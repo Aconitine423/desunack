@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>페이지 제목</title>
+  <link rel="stylesheet" href="breadcrumb.css">
+</head>
+
+<body>
+<nav class="breadcrumb-nav">
+    <a href="/">홈</a>
+    <span class="breadcrumb-sep">&gt;</span>
+
+    <!-- 대분류 드롭다운 -->
+    <div class="breadcrumb-item dropdown" id="main-dropdown">
+        <button class="dropdown-toggle">
+         <span id="main-label" data-value="">대분류</span>
+         <span class="arrow">▼</span>
+        </button>
+        <ul class="dropdown-menu" id="main-menu">
+            <!-- js가 여기에 "음료/간식" 항목을 삽입 -->
+        </ul>
+        </div>
+
+        <span class="breadcrumb-sep">&gt;</span>
+
+        <!-- 소분류 드롭다운 -->
+         <div class="breadcrumb-item dropdown" id="sub-dropdown">
+            <button class="dropdown-toggle">
+                <span id="sub-label" data-value="">소분류</span>
+                <span class="arrow">▼</span>
+            </button>
+            <ul class="dropdown-menu" id="sub-menu">
+                <!-- js가 여기에 선택된 대분류의 소분류를 삽입 -->
+            </ul>
+         </div>
+        </nav>
+        <script src="breadcrumb.js"></script>
+        </body>
+</html>

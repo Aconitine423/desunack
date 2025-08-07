@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded',() => {
+
 //탭 전환
 const tabs = document.querySelectorAll('.tab');
 const forms = document.querySelectorAll('.login-form');

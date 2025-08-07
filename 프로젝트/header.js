@@ -1,4 +1,5 @@
 // 검색 팝업 기능 설정
+// 검색 팝업 기능 설정 (IIFE: 즉시 실행 함수)
 (function() {
     document.addEventListener('DOMContentLoaded', function() {
         const searchBtn    = document.getElementById('search-btn');
@@ -8,44 +9,65 @@
 
         if (!(searchBtn && searchPopup && popupContent && closePopup)) return;
 
-        // 팝업 숨김/표시 토글
+        // 초기 숨김
+        searchPopup.classList.remove('open');
+
+        // 팝업 숨기기
+        function hidePopup() {
+            searchPopup.classList.remove('open');
+        }
+
+        // 버튼 아래에 팝업 위치시키고 보이기
         function showPopupAboveButton() {
             searchPopup.classList.add('open');
             popupContent.style.visibility = 'hidden';
             requestAnimationFrame(() => {
                 const btnRect    = searchBtn.getBoundingClientRect();
-                const w          = popupContent.offsetWidth;
-                const h          = popupContent.offsetHeight;
-                const top  = Math.min(window.innerHeight - h - 80, btnRect.bottom + 12);
-                const left = Math.min(window.innerWidth - w - 80,
-                                      Math.max(0, btnRect.left + btnRect.width/2 - w/2));
+                const popupWidth = popupContent.offsetWidth;
+                const popupHeight= popupContent.offsetHeight;
+                const top  = Math.min(
+                    window.innerHeight - popupHeight - 80,
+                    btnRect.bottom + 12
+                );
+                const left = Math.min(
+                    window.innerWidth - popupWidth - 80,
+                    Math.max(0, btnRect.left + btnRect.width/2 - popupWidth/2)
+                );
                 popupContent.style.top        = `${top}px`;
                 popupContent.style.left       = `${left}px`;
                 popupContent.style.visibility = 'visible';
             });
         }
-        function hidePopup() {
-            searchPopup.classList.remove('open');
-        }
 
+        // 검색 버튼 클릭 토글
         searchBtn.addEventListener('click', () => {
-            searchPopup.classList.toggle('open')
-              ? showPopupAboveButton()
-              : hidePopup();
+            if (searchPopup.classList.toggle('open')) {
+                showPopupAboveButton();
+            } else {
+                hidePopup();
+            }
         });
+
+        // 닫기 버튼 클릭
         closePopup.addEventListener('click', hidePopup);
+
+        // 버튼 외부 클릭 시 닫기
         document.addEventListener('click', e => {
             if (!searchBtn.contains(e.target) && !popupContent.contains(e.target)) {
                 hidePopup();
             }
         });
+
+        // ESC 키 누르면 닫기
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') hidePopup();
         });
-        window.addEventListener('resize', () => {
+
+        // 스크롤/리사이즈 시 위치 재계산
+        window.addEventListener('scroll', () => {
             if (searchPopup.classList.contains('open')) showPopupAboveButton();
         });
-        window.addEventListener('scroll', () => {
+        window.addEventListener('resize', () => {
             if (searchPopup.classList.contains('open')) showPopupAboveButton();
         });
     });

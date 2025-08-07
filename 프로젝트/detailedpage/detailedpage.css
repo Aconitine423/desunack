@@ -3,14 +3,15 @@ html, body{
     font-family: "Noto Sans KR", Arial, sans-serif;
     background: #fafafa;
     color: #222;
+    padding-top: 60px;
 }
 
 /* 쿠팡 스타일 상단 고정 가로 스크롤 네비게이션(탭) */
 #scrollspy-nev {
     position: sticky;
-    top: 0;
+    top: 60px;
     background: #fff;
-    z-index: 100;
+    z-index: 900;
     border-bottom: 1px solid #e0e0e0;
     box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     overflow-x: auto;
@@ -134,6 +135,7 @@ main{
     border-radius: 12px;
     box-shadow: 0 1px 6px rgba(0,0,0,0.04);
     padding: 32px 28px;
+    scroll-margin-top: 60px;
 }
 
 .section h2{

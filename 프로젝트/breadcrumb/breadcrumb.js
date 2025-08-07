@@ -1,4 +1,6 @@
 
+// breadcrumb.js 맨 위에
+// TODO: 임시 주석
 // breadcrumb.js
 (function() {
   console.log('▶ breadcrumb init');

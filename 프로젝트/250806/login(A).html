@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link rel="stylesheet" href="login(A).css">
+</head>
+<body>
+    <!-- Login 폼 -->
+     <div class="container">
+     <h1 class="title">Login</h1>
+    <!-- 2 로그인 폼 컨테이너 -->
+    <div class="form-container">
+        <!-- 일반회원 로그인 폼: name 속성으로 userId, passward 고정 -->
+        <form id="normal" class="login-form active" action="/login/normal" method="post">
+            <!-- ID 입력 -->
+            <input type="text" name="userId" placeholder="아이디" required>
+            <!-- Password 입력 -->
+            <input type="password" name="password" placeholder="비밀번호" required>
+            <!-- 로그인 버튼 -->
+            <button type="submit" class="btn-signin">로그인</button>
+            <!-- 추가 링크 -->
+            <div class="links">
+                <a href="/프로젝트/250805/join02.html">회원가입</a>
+                <a href="/프로젝트/250806/find-inform.html" class="modal-trigger">비밀번호 찾기</a>
+            </div>
+        </form>
+        </div>
+        </div>
+        <script src="login(A).js"></script>
+    </body>
+    </html>

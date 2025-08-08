@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이디/비밀번호 찾기</title>
+    <link rel="stylesheet" href="find-inform.css">
+</head>
+<body>
+    <div class="tab-container">
+        <button id="tab-find-id" class="tab active">아이디 찾기</button>
+        <button id="tab-find-pw" class="tab">비밀번호 찾기</button>
+    </div>
+
+    <!-- 아이디 찾기 폼 -->
+     <fotm id="form-find-id" class="form active">
+        <input type="text" id="userName" placeholder="이름 또는 사업자명" required />
+        <input type="email" id="userEmail" placeholder="이메일" required />
+        <button type="button" id="btn-randcode-id">인증번호 받기</button>
+        <input type="number" id="authcodeId" placeholder="인증번호 입력" />
+        <button typ="button" id="btn-verify-id">인증 확인</button>
+        <div id="result-id"></div>
+    </fotm>
+
+    <!-- 비밀번호 찾기 폼 -->
+    <form id="form-find-pw" class="form">
+        <input type="text" id="userId" placeholder="아이디" required />
+        <input type="email" id="userEmailPw" placeholder="이메일" required />
+        <button type="button" id="btn-randcode-pw">인증번호 받기</button>
+        <input type="number" id="authCodePw" placeholder="인증번호 입력" />
+        <button typ="button" id="btn-verify-pw">인증 확인</button>
+        <div id="result-pw"></div>
+    </form>
+
+    <script src="find-inform.js"></script>
+    
+</body>
+</html>

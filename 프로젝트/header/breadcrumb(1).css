@@ -5,8 +5,9 @@
 }
 
 .breadcrumb-nav {
-  max-width: var(--content-w);
+ max-width: var(--content-w);
   margin: 0 auto;
+  margin-top: 4px !important;
   box-sizing: border-box;
   display: flex;
   align-items: center;

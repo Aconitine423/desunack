@@ -1,4 +1,19 @@
+
 /* 전체 레이아웃 및 폰트 */
+
+:root{
+    --hdr-h: 60px;
+    --scrollnav-h: 52px;
+}
+
+scroll-nav{
+    position: sticky;
+    top: var(--hdr-h);
+    z-index: 300;
+    height: var(--scrollnav-h);
+}
+
+
 html, body{
     font-family: "Noto Sans KR", Arial, sans-serif;
     background: #fafafa;
@@ -9,13 +24,15 @@ html, body{
 /* 쿠팡 스타일 상단 고정 가로 스크롤 네비게이션(탭) */
 #scrollspy-nev {
     position: sticky;
-    top: 60px;
+    top: var(--hdr-h);
     background: #fff;
     z-index: 900;
     border-bottom: 1px solid #e0e0e0;
     box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     overflow-x: auto;
     white-space: nowrap;
+    margin-top: 0;
+    padding-top: 48px;
 }
 #scrollspy-nev ul {
     display: flex;
@@ -135,7 +152,7 @@ main{
     border-radius: 12px;
     box-shadow: 0 1px 6px rgba(0,0,0,0.04);
     padding: 32px 28px;
-    scroll-margin-top: 60px;
+    scroll-margin-top: var(--hdr-h);
 }
 
 .section h2{

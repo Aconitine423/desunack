@@ -1,13 +1,13 @@
-package com.desunack.desunack;
+package com.desunack.security;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DesunackApplication {
+public class SecurityApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DesunackApplication.class, args);
+        SpringApplication.run(SecurityApplication.class, args);
     }
 
 }

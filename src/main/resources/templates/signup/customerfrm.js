@@ -3,16 +3,14 @@ const $year = $("#birthYear");
 const $month = $("#birthMonth");
 const $day = $("#birthDay");
 const thisYear = new Date().getFullYear();
-// $year.append("<option value=''>년</option>");
 for (let y = thisYear; y >= thisYear - 100; y--) {
     const $option = $("<option>");
     $option.val(y);
     $option.text(y);
     $year.append($option);
 }
+
 // 월 선택
-// $month.append("<option value=''>월</option>");
-// $day.append("<option value=''>일</option>");
 $year.on('change', function () {
     $month.empty();
     $month.append("<option value='' selected disabled hidden>월</option>");
@@ -45,7 +43,6 @@ $month.change(function () {
         case 8:
         case 10:
         case 12:
-            // console.log($selectMonth, typeof $selectMonth);
             day = 31;
             break;
         case 4:

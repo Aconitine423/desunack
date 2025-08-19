@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>소비자회원가입</title>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
 <form th:action="@{/signup/customerJoin}" method="post">
@@ -77,7 +78,7 @@
     <!--  이메일 입력  -->
     <div>
         <label for="emailLocal">이메일</label><br>
-        <input type="text" id="emailLocal" name="emailLocal" required>
+        <input type="text" id="emailLocal" name="emailLocal" required autocomplete="off">
         <span>@ </span>
         <select id="emailDomain" name="emailDomain">
             <option value="" selected disabled hidden>도메인</option>
@@ -89,95 +90,99 @@
             <option value="custom">직접입력</option>
         </select>
         <div id="emailCustomDomainContainer" style="display: inline-flex">
-            <input style="display: none" type="text" id="emailCustomDomain" name="emailCustomDomain" placeholder="직접입력">
+            <input style="display: none" type="text" id="emailCustomDomain" name="emailCustomDomain" placeholder="직접입력" autocomplete="off">
         </div>
     </div>
 <!--  주소 입력  -->
 <!--  카카오맵api활용  -->
+    <div>
+        <label for="searchPostBtn">주소</label><br>
+        <input type="text" id="sample3_postcode" size="4" name="userPost" placeholder="우편번호">
+        <input type="button" id="searchPostBtn" onclick="sample3_execDaumPostcode()" value="우편번호 찾기"><br>
+        <input type="text" id="sample3_address" size="20" placeholder="주소">
+        <input type="text" id="sample3_extraAddress" size="30" placeholder="참고항목"><br>
+        <input type="text" id="sample3_detailAddress" name="userAddressDetail" placeholder="상세주소" autocomplete="off">
+        <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+            <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+        </div>
+    </div>
 </form>
 </body>
+<script src="sutomerfrm.js"></script>
 <script th:inline="javascript">
-    // 연도선택
-    const $year = $("#birthYear");
-    const $month = $("#birthMonth");
-    const $day = $("#birthDay");
-    const thisYear = new Date().getFullYear();
-    // $year.append("<option value=''>년</option>");
-    for (let y = thisYear; y >= thisYear - 100; y--) {
-        const $option = $("<option>");
-        $option.val(y);
-        $option.text(y);
-        $year.append($option);
-    }
-    // 월 선택
-    // $month.append("<option value=''>월</option>");
-    // $day.append("<option value=''>일</option>");
-    $year.on('change', function () {
-        $month.empty();
-        $month.append("<option value='' selected disabled hidden>월</option>");
-        $day.empty();
-        $day.append("<option value='' selected disabled hidden>일</option>");
-        for (let m = 1; m <= 12; m++) {
-            const $option = $("<option>");
-            $option.val(m);
-            $option.text(m);
-            $month.append($option);
-        }
-    });
+    //카카오 우편번호 api
+    // 우편번호 찾기 찾기 화면을 넣을 element
+    var element_wrap = document.getElementById('wrap');
 
-    // 일 선택
-    $month.change(function () {
-        let $selectMonth = parseInt($month.val());
-        let $selectYear = parseInt($year.val());
-        $day.empty();
-        $day.append("<option value='' selected disabled hidden>일</option>");
-        let day;
-        // console.log($selectMonth, typeof $selectMonth);
-        if (isNaN($selectYear) || isNaN($selectMonth)) {
-            return;
-        }
-        switch ($selectMonth) {
-            case 1:
-            case 3:
-            case 5:
-            case 7:
-            case 8:
-            case 10:
-            case 12:
-                // console.log($selectMonth, typeof $selectMonth);
-                day = 31;
-                break;
-            case 4:
-            case 6:
-            case 9:
-            case 11:
-                day = 30;
-                break;
-            case 2:
-                if ($selectYear % 4 === 0) {
-                    day = 29;
-                } else {
-                    day = 28;
+    function foldDaumPostcode() {
+        // iframe을 넣은 element를 안보이게 한다.
+        element_wrap.style.display = 'none';
+    }
+
+    function sample3_execDaumPostcode() {
+        // 현재 scroll 위치를 저장해놓는다.
+        var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
                 }
-        }
-        for (let d = 1; d <= day; d++) {
-            const $option = $("<option>");
-            $option.val(d);
-            $option.text(d);
-            $day.append($option);
-        }
-    });
-    // 이메일 직접입력 선택시 직접입력창 display 활성화
-    const $emailDomainSelect = $("#emailDomain");
-    const $emailCustomDomainSelect = $("#emailCustomDomain");
-    $emailDomainSelect.on('change', function () {
-        if ($emailDomainSelect.val() === "custom") {
-            $emailCustomDomainSelect.css('display', 'block');
-            $emailCustomDomainSelect.attr('required', 'required');
-        }else {
-            $emailCustomDomainSelect.css('display', 'none');
-            $emailCustomDomainSelect.removeAttr('required', 'required');
-        }
-    });
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("sample3_extraAddress").value = extraAddr;
+
+                } else {
+                    document.getElementById("sample3_extraAddress").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample3_postcode').value = data.zonecode;
+                document.getElementById("sample3_address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("sample3_detailAddress").focus();
+
+                // iframe을 넣은 element를 안보이게 한다.
+                // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+                element_wrap.style.display = 'none';
+
+                // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
+                document.body.scrollTop = currentScroll;
+            },
+            // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
+            onresize : function(size) {
+                element_wrap.style.height = size.height+'px';
+            },
+            width : '100%',
+            height : '100%'
+        }).embed(element_wrap);
+
+        // iframe을 넣은 element를 보이게 한다.
+        element_wrap.style.display = 'block';
+    }
 </script>
 </html>

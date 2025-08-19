@@ -6,74 +6,91 @@
     --scrollnav-h: 52px;
 }
 
-scroll-nav{
-    position: sticky;
-    top: var(--hdr-h);
-    z-index: 300;
-    height: var(--scrollnav-h);
-}
-
-
 html, body{
     font-family: "Noto Sans KR", Arial, sans-serif;
     background: #fafafa;
     color: #222;
-    padding-top: 60px;
+    /* 상단 보정은 본문 컨테이너에서만 한다. 여기선 패딩 금지 */
+}
+
+header, .navar, .search-container{
+    overflow: visible !important;
 }
 
 /* 쿠팡 스타일 상단 고정 가로 스크롤 네비게이션(탭) */
-#scrollspy-nev {
+#scrollspy-nav {
     position: sticky;
-    top: var(--hdr-h);
+    top: var(--hdr-h, 60px);
     background: #fff;
-    z-index: 900;
+    z-index: 4000;
     border-bottom: 1px solid #e0e0e0;
     box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-    overflow-x: auto;
+    overflow-x: visible !important;
     white-space: nowrap;
     margin-top: 0;
-    padding-top: 48px;
+    padding-top: 0;
+    min-height: var(--scrollnav-h);
 }
-#scrollspy-nev ul {
+
+.scroll-nav{
+    /* position: sticky !important;
+    top: var(--hdr-h, 60px) !important; 
+    z-index: 4000 !important; */
+    background: #fff;
+}
+#scrollspy-nav ul {
     display: flex;
     margin: 0;
-    padding: 0 10px;
+    padding: 0;
+    gap: 24px;
     list-style: none;
     overflow-x: auto;
     white-space: nowrap;
     scrollbar-width: none; /* Firefox */
 }
-#scrollspy-nev ul::-webkit-scrollbar {
+#scrollspy-nav ul::-webkit-scrollbar {
     display: none; /* Chrome, Safari */
 }
-#scrollspy-nev li {
+#scrollspy-nav li {
     margin: 0;
     flex: 0 0 auto;
 }
-#scrollspy-nev a {
+
+.data-spy-section{
+scroll-margin-top: calc(var(--hdr-h, 60px) + var(--scrollnav-h, 52px) + 8px);
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+#scrollspy-nav a {
     display: block;
     padding: 0 24px;
     height: 54px;
     line-height: 54px;
     color: #222;
+    cursor: pointer;
     font-weight: 600;
     font-size: 1.08rem;
     text-decoration: none;
     text-align: center;
     border-bottom: 3px solid transparent;
-    transition: color 0.2s, border-bottom 0.2s;
+    transition: background .2s, color .2s;
     position: relative;
     background: none;
     white-space: nowrap;
 }
-#scrollspy-nev a.active {
+#scrollspy-nav a.active {
     color: #0074e9;
-    border-bottom: 3px solid #0074e9;
+    border-bottom-color:#0074e9;
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
     background: none;
 }
 
 /* 탭 바 그림자 효과 */
-#scrollspy-nev::after {
+#scrollspy-nav::after {
     content: '';
     display: block;
     height: 1px;
@@ -87,6 +104,8 @@ html, body{
 main{
     max-width: 900px;
     margin: 0 auto; /*좌우 자동 여백으로 가로 가운데 정렬*/
+    /* sticky는 조상에 overflow가 있으면 안 먹는다 */
+    overflow: visible !important;
 }
 
 /* 상품 정보 헤더 */
@@ -147,12 +166,12 @@ main{
 
 /* 상세 정보, 문의 섹션 */
 .section{
-    margin-bottom: 60px;
+    /* margin-bottom: 60px; */
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 1px 6px rgba(0,0,0,0.04);
     padding: 32px 28px;
-    scroll-margin-top: var(--hdr-h);
+    scroll-margin-top: calc(var(--hdr-h,60px)+ var(--scrollnav-h,52px) + 8px);
 }
 
 .section h2{
@@ -210,6 +229,10 @@ main{
     scrollbar-width: none;
 }
 
+/* 페이지 래퍼가 있다면 여기에만 추가 */
+.page-wrap, .container{
+    overflow: visible !important;
+}
 .review-preview-list::-webkit-scrollbar{
     display: none;
 }
@@ -315,18 +338,10 @@ main{
 }
 /* 반응형 */
 @media (max-width: 700px){
-    .product-header{
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .image-placeholder{
-        width: 100%;
-        height: 200px;
-    }
-    #scrollspy-nev ul {
+    #scrollspy-nav ul {
         padding: 0 4px;
     }
-    #scrollspy-nev a {
+    #scrollspy-nav a {
         padding: 0 12px;
         font-size: 1rem;
         height: 44px;
@@ -334,8 +349,27 @@ main{
     }
 }
 
+#section-info,
+#section-summary,
+#section-review,
+#section-inquiry{
+    scroll-margin-top: calc(var(--hdr-h, 60px) + var(--scrollnav-h, 52px) + 8px);
+}
+
+#section-inquiry{
+    margin-bottom: 0;
+    padding-bottom: 80px;
+}
 .scroll-arrow-buttons{
+    /* position: fixed;
+    right: 24px;
+    bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 9999; */
     position: fixed;
+    pointer-events: none;
     right: 24px;
     bottom: 32px;
     display: flex;
@@ -343,7 +377,9 @@ main{
     gap: 10px;
     z-index: 9999;
 }
-
+.scroll-arrow-buttons .scroll-btn { 
+    pointer-events: auto;
+ }  /* 버튼만 클릭 허용 */
 .scroll-btn{
     width: 48px;
     height: 48px;
@@ -354,7 +390,7 @@ main{
     color: #0074e9;
     font-size: 2rem;
     cursor: pointer;
-    transition: background 0.2s, box0shadow 0.2s;
+    transition: background 0.2s, box-shadow 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -364,3 +400,4 @@ main{
     background: #e6f0fa;
     box-shadow: 0 4px 16px rgba(0,0,0,0.18);
 }
+

@@ -9,7 +9,7 @@
 /* [필수] 상단 높이 변수 정의 - 실제 값으로 바꿔 써라 */
 :root{
     --hdr-h: 60px; /*헤더 실제 높이(px)*/
-    --scrollnav-h: 0px;  /*기본값: 스크롤네비 없으면 0*/
+    --scrollnav-h: 52px;  /*기본값: 스크롤네비 없으면 0*/
 }
 
 
@@ -17,20 +17,33 @@
 html, body{
     margin: 0 !important;
     padding-top: 0 !important;
+    overflow-y: auto !important;
 }
 
+main{
+    overflow: visible !important;
+}
 header {
-    position: sticky;            /* 스크롤해도 항상 화면 상단에 고정 */
-    top: 0;                     /* 상단에서 0 위치 */
+    position: sticky !important;          /* 스크롤해도 항상 화면 상단에 고정 */
+    top: 0 !important;                /* 상단에서 0 위치 */
     left: 0;                    /* 좌측에서 0 위치 */
     width: 100%;                /* 화면 가로 전체 너비 */
     z-index: 5000 !important;             /* 다른 콘텐츠 위에 표시 */
     background: #fff;           /* 배경 흰색 */
     border-bottom: 1px solid #eee; /* 하단에 연한 회색 실선 경계 */
     height: var(--hdr-h);
-
-
+    transform: none !important;
 }
+
+header, main{
+ transform: none !important;    /* 조상 transform로 fixed 기준 망가지는 것 방지 */
+  filter: none !important;
+  perspective: none !important;
+  contain: none !important;      /* 만약 reset이 contain 써놨다면 해제 */
+}
+
+
+
 /* 부모가 팝업을 잘라먹지 */
 header, .header{
     overflow: visible;
@@ -43,11 +56,6 @@ header, .site-header, #header{
     padding-bottom: 4px !important;
 }
 
-/* 헤더가 fixed/sticky라면, 본문에만 상단 보정 추가 */
-main, .page-wrap, .container{
-    /* 헤더 높이만큼만 본문 내려서 겹침 방지, 값은 프로젝트에 맞춰 조절  */
-    padding-top: var(--hdr-h, 48px);
-}
 
 /* 2) .header 클래스 사용 시 (flex 기반 레이아웃) */
 .header {
@@ -68,7 +76,7 @@ body {
 }
 
 main, .page, .container, #app{
-    padding-top: calc(var(--hdr-h) + var(--gap 0px)) !important;
+    padding-top: calc(var(--hdr-h) + var(--gap, 0px)) !important;
 }
 
 header + .breadcrumb-nav{
@@ -271,7 +279,6 @@ header + .breadcrumb-nav{
 /* 검색 컨테이너를 위치 기준으로 설정 */
 .search-container{
     position: relative; /*팝업의 절대 위치 기준이 이 요소가 됩니다.*/
-    display: inline-block;
 }
 
 /* 팝업 기본 숨김 처리 및 위치/크기 설정 */
@@ -316,17 +323,21 @@ header + .breadcrumb-nav{
 
 #search-popup{
     display: none; /* 기본 숨김 */
-    position: absolute; /* 위치 기준 */
-    top: calc(100% + 4px ); /* 버튼 바로 밑으로 4px */
-    left: 50%; /* 가로 중앙 */
-    transform: translateX(-50%);  /* 왼쪽 50%에서 -50% 이동 */
+    position: fixed; /* viewport 기준 */
+    pointer-events: none;
+    top:0; /* 버튼 바로 밑으로 */
+    left: 60%; /*100% 할 경우 브라우저 밖으로 나가짐*/
+    transform: translate(var(--popup-x, 0px), var(--popup-y, 0px));
     width: 520px; /* 원하는 너비 */
+    max-height: none;
+    overflow: auto; /*바깥은 감추고*/
     z-index: 6000 !important; /* 쌓임 순서 */
 }
 
 /* .open 클래스가 붙으면 보이도록 전환  */
 #search-popup.open{
-    display: block; 
+    display: block !important;
+    pointer-events: auto !important;
 }
 
 /* 팝업 내부 콘텐츠 스타일 */
@@ -341,6 +352,30 @@ header + .breadcrumb-nav{
     padding-top: 0;
 }
 
+#search-popup, #popup-content{
+    max-height: 70vh !important; /*인라인 1072px 무효화*/
+    overflow: auto !important; /*내부 스크롤*/
+}
+
+#search-popup .popup-content{
+    max-height: inherit; /*부모의 max-height 상속 */
+    overflow-y: auto; /*내부 스크롤*/
+    padding: 16px;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 필수: 떠 있을 때 고정 포지션으로 전환(기존 규칙을 어김) */
+#search-popup.floatign{
+    position: fixed !important; /*viewport 기준*/
+    left: 0 !important; /*js가 px값을 주입*/
+    top: 0 !important; /*js가 px값을 주입*/
+    right: auto !important; /*기존 right:0 무효화*/
+    transform: none !important; /*translateX(-50%) 무효화*/
+}
+
+header, .navbar, .search-container{
+    overflow: visible !important; /*상위가 자르지 않게*/
+}
 /* 1) footer 요소 안 전체 콘텐츠를 가운데 정렬 */
 footer {
     display: flex;

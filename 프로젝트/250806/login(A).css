@@ -1,7 +1,19 @@
+body{
+      background: #f5f5f5;
+}
 /* 공통 래퍼 */
 .container{
-    width: 320px;
-    margin: 40px auto;
+    width: 100%;
+    max-width: 360;
+    /* body에서 남은 공간을 다 차지 -> footer는 아래로 밀림 */
+    flex: 1;
+    /* 화면 중앙 정렬 */
+    display: flex;
+    flex-direction: column; /*로고 -> 타이틀 -> 폼*/
+    align-items: center; /* 가로 중앙 */
+    justify-content: center; /* 세로 중앙 */
+    padding: 40px 16px;
+    margin: 0 auto; /*좌우 중앙(백업 성격)*/
     text-align: center;
 }
 /* 타이을 중앙정렬 */
@@ -13,7 +25,7 @@
 
 /* 폼 컨테이너 */
 .form-container{
-    width: 320px;
+    width: 420px;
     margin: 0 auto;
     background: #f5f5f5;
     padding: 24px;
@@ -38,6 +50,7 @@
 
 .login-form input.focused{
     border-color: #4a90e2;
+    outline: none;
 }
 
 /* 로그인 버튼 */
@@ -74,3 +87,60 @@
 .links a:hover{
     text-decoration: underline;
 }
+
+
+/* 1) footer 요소 안 전체 콘텐츠를 가운데 정렬 */
+footer {
+    display: flex;
+    text-align: center;
+    flex-direction: column;  /* 수직으로 쌓기 */
+    align-items: center;     /* 가로축 중앙 정렬 */
+    padding: 2rem 1rem;      /* 위아래 여유 */
+    background: #fff;        /* 필요하다면 배경색 */
+}
+
+/* 2) 테이블 자체를 가운데 */
+.footer-menu {
+    border-collapse: collapse;
+    display: table;     /* table 레이아웃 유지 */
+    margin: 0 auto;     /* 좌우 자동 마진으로 중앙 정렬 */
+}
+
+/* 3) 각 셀(td) 안 텍스트도 가운데 */
+.footer-menu td {
+    padding: 12px 16px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* 4) 저작권 문구는 이미 .footer-copy에 text-align:center 되어 있음 */
+.footer-copy {
+    font-size: 0.9rem;
+    padding-top: 1rem;
+    color: #666;
+    text-align: center; /* 혹시 빠졌다면 명시 */
+    width: 100%;        /* 전체 폭 차지 */
+    margin-top: 3rem;   /* 위쪽 여유 */
+}
+
+/* 고정 헤더 보정이 과한 경우 */
+
+.breadcrumb-nav:first-child{
+    margin-top: 0 !important;
+}
+
+
+/* 화면 전체 높이 계산 가능하도록 */
+html, body {
+    height: 100%;
+}
+
+/* 바디를 세로 플렉스 컨테이너로 만들어 메인(.container) + 푸터 순으로 쌓이게 함 */
+
+body{
+    margin: 0;
+    min-height: 100vh; /*뷰포트 높이 전체*/
+    display: flex;
+    flex-direction: column; /*위(메인) -> 아래(푸터)*/
+}
+

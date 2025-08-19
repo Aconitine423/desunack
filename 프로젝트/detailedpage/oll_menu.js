@@ -25,6 +25,8 @@
         { label: "빵", value: "headerBread" }
       ]
     };
+
+
     // ─────────────────────────────────────
     // 1) 상태
     // ─────────────────────────────────────
@@ -329,32 +331,102 @@
 // ─────────────────────────────────────
 // 9) 검색창 열기/닫기
 // ─────────────────────────────────────
+// (function initSearchPopup(){
+//   const searchBtn   = document.getElementById('search-btn');
+//   const searchPopup = document.getElementById('search-popup');
+//   const closeBtn    = document.getElementById('close-popup');
+
+//   if (!searchBtn || !searchPopup) return;
+
+//   function openSearch(){
+//     searchPopup.classList.add('open');
+//   }
+//   function closeSearch(){
+//     searchPopup.classList.remove('open');
+//   }
+
+//   searchBtn.addEventListener('click', e=>{
+//     e.preventDefault();
+//     e.stopPropagation(); // 밖 클릭 방지
+//     openSearch();
+//   });
+
+//   if (closeBtn) {
+//     closeBtn.addEventListener('click', e=>{
+//       e.preventDefault();
+//       closeSearch();
+//     });
+//   }
+// })();
+
+// 9 검색창 열기 /닫기(absolute 유지 + 동적 높이 계산)
+
 (function initSearchPopup(){
-  const searchBtn   = document.getElementById('search-btn');
+  const searchBtn = document.getElementById('search-btn');
   const searchPopup = document.getElementById('search-popup');
-  const closeBtn    = document.getElementById('close-popup');
+  const closeBtn = document.getElementById('close-popup');
+  // const popupContent = document.getElementById('popup-conten') || (searchPopup && searchPopup.querySelector('.popup-content'));
+  const popupContent = (searchPopup && searchPopup.querySelector('.popup-content')) 
+                     ||(searchPopup && document.getElementById('popup-content'));
 
   if (!searchBtn || !searchPopup) return;
 
+  // [핵심] 팝업 상단(y) 기준으로 화면 바닥까지 남은 높이 계산
+  function recalcPopupHeight(){
+    if (!searchPopup.classList.contains('open')) return;
+
+    // // 버튼의 화면 기준 위치를 얻어서, 버튼 하단 + 8px에서 팝업이 시작한다고 가정
+    // const btnRect = searchBtn.getBoundingClientRect();
+    // const topPx   = btnRect.bottom + 8; //css의 top: calc(100% + 8px)과 일치
+
+    // // 화면 높이 - 팝업 시작 y - 하단 여백(16px) 
+    // const popupTop = searchPopup.getBoundingClientRect().top;
+    // const avail = Math.max(160, Math.floor(window.innerHeight - popupTop - 16));
+    
+    // 화면 높이 - 팝업(자기 자신)의 화면상 top - 하단 여백(16px)
+    const popupTop = searchPopup.getBoundingClientRect().top;
+    const avail = Math.max(160, Math.floor(window.innerHeight - popupTop - 16));
+     // 팝업은 바깥 스크롤 금지, 내부 콘텐츠만 스크롤
+    searchPopup.style.maxHeight = avail + 'px';
+    if (popupContent) popupContent.style.maxHeight = avail + 'px';
+  }
+
   function openSearch(){
     searchPopup.classList.add('open');
+    // 레이아웃이 잡힌 다음 프레임에 계산 (열리는 transition/폰트 로드 보정)
+    requestAnimationFrame(() => {
+      recalcPopupHeight();
+      setTimeout(recalcPopupHeight, 50); // 혹시 몰라 한 번 더
+    });
   }
+
   function closeSearch(){
     searchPopup.classList.remove('open');
   }
 
-  searchBtn.addEventListener('click', e=>{
+  searchBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    e.stopPropagation(); // 밖 클릭 방지
+    e.stopPropagation();
     openSearch();
   });
 
-  if (closeBtn) {
-    closeBtn.addEventListener('click', e=>{
+  if (closeBtn){
+    closeBtn.addEventListener('click', (e)=>{
       e.preventDefault();
       closeSearch();
     });
   }
+
+  // 팝업 밖 클릭하면 닫기
+   document.addEventListener('click', (e) => {
+    if (!searchPopup.contains(e.target) && !searchBtn.contains(e.target)) {
+      closeSearch();
+    }
+   });
+
+   //스크롤/리사이즈 시에도 높이 재계산 (absolute 유지하면서 화면 끝까지)
+   window.addEventListener('scroll', recalcPopupHeight, {passive: true});
+   window.addEventListener('resize', recalcPopupHeight);
 })();
 
 // ─────────────────────────────────────

@@ -3,39 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>소비자회원가입</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body>
 <form th:action="@{/signup/customerJoin}" method="post">
-<!--  아이디 입력  -->
+    <!--  아이디 입력  -->
     <div>
         <label for="userId">아이디</label>
-        <input type="text" id="userId" name="userId" required placeholder="아이디를 입력하세요">
+        <input type="text" id="userId" name="userId" required placeholder="아이디를 입력하세요" autocomplete="off">
         <input type="button" id="checkId" class="checkIdBtn" value="중복확인" style="cursor: pointer"><br>
         <span id="idError" th:name="errorMsg"></span>
     </div>
-<!--  비밀번호 입력  -->
+    <!--  비밀번호 입력  -->
     <div>
         <label for="userPw">비밀번호</label>
-        <input type="text" id="userPw" name="userPw" required placeholder="비밀번호를 입력하세요."><br>
+        <input type="password" id="userPw" name="userPw" required placeholder="비밀번호를 입력하세요."><br>
         <span id="pwError" th:name="errorMsg"></span>
         <label for="checkPw">비밀번호확인</label>
-        <input type="text" id="checkPw" name="checkPw" required placeholder="비밀번호를 입력하세요."><br>
+        <input type="password" id="checkPw" name="checkPw" required placeholder="비밀번호를 입력하세요."><br>
         <span id="checkPwError" th:name="errorMsg"></span>
     </div>
-<!--  이름 입력  -->
+    <!--  이름 입력  -->
     <div>
         <label for="userName">이름</label>
-        <input type="text" id="userName" name="userName" required placeholder="이름을 입력하세요."><br>
+        <input type="text" id="userName" name="userName" required placeholder="이름을 입력하세요." autocomplete="off"><br>
         <span id="nameError" th:name="errorMsg"></span>
     </div>
-<!--  닉네임 입력  -->
+    <!--  닉네임 입력  -->
     <div>
         <label for="userNickname">닉네임</label>
-        <input type="text" id="userNickname" name="userNickname" required placeholder="닉네임을 입력하세요.">
+        <input type="text" id="userNickname" name="userNickname" required placeholder="닉네임을 입력하세요." autocomplete="off">
         <input type="button" id="checkNickname" class="checkNicknameBtn" value="중복확인" style="cursor: pointer"><br>
         <span id="nicknameError" th:name="errorMsg"></span>
     </div>
-<!--  성별 선택  -->
+    <!--  성별 선택  -->
     <div>
         <label>성별 선택</label>
         <div>
@@ -48,8 +49,135 @@
             </div>
         </div>
     </div>
-<!--  생년월일 입력  -->
-
+    <!--  생년월일 입력  -->
+    <div>
+        <label>생년월일</label><br>
+        <select id="birthYear" name="birthYear">
+            <option value="" selected disabled hidden>출생년도</option>
+        </select>
+        <label for="birthYear">년</label>
+        <select id="birthMonth" name="birthMonth">
+            <option value="" selected disabled hidden>월</option>
+        </select>
+        <label for="birthMonth">월</label>
+        <select id="birthDay" name="birthDay">
+            <option value="" selected disabled hidden>일</option>
+        </select>
+        <label for="birthDay">일</label><br>
+        <span id="birthError" th:name="errorMsg"></span>
+    </div>
+    <!--  휴대전화 입력  -->
+    <div>
+        <label>휴대전화</label><br>
+        <input type="text" id="phone1" name="phone1" value="010" size="1" readonly>
+        <span>- </span><input type="text" id="phone2" name="phone2" size="3" required>
+        <span>- </span><input type="text" id="phone3" name="phone3" size="3" required><br>
+        <span id="phoneError" th:name="errorMsg"></span>
+    </div>
+    <!--  이메일 입력  -->
+    <div>
+        <label for="emailLocal">이메일</label><br>
+        <input type="text" id="emailLocal" name="emailLocal" required>
+        <span>@ </span>
+        <select id="emailDomain" name="emailDomain">
+            <option value="" selected disabled hidden>도메인</option>
+            <option value="gmail.com">gmail.com</option>
+            <option value="naver.com">naver.com</option>
+            <option value="kakao.com">kakao.com</option>
+            <option value="hanmail.net">hanmail.net</option>
+            <option value="nate.com">nate.com</option>
+            <option value="custom">직접입력</option>
+        </select>
+        <div id="emailCustomDomainContainer" style="display: inline-flex">
+            <input style="display: none" type="text" id="emailCustomDomain" name="emailCustomDomain" placeholder="직접입력">
+        </div>
+    </div>
+<!--  주소 입력  -->
+<!--  카카오맵api활용  -->
 </form>
 </body>
+<script th:inline="javascript">
+    // 연도선택
+    const $year = $("#birthYear");
+    const $month = $("#birthMonth");
+    const $day = $("#birthDay");
+    const thisYear = new Date().getFullYear();
+    // $year.append("<option value=''>년</option>");
+    for (let y = thisYear; y >= thisYear - 100; y--) {
+        const $option = $("<option>");
+        $option.val(y);
+        $option.text(y);
+        $year.append($option);
+    }
+    // 월 선택
+    // $month.append("<option value=''>월</option>");
+    // $day.append("<option value=''>일</option>");
+    $year.on('change', function () {
+        $month.empty();
+        $month.append("<option value='' selected disabled hidden>월</option>");
+        $day.empty();
+        $day.append("<option value='' selected disabled hidden>일</option>");
+        for (let m = 1; m <= 12; m++) {
+            const $option = $("<option>");
+            $option.val(m);
+            $option.text(m);
+            $month.append($option);
+        }
+    });
+
+    // 일 선택
+    $month.change(function () {
+        let $selectMonth = parseInt($month.val());
+        let $selectYear = parseInt($year.val());
+        $day.empty();
+        $day.append("<option value='' selected disabled hidden>일</option>");
+        let day;
+        // console.log($selectMonth, typeof $selectMonth);
+        if (isNaN($selectYear) || isNaN($selectMonth)) {
+            return;
+        }
+        switch ($selectMonth) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                // console.log($selectMonth, typeof $selectMonth);
+                day = 31;
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                day = 30;
+                break;
+            case 2:
+                if ($selectYear % 4 === 0) {
+                    day = 29;
+                } else {
+                    day = 28;
+                }
+        }
+        for (let d = 1; d <= day; d++) {
+            const $option = $("<option>");
+            $option.val(d);
+            $option.text(d);
+            $day.append($option);
+        }
+    });
+    // 이메일 직접입력 선택시 직접입력창 display 활성화
+    const $emailDomainSelect = $("#emailDomain");
+    const $emailCustomDomainSelect = $("#emailCustomDomain");
+    $emailDomainSelect.on('change', function () {
+        if ($emailDomainSelect.val() === "custom") {
+            $emailCustomDomainSelect.css('display', 'block');
+            $emailCustomDomainSelect.attr('required', 'required');
+        }else {
+            $emailCustomDomainSelect.css('display', 'none');
+            $emailCustomDomainSelect.removeAttr('required', 'required');
+        }
+    });
+</script>
 </html>

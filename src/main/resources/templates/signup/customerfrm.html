@@ -5,9 +5,45 @@
     <title>소비자회원가입</title>
 </head>
 <body>
-<div>
-    <label for="c_m_id">아이디</label>
-    <input type="text" id="c_m_id" name="c_m_id" required placeholder="아이디를 입력하세요">
-</div>
+<form th:action="@{/signup/customerJoin}" method="post">
+<!--  아이디 입력  -->
+    <div>
+        <label for="userId">아이디</label>
+        <input type="text" id="userId" name="userId" required placeholder="아이디를 입력하세요">
+        <input type="button" id="checkId" class="checkIdBtn" value="중복확인" style="cursor: pointer">
+    </div>
+<!--  비밀번호 입력  -->
+    <div>
+        <label for="userPw">비밀번호</label>
+        <input type="text" id="userPw" name="userPw" required placeholder="비밀번호를 입력하세요.">
+        <label for="checkPw">비밀번호확인</label>
+        <input type="text" id="checkPw" name="checkPw" required placeholder="비밀번호를 입력하세요.">
+    </div>
+<!--  이름 입력  -->
+    <div>
+        <label for="userName">이름</label>
+        <input type="text" id="userName" name="userName" required placeholder="이름을 입력하세요.">
+    </div>
+<!--  닉네임 입력  -->
+    <div>
+        <label for="userNickname">닉네임</label>
+        <input type="text" id="userNickname" name="userNickname" required placeholder="닉네임을 입력하세요.">
+        <input type="button" id="checkNickname" class="checkNicknameBtn" value="중복확인" style="cursor: pointer">
+    </div>
+<!--  성별 선택  -->
+    <div>
+        <label>성별 선택</label>
+        <div>
+            <div>
+                <input type="radio" id="male" name="userGender" value="1">
+                <label for="male">남성</label>
+            </div>
+            <div>
+                <input type="radio" id="female" name="userGender" value="2">
+                <label for="female">여성</label>
+            </div>
+        </div>
+    </div>
+</form>
 </body>
 </html>

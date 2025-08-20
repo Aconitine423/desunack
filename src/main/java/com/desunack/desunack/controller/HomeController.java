@@ -7,12 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Slf4j
 @Controller
 public class HomeController {
+    @GetMapping("/")
+    public String home() {
+        return "index";
+    }
+
     @GetMapping("/signup")
-    public String signup(){
+    public String signup() {
         return "/signup/signup";
     }
+
     @GetMapping("/signup/customerfrm")
-    public String customerJoin(){
+    public String customerJoin() {
         return "/signup/customerfrm";
     }
 }

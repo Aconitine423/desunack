@@ -52,7 +52,7 @@ $month.change(function () {
             day = 30;
             break;
         case 2:
-            if ($selectYear % 4 === 0) {
+            if (($selectYear % 4 === 0 && $selectYear % 100 !== 0) || $selectYear % 400 === 0) {
                 day = 29;
             } else {
                 day = 28;
@@ -78,3 +78,12 @@ $emailDomainSelect.on('change', function () {
         $emailCustomDomainSelect.removeAttr('required', 'required');
     }
 });
+
+// 이용약관 스크롤링 해야 약관 동의 체크박스 활성화
+const $termsBox = $('#joinTermsBox');
+const $termsCheckbox = $('#joinTerms');
+$termsBox.on('scroll', function () {
+    if (this.scrollHeight - this.scrollTop === this.clientHeight) {
+        $termsCheckbox.prop('disabled', false);
+    }
+})

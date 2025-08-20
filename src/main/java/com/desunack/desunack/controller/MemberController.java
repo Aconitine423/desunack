@@ -1,12 +1,17 @@
 package com.desunack.desunack.controller;
 
+import com.desunack.desunack.DTO.UserDto;
 import com.desunack.desunack.service.MemberService;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @Slf4j
@@ -14,13 +19,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberController {
     @Autowired
     private MemberService mSer;
+    private UserDto uDto;
 
     @GetMapping("/login1")
     public String login(){
         return "member/login";
     }
     @PostMapping("/login1")
-    public String login1(){
-        return "member/login";
+    public String login1(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes redirectAttributes){
+
+        uDto = mSer.login1(userDto.getUserId(), userDto.getUserPw());
+        if(uDto != null){
+            session.setAttribute("uDto", uDto);
+            return "redirect:/";
+        }
+        return "redirect:/";
     }
 }

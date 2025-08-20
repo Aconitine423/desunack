@@ -21,6 +21,6 @@ public class MemberController {
     }
     @PostMapping("/login1")
     public String login1(){
-
+        return "member/login";
     }
 }

@@ -13,5 +13,7 @@ public class MemberService {
     private MemberDao mDao;
 
 
-    public boolean login1()
+    public boolean login1(){
+        return false;
+    }
 }

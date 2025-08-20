@@ -1,4 +1,4 @@
-package com.desunack.security.controller;
+package com.desunack.desunack.controller;
 
 import com.desunack.desunack.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +21,6 @@ public class MemberController {
     }
     @PostMapping("/login1")
     public String login1(){
-
+        return "member/login";
     }
 }

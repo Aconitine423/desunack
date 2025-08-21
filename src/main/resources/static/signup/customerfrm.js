@@ -79,7 +79,7 @@ $selectDomain.on('change', function () {
 
 // 이용약관 스크롤링 해야 약관 동의 체크박스 활성화
 const $termsBox = $('#joinTermsBox');
-const $termsCheckbox = $('#joinTerms');
+const $termsCheckbox = $('#joinTermsCheckBox');
 $termsBox.on('scroll', function () {
     if (this.scrollHeight - this.scrollTop === this.clientHeight) {
         $termsCheckbox.prop('disabled', false);
@@ -88,7 +88,73 @@ $termsBox.on('scroll', function () {
 
 // 회원가입 버튼 클릭시 요소들 유효성 검사
 const $signupForm = $('#signupForm');
+const $messageBox = $('#messageBox');
 $signupForm.on('submit', function (event) {
     event.preventDefault();
+    $messageBox.show().removeClass().addClass('message-box');
 
+    // 약관동의 체크 여부 확인
+if ($termsCheckbox.prop('checked')) {
+    $messageBox.text('이용약관에 동의해주세요.').css('display', 'block');
+    return;
+}
+    // 입력된 이메일 합치기
+    const emailLocal = $('#emailLocal').val();
+const emailDomain = $emailDomain.val();
+let userEmail;
+
+if ($selectDomain.val() === "custom") {
+    const customDomain = $emailDomain.val();
+    if  (customDomain) {
+        userEmail = `${emailLocal}@${customDomain}`;
+    } else {
+        $messageBox.text('직접입력 도메인을 입력해주세요.').css('display', 'block');
+        return;
+    }
+} else {
+    userEmail = `${emailLocal}@${emailDomain}`;
+}
+
+    // 선택된 생일 합치기
+    const birthYear = $year.val();
+const birthMonth = $month.val();
+const birthDay = $day.val();
+const userBirth = `${birthYear}-${birthMonth}-${birthDay}`;
+
+    // 선택된 전화번호 합치기
+    const phone1 = $('#phone1').val();
+    const phone2 = $('#phone2').val();
+    const phone3 = $('#phone3').val();
+    const userPhone = `${phone1}-${phone2}-${phone3}`;
+
+    // 입력된 주소 합치기
+    const address1 = $('#sample3_address').val();
+    const address2 = $('#sample3_extraAddress').val();
+    const userAddress = address1 + address2;
+
+    // 입력된 파라미터 묶음
+    const formData = {
+        userId: $('#userId').val(),
+        userPw: $('#userPassword').val(),
+        userName: $('#userName').val(),
+        userNickname: $('#userNickname').val(),
+        userGender: $('input[name="userGender"]:checked').val(),
+        userBirth: userBirth,
+        userPhone: userPhone,
+        userEmail: userEmail,
+        userPost: $('#sample3_postcode').val(),
+        userAddress: userAddress,
+        userAddressDetail: $('#sample3_detailAddress').val(),
+        userKind: 'C',
+        userStatus: '1',
+        userSignupDate: new Date()
+    };
+
+    console.log('formData', formData);
+
+    // 회원가입 완료 메시지 일정시간
+    $messageBox.text('회원가입이 완료되었습니다.').css('display', 'block').css('color', 'blue');
+    setTimeout(function () {
+        $messageBox.hide();
+    }, 3000);
 })

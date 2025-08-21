@@ -25,7 +25,7 @@
     </div>
     <div class="inputGroup">
         <label for="passwordConfirm">비밀번호확인</label>
-        <input type="password" class="inputForm" id="passwordConfirm" name="passwordConfirm" required placeholder="비밀번호를 입력하세요."><br>
+        <input type="password" class="inputForm" id="passwordConfirm" name="passwordConfirm" required placeholder="비밀번호를 재입력하세요."><br>
         <span id="checkPwError" th:name="errorMsg"></span>
     </div>
     <!--  이름 입력  -->
@@ -45,7 +45,7 @@
     <div class="inputGroup">
         <label>성별 선택</label>
         <div>
-            <div>
+            <div id="userGender">
                 <input type="radio" id="male" name="userGender" value="1">
                 <label for="male">남성</label>
                 <input type="radio" id="female" name="userGender" value="2">
@@ -89,13 +89,13 @@
                    autocomplete="off" required>
         </div>
         <select id="selectDomain" name="selectDomain">
-            <option value="" selected disabled hidden>도메인</option>
+<!--            <option value="" selected disabled hidden>도메인</option>-->
             <option value="gmail.com">gmail.com</option>
             <option value="naver.com">naver.com</option>
             <option value="kakao.com">kakao.com</option>
             <option value="hanmail.net">hanmail.net</option>
             <option value="nate.com">nate.com</option>
-            <option value="custom">직접입력</option>
+            <option value="custom" selected>직접입력</option>
         </select>
     </div>
     <!--  주소 입력  -->
@@ -116,7 +116,7 @@
 <!--  이용약관  -->
     <div class="inputGroup">
         <label>이용약관</label>
-        <div id="joinTermsBox" class="terms-box">
+        <div id="joinTermsBox" class="termsBox">
             <p>제1조 (목적)</p>
             <p>본 약관은 Desunack(이하 “회사”)이 제공하는 모든 서비스(이하 “서비스”)의 이용과 관련하여, 회사와 회원 간의 권리, 의무 및 책임 사항, 기타 필요한 사항을 규정함을 목적으로 합니다.</p>
 
@@ -134,11 +134,11 @@
             <p>제4조 (개인정보보호 의무)</p>
             <p>회사는 관련 법령이 정하는 바에 따라 회원의 개인정보를 보호하기 위해 노력합니다. 개인정보의 보호 및 사용에 대해서는 관련 법령 및 회사의 개인정보처리방침이 적용됩니다.</p>
         </div>
-        <input id="joinTerms" name="joinTerms" type="checkbox" disabled required>
-        <label for="joinTerms">이용약관에 동의합니다.</label>
+        <input id="joinTermsCheckBox" name="joinTerms" type="checkbox" disabled required>
+        <label for="joinTermsCheckBox">이용약관에 동의합니다.</label>
     </div>
-<!--  유효성 검사용 메시지 박스  -->
-    <div id="messageBox" class="messageBox hidden" role="alert"></div>
+<!--  submit 메시지 박스  -->
+    <div id="messageBox" class="messageBox" role="alert"></div>
 
 <!--  가입하기 / 취소  -->
     <div class="signupFormBtn btnGroup">

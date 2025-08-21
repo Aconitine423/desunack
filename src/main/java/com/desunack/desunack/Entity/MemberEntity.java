@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @Builder
 @Accessors(chain = true)
-public class Member {
+public class MemberEntity {
     private int m_uid;
 
     private String m_id;
@@ -32,9 +32,11 @@ public class Member {
     private LocalDate m_recent_date;
 
     public UserDto toDto() {
+
         return UserDto.builder().userUid(this.m_uid).userId(this.m_id).userName(this.m_name).userPw(this.m_pw)
                 .userPhone(this.m_phone).userEmail(this.m_email).userPost(this.m_post).userAddress(this.m_address)
                 .userAddressDetail(this.m_address_detail).userKind(this.m_kind).userStatus(this.m_status)
                 .userSignupDate(this.m_join_date).userRecentDate(this.m_recent_date).build();
     }
+
 }

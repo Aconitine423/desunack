@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @Accessors(chain=true)
-public class Resigned_member {
+public class ResignedMemberEntity {
     private int rm_num;
     private int rm_m_uid;
     private String rm_phone;

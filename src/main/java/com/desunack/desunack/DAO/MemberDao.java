@@ -1,6 +1,6 @@
 package com.desunack.desunack.DAO;
 
-import com.desunack.desunack.Entity.Member;
+import com.desunack.desunack.Entity.MemberEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -10,5 +10,5 @@ public interface MemberDao {
     @Select("select m_pw from member where m_id = #{m_id}")
     String getSecurityPw(String m_id);
 
-    Member getMemberEntity(String userId);
+    MemberEntity getMemberEntity(String userId);
 }

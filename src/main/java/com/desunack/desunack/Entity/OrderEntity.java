@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @Builder
 @Accessors(chain=true)
-public class Goods_order {
+public class OrderEntity {
     private int go_num;
     private int go_m_uid;
     private String go_receiver_name;

@@ -1,5 +1,5 @@
 package com.desunack.desunack.DTO;
-import com.desunack.desunack.Entity.Delivery_list;
+import com.desunack.desunack.Entity.DeliveryAddressEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,8 +20,8 @@ public class DeliveryAddressDto {
     private String da_address_detail;
     private String da_post;
 
-    public Delivery_list toEntity() {
-        return Delivery_list.builder().dl_m_uid(this.da_m_uid).dl_shipping_name(this.da_shipping_name)
+    public DeliveryAddressEntity toEntity() {
+        return DeliveryAddressEntity.builder().dl_m_uid(this.da_m_uid).dl_shipping_name(this.da_shipping_name)
                 .dl_address(this.da_address).dl_address_detail(this.da_address_detail).dl_post(this.da_post).build();
     }
 }

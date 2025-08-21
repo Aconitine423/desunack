@@ -1,6 +1,6 @@
 package com.desunack.desunack.DTO;
 
-import com.desunack.desunack.Entity.Member;
+import com.desunack.desunack.Entity.MemberEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,8 +29,8 @@ public class UserDto {
     private LocalDate userSignupDate;
     private LocalDate userRecentDate;
 
-    public Member toEntity() {
-        return Member.builder().m_uid(this.userUid).m_id(this.userId).m_name(this.userName).m_pw(this.userPw)
+    public MemberEntity toEntity() {
+        return MemberEntity.builder().m_uid(this.userUid).m_id(this.userId).m_name(this.userName).m_pw(this.userPw)
                 .m_email(this.userEmail).m_post(this.userPost).m_phone(this.userPhone).m_address(this.userAddress)
                 .m_address_detail(this.userAddressDetail).m_kind(this.userKind).m_status(this.userStatus)
                 .m_join_date(this.userSignupDate).m_recent_date(this.userRecentDate).build();

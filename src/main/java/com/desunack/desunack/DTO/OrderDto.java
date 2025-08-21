@@ -1,5 +1,5 @@
 package com.desunack.desunack.DTO;
-import com.desunack.desunack.Entity.Goods_order;
+import com.desunack.desunack.Entity.OrderEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,8 +27,8 @@ public class OrderDto {
     private int order_total_cost;
     private char order_status;
 
-    public Goods_order toEntity() {
-        return Goods_order.builder().go_num(this.order_num).go_m_uid(this.order_m_uid)
+    public OrderEntity toEntity() {
+        return OrderEntity.builder().go_num(this.order_num).go_m_uid(this.order_m_uid)
                 .go_receiver_name(this.order_receiver_name)
                 .go_receiver_phone(this.order_receiver_phone)
                 .go_receiver_address(this.order_receiver_address)

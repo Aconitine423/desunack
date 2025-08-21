@@ -1,6 +1,7 @@
 package com.desunack.desunack.DTO;
 
-import com.desunack.desunack.Entity.C_member;
+import com.desunack.desunack.Entity.CustomerEntity;
+import com.desunack.desunack.Entity.MemberEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,17 +15,18 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CustomerDto {
-    private int customerUid;
+public class CustomerDto{
+    private UserDto userDto;
     private String customerNickname;
     private char customerGender;
     private LocalDate customerBDay;
     private int customerPoint;
     private int customerRunningTotal;
 
-    public C_member toEntity(){
-        return C_member.builder().c_m_uid(this.customerUid).c_nickname(customerNickname)
+    public CustomerEntity toEntity(){
+        MemberEntity mem = userDto.toEntity();
+        return CustomerEntity.builder().c_nickname(customerNickname)
                 .c_gender(this.customerGender).c_birth(customerBDay)
-                .c_point(this.customerPoint).c_running_total(this.customerRunningTotal).build();
+                .c_point(this.customerPoint).c_running_total(this.customerRunningTotal).memberEntity(mem).build();
     }
 }

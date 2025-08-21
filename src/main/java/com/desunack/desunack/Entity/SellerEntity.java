@@ -1,6 +1,7 @@
 package com.desunack.desunack.Entity;
 
 import com.desunack.desunack.DTO.SellerDto;
+import com.desunack.desunack.DTO.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,16 +14,17 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @Builder
 @Accessors(chain = true)
-public class S_member {
-    private int s_m_uid;
+public class SellerEntity {
+    private MemberEntity memberEntity;
     private String s_picture;
     private String s_account;
     private String s_bank;
     private String s_delivery;
 
     public SellerDto toDto() {
-        return SellerDto.builder().sellerUid(this.s_m_uid).sellerNumImage(this.s_picture)
+        UserDto uDto = memberEntity.toDto();
+        return SellerDto.builder().sellerNumImage(this.s_picture)
                 .sellerAccount(this.s_account)
-                .sellerBank(this.s_bank).sellerDelivery(this.s_delivery).build();
+                .sellerBank(this.s_bank).sellerDelivery(this.s_delivery).userDto(uDto).build();
     }
 }

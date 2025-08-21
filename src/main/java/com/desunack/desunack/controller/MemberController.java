@@ -19,36 +19,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MemberController {
     @Autowired
     private MemberService mSer;
-    private UserDto uDto;
 
     @GetMapping("/login1")
     public String login(){
         return "member/login";
     }
     @PostMapping("/login1")
-    public String login1(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes redirectAttributes){
-
+    public String login1(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr){
 
         if(mSer.login1(userDto.getUserId(), userDto.getUserPw(), session)){
-            session.setAttribute("uDto", uDto);
             return "redirect:/";
         }
-        return "redirect:/";
-    }
-    @PostMapping("/find-id")
-    public String findId(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr){
-        if(mSer.findId(userDto.getUserName(),userDto.getUserEmail(), rttr)){
-            return "/";
-        }
-        rttr.addFlashAttribute("msg", "일치하는 결과가 없습니다.");
-        return "/";
-    }
+        rttr.addFlashAttribute("msg","로그인에 실패했습니다. 아이디 혹은 비밀번호를 확인해주세요");
 
-    public String findPw(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr){
-        if(mSer.findPw(userDto.getUserId(),userDto.getUserEmail(),rttr)){
-            return "/";
-        }
-        rttr.addFlashAttribute("msg", "일치하는 결과가 없습니다");
-        return "/";
+        return "redirect:/";
     }
 }

@@ -23,10 +23,9 @@ public class CustomerDto{
     private int customerPoint;
     private int customerRunningTotal;
 
-    public CustomerEntity toEntity(){
-        MemberEntity mem = userDto.toEntity();
+    public CustomerEntity toEntity(UserDto uDto){
         return CustomerEntity.builder().c_nickname(customerNickname)
                 .c_gender(this.customerGender).c_birth(customerBDay)
-                .c_point(this.customerPoint).c_running_total(this.customerRunningTotal).memberEntity(mem).build();
+                .c_point(this.customerPoint).c_running_total(this.customerRunningTotal).memberEntity(uDto.toEntity()).build();
     }
 }

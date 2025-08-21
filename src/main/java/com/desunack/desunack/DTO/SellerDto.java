@@ -20,9 +20,8 @@ public class SellerDto {
     private String sellerBank;
     private String sellerDelivery;
 
-    public SellerEntity toEntity() {
-        MemberEntity mem = userDto.toEntity();
+    public SellerEntity toEntity(UserDto uDto) {
         return SellerEntity.builder().s_picture(this.sellerNumImage)
-                .s_account(this.sellerAccount).s_bank(this.sellerBank).s_delivery(this.sellerDelivery).memberEntity(mem).build();
+                .s_account(this.sellerAccount).s_bank(this.sellerBank).s_delivery(this.sellerDelivery).memberEntity(uDto.toEntity()).build();
     }
 }

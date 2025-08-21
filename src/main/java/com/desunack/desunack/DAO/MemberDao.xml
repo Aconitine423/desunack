@@ -8,4 +8,10 @@
     <select id="getMemberEntity" resultType="com.desunack.desunack.Entity.MemberEntity">
         select m_uid, m_name, m_post, m_address, m_address_detail, m_kind from member where m_id = #{m_id}
     </select>
+    <select id="getCustomerEntity" resultType="com.desunack.desunack.Entity.CustomerEntity">
+        select * from c_member where c_m_uid = #{m_id}
+    </select>
+    <select id="getSellerEntity" resultType="com.desunack.desunack.Entity.SellerEntity">
+        select * from s_member where s_m_uid = #{m_id}
+    </select>
 </mapper>

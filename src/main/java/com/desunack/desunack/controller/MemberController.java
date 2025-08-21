@@ -19,20 +19,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MemberController {
     @Autowired
     private MemberService mSer;
-    private UserDto uDto;
 
     @GetMapping("/login1")
     public String login(){
         return "member/login";
     }
     @PostMapping("/login1")
-    public String login1(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes redirectAttributes){
+    public String login1(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr){
 
-        uDto = mSer.login1(userDto.getUserId(), userDto.getUserPw());
-        if(uDto != null){
-            session.setAttribute("uDto", uDto);
+        if(mSer.login1(userDto.getUserId(), userDto.getUserPw(), session)){
             return "redirect:/";
         }
+        rttr.addFlashAttribute("msg","로그인에 실패했습니다. 아이디 혹은 비밀번호를 확인해주세요");
+
         return "redirect:/";
     }
 }

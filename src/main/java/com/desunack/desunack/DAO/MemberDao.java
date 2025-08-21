@@ -12,10 +12,16 @@ public interface MemberDao {
     @Select("select m_pw from member where m_id = #{m_id}")
     String getSecurityPw(String m_id);
 
-    MemberEntity getMemberEntity(String userId);
+    MemberEntity getMemberEntity(String m_id);
 
 
-    CustomerEntity getCustomerEntity(int m_Uid);
+    CustomerEntity getCustomerEntity(int m_uid);
 
-    SellerEntity getSellerEntity(int mUid);
+    SellerEntity getSellerEntity(int m_uid);
+
+    String findId(String m_name, String m_email);
+
+    int findPw(String m_id, String m_email);
+
+    boolean updatePw(String m_id, String ecdpw);
 }

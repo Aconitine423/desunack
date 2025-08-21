@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Service
@@ -49,6 +50,52 @@ public class MemberService {
                 return true;
             }
             return false;
+        }
+        return false;
+    }
+
+    public boolean findId(String m_name, String m_email, RedirectAttributes rttr) {
+        String id = mDao.findId(m_name, m_email);
+        if(id != null){
+            String msg = m_name + "님의 ID는 " + id + "입니다";
+            rttr.addFlashAttribute("msg", msg);
+            return true;
+        }
+        return false;
+    }
+
+
+    public boolean findPw(String m_id, String m_email, RedirectAttributes rttr) {
+        int isExist = mDao.findPw(m_id, m_email);
+        if(isExist != 0){
+            StringBuilder sb = new StringBuilder();
+            int randNum;
+            char randChar;
+            for(int i = 0; i < 12; i++){
+                randNum = (int)(Math.random() * 1000);
+                randNum = randNum % 62;
+                if(randNum > 9 && randNum < 36){
+                    randChar = (char) (randNum + 87);
+                    sb.append(randChar);
+                }else if(randNum > 35){
+                    randChar = (char) (randNum + 28);
+                    sb.append(randChar);
+                }
+                else{
+                    sb.append(randNum);
+                }
+            }
+            BCryptPasswordEncoder ecd = new BCryptPasswordEncoder();
+            String pw = sb.toString();
+            String ecdpw = ecd.encode(pw);
+            if(mDao.updatePw(m_id, ecdpw)){
+                String msg = m_id + "님의 임시 비밀번호는 " + pw + "입니다";
+                rttr.addFlashAttribute("msg", msg);
+            }else{
+                String msg = "서버와의 연결이 원활하지 않습니다.";
+                rttr.addFlashAttribute("msg", msg);
+            }
+            return true;
         }
         return false;
     }

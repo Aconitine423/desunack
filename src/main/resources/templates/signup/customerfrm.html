@@ -6,58 +6,43 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <link rel="stylesheet" href="/common/reset.css">
-    <style>
-        /* 약관내역 */
-        .terms-box {
-            width: 36rem;
-            height: 150px;
-            overflow-y: scroll;
-            border: 1px solid #d1d5db;
-            padding: 1rem;
-            border-radius: 0.375rem;
-            background-color: #fafafa;
-            color: #374151;
-            font-size: 0.875rem;
-            line-height: 1.5;
-        }
-        .terms-box p {
-            margin-bottom: 1rem;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/customerfrm.css">
 </head>
 <body>
-<form th:action="@{/signup/customerJoin}" method="post">
+<form th:action="@{/signup/customerJoin}" id="signupForm" class="signupForm" method="post">
     <!--  아이디 입력  -->
-    <div>
+    <div class="inputGroup">
         <label for="userId">아이디</label>
-        <input type="text" id="userId" name="userId" required placeholder="아이디를 입력하세요" autocomplete="off">
-        <input type="button" id="checkId" class="checkIdBtn" value="중복확인" style="cursor: pointer"><br>
+        <input type="text" class="inputForm" id="userId" name="userId" required placeholder="아이디를 입력하세요" autocomplete="off">
+        <input type="button" id="checkId" class="checkBtn" value="중복확인" style="cursor: pointer"><br>
         <span id="idError" th:name="errorMsg"></span>
     </div>
     <!--  비밀번호 입력  -->
-    <div>
-        <label for="userPw">비밀번호</label>
-        <input type="password" id="userPw" name="userPw" required placeholder="비밀번호를 입력하세요."><br>
+    <div class="inputGroup">
+        <label for="userPassword">비밀번호</label>
+        <input type="password" class="inputForm" id="userPassword" name="userPassword" required placeholder="비밀번호를 입력하세요."><br>
         <span id="pwError" th:name="errorMsg"></span>
-        <label for="checkPw">비밀번호확인</label>
-        <input type="password" id="checkPw" name="checkPw" required placeholder="비밀번호를 입력하세요."><br>
+    </div>
+    <div class="inputGroup">
+        <label for="passwordConfirm">비밀번호확인</label>
+        <input type="password" class="inputForm" id="passwordConfirm" name="passwordConfirm" required placeholder="비밀번호를 입력하세요."><br>
         <span id="checkPwError" th:name="errorMsg"></span>
     </div>
     <!--  이름 입력  -->
-    <div>
+    <div class="inputGroup">
         <label for="userName">이름</label>
-        <input type="text" id="userName" name="userName" required placeholder="이름을 입력하세요." autocomplete="off"><br>
+        <input type="text" class="inputForm" id="userName" name="userName" required placeholder="이름을 입력하세요." autocomplete="off"><br>
         <span id="nameError" th:name="errorMsg"></span>
     </div>
     <!--  닉네임 입력  -->
-    <div>
+    <div class="inputGroup">
         <label for="userNickname">닉네임</label>
-        <input type="text" id="userNickname" name="userNickname" required placeholder="닉네임을 입력하세요." autocomplete="off">
-        <input type="button" id="checkNickname" class="checkNicknameBtn" value="중복확인" style="cursor: pointer"><br>
+        <input type="text" class="inputForm" id="userNickname" name="userNickname" required placeholder="닉네임을 입력하세요." autocomplete="off">
+        <input type="button" id="checkNickname" class="checkBtn" value="중복확인" style="cursor: pointer"><br>
         <span id="nicknameError" th:name="errorMsg"></span>
     </div>
     <!--  성별 선택  -->
-    <div>
+    <div class="inputGroup">
         <label>성별 선택</label>
         <div>
             <div>
@@ -70,7 +55,7 @@
         </div>
     </div>
     <!--  생년월일 입력  -->
-    <div>
+    <div class="inputGroup">
         <label>생년월일</label><br>
         <select id="birthYear" name="birthYear">
             <option value="" selected disabled hidden>출생년도</option>
@@ -87,19 +72,23 @@
         <span id="birthError" th:name="errorMsg"></span>
     </div>
     <!--  휴대전화 입력  -->
-    <div>
+    <div class="inputGroup">
         <label>휴대전화</label><br>
-        <input type="text" id="phone1" name="phone1" value="010" size="1" readonly>
-        <span>- </span><input type="text" id="phone2" name="phone2" size="3" required>
-        <span>- </span><input type="text" id="phone3" name="phone3" size="3" required><br>
+        <input type="text" class="inputForm" id="phone1" name="phone1" value="010" size="1" readonly>
+        <span>- </span><input type="text" class="inputForm" id="phone2" name="phone2" size="3" required>
+        <span>- </span><input type="text" class="inputForm" id="phone3" name="phone3" size="3" required><br>
         <span id="phoneError" th:name="errorMsg"></span>
     </div>
     <!--  이메일 입력  -->
-    <div>
+    <div class="inputGroup">
         <label for="emailLocal">이메일</label><br>
-        <input type="text" id="emailLocal" name="emailLocal" required autocomplete="off">
+        <input type="text" class="inputForm" id="emailLocal" name="emailLocal" required autocomplete="off">
         <span>@ </span>
-        <select id="emailDomain" name="emailDomain">
+        <div id="emailCustomDomainContainer" style="display: inline-flex">
+            <input type="text" class="inputForm" id="emailDomain" name="emailDomain" placeholder="직접입력"
+                   autocomplete="off" required>
+        </div>
+        <select id="selectDomain" name="selectDomain">
             <option value="" selected disabled hidden>도메인</option>
             <option value="gmail.com">gmail.com</option>
             <option value="naver.com">naver.com</option>
@@ -108,20 +97,16 @@
             <option value="nate.com">nate.com</option>
             <option value="custom">직접입력</option>
         </select>
-        <div id="emailCustomDomainContainer" style="display: inline-flex">
-            <input style="display: none" type="text" id="emailCustomDomain" name="emailCustomDomain" placeholder="직접입력"
-                   autocomplete="off">
-        </div>
     </div>
     <!--  주소 입력  -->
     <!--  카카오 우편번호 api 활용  -->
-    <div>
+    <div class="inputGroup">
         <label for="searchPostBtn">주소</label><br>
-        <input type="text" id="sample3_postcode" size="4" name="userPost" placeholder="우편번호">
+        <input type="text" class="inputForm" id="sample3_postcode" size="4" name="userPost" placeholder="우편번호">
         <input type="button" id="searchPostBtn" onclick="sample3_execDaumPostcode()" value="우편번호 찾기"><br>
-        <input type="text" id="sample3_address" size="20" placeholder="주소">
-        <input type="text" id="sample3_extraAddress" size="30" placeholder="참고항목"><br>
-        <input type="text" id="sample3_detailAddress" name="userAddressDetail" placeholder="상세주소" autocomplete="off">
+        <input type="text" class="inputForm" id="sample3_address" size="20" placeholder="주소">
+        <input type="text" class="inputForm" id="sample3_extraAddress" size="30" placeholder="참고항목"><br>
+        <input type="text" class="inputForm" id="sample3_detailAddress" name="userAddressDetail" placeholder="상세주소" autocomplete="off">
         <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
             <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
                  style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()"
@@ -129,7 +114,7 @@
         </div>
     </div>
 <!--  이용약관  -->
-    <div>
+    <div class="inputGroup">
         <label>이용약관</label>
         <div id="joinTermsBox" class="terms-box">
             <p>제1조 (목적)</p>
@@ -152,11 +137,19 @@
         <input id="joinTerms" name="joinTerms" type="checkbox" disabled required>
         <label for="joinTerms">이용약관에 동의합니다.</label>
     </div>
+<!--  유효성 검사용 메시지 박스  -->
+    <div id="messageBox" class="messageBox hidden" role="alert"></div>
+
+<!--  가입하기 / 취소  -->
+    <div class="signupFormBtn btnGroup">
+        <button type="submit" id="submitBtn" class="submitBtn">가입하기</button>
+        <button type="reset" class="resetBtn">취소</button>
+    </div>
 </form>
 </body>
 <script src="/signup/customerfrm.js"></script>
 <script th:inline="javascript">
-    //카카오 우편번호 api
+    // 카카오 우편번호 api
     // 우편번호 찾기 찾기 화면을 넣을 element
     var element_wrap = document.getElementById('wrap');
 

@@ -66,16 +66,14 @@ $month.change(function () {
     }
 });
 
-// 이메일 직접입력 선택시 직접입력창 display 활성화
-const $emailDomainSelect = $("#emailDomain");
-const $emailCustomDomainSelect = $("#emailCustomDomain");
-$emailDomainSelect.on('change', function () {
-    if ($emailDomainSelect.val() === "custom") {
-        $emailCustomDomainSelect.css('display', 'block');
-        $emailCustomDomainSelect.attr('required', 'required');
+// 이메일 도메인 선택시 직접입력창에 value값 입력
+const $emailDomain = $("#emailDomain");
+const $selectDomain = $("#selectDomain");
+$selectDomain.on('change', function () {
+    if ($selectDomain.val() === "custom") {
+        $emailDomain.val("");
     }else {
-        $emailCustomDomainSelect.css('display', 'none');
-        $emailCustomDomainSelect.removeAttr('required', 'required');
+        $emailDomain.val($selectDomain.val());
     }
 });
 
@@ -86,4 +84,11 @@ $termsBox.on('scroll', function () {
     if (this.scrollHeight - this.scrollTop === this.clientHeight) {
         $termsCheckbox.prop('disabled', false);
     }
+})
+
+// 회원가입 버튼 클릭시 요소들 유효성 검사
+const $signupForm = $('#signupForm');
+$signupForm.on('submit', function (event) {
+    event.preventDefault();
+
 })

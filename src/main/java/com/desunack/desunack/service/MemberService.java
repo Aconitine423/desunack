@@ -32,18 +32,18 @@ public class MemberService {
                 memberEntity = mDao.getMemberEntity(id);
                 switch(memberEntity.getM_kind()){
                     case 'A':
-                        session.setAttribute("admin", memberEntity);
+                        session.setAttribute("member", memberEntity);
 
                         break;
                     case 'C':
                         CustomerEntity cEntity = mDao.getCustomerEntity(memberEntity.getM_uid());
                         CustomerDto cDto = cEntity.toDto(memberEntity);
-                        session.setAttribute("customer", cDto);
+                        session.setAttribute("member", cDto);
                         break;
                     case 'S':
                         SellerEntity sEntity = mDao.getSellerEntity(memberEntity.getM_uid());
                         SellerDto sDto = sEntity.toDto(memberEntity);
-                        session.setAttribute("seller", sDto);
+                        session.setAttribute("member", sDto);
                         break;
                 }
                 return true;

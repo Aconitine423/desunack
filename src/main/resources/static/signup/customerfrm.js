@@ -152,7 +152,7 @@ const userBirth = `${birthYear}-${birthMonth}-${birthDay}`;
 
     console.log('formData', formData);
 
-    // 회원가입 완료 메시지 일정시간
+    // 회원가입 완료 메시지 일정시간 표기
     $messageBox.text('회원가입이 완료되었습니다.').css('display', 'block').css('color', 'blue');
     setTimeout(function () {
         $messageBox.hide();

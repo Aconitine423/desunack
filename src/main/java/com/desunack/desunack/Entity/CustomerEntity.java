@@ -24,11 +24,10 @@ public class CustomerEntity {
     private int c_point;
     private int c_running_total;
 
-    public CustomerDto toDto() {
-        UserDto uDto = memberEntity.toDto();
+    public CustomerDto toDto(MemberEntity mem) {
         return CustomerDto.builder().customerNickname(this.c_nickname)
                 .customerGender(this.c_gender).customerBDay(this.c_birth)
-                .customerPoint(this.c_point).customerRunningTotal(this.c_running_total).userDto(uDto).build();
+                .customerPoint(this.c_point).customerRunningTotal(this.c_running_total).userDto(mem.toDto()).build();
     }
 
 

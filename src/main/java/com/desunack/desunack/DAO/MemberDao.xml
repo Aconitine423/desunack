@@ -3,9 +3,6 @@
 
 
 <mapper namespace="com.desunack.desunack.DAO.MemberDao">
-    <update id="updatePw">
-        update member set m_pw = #{ecdpw} where m_id = #{m_id}
-    </update>
 
 
     <select id="getMemberEntity" resultType="com.desunack.desunack.Entity.MemberEntity">
@@ -16,11 +13,5 @@
     </select>
     <select id="getSellerEntity" resultType="com.desunack.desunack.Entity.SellerEntity">
         select * from s_member where s_m_uid = #{m_id}
-    </select>
-    <select id="findId" resultType="java.lang.String">
-        select m_id from member where m_name = #{m_name} and m_email = #{m_email}
-    </select>
-    <select id="findPw" resultType="java.lang.Integer">
-        select count(*) from member where m_id = #{m_id} and m_email = #{m_email}
     </select>
 </mapper>

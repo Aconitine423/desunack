@@ -28,8 +28,8 @@ public class MemberController {
     @PostMapping("/login1")
     public String login1(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes redirectAttributes){
 
-        uDto = mSer.login1(userDto.getUserId(), userDto.getUserPw());
-        if(uDto != null){
+
+        if(mSer.login1(userDto.getUserId(), userDto.getUserPw(), session)){
             session.setAttribute("uDto", uDto);
             return "redirect:/";
         }

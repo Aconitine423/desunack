@@ -41,7 +41,7 @@ public class MemberController {
         return "member/login";
     }
     @PostMapping("/login1")
-    public String login1(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr){
+    public String login1(@RequestParam UserDto userDto, HttpSession session, RedirectAttributes rttr){
 
         if(mSer.login1(userDto.getUserId(), userDto.getUserPw(), session)){
             return "redirect:/";
@@ -59,6 +59,7 @@ public class MemberController {
         return "/";
     }
 
+    @PostMapping("/find-pw")
     public String findPw(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr){
         if(mSer.findPw(userDto.getUserId(),userDto.getUserEmail(),rttr)){
             return "/";

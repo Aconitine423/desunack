@@ -21,9 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberDao mDao;
-    private final UserDto uDto;
-    private final CustomerDto cDto;
-    private final MemberEntity memberEntity;
+    private UserDto uDto;
+    private  CustomerDto cDto;
+    private MemberEntity memberEntity;
 
     @Transactional
     public boolean customerJoin(CustomerDto customerDto) {

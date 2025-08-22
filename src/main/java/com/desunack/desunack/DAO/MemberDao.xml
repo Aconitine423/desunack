@@ -3,6 +3,14 @@
 
 
 <mapper namespace="com.desunack.desunack.DAO.MemberDao">
+    <insert id="memberJoin">
+        insert into member(m_uid, m_id, m_pw, m_name, m_phone, m_email, m_post, m_address, m_address_detail, m_kind, m_status, m_join_date, m_recent_date)
+        values (#{m_uid}, #{m_id}, #{m_pw}, #{m_name}, #{m_phone}, #{m_email}, #{m_post}, #{m_address}, #{m_address_detail}, #{m_kind}, default, default, default)
+    </insert>
+
+    <insert id="customerJoin">
+        insert into c_member values (#{m_uid}, #{c_nickname}, #{c_gender}, #{c_birth}, default, default)
+    </insert>
 
 
     <select id="getMemberEntity" resultType="com.desunack.desunack.Entity.MemberEntity">

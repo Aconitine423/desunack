@@ -9,18 +9,42 @@ import com.desunack.desunack.Entity.CustomerEntity;
 import com.desunack.desunack.Entity.MemberEntity;
 import com.desunack.desunack.Entity.SellerEntity;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class MemberService {
-    @Autowired
-    private MemberDao mDao;
-    private UserDto uDto;
-    private MemberEntity memberEntity;
+    private final MemberDao mDao;
+    private final UserDto uDto;
+    private final CustomerDto cDto;
+    private final MemberEntity memberEntity;
+
+    @Transactional
+    public boolean customerJoin(CustomerDto customerDto) {
+        // DTO -> Entity 변환
+        CustomerEntity customerEntity = customerDto.toEntity(uDto);
+        if (mDao.isUsedId(customerEntity.getMemberEntity().getM_id())){
+            return false;
+        }
+        BCryptPasswordEncoder ecd = new BCryptPasswordEncoder();
+        String ecdPw = ecd.encode(customerEntity.getMemberEntity().getM_pw());
+        memberEntity.setM_pw(ecdPw);
+        customerEntity.setMemberEntity(memberEntity);
+
+        int memberUid = mDao.maxCustomerUid();
+        memberEntity.setM_uid(memberUid);
+        customerEntity.setMemberEntity(memberEntity);
+
+        mDao.memberJoin(customerEntity);
+        mDao.customerJoin(customerEntity);
+        return true;
+    }
 
     public boolean login1(String id, String pw, HttpSession session){
         String ecdpw = mDao.getSecurityPw(id);
@@ -52,4 +76,5 @@ public class MemberService {
         }
         return false;
     }
+
 }

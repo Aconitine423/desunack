@@ -152,9 +152,18 @@ const userBirth = `${birthYear}-${birthMonth}-${birthDay}`;
 
     console.log('formData', formData);
 
-    // 회원가입 완료 메시지 일정시간 표기
-    $messageBox.text('회원가입이 완료되었습니다.').css('display', 'block').css('color', 'blue');
-    setTimeout(function () {
-        $messageBox.hide();
-    }, 3000);
+    // 엑시오스로 데이터 전송
+    axios.post('/signup/customerJoin', formData)
+        .then(function (response) {
+            console.log("회원가입 성공:", response.data);
+            $messageBox.text('회원가입이 완료되었습니다.').css('display', 'block').css('color', 'blue');
+            setTimeout(function() {
+                $messageBox.hide();
+                window.location.href = '/login'; // 로그인 페이지로
+            }, 3000);
+        })
+        .catch(function (error) {
+            console.error("회원가입 실패:", error);
+            $messageBox.text('회원가입에 실패했습니다.').css('display', 'block').css('color', 'red');
+        });
 })

@@ -1,8 +1,11 @@
 package com.desunack.desunack.controller;
 
+import com.desunack.desunack.DTO.CustomerDto;
 import com.desunack.desunack.DTO.UserDto;
 import com.desunack.desunack.service.MemberService;
 import jakarta.servlet.http.HttpSession;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,12 +16,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+@RequiredArgsConstructor
 @Controller
 @Slf4j
 @RequestMapping
 public class MemberController {
-    @Autowired
-    private MemberService mSer;
+    private final MemberService mSer;
+
+    @PostMapping("/signup/customerJoin")
+    public String joinCustomer(@RequestParam CustomerDto customerDto, RedirectAttributes rttr){
+        log.info("======customerDto={}", customerDto);
+        boolean result = mSer.customerJoin(customerDto);
+        if(result){
+            rttr.addFlashAttribute("msg", "회원가입 성공");
+            return "redirect:/";
+        } else {
+            rttr.addFlashAttribute("msg", "회원가입 실패");
+            return "redirect:/signup/customerfrm";
+        }
+    }
 
     @GetMapping("/login1")
     public String login(){

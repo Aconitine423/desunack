@@ -25,4 +25,7 @@ public interface MemberDao {
 
     @Select("select max(m_uid) from member where m_kind = 'C'")
     int maxCustomerUid();
+
+    @Select("select count(*) from member where m_id = #{mId}")
+    boolean isUsedId(String mId);
 }

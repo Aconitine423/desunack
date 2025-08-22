@@ -37,7 +37,7 @@ public class MemberService {
         memberEntity.setM_pw(ecdPw);
         customerEntity.setMemberEntity(memberEntity);
 
-        int memberUid = mDao.maxCustomerUid();
+        int memberUid = mDao.maxCustomerUid() +1;
         memberEntity.setM_uid(memberUid);
         customerEntity.setMemberEntity(memberEntity);
 

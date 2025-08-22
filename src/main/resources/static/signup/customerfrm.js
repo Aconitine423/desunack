@@ -145,7 +145,7 @@ const userBirth = `${birthYear}-${birthMonth}-${birthDay}`;
         userPost: $('#sample3_postcode').val(),
         userAddress: userAddress,
         userAddressDetail: $('#sample3_detailAddress').val(),
-        userKind: 'C',
+        userKind: 'A',
         userStatus: '1',
         userSignupDate: new Date()
     };

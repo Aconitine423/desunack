@@ -20,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MemberService {
     @Autowired
     private MemberDao mDao;
-    private UserDto uDto;
     private MemberEntity memberEntity;
 
     public boolean login1(String id, String pw, HttpSession session){
@@ -97,6 +96,25 @@ public class MemberService {
             }
             return true;
         }
+        return false;
+    }
+
+    public boolean getGoodsSales(String m_age, String m_gender, HttpSession session){
+        //m_age와 m_gender를 통해 상품-판매량 조인해서 검색결과 반환한 후
+        //goodsDto에 저장된 데이터를 String Builder에 저장해서 출력시킬내용 세션에 저장하기
+        //조인해서 검색 결과 반환하는 쿼리문
+        //select * from 상품 join 상품판매
+        // on 상품ID = 상품판매ID and 상품판매성별 = 회원성별 and 상품판매나이 = 회원나이대
+        //order by 상품판매량 desc;
+        return false;
+    }
+
+    public boolean getCompanySales(String m_uid, HttpSession session){
+        //m_uid를 통해 상품판매량 조인해서 검색결과 반환한 후
+        //goodsDto에 저장된 데이터를 String Builder에 저장해서 출력시킬내용 세션에저장하기
+        //쿼리문
+        //select * from 상품 join 상품판매 on 상품ID = 상품판매ID and 상품판매나이 = 전체나이대 and 상품판매성별 = 전체성별
+        //where 판매자ID = m_id order by 상품판매량 desc
         return false;
     }
 }

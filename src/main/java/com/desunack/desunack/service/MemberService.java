@@ -32,16 +32,18 @@ public class MemberService {
         if (mDao.isUsedId(customerEntity.getMemberEntity().getM_id())){
             return false;
         }
+        // 비밀번호 암호화
         BCryptPasswordEncoder ecd = new BCryptPasswordEncoder();
         String ecdPw = ecd.encode(customerEntity.getMemberEntity().getM_pw());
         memberEntity.setM_pw(ecdPw);
         customerEntity.setMemberEntity(memberEntity);
-
+        // 회원고유번호 조회해서 +1
         int memberUid = mDao.maxCustomerUid() +1;
         memberEntity.setM_uid(memberUid);
         customerEntity.setMemberEntity(memberEntity);
-
+        // 공통테이블 먼저 insert
         mDao.memberJoin(customerEntity);
+        // 소비자테이블 insert
         mDao.customerJoin(customerEntity);
         return true;
     }

@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MemberController {
     private final MemberService mSer;
 
+    // 소비자 회원가입
     @PostMapping("/signup/customerJoin")
     public ResponseEntity<String> joinCustomer(@RequestBody CustomerDto customerDto){
         log.info("======customerDto={}", customerDto);
@@ -30,6 +31,22 @@ public class MemberController {
         } else {
             return ResponseEntity.badRequest().body("회원가입 실패");
         }
+    }
+
+    // 회원가입 아이디 중복체크
+    @PostMapping("/signup/checkUserId")
+    public ResponseEntity<Boolean> checkUserId(@RequestBody UserDto userDto){
+        String userId = userDto.getUserId();
+        boolean isUsedId = mSer.isUsedId(userId); // true면 중복
+        return isUsedId ? ResponseEntity.ok(true) : ResponseEntity.badRequest().body(false);
+    }
+
+    // 회원가입 닉네임 중복체크
+    @PostMapping("/signup/checkUserNickname")
+    public ResponseEntity<Boolean> checkUserNickname(@RequestBody CustomerDto customerDto){
+        String userNickname = customerDto.getCustomerNickname();
+        boolean isUsedNickname = mSer.isUsedNickname(userNickname); // true면 중복
+        return isUsedNickname ? ResponseEntity.ok(true) : ResponseEntity.badRequest().body(false);
     }
 
 

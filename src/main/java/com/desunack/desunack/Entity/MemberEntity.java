@@ -17,7 +17,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class MemberEntity {
     private int m_uid;
-
     private String m_id;
     private String m_name;
     private String m_pw;
@@ -38,5 +37,4 @@ public class MemberEntity {
                 .userAddressDetail(this.m_address_detail).userKind(this.m_kind).userStatus(this.m_status)
                 .userSignupDate(this.m_join_date).userRecentDate(this.m_recent_date).build();
     }
-
 }

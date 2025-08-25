@@ -16,10 +16,12 @@ import java.time.LocalDate;
 @Controller
 public class HomeController {
     public MemberService mSer;
+
     @GetMapping("/signup")
     public String signup() {
         return "/signup/signup";
     }
+
     @GetMapping("/signup/customerfrm")
     public String customerJoin() {
         return "/signup/customerfrm";
@@ -27,17 +29,20 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(@RequestParam HttpSession session) {
-        char kind = (char) session.getAttribute("m_kind");
-        char gender = (char) session.getAttribute("m_gender");
-        int age =  (LocalDate.now().getYear() - (int) session.getAttribute("m_birth"))/10 * 10; // << 현재 연도와 태어난 연도의 차를 통해서 계산하기
-        if(kind == 'C'){
-            if(mSer.getGoodsSales(gender, age, session)){
-                return "/index";
-            }
-        }else if(kind == 'S'){
-            int id = (int) session.getAttribute("m_id");
-            if(mSer.getCompanySales(id, session)){
-                return "/index";
+        Object userKind = session.getAttribute("m_kind");
+        if (userKind != null) {
+            char kind = (char) userKind;
+            if (kind == 'C') {
+                char gender = (char) session.getAttribute("m_gender");
+                int age = (LocalDate.now().getYear() - (int) session.getAttribute("m_birth")) / 10 * 10; // << 현재 연도와 태어난 연도의 차를 통해서 계산하기
+                if (mSer.getGoodsSales(gender, age, session)) {
+                    return "/index";
+                }
+            } else if (kind == 'S') {
+                int id = (int) session.getAttribute("m_id");
+                if (mSer.getCompanySales(id, session)) {
+                    return "/index";
+                }
             }
         }
         return "/index";

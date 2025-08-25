@@ -40,10 +40,13 @@ public class MemberController {
     public String login1(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr){
 
         if(mSer.login1(userDto.getUserId(), userDto.getUserPw(), session)){
-            return "redirect:/";
+            log.info("======로그인");
+            return null;
+//            return "redirect:/";
         }
+        log.info("======로그인실패");
         rttr.addFlashAttribute("msg","로그인에 실패했습니다. 아이디 혹은 비밀번호를 확인해주세요");
-
-        return "redirect:/";
+return null;
+//        return "redirect:/";
     }
 }

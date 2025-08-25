@@ -33,7 +33,7 @@ public class MemberController {
     }
 
 
-    @PostMapping("/member/login")
+    @PostMapping("/member/login1")
     public String login1(@RequestParam String id, String pw, Model model, HttpSession session, RedirectAttributes rttr){
 
         if(mSer.login1(id, pw, session)){

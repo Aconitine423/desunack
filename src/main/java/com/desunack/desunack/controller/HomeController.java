@@ -28,7 +28,7 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String home(@RequestParam HttpSession session) {
+    public String home(HttpSession session) {
         Object userKind = session.getAttribute("m_kind");
         if (userKind != null) {
             char kind = (char) userKind;

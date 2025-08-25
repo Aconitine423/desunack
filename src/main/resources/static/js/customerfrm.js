@@ -154,7 +154,7 @@ if ($selectDomain.val() === "custom") {
         userPost: $('#sample3_postcode').val(),
         userAddress: userAddress,
         userAddressDetail: $('#sample3_detailAddress').val(),
-        userKind: 'A',
+        userKind: 'C',
         userStatus: '1',
         userSignupDate: new Date(),
         userRecentDate: new Date()

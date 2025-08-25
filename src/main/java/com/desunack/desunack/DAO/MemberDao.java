@@ -33,9 +33,13 @@ public interface MemberDao {
     @Select("select count(*) from member where m_id = #{mId}")
     boolean isUsedId(String mId);
 
+    @Select("select count(*) from c_member where c_nickname = #{userNickname}")
+    boolean isUsedNickname(String userNickname);
+
     boolean updatePw(String m_id, String ecdpw);
 
     String getGoodsSales(char m_gender, int m_age);
 
     String getCompanySales(int m_uid);
+
 }

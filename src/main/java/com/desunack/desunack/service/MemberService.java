@@ -26,6 +26,7 @@ public class MemberService {
     private  CustomerDto cDto;
     private MemberEntity memberEntity;
 
+    // 소비자 회원가입
     @Transactional
     public boolean customerJoin(CustomerDto customerDto) {
         // DTO -> Entity 변환
@@ -52,6 +53,16 @@ public class MemberService {
         mDao.customerJoin(customerEntity);
 
         return true;
+    }
+
+    // 회원가입 아이디 중복체크
+    public boolean isUsedId(String userId) {
+        return mDao.isUsedId(userId);
+    }
+
+    // 회원가입 닉네임 중복체크
+    public boolean isUsedNickname(String userNickname) {
+        return mDao.isUsedNickname(userNickname);
     }
 
     public boolean login1(String id, String pw, HttpSession session){
@@ -159,4 +170,5 @@ public class MemberService {
         }
         return false;
     }
+
 }

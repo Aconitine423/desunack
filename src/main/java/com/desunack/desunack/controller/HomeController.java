@@ -32,15 +32,15 @@ public class HomeController {
         int age =  (LocalDate.now().getYear() - (int) session.getAttribute("m_birth"))/10 * 10; // << 현재 연도와 태어난 연도의 차를 통해서 계산하기
         if(kind == 'C'){
             if(mSer.getGoodsSales(gender, age, session)){
-                return "/";
+                return "/index";
             }
         }else if(kind == 'S'){
             int id = (int) session.getAttribute("m_id");
             if(mSer.getCompanySales(id, session)){
-                return "/";
+                return "/index";
             }
         }
-        return "index";
+        return "/index";
     }
 
 }

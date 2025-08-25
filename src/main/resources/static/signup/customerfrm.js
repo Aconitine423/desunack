@@ -156,7 +156,7 @@ const userBirth = `${birthYear}-${birthMonth}-${birthDay}`;
     axios.post('/signup/customerJoin', formData)
         .then(function (response) {
             console.log("회원가입 성공:", response.data);
-            $messageBox.text('회원가입이 완료되었습니다.').css('display', 'block').css('color', 'blue');
+            $messageBox.text(response.data).css('display', 'block').css('color', 'blue');
             setTimeout(function() {
                 $messageBox.hide();
                 window.location.href = '/login'; // 로그인 페이지로
@@ -164,6 +164,10 @@ const userBirth = `${birthYear}-${birthMonth}-${birthDay}`;
         })
         .catch(function (error) {
             console.error("회원가입 실패:", error);
-            $messageBox.text('회원가입에 실패했습니다.').css('display', 'block').css('color', 'red');
+            if (error.response && error.response.data) {
+                $messageBox.text(error.response.data).css('display', 'block').css('color', 'red');
+            } else {
+                $messageBox.text('회원가입에 실패했습니다.').css('display', 'block').css('color', 'red');
+            }
         });
 })

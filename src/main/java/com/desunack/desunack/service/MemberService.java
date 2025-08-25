@@ -28,23 +28,28 @@ public class MemberService {
     @Transactional
     public boolean customerJoin(CustomerDto customerDto) {
         // DTO -> Entity 변환
-        CustomerEntity customerEntity = customerDto.toEntity(uDto);
-        if (mDao.isUsedId(customerEntity.getMemberEntity().getM_id())){
+        CustomerEntity customerEntity = customerDto.toEntity();
+
+        // ID 중복체크
+        if (mDao.isUsedId(customerEntity.getM_id())){
             return false;
         }
+
         // 비밀번호 암호화
         BCryptPasswordEncoder ecd = new BCryptPasswordEncoder();
-        String ecdPw = ecd.encode(customerEntity.getMemberEntity().getM_pw());
-        memberEntity.setM_pw(ecdPw);
-        customerEntity.setMemberEntity(memberEntity);
+        String ecdPw = ecd.encode(customerEntity.getM_pw());
+        customerEntity.setM_pw(ecdPw);
+
         // 회원고유번호 조회해서 +1
         int memberUid = mDao.maxCustomerUid() +1;
-        memberEntity.setM_uid(memberUid);
-        customerEntity.setMemberEntity(memberEntity);
+        customerEntity.setM_uid(memberUid);
+
         // 공통테이블 먼저 insert
         mDao.memberJoin(customerEntity);
+
         // 소비자테이블 insert
         mDao.customerJoin(customerEntity);
+
         return true;
     }
 
@@ -63,12 +68,12 @@ public class MemberService {
                         break;
                     case 'C':
                         CustomerEntity cEntity = mDao.getCustomerEntity(memberEntity.getM_uid());
-                        CustomerDto cDto = cEntity.toDto(memberEntity);
+                        CustomerDto cDto = cEntity.toDto();
                         session.setAttribute("member", cDto);
                         break;
                     case 'S':
                         SellerEntity sEntity = mDao.getSellerEntity(memberEntity.getM_uid());
-                        SellerDto sDto = sEntity.toDto(memberEntity);
+                        SellerDto sDto = sEntity.toDto();
                         session.setAttribute("member", sDto);
                         break;
                 }

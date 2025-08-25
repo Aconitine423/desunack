@@ -8,12 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequiredArgsConstructor
@@ -24,15 +22,13 @@ public class MemberController {
     private final MemberService mSer;
 
     @PostMapping("/signup/customerJoin")
-    public String joinCustomer(@RequestParam CustomerDto customerDto, RedirectAttributes rttr){
+    public ResponseEntity<String> joinCustomer(@RequestBody CustomerDto customerDto){
         log.info("======customerDto={}", customerDto);
         boolean result = mSer.customerJoin(customerDto);
         if(result){
-            rttr.addFlashAttribute("msg", "회원가입 성공");
-            return "redirect:/";
+            return ResponseEntity.ok("회원가입 성공");
         } else {
-            rttr.addFlashAttribute("msg", "회원가입 실패");
-            return "redirect:/signup/customerfrm";
+            return ResponseEntity.badRequest().body("회원가입 실패");
         }
     }
 

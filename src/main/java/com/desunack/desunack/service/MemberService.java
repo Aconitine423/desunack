@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
@@ -131,22 +130,32 @@ public class MemberService {
         return false;
     }
 
-    public boolean getGoodsSales(String m_age, String m_gender, HttpSession session){
-        //m_age와 m_gender를 통해 상품-판매량 조인해서 검색결과 반환한 후
-        //goodsDto에 저장된 데이터를 String Builder에 저장해서 출력시킬내용 세션에 저장하기
+    public boolean getGoodsSales(char m_gender, int m_age, HttpSession session){
+        //m_age와 m_gender를 통해 상품-판매량 조인해서 검색결과 반환(JSON)한 후
+        //JSON을 분해해 나온 goodsDto에 저장된 데이터를 String Builder에 저장해서 출력시킬내용 세션에 저장하기
         //조인해서 검색 결과 반환하는 쿼리문
         //select * from 상품 join 상품판매
         // on 상품ID = 상품판매ID and 상품판매성별 = 회원성별 and 상품판매나이 = 회원나이대
         //order by 상품판매량 desc;
+        String Json = mDao.getGoodsSales(m_gender, m_age);
+        if(Json != null){
+            session.setAttribute("Json", Json);
+            return true;
+        }
         return false;
     }
 
-    public boolean getCompanySales(String m_uid, HttpSession session){
+    public boolean getCompanySales(int m_uid, HttpSession session){
         //m_uid를 통해 상품판매량 조인해서 검색결과 반환한 후
         //goodsDto에 저장된 데이터를 String Builder에 저장해서 출력시킬내용 세션에저장하기
         //쿼리문
-        //select * from 상품 join 상품판매 on 상품ID = 상품판매ID and 상품판매나이 = 전체나이대 and 상품판매성별 = 전체성별
+        //select * from 상품 join 전체판매 on 상품ID = 상품판매ID
         //where 판매자ID = m_id order by 상품판매량 desc
+        String Json = mDao.getCompanySales(m_uid);
+        if(Json != null){
+            session.setAttribute("Json", Json);
+            return true;
+        }
         return false;
     }
 }

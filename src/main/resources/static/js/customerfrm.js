@@ -94,7 +94,7 @@ $signupForm.on('submit', function (event) {
     $messageBox.show().removeClass().addClass('message-box');
 
     // 약관동의 체크 여부 확인
-if ($termsCheckbox.prop('checked')) {
+if (!($termsCheckbox.prop('checked'))) {
     $messageBox.text('이용약관에 동의해주세요.').css('display', 'block');
     return;
 }
@@ -117,9 +117,18 @@ if ($selectDomain.val() === "custom") {
 
     // 선택된 생일 합치기
     const birthYear = $year.val();
-const birthMonth = $month.val();
-const birthDay = $day.val();
-const userBirth = `${birthYear}-${birthMonth}-${birthDay}`;
+    const birthMonth = $month.val();
+    const birthDay = $day.val();
+
+    // 날짜를 두 자리로 포맷하는 함수
+    function formatNumber(num) {
+        return num.toString().padStart(2, '0');
+    }
+
+    // 날짜 포맷팅
+    const formattedMonth = formatNumber(birthMonth);
+    const formattedDay = formatNumber(birthDay);
+    const userBirth = `${birthYear}-${formattedMonth}-${formattedDay}`;
 
     // 선택된 전화번호 합치기
     const phone1 = $('#phone1').val();
@@ -137,9 +146,9 @@ const userBirth = `${birthYear}-${birthMonth}-${birthDay}`;
         userId: $('#userId').val(),
         userPw: $('#userPassword').val(),
         userName: $('#userName').val(),
-        userNickname: $('#userNickname').val(),
-        userGender: $('input[name="userGender"]:checked').val(),
-        userBirth: userBirth,
+        customerNickname: $('#userNickname').val(),
+        customerGender: $('input[name="userGender"]:checked').val(),
+        customerBDay: userBirth,
         userPhone: userPhone,
         userEmail: userEmail,
         userPost: $('#sample3_postcode').val(),
@@ -147,7 +156,8 @@ const userBirth = `${birthYear}-${birthMonth}-${birthDay}`;
         userAddressDetail: $('#sample3_detailAddress').val(),
         userKind: 'A',
         userStatus: '1',
-        userSignupDate: new Date()
+        userSignupDate: new Date(),
+        userRecentDate: new Date()
     };
 
     console.log('formData', formData);
@@ -163,7 +173,7 @@ const userBirth = `${birthYear}-${birthMonth}-${birthDay}`;
             }, 3000);
         })
         .catch(function (error) {
-            console.error("회원가입 실패:", error);
+            console.log("회원가입 실패:", error);
             if (error.response && error.response.data) {
                 $messageBox.text(error.response.data).css('display', 'block').css('color', 'red');
             } else {

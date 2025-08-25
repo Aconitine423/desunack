@@ -38,7 +38,7 @@ public class MemberController {
 
         if(mSer.login1(id, pw, session)){
            log.info("======login success={}", id);
-            return null;
+            return "/index";
         }
         log.info("======login fail={}", id);
         rttr.addFlashAttribute("msg","로그인에 실패했습니다. 아이디 혹은 비밀번호를 확인해주세요");

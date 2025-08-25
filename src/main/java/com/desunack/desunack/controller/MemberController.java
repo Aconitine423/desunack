@@ -32,21 +32,17 @@ public class MemberController {
         }
     }
 
-    @GetMapping("/member/login")
-    public String login(){
-        return "/member/login";
-    }
-    @PostMapping("/member/login")
-    public String login1(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr){
 
-        if(mSer.login1(userDto.getUserId(), userDto.getUserPw(), session)){
-            log.info("======로그인");
+    @PostMapping("/member/login")
+    public String login1(@RequestParam String id, String pw, Model model, HttpSession session, RedirectAttributes rttr){
+
+        if(mSer.login1(id, pw, session)){
+           log.info("======login success={}", id);
             return null;
-//            return "redirect:/";
         }
-        log.info("======로그인실패");
+        log.info("======login fail={}", id);
         rttr.addFlashAttribute("msg","로그인에 실패했습니다. 아이디 혹은 비밀번호를 확인해주세요");
-return null;
-//        return "redirect:/";
+
+        return null;
     }
 }

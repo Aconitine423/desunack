@@ -23,4 +23,20 @@
     <select id="findPw" resultType="java.lang.Integer">
         select count(*) from member where m_id = #{m_id} and m_email = #{m_email}
     </select>
+    <select id="getGoodsSales" resultType="java.lang.String">
+        select json_arrayagg(json_object('g_id',g_id,'g_m_uid',g_m_uid,'brand_name',brand_name,'g_name',g_name,'company_name',company_name,
+                                         'g_value',g_value, 'g_qty',g_qty,'g_startday',g_startday,'g_endday',g_endday,'g_cat_key',g_cat_key,
+                                         'g_image',g_image,'g_detail',g_detail,'g_delivery_kind',g_delivery_kind,'g_status',g_status,
+                                         'g_toal_rating',g_total_rating,'g_review_count',g_review_count,'gsa_sales',gsa_sales))
+        from goods join goods_sales on goods.g_id = goods_sales.gsa_g_id
+        where gsa_gender = #{m_gender} and gsa_age_range = #{m_age}
+    </select>
+    <select id="getCompanySales" resultType="java.lang.String">
+        select json_arrayagg(json_object('g_id',g_id,'g_m_uid',g_m_uid,'brand_name',brand_name,'g_name',g_name,'company_name',company_name,
+                                         'g_value',g_value, 'g_qty',g_qty,'g_startday',g_startday,'g_endday',g_endday,'g_cat_key',g_cat_key,
+                                         'g_image',g_image,'g_detail',g_detail,'g_delivery_kind',g_delivery_kind,'g_status',g_status,
+                                         'g_toal_rating',g_total_rating,'g_review_count',g_review_count,'gts_sales',gts_sales))
+        from goods join goods_total_sales on goods.g_id = goods_total_sales.gts_g_id
+        where g_m_uid = #{m_uid}
+    </select>
 </mapper>

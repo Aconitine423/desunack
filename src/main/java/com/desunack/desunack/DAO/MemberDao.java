@@ -24,4 +24,8 @@ public interface MemberDao {
     int findPw(String m_id, String m_email);
 
     boolean updatePw(String m_id, String ecdpw);
+
+    String getGoodsSales(char m_gender, int m_age);
+
+    String getCompanySales(int m_uid);
 }

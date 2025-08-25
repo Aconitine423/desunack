@@ -169,7 +169,7 @@ if ($selectDomain.val() === "custom") {
             $messageBox.text(response.data).css('display', 'block').css('color', 'blue');
             setTimeout(function() {
                 $messageBox.hide();
-                window.location.href = '/login'; // 로그인 페이지로
+                window.location.href = '/member/login'; // 로그인 페이지로
             }, 3000);
         })
         .catch(function (error) {

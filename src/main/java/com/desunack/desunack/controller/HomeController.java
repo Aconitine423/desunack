@@ -10,15 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
+
 @Slf4j
 @Controller
 public class HomeController {
     public MemberService mSer;
 
-    @GetMapping("/")
-    public String home() {
-        return "index";
-    }
     @GetMapping("/signup")
     public String signup() {
         return "/signup/signup";
@@ -29,22 +27,30 @@ public class HomeController {
         return "/signup/customerfrm";
     }
 
+    @GetMapping("/member/login")
+    public String login1(){
+        log.info("=======login1이동");
+        return "/member/login";
+    }
     @GetMapping("/")
-    public String home(@RequestParam HttpSession session) {
-        kind = session.getAttribute("m_kind");
-        gender = session.getAttribute("m_gender");
-        age = session.getAttribute("m_age") - '현재연도'; // << 현재 연도와 태어난 연도의 차를 통해서 계산하기
-        if(kind == 'C'){
-            if(mSer.getGoodsSales(gender, age, session)){
-                return "/";
-            }
-        }else if(kind == 'S'){
-            id = session.getAttribute("m_id");
-            if(mSer.getCompanySales(id, session)){
-                return "/";
+    public String home(HttpSession session) {
+        Object userKind = session.getAttribute("m_kind");
+        if (userKind != null) {
+            char kind = (char) userKind;
+            if (kind == 'C') {
+                char gender = (char) session.getAttribute("m_gender");
+                int age = (LocalDate.now().getYear() - (int) session.getAttribute("m_birth")) / 10 * 10; // << 현재 연도와 태어난 연도의 차를 통해서 계산하기
+                if (mSer.getGoodsSales(gender, age, session)) {
+                    return "/index";
+                }
+            } else if (kind == 'S') {
+                int id = (int) session.getAttribute("m_id");
+                if (mSer.getCompanySales(id, session)) {
+                    return "/index";
+                }
             }
         }
-        return "index";
+        return "/index";
     }
 
 }

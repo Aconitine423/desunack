@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<!-- DOCTYPE 선언: 문서 유형을 HTML5로 지정 (문서 상단에 반드시 위치해야 함) -->
+
+<html lang="ko">
+<!-- <html> 요소: 문서의 최상위 루트 요소(root element)
+lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어) -->
+
+<head>
+     <!-- <head> 요소: 메타데이터(metadata)를 포함, 실제 콘텐츠(content)가 아닌 설정 정보 -->
+          
+          <!-- 문서 인코딩 설정 -->
+          <meta charset="UTF-8">
+          <!-- <meta> 요소: 문서 메타데이터 설정
+          charset 속성: 문자 인코딩(character encoding)을 UTF-8로 지정 -->
+          
+          <!-- 뷰포트 설정 -->
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <!-- name 속성: 메타정보의 이름(viewport)
+          content 속성: 설정 값 (width=device-width → 화면 너비에 맞춤,
+          initial-scale=1.0 → 초기 확대 비율 1.0) -->
+          
+          <!-- 문서 제목(title) -->
+          <title>대체당</title>
+          <!-- <title> 요소: 브라우저 탭(tab)에 표시될 제목(title)을 지정 -->
+               
+               <!-- 기본 스타일시트 연결 -->
+               <link rel="stylesheet" href="main.css">
+               <!-- <link rel="stylesheet" href="../프로젝트/common/reset.css"> -->
+               <!-- <link> 요소: 외부 리소스 연결
+               rel 속성: 스타일시트(stylesheet)임을 지정
+               href 속성: 연결할 CSS 파일 경로 -->
+               
+               <!-- Font Awesome 아이콘 라이브러리 연결 -->
+               <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+               <!-- href: CDN(Content Delivery Network) 경로
+               Font Awesome: 웹 아이콘(icon) 폰트 라이브러리 -->
+          </head>
+          <body>
+               <!-- <body> 요소: 화면에 실제 표시되는 콘텐츠(container)를 포함 -->
+                    
+                    <!-- ================================================================= -->
+                    <!-- 헤더(Header): 사이트 로고 및 인증 버튼 (로그인 / 회원가입) -->
+                    <!-- ================================================================= -->
+                    <header>
+                         <nav class="navbar">
+                              <ul class="nav-menu">
+                                   <li class="mega-dropdown">
+                                        <a href="#" class="mega-toggle"><i class="fa fa-bars"></i></a>
+                                        <div class="mega-menu">
+                                             <div class="mega-column">
+                                                  <h4 class="active" data-main="headerDrink">음료</h4>
+                                                  <a href="#" data-main="headerDrink" data-sub="headerSoda">탄산</a>
+                                                  <a href="#" data-main="headerDrink" data-sub="headerNonSoda">비탄산</a>
+                                                  <a href="#" data-main="headerDrink" data-sub="headerPowder">분말</a>
+                                             </div>
+                                             <div class="mega-column">
+                                                  <h4 class="active" data-main="headerSnack">스낵</h4>
+                                                  <a href="#" data-main="headerSnack" data-sub="headerCookie">과자</a>
+                                                  <a href="#" data-main="headerSnack" data-sub="headerCandy">사탕류</a>
+                                                  <a href="#" data-main="headerSnack" data-sub="headerChocolate">초콜릿</a>
+                                                  <a href="#" data-main="headerSnack" data-sub="headerIcecream">아이스크림</a>
+                                                  <a href="#" data-main="headerSnack" data-sub="headerBread">빵</a>
+                                             </div>
+                                        </div>
+                                   </li>
+                                   <li><a href="brand.html">브랜드</a></li>
+                                   <li class="has-dropdown">
+                                        <a href="#" class="dropdown-toggle" data-main="headerDrink">음료</a>
+                                        <ul class="dropdown-menu">
+                                             <li><a href="#" data-main="headerDrink" data-sub="headerSoda">탄산</a></li>
+                                             <li><a href="#" data-main="headerDrink" data-sub="headerNonSoda">비탄산</a></li>
+                                             <li><a href="#" data-main="headerDrink" data-sub="headerPowder">분말</a></li>
+                                        </ul>
+                                   </li>
+                                   <li class="has-dropdown">
+                                        <a href="#" class="dropdown-toggle" data-main="headerSnack">스낵</a>
+                                        <ul class="dropdown-menu">
+                                             <li><a href="#" data-main="headerSnack" data-sub="headerCookie">과자</a></li>
+                                             <li><a href="#" data-main="headerSnack" data-sub="headerCandy">사탕류</a></li>
+                                             <li><a href="#" data-main="headerSnack" data-sub="headerChocolate">초콜릿</a></li>
+                                             <li><a href="#" data-main="headerSnack" data-sub="headerIcecream">아이스크림</a></li>
+                                             <li><a href="#" data-main="headerSnack" data-sub="headerBread">빵</a></li>
+                                        </ul>
+                                   </li>
+                              </ul>
+                              <div class="auth-buttons">
+                                   <!-- 검색 버튼 -->
+                                   <div class="search-container">
+                                        <button id="search-btn" class="search-btn">
+                                             <i class="fa fa-search"></i>
+                                             <!-- <span>검색</span> -->
+                                        </button>
+                                        <!-- 팝업 -->
+                                        <div id="search-popup" class="search-popup">
+                                             <div id="popup-content" class="popup-content">
+                                                  <div class="popup-header">
+                                                       <h3>검색 옵션</h3>
+                                                       <button class="close-btn" id="close-popup">&times;</button>
+                                                  </div>
+                                                  <!-- 체크박스 그룹 전체 래퍼 -->
+                                                  <div class="checkbox-group">
+                                                       
+                                                       <!-- 1)대체당 카테고리  -->
+                                                       <fieldset class="filter-category">
+                                                            <legend>대체당</legend>
+                                                            <!-- 각 레벨에 display:inline-block/grid로 배치됩니다-->
+                                                            <label><input type="checkbox" name="sweetener" value="sucralose">수크랄로스</label>
+                                                            <label><input type="checkbox" name="sweetener" value="stevia">스테비아</label>
+                                                            <label><input type="checkbox" name="sweetener" value="allulose">알룰로스</label>
+                                                            <label><input type="checkbox" name="sweetener" value="maltitol">말티톨</label>
+                                                            <label><input type="checkbox" name="sweetener" value="sorbitol">소르비톨</label>
+                                                            <label><input type="checkbox" name="sweetener" value="srythritol">에리스리톨</label>
+                                                            <label><input type="checkbox" name="sweetener" value="xylitol">자일리톨</label>
+                                                            <label><input type="checkbox" name="sweetener" value="saccharin">사카린</label>
+                                                            <label><input type="checkbox" name="sweetener" value="aspartame">아스파탐</label>
+                                                            <label><input type="checkbox" name="sweetener" value="acesulfame-potassium">아세설팜칼륨</label>
+                                                       </fieldset>
+                                                       
+                                                       <!-- 2) 알러지 카테고리 -->
+                                                       <fieldset class="filter-category">
+                                                            <legend>알러지</legend>
+                                                            <label><input type="checkbox" name="allergy" value="peanut">땅콩</label>
+                                                            <label><input type="checkbox" name="allergy" value="nuts">견과류</label>
+                                                            <label><input type="checkbox" name="allergy" value="soybean">대두</label>
+                                                            <label><input type="checkbox" name="allergy" value="wheat">밀</label>
+                                                            <label><input type="checkbox" name="allergy" value="egg">달걀</label>
+                                                            <label><input type="checkbox" name="allergy" value="milk">우유</label>
+                                                            <label><input type="checkbox" name="allergy" value="fish">생선</label>
+                                                            <label><input type="checkbox" name="allergy" value="shellfish">패류</label>
+                                                       </fieldset>
+                                                  </div>
+                                                  <button class="search-submit-btn">검색</button>
+                                             </div>
+                                        </div>
+                                   </div>
+                                   <!-- 로그인/회원가입 -->
+                                   <a href="login.html" class="login-btn"><i class="fa-regular fa-user"></i><span>로그인</span></a>
+                                   <a href="signup.html" class="signup-btn"><i class="fa-solid fa-user-plus"></i><span>회원가입</span></a>
+                              </div>
+                         </nav>
+                         </header>
+                    
+                    <!-- ================================================================= -->
+                    <!-- 홍보 이미지 슬라이더(Promo Slider): 3개의 배경색 슬라이드를 순환 표시 -->
+                    <!-- ================================================================= -->
+                    <section class="promo-slider">
+                         <!-- <section> 요소: 문서의 구획(section) 정의
+                              class="promo-slider": 홍보 슬라이더 스타일링용 -->
+                              <div class="slider-container">
+                                   <!-- class="slider-container": 슬라이드(wrapper) 컨테이너(container) 레이아웃 -->
+                                   
+                                   <!-- 첫 번째 슬라이드 (활성 상태 적용) -->
+                                   <div class="slide active" style="background-color: #ff6b9d;"></div>
+                                   <!-- class="slide": 각 슬라이드(item) 요소
+                                   class="active": 현재(active) 슬라이드 강조용
+                                   style 속성: 인라인(inline) 스타일 → 배경색(background-color) 지정 -->
+                                   
+                                   <!-- 두 번째 슬라이드 -->
+                                   <div class="slide" style="background-color: #4ecdc4;"></div>
+                                   
+                                   <!-- 세 번째 슬라이드 -->
+                                   <div class="slide" style="background-color: #45b7d1;"></div>
+                              </div>
+                              
+                              <!-- 슬라이더 하단 도트(Pagination Dots) -->
+                              <div class="slider-dots">
+                                   <!-- class="slider-dots": 도트(dot) 그룹(group) 레이아웃 -->
+                                   <span class="dot active"></span>
+                                   <!-- <span> 요소: 인라인(inline) 컨테이너
+                                        class="dot": 페이지네이션(dot) 표시용
+                                        class="active": 현재 페이지 표시 -->
+                                        <span class="dot"></span>
+                                        <span class="dot"></span>
+                                   </div>
+                              </section>
+                              
+                              <!-- ================================================================= -->
+                              <!-- 회원정보 기반 결과 섹션(Member Results): 그리드 형태로 8개 아이템 표시  -->
+                              <!-- ================================================================= -->
+                              <section class="member-results">
+                                   <!-- class="member-results": 회원결과 섹션 스타일링용 -->
+                                   
+                                   <!-- 섹션 제목 -->
+                                   <h2 class="section-title">회원 정보 기반 결과</h2>
+                                   <!-- <h2> 요소: 제목(header) 레벨 2
+                                        class="section-title": 섹션 제목 디자인용 -->
+                                        
+                                        <!-- 4열 그리드 컨테이너 -->
+                                        <div class="grid-container">
+                                             <!-- class="grid-container": CSS Grid 레이아웃 사용, 4열(column) 구성 -->
+                                             
+                                             <!-- 각 그리드 아이템: 배경색으로 구분 -->
+                                             <div class="grid-item" style="background-color: #ff6d9d;"></div>
+                                             <div class="grid-item" style="background-color: #4ecdc4;"></div>
+                                             <div class="grid-item" style="background-color: #45b7d1;"></div>
+                                             <div class="grid-item" style="background-color: #96ceb4;"></div>
+                                             <div class="grid-item" style="background-color: #feca57;"></div>
+                                             <div class="grid-item" style="background-color: #ff9ff3;"></div>
+                                             <div class="grid-item" style="background-color: #54a0ff;"></div>
+                                             <div class="grid-item" style="background-color: #5f27cd;"></div>
+                                        </div>
+                                   </section>
+                                   
+                                   <!-- ================================================================= -->
+                                   <!-- 메뉴 목록 섹션(Menu List): 품절 뱃지 표시 예시 포함 -->
+                                   <!-- ================================================================= -->
+                                   <section class="menu-list">
+                                        <!-- class="menu-list": 메뉴 목록 섹션 스타일링용 -->
+                                        <h2 class="section-title">메뉴 목록</h2>
+                                        
+                                        <div class="grid-container">
+                                             <!-- 그리드 레이아웃 재사용 -->
+                                             
+                                             <!-- 품절 처리된 아이템 예시 -->
+                                             <div class="grid-item">
+                                                  <div class="img-container" style="background: #ff6d9d;">
+                                                       <!-- class="img-container": 이미지 래퍼(wrapper) 스타일링용
+                                                       style="background": 배경색 지정 -->
+                                                       
+                                                       <!-- 반투명 오버레이 배경 (soldout-bg) -->
+                                                       <div class="soldout-bg"></div>
+                                                       <!-- class="soldout-bg": Sold Out 배경(overlay) 스타일 -->
+                                                       
+                                                       <!-- sold out 뱃지 텍스트 -->
+                                                       <div class="soldout-badge"><span>sold<br>out</span></div>
+                                                       <!-- class="soldout-badge": Sold Out 배지(badge) 스타일
+                                                       <span>: 줄바꿈(<br>) 포함 텍스트 표시용 -->
+                                                       </div>
+                                                  </div>
+                                                  
+                                                  <!-- 나머지 정상 상품 아이템 -->
+                                                  <div class="grid-item" style="background-color: #ff6d9d;"></div>
+                                                  <div class="grid-item" style="background-color: #4ecdc4;"></div>
+                                                  <div class="grid-item" style="background-color: #45b7d1;"></div>
+                                                  <div class="grid-item" style="background-color: #96ceb4;"></div>
+                                                  <div class="grid-item" style="background-color: #feca57;"></div>
+                                                  <div class="grid-item" style="background-color: #ff9ff3;"></div>
+                                                  <div class="grid-item" style="background-color: #54a0ff;"></div>
+                                                  <div class="grid-item" style="background-color: #5f27cd;"></div>
+                                             </div>
+                                        </section>
+                                        
+                                        <footer>
+                                        
+                                             </div>
+                                             <table class="footer-menu" border="0" cellpadding="4" cellspacing="0">
+                                                  <!-- 1행: 메뉴 링크를 각각의 셀에 넣으면, 자동으로 각 열 위치가 맞춰집니다 -->
+                                                  <tr>
+                                                       <td rowspan="2">
+                                                        <img src="./img/232333.png" alt="대체당" style="width:150px; vertical-align:middle;">
+                                                       </td>
+                                                       <td><a href="company.html">회사 소개</a></td>
+                                                       <td><a href="terms.html">이용약관</a></td>
+                                                       <td><a href="privacy.html">개인정보처리방침</a></td>
+                                                       <td><a href="notice.html">공지사항</a></td>
+                                                       <td><a href="contact.html">1:1 문의</a></td>
+                                                       <td><a href="faq.html">자주 묻는 질문</a></td>
+                                                  </tr>
+                                                  
+                                                  <!-- 2행: 각 링크 아래에 들어갈 상세 정보 -->
+                                                  
+                                                  <tr>
+                                                       <td>
+                                                            회사정보<br>
+                                                            사업자등록번호
+                                                       </td>
+                                                       <td></td>
+                                                       <td>
+                                                            메일<br>
+                                                            전화번호<br>
+                                                            주소
+                                                       </td>
+                                                       <td></td>
+                                                       <td></td>
+                                                       <td></td>
+                                                  </tr>
+                                                  
+                                                  <!--  3행: 칸을 합쳐서 저작권 표시-->
+                                                  <tr>
+                                                       <td colspan="7" class="footer-copy">
+                                                            © 2025 대체당. All rights reserved.
+                                                       </td>
+                                                  </tr>
+                                             </table>
+                                        </footer>
+                                        
+                                   <!-- ================================================================= -->
+                                   <!-- 외부 JavaScript 파일 로드: 슬라이더 동작 및 팝업 위치 제어 -->
+                                   <!-- ================================================================= -->
+                                   <script src="script-copy.js"></script>
+                                   <!-- <script> 요소: 외부 JavaScript 파일 연결
+                                        src 속성: script.js 경로 지정 -->
+                                   </body>
+                                   </html>
+                                   

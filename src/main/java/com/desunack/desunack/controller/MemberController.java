@@ -8,12 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequiredArgsConstructor
@@ -24,31 +22,28 @@ public class MemberController {
     private final MemberService mSer;
 
     @PostMapping("/signup/customerJoin")
-    public String joinCustomer(@RequestParam CustomerDto customerDto, RedirectAttributes rttr){
+    public ResponseEntity<String> joinCustomer(@RequestBody CustomerDto customerDto){
         log.info("======customerDto={}", customerDto);
         boolean result = mSer.customerJoin(customerDto);
         if(result){
-            rttr.addFlashAttribute("msg", "회원가입 성공");
-            return "redirect:/";
+            return ResponseEntity.ok("회원가입 성공");
         } else {
-            rttr.addFlashAttribute("msg", "회원가입 실패");
-            return "redirect:/signup/customerfrm";
+            return ResponseEntity.badRequest().body("회원가입 실패");
         }
     }
 
-    @GetMapping("/login1")
-    public String login(){
-        return "member/login";
-    }
-    @PostMapping("/login1")
-    public String login1(@RequestParam UserDto userDto, HttpSession session, RedirectAttributes rttr){
 
-        if(mSer.login1(userDto.getUserId(), userDto.getUserPw(), session)){
-            return "redirect:/";
+    @PostMapping("/member/login1")
+    public String login1(@RequestParam String id, String pw, Model model, HttpSession session, RedirectAttributes rttr){
+
+        if(mSer.login1(id, pw, session)){
+           log.info("======login success={}", id);
+            return "/index";
         }
+        log.info("======login fail={}", id);
         rttr.addFlashAttribute("msg","로그인에 실패했습니다. 아이디 혹은 비밀번호를 확인해주세요");
 
-        return "redirect:/";
+        return null;
     }
     @PostMapping("/find-id")
     public String findId(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr){

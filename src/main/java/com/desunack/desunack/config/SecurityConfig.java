@@ -28,13 +28,23 @@ public class SecurityConfig {
                         .loginProcessingUrl("/member/login") // 로그인 진행 url, 컨트롤러 정의 불필요
                         .defaultSuccessUrl("/") // 로그인 성공시 이동할 url
                         // 실패시 기본값(로그인 페이지 열기 url)
-                        .failureUrl("/member/login/error") // 선택사항
+//                        .failureUrl("/member/login/error") // 선택사항
 //                        .failureHandler(authenticationFailureHandler)
 //                        .usernameParameter("username") // 기본값, 파라미터 받을 지칭을 바꿈 (ex. id)
 //                        .passwordParameter("password") // 기본값, 파라미터 받을 지칭을 바꿈 (ex. pw)
-//                        .permitAll() // 권한 상관없이 모든 사용자들에게 접근을 허용함 (비권장)
+                        .permitAll() // 권한 상관없이 모든 사용자들에게 접근을 허용함 (비권장)
                 // permitAll() 해서 authorizeHttpRequests()로 각 요청 url마다 개별적으로 권한을 따로 지정하는 것보단
                 // 컨트롤러에 @PreAuthorize @Secured 로 명시하는 것이 편할 수도 있다.
+        );
+        // CSRF 보호 비활성화
+        http.csrf(AbstractHttpConfigurer::disable);
+
+        // 접근 개별 허용
+        http.authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/img/**", "/css/**", "/js/**", "/common/**").permitAll()
+                        .requestMatchers("/", "/login1", "/signup/**", "/member/**").permitAll() // 공개 URL
+                        .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자 URL
+                        .anyRequest().authenticated() // 나머지 모든 요청은 인증 필요
         );
         //authorizeHttpRequests() 구현 예시
 //        http.authorizeHttpRequests(request -> request
@@ -42,9 +52,9 @@ public class SecurityConfig {
 //				.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
 //				//resources/static/이하폴더 허용
 //				.requestMatchers("/images/**", "/css/**", "/js/**").permitAll()
-//				.requestMatchers("/","/member/anyone","/member/login").permitAll()
+//				.requestMatchers("/","/sighnup/**", "/member/login").permitAll()
 //				.requestMatchers("/member/anonymous").anonymous()
-//				.requestMatchers("/member/admin").hasRole("ADMIN")
+//				.requestMatchers("/admin/**").hasRole("A")
 //				.requestMatchers("/member/user").hasAnyRole("USER","ADMIN")
 //				.anyRequest().authenticated()
 //        );

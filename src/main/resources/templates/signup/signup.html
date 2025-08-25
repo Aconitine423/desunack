@@ -181,6 +181,13 @@
         $("#signupModal").css("display", "flex");
     })
 
+    // 판매회원 버튼 클릭시 모달 열기
+    $("#customerJoinBtn").on('click', function (event) {
+        event.preventDefault();
+        $("#customerModalIframe").attr("src", "/signup/customerfrm");
+        $("#signupModal").css("display", "flex");
+    })
+
     // iframe 로드가 완료되면 높이 조절 함수 호출
     $customerModalIframe.on('load', function() {
         resizeIframe();

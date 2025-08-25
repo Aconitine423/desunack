@@ -19,22 +19,23 @@ public interface MemberDao {
 
     SellerEntity getSellerEntity(int m_uid);
 
-    SellerEntity getSellerEntity(int mUid);
-
     String findId(String m_name, String m_email);
 
     int findPw(String m_id, String m_email);
-
-    boolean updatePw(String m_id, String ecdpw);
 
     void memberJoin(CustomerEntity customerEntity);
 
     boolean customerJoin(CustomerEntity customerEntity);
 
-    @Select("select max(m_uid) from member where m_kind = 'C'")
+    @Select("select ifnull(max(m_uid),0) from member where m_kind = 'C'")
     int maxCustomerUid();
 
     @Select("select count(*) from member where m_id = #{mId}")
     boolean isUsedId(String mId);
-}
 
+    boolean updatePw(String m_id, String ecdpw);
+
+    String getGoodsSales(char m_gender, int m_age);
+
+    String getCompanySales(int m_uid);
+}

@@ -14,33 +14,33 @@
     <!--  아이디 입력  -->
     <div class="inputGroup">
         <label for="userId">아이디</label>
-        <input type="text" class="inputForm" id="userId" name="userId" required placeholder="아이디를 입력하세요" autocomplete="off">
+        <input type="text" class="inputForm" id="userId" name="userId" placeholder="아이디를 입력하세요" autocomplete="off">
         <input type="button" id="checkId" class="checkBtn" value="중복확인" style="cursor: pointer"><br>
-        <span id="idError" th:name="errorMsg"></span>
+        <span id="idError" class="errorMsg"></span>
     </div>
     <!--  비밀번호 입력  -->
     <div class="inputGroup">
         <label for="userPassword">비밀번호</label>
-        <input type="password" class="inputForm" id="userPassword" name="userPassword" required placeholder="비밀번호를 입력하세요."><br>
-        <span id="pwError" th:name="errorMsg"></span>
+        <input type="password" class="inputForm" id="userPassword" name="userPassword" placeholder="비밀번호를 입력하세요."><br>
+        <span id="pwError" class="errorMsg"></span>
     </div>
     <div class="inputGroup">
         <label for="passwordConfirm">비밀번호확인</label>
-        <input type="password" class="inputForm" id="passwordConfirm" name="passwordConfirm" required placeholder="비밀번호를 재입력하세요."><br>
-        <span id="checkPwError" th:name="errorMsg"></span>
+        <input type="password" class="inputForm" id="passwordConfirm" name="passwordConfirm" placeholder="비밀번호를 재입력하세요."><br>
+        <span id="checkPwError" class="errorMsg"></span>
     </div>
     <!--  이름 입력  -->
     <div class="inputGroup">
         <label for="userName">이름</label>
-        <input type="text" class="inputForm" id="userName" name="userName" required placeholder="이름을 입력하세요." autocomplete="off"><br>
-        <span id="nameError" th:name="errorMsg"></span>
+        <input type="text" class="inputForm" id="userName" name="userName" placeholder="이름을 입력하세요." autocomplete="off"><br>
+        <span id="nameError" class="errorMsg"></span>
     </div>
     <!--  닉네임 입력  -->
     <div class="inputGroup">
         <label for="userNickname">닉네임</label>
-        <input type="text" class="inputForm" id="userNickname" name="userNickname" required placeholder="닉네임을 입력하세요." autocomplete="off">
+        <input type="text" class="inputForm" id="userNickname" name="userNickname" placeholder="닉네임을 입력하세요." autocomplete="off">
         <input type="button" id="checkNickname" class="checkBtn" value="중복확인" style="cursor: pointer"><br>
-        <span id="nicknameError" th:name="errorMsg"></span>
+        <span id="nicknameError" class="errorMsg"></span>
     </div>
     <!--  성별 선택  -->
     <div class="inputGroup">
@@ -51,7 +51,7 @@
                 <label for="male">남성</label>
                 <input type="radio" id="female" name="userGender" value="2">
                 <label for="female">여성</label><br>
-                <span id="genderError" th:name="errorMsg"></span>
+                <span id="genderError" class="errorMsg"></span>
             </div>
         </div>
     </div>
@@ -70,24 +70,24 @@
             <option value="" selected disabled hidden>일</option>
         </select>
         <label for="birthDay">일</label><br>
-        <span id="birthError" th:name="errorMsg"></span>
+        <span id="birthError" class="errorMsg"></span>
     </div>
     <!--  휴대전화 입력  -->
     <div class="inputGroup">
         <label>휴대전화</label><br>
         <input type="text" class="inputForm" id="phone1" name="phone1" value="010" size="1" readonly>
-        <span>- </span><input type="text" class="inputForm" id="phone2" name="phone2" size="3" required>
-        <span>- </span><input type="text" class="inputForm" id="phone3" name="phone3" size="3" required><br>
-        <span id="phoneError" th:name="errorMsg"></span>
+        <span>- </span><input type="text" class="inputForm" id="phone2" name="phone2" size="3">
+        <span>- </span><input type="text" class="inputForm" id="phone3" name="phone3" size="3"><br>
+        <span id="phoneError" class="errorMsg"></span>
     </div>
     <!--  이메일 입력  -->
     <div class="inputGroup">
         <label for="emailLocal">이메일</label><br>
-        <input type="text" class="inputForm" id="emailLocal" name="emailLocal" required autocomplete="off">
+        <input type="text" class="inputForm" id="emailLocal" name="emailLocal" autocomplete="off">
         <span>@ </span>
         <div id="emailCustomDomainContainer" style="display: inline-flex">
             <input type="text" class="inputForm" id="emailDomain" name="emailDomain" placeholder="직접입력"
-                   autocomplete="off" required>
+                   autocomplete="off">
         </div>
         <select id="selectDomain" name="selectDomain">
 <!--            <option value="" selected disabled hidden>도메인</option>-->
@@ -98,6 +98,7 @@
             <option value="nate.com">nate.com</option>
             <option value="custom" selected>직접입력</option>
         </select>
+        <span id="emailError" class="errorMsg"></span>
     </div>
     <!--  주소 입력  -->
     <!--  카카오 우편번호 api 활용  -->
@@ -112,6 +113,7 @@
             <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
                  style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()"
                  alt="접기 버튼">
+            <span id="addressError" class="errorMsg"></span>
         </div>
     </div>
 <!--  이용약관  -->
@@ -135,7 +137,7 @@
             <p>제4조 (개인정보보호 의무)</p>
             <p>회사는 관련 법령이 정하는 바에 따라 회원의 개인정보를 보호하기 위해 노력합니다. 개인정보의 보호 및 사용에 대해서는 관련 법령 및 회사의 개인정보처리방침이 적용됩니다.</p>
         </div>
-        <input id="joinTermsCheckBox" name="joinTerms" type="checkbox" disabled required>
+        <input id="joinTermsCheckBox" name="joinTerms" type="checkbox" disabled>
         <label for="joinTermsCheckBox">이용약관에 동의합니다.</label>
     </div>
 <!--  submit 메시지 박스  -->

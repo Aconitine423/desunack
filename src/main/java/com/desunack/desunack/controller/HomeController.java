@@ -27,6 +27,7 @@ public class HomeController {
 
     @GetMapping("/member/login")
     public String login1(){
+        log.info("=======login1이동");
         return "/member/login";
     }
     @GetMapping("/")

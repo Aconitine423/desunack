@@ -32,11 +32,11 @@ public class MemberController {
         }
     }
 
-    @GetMapping("/login1")
+    @GetMapping("/member/login")
     public String login(){
-        return "member/login";
+        return "/member/login";
     }
-    @PostMapping("/login1")
+    @PostMapping("/member/login")
     public String login1(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr){
 
         if(mSer.login1(userDto.getUserId(), userDto.getUserPw(), session)){

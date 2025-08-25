@@ -9,7 +9,8 @@
     </insert>
 
     <insert id="customerJoin">
-        insert into c_member values (#{m_uid}, #{c_nickname}, #{c_gender}, #{c_birth}, default, default)
+        insert into c_member(c_m_uid, c_nickname, c_gender, c_birth, c_point, c_running_total)
+        values (#{m_uid}, #{c_nickname}, #{c_gender}, #{c_birth}, default, default)
     </insert>
 
     <update id="updatePw">

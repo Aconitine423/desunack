@@ -1,0 +1,137 @@
+/* 공통 설정 */
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+    padding: 2rem;
+}
+
+/* 탭 */
+.tab-container{
+    display: flex;
+    width: 100%;
+    max-width: 400px;  /* .form 과 동일한 최대 너비 */
+    margin: 0 auto 2rem; /* 중앙 정렬 + 아래 여백 */
+    justify-content: center;
+    margin-bottom: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.tab{
+    flex: 1;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    background: #fff;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.tab:not(:last-child){
+    border-right: 1px solid #ddd;
+}
+
+.tab.active{
+    background: #4a90e2;
+    color: #fff;
+}
+
+/* 폼 컨테이너 */
+.form{
+    display: none;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+.form.active{
+    display: block;
+    transform: translateY(0);
+}
+
+/* 입력창 스타일 */
+
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="number"]{
+    width: 100%; 
+    padding: 0.75rem 1rem; 
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form input:focus{
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74,144,226,0.2);
+    outline: none;
+}
+
+
+/* 버튼 스타일 */
+
+.form button{
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    line-height: 1;
+    border: none;
+    border-radius: 6px;
+    background: #4a90e2;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.form button:hover{
+    background: #357ab8;
+}
+
+.form button:active{
+    transform: scale(0.97);
+}
+
+/* 결과 영역 스타일 */
+#result-id,
+#result-pw{
+    min-height: 3rem;
+    padding: 1rem;
+    background: #eef5ff;
+    border: 1px solid #b3d1ff;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: #235a9c;
+}
+
+/* 반응형 처리 (모바일) */
+
+@media(max-width: 480px){
+    .form{
+        padding: 1rem;
+    }
+    .tab{
+        font-size: 0.9rem;
+        padding: 0.6rem 0.8rem;
+    }
+    .form button{
+        width: 100%;
+        text-align:center;
+    }
+}

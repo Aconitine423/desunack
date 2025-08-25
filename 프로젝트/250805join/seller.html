@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>판매자용 회원가입</title>
+    <link rel="stylesheet" href="join.css">
+</head>
+<body>
+    <form class="signup-form seller-signup" action="/sellerSignup" method="post" enctype="multipart/form-data">
+        <!-- 1. 사업자번호 + 사진 등록 -->
+        <div class="form-group">
+            <label for="sellerNum">사업자번호</label>
+            <input type="text" id="sellerNum" name="sellerNum" required />
+            <button type="button" class="btn photo-btn">사진등록</button>
+        </div>
+        
+        <!-- 2. 비밀번호 -->
+        <div class="form-group">
+            <label for="sellerPassward">비밀번호</label>
+            <input type="password" id="sellerPassward" name="sellerPassward" required />
+        </div>
+        
+        <!-- 3. 비밀번호 확인 -->
+        <div class="form-group">
+            <label for="confirmPassward">비밀번호 확인</label>
+            <input type="password" id="confirmPassward" name="confirmPassward" required />
+        </div>
+        
+        <!-- 4. 사업자명 -->
+        <div class="form-group">
+            <label for="sellerName">사업자명</label>
+            <input type="text" id="sellerName" name="sellerName" required/>
+        </div>
+        
+        <!-- 5~8. 전화번호 (phone1, phone2, phone3) +  hidden sellerPhone -->
+        <div class="form-group phone-group">
+            <label for="phone1">전화번호</label>
+            <input type="tel" id="phone1" name="phone1" minlength="2" maxlength="3" required />
+            <span class="sep">-</span>
+            <input type="tel" id="phone2" name="phone2" minlength="3" maxlength="4" required />
+            <span class="sep">-</span>
+            <input type="tel" id="phone3" name="phone3" maxlength="4" required />
+            <input type="hidden" id="sellerPhone" name="sellerPhone" />
+        </div>
+        
+        <!-- 9~10. 계좌정보(sellerAccount) + 은행선택(bankName) -->
+        <div class="form-group">
+            <label for="sellerAccount">계좌정보</label>
+            <input type="number" id="sellerAccount" name="sellerAccount" required />
+            <select id="bankName" name="bankName" class="bank-select" required>
+                <option value="">은행 선택</option>
+                <option value="국민은행">국민은행</option>
+                <option value="신한은행">신한은행</option>
+                <option value="하나은행">하나은행</option>
+                <option value="우리은행">우리은행</option>
+                <!-- 필요시 추가 -->
+            </select>
+        </div>
+        
+        <!-- 11~13. 이메일(emailLocal, emailDomain, sellerEmail) -->
+        <div class="form-group email-group">
+            <label>이메일</label>
+            <input type="text" id="emailLocal" name="emailLocal" placeholder="abcd" required /> @
+            <select id="emailDomainSelect" class="domain-select">
+                <option vaiue="">선택</option>
+                <option vaiue="gmail.com">gmail.com</option>
+                <option vaiue="naver.com">naver.com</option>
+                <option vaiue="custom">직접입력</option>
+            </select>
+            <input type="text" id="emailDomain" name="emailDomain" class="custom-domain" placeholder="domain.com" style="display:none;" required />
+            <!-- 조합된 이메일을 담아 보낼 hidden 필드 -->
+            <input type="hidden" id="sellerEmail" name="sellerEmail" />
+        </div>
+        
+        <!-- 가입하기 / 취소 -->
+        <div class="form-actions">
+            <button type="submit" class="btn submit-btn">가입하기</button>
+            <butoon type="button" class="btn cancel-btn" onclick="history.back()">취소</butoon>
+        </div>
+    </form>
+</body>
+</html>

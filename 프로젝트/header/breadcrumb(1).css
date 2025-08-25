@@ -1,0 +1,84 @@
+/* 1. 네비 전체 컨테이너 */
+
+:root{
+  --content-w: 900px;
+}
+
+.breadcrumb-nav {
+ max-width: var(--content-w);
+  margin: 0 auto;
+  margin-top: 4px !important;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  background: #fff;
+  padding-top: 8px !important;
+  margin-top: 0 !important;
+  padding-bottom: 0px !important;
+  padding: 4px 12px;
+}
+
+
+/* 2. 아이템과 구분자 */
+.breadcrumb-item {
+  position: relative; /* 자식 절대위치 기준 */
+  color: #333;
+  text-decoration: none;
+}
+.breadcrumb-sep {
+  margin: 0 8px;
+  color: #666;
+}
+
+/* 3. 토글 버튼 */
+.dropdown-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  display: flex;
+  align-items: center;
+}
+.dropdown-toggle .arrow {
+  margin-left: 4px;
+  font-size: 10px;
+}
+
+/* 4. 드롭다운 메뉴 (숨김→보임) */
+.breadcrumb-nav .dropdown {
+  position: relative; /* 메뉴 위치 기준 */
+}
+.breadcrumb-nav .dropdown .dropdown-menu {
+  display: none;         /* 기본 숨김 */
+  position: absolute;    /* 부모 .dropdown 기준 */
+  top: 100%;             /* 버튼 바로 아래 */
+  left: 0;               /* 왼쪽 정렬 */
+  margin-top: 4px;
+  padding: 4px 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  min-width: 120px;
+  z-index: 100;
+  list-style: none;
+}
+.breadcrumb-nav .dropdown .dropdown-menu li {
+  padding: 4px 12px;
+}
+.breadcrumb-nav .dropdown .dropdown-menu li a {
+  display: block;
+  color: #333;
+  text-decoration: none;
+}
+.breadcrumb-nav .dropdown .dropdown-menu li:hover {
+  background: #f0f0f0;
+}
+
+/* 5. open 클래스 붙으면 보이기 */
+.breadcrumb-nav .dropdown.open .dropdown-menu {
+  display: block;
+}
+
+header + .breadcrumb-nav{margin-top: 0;}

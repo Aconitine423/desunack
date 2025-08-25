@@ -27,7 +27,7 @@ public interface MemberDao {
 
     boolean customerJoin(CustomerEntity customerEntity);
 
-    @Select("select max(m_uid) from member where m_kind = 'C'")
+    @Select("select ifnull(max(m_uid),0) from member where m_kind = 'C'")
     int maxCustomerUid();
 
     @Select("select count(*) from member where m_id = #{mId}")

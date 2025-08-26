@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 @Mapper
 public interface SearchDao {
-    String filterSearch(ArrayList<String> filteredList, int startIdx, int size);
+    String filterSearch(ArrayList<Integer> filteredList, int startIdx, int size);
 
-    ArrayList<String> sweetenerFilter(ArrayList<String> sweetenerList);
+    ArrayList<Integer> sweetenerFilter(ArrayList<String> sweetenerList);
 
-    ArrayList<String> AllergyFilter(ArrayList<String> AllergyList);
+    ArrayList<Integer> AllergyFilter(ArrayList<String> AllergyList);
 }

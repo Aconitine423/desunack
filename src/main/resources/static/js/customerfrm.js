@@ -105,17 +105,17 @@ function validateForm() {
     }
 
     // 2. 비밀번호 유효성 검사 (필수, 길이, 영문자포함)
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; // 영문자, 숫자 포함 8자 이상
     if (userPw === '') {
         $('#pwError').text('비밀번호는 필수 입력 항목입니다.').css('color', 'red');
         isValid = false;
     } else if (userPw.length < 8) {
         $('#pwError').text('비밀번호는 8자 이상이어야 합니다.').css('color', 'red');
         isValid = false;
+    } else if (!(passwordRegex.test(userPw))) {
+        $('#pwError').text('비밀번호는 영문자와 숫자를 모두 포함해야 합니다.').css('color', 'red');
+        isValid = false;
     }
-    // else if (userPw.?) {
-    //     $('#pwError').text('비밀번호는 영문자를 포함해야 합니다.');
-    //     isValid = false;
-    // }
 
     // 3. 비밀번호 확인 유효성 검사
     if (userPwConfirm === '') {

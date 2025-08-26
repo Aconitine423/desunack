@@ -53,7 +53,7 @@ function checkUserNickname() {
     }
 
     // DB 닉네임 중복 체크 요청
-    axios.post('/signup/checkUserNickname', {userNickname: userNickname})
+    axios.post('/signup/checkUserNickname', {customerNickname: userNickname})
         .then(response => {
             isNicknameChecked = true;
             isNicknameAvailable = !response.data;

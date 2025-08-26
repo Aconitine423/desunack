@@ -1092,4 +1092,5 @@ footer{
 .navbar > .search-container,
 .navbar > .search-btn { order: 2; margin-left: auto; }
 .navbar > .auth-buttons { order: 3; }                        /* 오른쪽: 로그인/회원가입 */
+
 #search-btn { position: static !important; bottom:auto; right:auto; } /* 떠다니는 버튼이면 정렬 합류 */

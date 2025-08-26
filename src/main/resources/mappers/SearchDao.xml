@@ -3,5 +3,23 @@
 
 
 <mapper namespace="com.desunack.desunack.DAO.SearchDao">
+    <select id="filterSearch" resultType="java.lang.String">
+        select JSON_ARRAYAGG(JSON_OBJECT('g_id',g_id,'g_m_uid',g_m_uid,'brand_name',brand_name,'g_name',g_name,'company_name',company_name,
+                                         'g_value',g_value, 'g_qty',g_qty,'g_startday',g_startday,'g_endday',g_endday,'g_cat_key',g_cat_key,
+                                         'g_image',g_image,'g_detail',g_detail,'g_delivery_kind',g_delivery_kind,'g_status',g_status,
+                                         'g_toal_rating',g_total_rating,'g_review_count',g_review_count))
+        from goods where in <foreach collection="filteredList" item = "list" open = "(" close = ")" separator=",">#{list}</foreach> limit #{startIdx}, #{size}
+    </select>
+    <select id="sweetenerFilter" resultType="java.lang.String">
+        select distinct gs.gs_g_id from goods_sweetener gs join sweetener s on gs.gs_s_key = s.s_key
+                 where s.s_name = in <foreach collection="sweetenerList" item = "sweetener" open = "(" close = ")" separator=",">#{sweetener}</foreach>
+                order by gs.gs_g_id desc;
+    </select>
+    <select id="AllergyFilter" resultType="java.lang.String">
+        select distinct ga.ga_g_id from goods_allergy ga join allergy a on ga.ga_a_key = a.a_key
+                    where a.a_name = in <foreach collection="allergyList" item = "allergy" open = "(" close = ")" separator=",">#{allergy}</foreach>
+                    order by ga.ga_g_id desc;
+    </select>
+
 
 </mapper>

@@ -2,21 +2,13 @@ package com.desunack.desunack.DAO;
 
 import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
-public class SearchDao {
-    //select * from goods
-    //<if 알룰로스 == true>sweetner = 알룰로스<if>
-    //<if 견과류 == true>allergy != 견과류><if>
-    //
-     /*
+import java.util.ArrayList;
 
-     select * from goods where sweetner = ? and sweetner = ? and sweetener = ?
-     <switch (where)sweetner>
-     case 알룰로스: (알룰로스가 트루일경우)
-     asdfjlskadfjldsjf
-     case 자일리톨:
-     ㅁㄹ너ㅏㅣㄴㅇㄹ
-     case 말티톨:
-     ㅁㅇㅎㅁㅂㅍㄹ
-      */
+@Mapper
+public interface SearchDao {
+    String filterSearch(ArrayList<String> filteredList, int startIdx, int size);
+
+    ArrayList<String> sweetenerFilter(ArrayList<String> sweetenerList);
+
+    ArrayList<String> AllergyFilter(ArrayList<String> AllergyList);
 }

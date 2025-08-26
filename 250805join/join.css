@@ -1,0 +1,191 @@
+/* reset */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* layout 전체 배경 및 중앙 정렬 */
+body{
+    display: flex;
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* 폼 래퍼 */
+.signup-form{
+    background: #fff;
+    padding: 2rem;
+    width: 360px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* 제목 */
+
+.signup-form h2{
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+/* common form-group */
+.form-group{
+    margin-bottom: 1rem;
+}
+
+/* 라벨 */
+.form-group > label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+
+/* 입력 필드 공통 */
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="phone"],
+.form-group select{
+    width: calc(100% - 0.5rem);
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* ID 닉네임 중복확인 버튼 */
+.id-check,
+.nickname-check{
+    display: flex;
+    align-items: center;
+}
+
+.id-check input,
+.nickname-check input{
+    flex: 1;
+}
+
+.check-btn{
+    margin-left: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* 전화번호 3 분할  */
+.phone-group {
+    display: flex;
+    align-items: center;
+}
+
+.phone-group input {
+    width: 60px;
+    text-align: center;
+}
+
+.phone-group input + input {
+    margin-left: 0.5rem;
+}
+
+.phone-group span {
+    margin: 0 0.25rem;
+}
+
+.phone-group > label {
+    margin-right: 0.5rem;
+    white-space: nowrap;
+    flex: 0 0 auto;
+}
+
+.phone-group .sep{
+    margin: 0 0.25rem;
+}
+
+/* 성별 */
+.gender-group{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* 생년월일 분리형 */
+.birth-group{
+    display: flex;
+    gap: 0.5rem;
+}
+
+.birth-group select{
+    flex: 1;
+}
+
+/* 이메일 분리형 */
+.email-group{
+    display: flex;
+    align-items: center;
+}
+
+.email-group input{
+    flex: 1;
+}
+
+.email-group select {
+    margin-left: 0.5rem;
+    flex: 1;
+}
+/* 주소 찾기 버튼 */
+.address-group{
+    display: flex;
+    align-items: center;
+}
+
+.address-group input{
+    flex: 1;
+}
+.address-btn{
+    margin-left: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* 버튼 그룹 */
+.button-group{
+    display: flex;
+    gap: 1rem;
+}
+
+.submit-btn,
+.cancel-btn{
+    flex: 1;
+    padding:0.75rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.submit-btn{
+    background: #ff6f61;
+    color: #fff;
+}
+
+.submit-btn:hover{
+    background: #e04a4f;
+}
+
+.cancel-btn{
+    background: #ddd;
+    color: #333;
+}
+
+.cancel-btn:hover{
+    background: #bbb;
+}

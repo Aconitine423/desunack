@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입 선택 페이지</title>
+    <link rel="stylesheet" href="join02.css" type="text/css"/>
+    <link rel="stylesheet" href="../250805join/join.css" type="text/css"/>
+</head>
+<body>
+    
+    <!-- 상단 네비 등 생략 -->
+    <main class="signup-choice">
+        <!-- 1 일반회원  -->
+        <div class="card" id="memberCard">
+            <div class="card-content">
+                <h2>일반회원<br>회원가입</h2>
+            </div>
+        </div>
+        
+        <!-- 2 판매자용 -->
+        <div class="card" id="sellerCard">
+            <div class="card-content">
+                <h2>판매자용<br>회원가입</h2>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 공용 모달 오버레이 -->
+    <div id="modalOverlay" class="modal-overlay">
+        <div class="modal-box">
+            <button class="modal-close">&times;</button>
+            
+            <form class="signup-form" action="/signup" method="post">
+                
+                <!-- 1. userId -->
+                <div class="form-group id-check">
+                    <label for="userId">아이디</label>
+                    <input 
+                    type="text"
+                    id="userId"
+                    name="userId"
+                    required
+                    >
+                    <button type="button" class="check-btn">중복 확인</button>
+                </div>
+                
+                <!-- 2 userPassward -->
+                <div class="form-group">
+                    <label for="userPassward">비밀번호</label>
+                    <input
+                    type="password"
+                    id="userPassward"
+                    name="userPassward"
+                    required
+                    >
+                </div>
+                
+                <!-- 3 comfirmPassward -->
+                <div class="form-group">
+                    <label for="comfirmPassward">비밀번호 확인</label>
+                    <input 
+                    type="password"
+                    id="comfirmPassward"
+                    name="comfirmPassward"
+                    required
+                    >
+                </div>
+                
+                <!-- 4 userName -->
+                <div class="form-group">
+                    <label for="userName">이름</label>
+                    <input
+                    type="text"
+                    id="userName"
+                    name="userName"
+                    required
+                    >
+                </div>
+                
+                <!-- 5 userNickname -->
+                <div class="form-group nickname-check">
+                    <label for="userNickname">닉네임</label>
+                    <input 
+                    type="text"
+                    id="userNickname"
+                    name="userNickname"
+                    required
+                    >
+                    <button type="button" class="check-btn">중복 확인</button>
+                </div>
+                
+                <!-- 6 phonel, phone2, phone3 -->
+                <div class="form-group phone-group">
+                    <label>전화번호</label>
+                    <input 
+                    type="number"
+                    id="phonel"
+                    name="phonel"
+                    placeholder="010"
+                    required
+                    ><span>-</span>
+                    <input
+                    type="number"
+                    id="phone2"
+                    name="phone2"
+                    placeholder="1234"
+                    required
+                    ><span>-</span>
+                    <input
+                    type="number"
+                    id="phone3"
+                    name="phone3"
+                    placeholder="5678"
+                    required
+                    >
+                </div>
+                
+                <!-- 7 userGender -->
+                <div class="form-group gender-group">
+                    <label>성별</label>
+                    <label>
+                        <input
+                        type="radio"
+                        name="userGender"
+                        value="0"
+                        required
+                        >남성
+                    </label>
+                    <label>
+                        <input
+                        type="radio"
+                        name="userGender"
+                        value="1"
+                        >여성
+                    </label>
+                </div>
+                
+                <!-- 8 birthTear, birthMonth, birthDay -->
+                <div class="form-group birth-group">
+                    <label>생년월일</label>
+                    <select
+                    id="birthYear"
+                    name="birthYear"
+                    required
+                    >
+                    <option value="">년</option>
+                    <!-- 년도 옵션들 -->
+                </select>
+                <select
+                id="birthMonth"
+                name="birthMonth"
+                required
+                >
+                <option value="">월</option>
+                <!-- 월 옵션들 -->
+            </select>
+            <select
+            id="birthDay"
+            name="birthDay"
+            required
+            >
+            <option value="">일</option>
+        </select>
+      </div>
+    
+    <!-- 9 emailLocal, emailDomain -->
+    <div class="form-group email-group">
+        <label>이메일</label>
+        <input
+        type="text"
+        id="emailLocal"
+        name="emailLocal"
+        placeholder="example"
+        required
+        > @
+        <select
+        id="emailDomain"
+        name="emailDomain"
+        required
+        >
+        <option value="">선택</option>
+        <option value="gmail.com">gmail.com</option>
+        <option value="naver.com">naver.com</option>
+        <!-- 기타 도메인들 -->
+    </select>
+</div>
+
+<!-- 10 userAdress -->
+<div class="form-group address-group">
+    <label for="userAdress">주소</label>
+    <input
+    type="text"
+    id="userAdress"
+    name="userAdress"
+    readonly
+    >
+    <button type="button" class="address-btn"></button>
+</div>
+
+<!-- 11 가입하기 / 취소 -->
+<div class="form-group button-group">
+    <button
+    type="submit"
+    class="submit-btn"
+    >가입하기</button>
+</div>
+</form>
+<!-- 판매자 회원 -->
+<form class="signup-form seller-signup" action="/sellerSignup" method="post" enctype="multipart/form-data">
+    <!-- 1. 사업자번호 + 사진 등록 -->
+    <div class="form-group">
+        <label for="sellerNum">사업자번호</label>
+        <input type="text" id="sellerNum" name="sellerNum" required />
+        <button type="button" class="btn photo-btn">사진등록</button>
+    </div>
+    
+    <!-- 2. 비밀번호 -->
+    <div class="form-group">
+        <label for="sellerPassward">비밀번호</label>
+        <input type="password" id="sellerPassward" name="sellerPassward" required />
+    </div>
+    
+    <!-- 3. 비밀번호 확인 -->
+    <div class="form-group">
+        <label for="confirmPassward">비밀번호 확인</label>
+        <input type="password" id="confirmPassward" name="confirmPassward" required />
+    </div>
+    
+    <!-- 4. 사업자명 -->
+    <div class="form-group">
+        <label for="sellerName">사업자명</label>
+        <input type="text" id="sellerName" name="sellerName" required/>
+    </div>
+    
+    <!-- 5~8. 전화번호 (phone1, phone2, phone3) +  hidden sellerPhone -->
+    <div class="form-group phone-group">
+        <label for="phone1">전화번호</label>
+        <input type="tel" id="sellerphone1" name="phone1" minlength="2" maxlength="3" required />
+        <span class="sep">-</span>
+        <input type="tel" id="sellerphone2" name="phone2" minlength="3" maxlength="4" required />
+        <span class="sep">-</span>
+        <input type="tel" id="sellerphone3" name="phone3" maxlength="4" required />
+        <input type="hidden" id="sellerPhone" name="sellerPhone" />
+    </div>
+    
+    <!-- 9~10. 계좌정보(sellerAccount) + 은행선택(bankName) -->
+    <div class="form-group">
+        <label for="sellerAccount">계좌정보</label>
+        <input type="number" id="sellerAccount" name="sellerAccount" required />
+        <select id="bankName" name="bankName" class="bank-select" required>
+            <option value="">은행 선택</option>
+            <option value="국민은행">국민은행</option>
+            <option value="신한은행">신한은행</option>
+            <option value="하나은행">하나은행</option>
+            <option value="우리은행">우리은행</option>
+            <!-- 필요시 추가 -->
+        </select>
+    </div>
+    
+    <!-- 11~13. 이메일(emailLocal, emailDomain, sellerEmail) -->
+    <div class="form-group email-group">
+        <label for="sellerEmailLocal">이메일</label>
+        <input type="text" id="selleremailLocal" name="emailLocal" placeholder="abcd" required /> @
+        <select id="sellerEmailDomainSelect" name="emailDomain" required>
+            <option value="">선택</option>
+            <option value="gmail.com">gmail.com</option>
+            <option value="naver.com">naver.com</option>
+            <option value="custom">직접입력</option>
+        </select>
+        <input type="text" id="sellerEmailCustom" name="emailDomainCustom" placeholder="domain.com" style="display:none;" required />
+        <!-- 조합된 이메일을 담아 보낼 hidden 필드 -->
+        <input type="hidden" id="sellerEmailHidden" name="sellerEmail" />
+    </div>
+    
+    <!-- 가입하기 / 취소 -->
+    <div class="form-actions">
+        <button type="submit" class="btn submit-btn">가입하기</button>
+        <butoon type="button" class="btn cancel-btn" onclick="history.back()">취소</butoon>
+    </div>
+</form>
+</div>
+</div>
+<script src="joins.js"></script>
+</body>
+</html>

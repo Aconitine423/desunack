@@ -69,6 +69,13 @@ function checkUserNickname() {
         })
 }
 
+// 전화번호 입력 필드에 숫자만 입력 가능하도록
+$('#phone2, #phone3').on('input', function() {
+    const $this = $(this);
+    // 숫자 이외의 문자 제거
+    $this.val($this.val().replace(/[^0-9]/g, '').substring(0, 4));
+});
+
 // 유효성 검사
 function validateForm() {
     let isValid = true;
@@ -154,11 +161,12 @@ function validateForm() {
         // 8. 휴대폰번호 유효성 검사 (필수, 형식)
         const userPhone2 = $('#phone2').val();
         const userPhone3 = $('#phone3').val();
+        const phoneRegex = /^\d{4}$/;
         if (userPhone2 === '' || userPhone3 === '') {
             $('#phoneError').text('휴대폰 번호는 필수 입력 항목입니다.').css('color', 'red');
             isValid = false;
-        } else if (typeof userPhone2 !== 'number' || typeof userPhone3 !== 'number') {
-            $('#phoneError').text('휴대폰 번호는 숫자로 입력해주세요.').css('color', 'red');
+        } else if (!(phoneRegex.test(userPhone2)) || !(phoneRegex.test(userPhone3))) {
+            $('#phoneError').text('휴대폰 번호는 4자리 숫자로 입력해주세요.').css('color', 'red');
             isValid = false;
         }
 

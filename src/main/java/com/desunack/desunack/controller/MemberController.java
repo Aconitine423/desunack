@@ -38,7 +38,7 @@ public class MemberController {
     public ResponseEntity<Boolean> checkUserId(@RequestBody UserDto userDto){
         String userId = userDto.getUserId();
         boolean isUsedId = mSer.isUsedId(userId); // true면 중복
-        return isUsedId ? ResponseEntity.ok(true) : ResponseEntity.badRequest().body(false);
+        return ResponseEntity.ok(isUsedId);
     }
 
     // 회원가입 닉네임 중복체크
@@ -46,7 +46,7 @@ public class MemberController {
     public ResponseEntity<Boolean> checkUserNickname(@RequestBody CustomerDto customerDto){
         String userNickname = customerDto.getCustomerNickname();
         boolean isUsedNickname = mSer.isUsedNickname(userNickname); // true면 중복
-        return isUsedNickname ? ResponseEntity.ok(true) : ResponseEntity.badRequest().body(false);
+        return ResponseEntity.ok(isUsedNickname);
     }
 
 

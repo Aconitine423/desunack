@@ -24,7 +24,7 @@ public class HomeController {
 
     @GetMapping("/signup/customerfrm")
     public String customerJoin() {
-        return "/signup/customerfrm";
+        return "/signup/customerFrm";
     }
 
     @GetMapping("/member/login")

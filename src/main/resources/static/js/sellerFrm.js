@@ -2,10 +2,8 @@ const $signupForm = $('#signupForm');
 const $messageBox = $('#messageBox');
 
 // 중복 체크 여부 상태를 저장할 변수 (기본값: false)
-let isIdChecked = false; // 중복 체크 여부
-let isIdAvailable = false; // 중복 체크 여부 상태 저장
-let isNicknameChecked = false;
-let isNicknameAvailable = false;
+let isSellerIdChecked = false; // 중복 체크 여부
+let isSellerIdAvailable = false; // 중복 체크 여부 상태 저장
 
 // 아이디 중복체크
 function checkUserId() {
@@ -39,7 +37,7 @@ function checkUserId() {
 }
 
 // 전화번호 입력 필드에 숫자만 입력 가능하도록
-$('#phone2, #phone3').on('input', function() {
+$('#tel2, #tel3').on('input', function() {
     const $this = $(this);
     // 숫자 이외의 문자 제거
     $this.val($this.val().replace(/[^0-9]/g, '').substring(0, 4));
@@ -54,53 +52,62 @@ function validateForm() {
     $('.errorMsg').text('');
 
     // 1. 아이디 유효성 검사 (필수, 길이, 중복체크)
-    const userId = $('#userId').val();
-    if (userId === '') {
-        $('#idError').text('아이디는 필수 입력 항목입니다.').css('color', 'red');
+    const sellerId = $('#sellerId').val();
+    if (sellerId === '') {
+        $('#sellerIdError').text('아이디는 필수 입력 항목입니다.').css('color', 'red');
         isValid = false;
-    } else if (userId.length < 5 || userId.length > 20) {
-        $('#idError').text('아이디는 5~20자 사이로 입력해주세요.').css('color', 'red');
+    } else if (sellerId.length < 5 || sellerId.length > 20) {
+        $('#sellerIdError').text('아이디는 5~20자 사이로 입력해주세요.').css('color', 'red');
         isValid = false;
-    } else if (!isIdChecked || !isIdAvailable) {
-        $('#idError').text('아이디 중복 체크를 해주세요.').css('color', 'red');
+    } else if (!isSellerIdChecked || !isSellerIdAvailable) {
+        $('#sellerIdError').text('아이디 중복 체크를 해주세요.').css('color', 'red');
         isValid = false;
     }
 
     // 2. 비밀번호 유효성 검사 (필수, 길이, 영문자포함)
-    const userPw = $('#userPassword').val();
+    const sellerPw = $('#sellerPassword').val();
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; // 영문자, 숫자 포함 8자 이상
-    if (userPw === '') {
-        $('#pwError').text('비밀번호는 필수 입력 항목입니다.').css('color', 'red');
+    if (sellerPw === '') {
+        $('#sellerPwError').text('비밀번호는 필수 입력 항목입니다.').css('color', 'red');
         isValid = false;
-    } else if (userPw.length < 8) {
-        $('#pwError').text('비밀번호는 8자 이상이어야 합니다.').css('color', 'red');
+    } else if (sellerPw.length < 8) {
+        $('#sellerPwError').text('비밀번호는 8자 이상이어야 합니다.').css('color', 'red');
         isValid = false;
-    } else if (!(passwordRegex.test(userPw))) {
-        $('#pwError').text('비밀번호는 영문자와 숫자를 모두 포함해야 합니다.').css('color', 'red');
+    } else if (!(passwordRegex.test(sellerPw))) {
+        $('#sellerPwError').text('비밀번호는 영문자와 숫자를 모두 포함해야 합니다.').css('color', 'red');
         isValid = false;
     }
 
     // 3. 비밀번호 확인 유효성 검사
-    const userPwConfirm = $('#userPasswordConfirm').val();
-    if (userPwConfirm === '') {
-        $('#checkPwError').text('비밀번호를 다시 한 번 입력해주세요.').css('color', 'red');
+    const sellerPwConfirm = $('#sellerPasswordConfirm').val();
+    if (sellerPwConfirm === '') {
+        $('#checkSellerPwError').text('비밀번호를 다시 한 번 입력해주세요.').css('color', 'red');
         isValid = false;
-    } else if (userPw !== userPwConfirm) {
-        $('#checkPwError').text('비밀번호가 일치하지 않습니다.').css('color', 'red');
-        isValid = false;
-    }
-
-    // 4. 이름 유효성 검사 (필수, 길이)
-    const userName = $('#userName').val();
-    if (userName === '') {
-        $('#nameError').text('이름은 필수 입력 항목입니다.').css('color', 'red');
-        isValid = false;
-    } else if (userName.length > 20) {
-        $('#nameError').text('이름은 최대 20자까지 가능합니다.').css('color', 'red');
+    } else if (sellerPw !== sellerPwConfirm) {
+        $('#checkSellerPwError').text('비밀번호가 일치하지 않습니다.').css('color', 'red');
         isValid = false;
     }
 
-    // 5. 계좌번호 유효성 검사 (필수)
+    // 4. 사업자명 유효성 검사 (필수, 길이)
+    const sellerName = $('#sellerName').val();
+    if (sellerName === '') {
+        $('#sellerNameError').text('사업자명은 필수 입력 항목입니다.').css('color', 'red');
+        isValid = false;
+    } else if (sellerName.length > 20) {
+        $('#sellerNameError').text('사업자명은 최대 20자까지 가능합니다.').css('color', 'red');
+        isValid = false;
+    }
+
+        // 5. 전화번호 유효성 검사 (필수)
+        const sellerTel1 = $('#tel1').val();
+        const sellerTel2 = $('#tel2').val();
+        const sellerTel3 = $('#tel3').val();
+        if (sellerTel1 === '' || sellerTel2 === '' || sellerTel3 === '') {
+            $('#sellerTelError').text('전화번호는 필수 입력 항목입니다.').css('color', 'red');
+            isValid = false;
+        }
+
+    // 6. 계좌번호 유효성 검사 (필수)
     const userNickname = $('#userNickname').val();
     if (userNickname === '') {
         $('#nicknameError').text('닉네임은 필수 입력 항목입니다.').css('color', 'red');
@@ -119,25 +126,14 @@ function validateForm() {
         // }
 
         // 7. 생년월일 유효성 검사 (전부 선택여부)
-        const userBirthYear = $('#birthYear').val();
-        const userBirthMonth = $('#birthMonth').val();
-        const userBirthDay = $('#birthDay').val();
-        if (!userBirthYear || !userBirthMonth || !userBirthDay) {
-            $('#birthError').text('생년월일을 모두 선택해주세요.').css('color', 'red');
-            isValid = false;
-        }
+        // const userBirthYear = $('#birthYear').val();
+        // const userBirthMonth = $('#birthMonth').val();
+        // const userBirthDay = $('#birthDay').val();
+        // if (!userBirthYear || !userBirthMonth || !userBirthDay) {
+        //     $('#birthError').text('생년월일을 모두 선택해주세요.').css('color', 'red');
+        //     isValid = false;
+        // }
 
-        // 8. 전화번호 유효성 검사 (필수, 형식)
-        const userPhone2 = $('#phone2').val();
-        const userPhone3 = $('#phone3').val();
-        const phoneRegex = /^\d{4}$/;
-        if (userPhone2 === '' || userPhone3 === '') {
-            $('#phoneError').text('휴대폰 번호는 필수 입력 항목입니다.').css('color', 'red');
-            isValid = false;
-        } else if (!(phoneRegex.test(userPhone2)) || !(phoneRegex.test(userPhone3))) {
-            $('#phoneError').text('휴대폰 번호는 4자리 숫자로 입력해주세요.').css('color', 'red');
-            isValid = false;
-        }
 
         // 9. 이메일 유효성 검사 (필수, 형식)
         const userEmailLocal = $('#emailLocal').val();

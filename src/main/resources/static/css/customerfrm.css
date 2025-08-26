@@ -1,77 +1,187 @@
 /* layout 전체 배경 및 중앙 정렬 */
 body{
-    display: block;
+    display: flex;
     font-family: 'Noto Sans KR', sans-serif;
     background: #f5f5f5;
-    justify-content: center;
-    align-items: center;
-    height: 90vh;
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*height: 90vh;*/
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 /* 폼 래퍼 */
 .signupForm{
     /*background: #fff;*/
     padding: 2rem;
-    width: auto;
+    margin: 3rem auto;
+    width: 90%;
+    max-width: 800px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* 라벨 */
-.signupForm > label{
-    display: block;
+/* 인풋 그룹: 라벨, 인풋창 정렬용 flexbox 컨테이너 */
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.inputGroup > label {
     font-weight: bold;
     margin-bottom: 0.5rem;
+    width: 100px;
+    flex-shrink: 0;
+}
+/* 입력 필드 및 버튼을 감싸는 컨테이너 */
+.inputContainer {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    gap: 0.5rem;
 }
 
 /* 입력 필드 공통 */
-.inputForm input[type="text"],
-.inputForm input[type="password"],
-.inputForm input[type="number"],
-.inputForm select{
-    width: calc(100% - 0.5rem);
-    padding: 0.5rem;
+.inputForm {
+    flex-grow: 1;
+    padding: 0.75rem;
     border: 1px solid #ccc;
     border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 /* ID 닉네임 중복확인 버튼 */
 .checkBtn {
-    display: inline-block;
-    align-items: center;
-    margin-left: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1rem;
     background: #eee;
     border: 1px solid #ccc;
     border-radius: 4px;
     cursor: pointer;
+    white-space: nowrap; /* 텍스트가 줄바꿈되지 않도록 함 */
 }
 
-/* 폰번호 입력창 */
-#phone1 {
-    width: 3rem;
-}
-#phone2 {
-    width: 4rem;
-}
-#phone3 {
-    width: 4rem;
+/* 폰번호 입력창 컨테이너 */
+.phoneContainer {
+display: flex;
+    align-items: center;
 }
 
-/* 항목 그룹 */
-.inputGroup {
-    margin-bottom: 0.5rem;
+.phoneContainer .inputForm {
+    text-align: center;
+    flex-basis: 0;
+    flex-grow: 1;
+}
+.phoneContainer .inputForm:first-of-type {
+    flex-grow: 0.5;
+}
+.phoneContainer span {
+    white-space: nowrap;
+}
+
+/* 이메일 입력창 컨테이너 */
+.emailContainer {
+    flex-wrap: wrap; /* 작은 화면에서 줄바꿈 */
+    align-items: center;
+}
+.emailContainer > span {
+    margin: 0 0.25rem;
+}
+.emailContainer .inputForm,
+.emailContainer select {
+    flex-grow: 1;
+    min-width: 100px;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px; /* 둥근 모양을 위한 값 */
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+/* 주소 입력창 컨테이너 */
+.addressContainer {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+.addressContainer .inputForm {
+    flex-grow: 1;
+}
+.addressContainer #sample3_postcode {
+    flex-grow: 0;
+    width: 100px;
+}
+
+/* 생년월일 컨테이너 */
+.birthContainer {
+    flex-wrap: wrap;
+    align-items: center;
+}
+.birthContainer .birthSelect {
+    flex-grow: 1;
+    min-width: 80px;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px; /* 둥근 모양을 위한 값 */
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+/* 실시간 오류메시지창 */
+.errorMsg {
+    font-size: 0.8rem;
+    color: red;
+    margin-top: 0.25rem;
 }
 
 /* 버튼 그룹 */
 .btnGroup {
     display: flex;
+    justify-content: center;
     gap: 1rem;
+    margin-top: 2rem;
+}
+.submitBtn,
+.resetBtn {
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.submitBtn {
+    background-color: #1c50e1;
+    color: white;
+}
+.submitBtn:hover {
+    background-color: #288cf1;
+}
+.resetBtn {
+    background-color: #f44336;
+    color: white;
+}
+.resetBtn:hover {
+    background-color: #da190b;
 }
 
 /* 약관내역 */
+.termsGroup {
+    flex-direction: column;
+}
+.termsContainer {
+    flex-direction: column;
+    align-items: center;
+}
 .termsBox {
-    width: 36rem;
+    max-width: 800px;
     height: 150px;
     overflow-y: scroll;
     border: 1px solid #d1d5db;
@@ -81,9 +191,19 @@ body{
     color: #374151;
     font-size: 0.875rem;
     line-height: 1.5;
+    margin-bottom: 1rem;
 }
 .termsBox p {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+}
+.checkBoxContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.radioLabel {
+    margin-right: 1rem;
 }
 
 /* 메시지 박스 */
@@ -91,4 +211,6 @@ body{
     display: none;
     color: red;
     font-weight: bold;
+    text-align: center;
+    margin-top: 1rem;
 }

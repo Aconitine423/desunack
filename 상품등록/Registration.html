@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 상품 등록 </title>
+    <link rel="stylesheet" href="product-register.css">
+</head>
+<body>
+    <header>
+        <h1> 상품 등록 </h1>
+    </header>
+    
+    <main class="register-form">
+        <form action="/product/register" method="post" enctype="multipart/form-data">
+            <!-- 기본 정보 -->
+            <fieldset>
+                <legend>기본 정보</legend>
+                <div class="form-row">
+                    <label for="goodsID">상품 번호</label>
+                    <input type="text" id="goodsID" name="goodsID" readonly>
+                </div>
+                <div class="form-row">
+                    <label for="goodsName">상품명</label>
+                    <input type="text" id="goodsName" name="goodsName" required>
+                </div>
+                <div class="form-row">
+                    <label for="goodsPrice">가격</label>
+                    <div class="input-with-unit">
+                        <input type="text" id="goodsPrice" name="goodsPrice" inputmode="numeric" placeholder="0">
+                        <span>원</span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label for="goodsQuantity">재고수량</label>
+                    <input type="number" id="goodsQuantity" name="goodsQuantity" required>
+                </div>
+                <div class="form-row">
+                    <label for="goodsDate">판매 기간</label>
+                    <input type="date" id="goodsDate" name="goodsDate" required>
+                </div>
+            </fieldset>
+            
+            <!-- 카테고리 -->
+            <fieldset>
+                <legend>카테고리 설정</legend>
+                <div class="form-row">
+                    <label for="category">대분류</label>
+                    <select id="category" name="category">
+                        <option>선택</option>
+                        <option value="drink">음료</option>
+                        <option value="snack">스낵</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="smallCategory">소분류</label>
+                    <select id="smallCategory" name="smallCategory" required>
+                        <option value="">선택</option>
+                    </select>
+                </div>
+            </fieldset>
+            
+            <!-- 이미지 등록 -->
+            <fieldset>
+                <legend> 상품 이미지 등록 </legend>
+                <div class="file-upload">
+                    <label for="mainImage" class="file-label">메인 이미지 선택</label>
+                    <input type="file" id="mainImage" name="mainImage">
+                    <span class="flie-name">선택된 파일 없음 </span>
+                </div>
+                <div class="file-upload">
+                    <label for="detailContent" class="file-label">상세 설명 이미지 선택</label>
+                    <input type="file" id="detailContent" name="detailContent">
+                    <span class="flie-name">선택된 파일 없음 </span>
+                </div>
+            </fieldset>
+            <!-- 성분 정보 -->
+            <fieldset>
+                <legend>성분 정보</legend>
+                <div class="checkbox-row">
+                    <label>
+                        <input type="checkbox" id="goodsSweetener" name="goodsSweetener" value="대체당">
+                        대체당
+                    </label>
+                    <label>
+                        <input type="checkbox" id="goodsAllergy" name="goodsAllergy" value="알러지">
+                        알러지
+                    </label>
+                </div>
+            </fieldset>
+            <!-- 배송 정보 -->
+            <fieldset>
+                <legend>배송 정보</legend>
+                <div class="form-row">
+                    <label for="deliveryType">배송 종류</label>
+                    <select id="deliveryType" name="deliveryType">
+                        <option value="normal">일반 배송</option>
+                        <option value="quick">퀵 배송</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="dsliveryPaidType">선불/착불</label>
+                    <select id="deliveryPaidType" name="deliveryPaidType">
+                        <option value="pre">선불</option>
+                        <option value="post">착불</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="deliveryFee">배송료</label>
+                    <div class="input-with-unit">
+                        <input type="text" id="deliveryFee" name="deliveryFee" inputmode="numeric" placeholder="0">
+                        <span>원</span>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- 추가 정보 -->
+            <fieldset>
+                <legend>상품 추가 정보</legend>
+                <div class="form-row">
+                    <label for="brandName">브랜드명</label>
+                    <input type="text" id="brandName" name="brandName">
+                </div>
+                <div class="form-row">
+                    <label for="foodType">식품유형</label>
+                    <input type="text" id="foodType" name="foodType">
+                </div>
+                <div class="form-row">
+                    <label for="madeIn">원산지</label>
+                    <input type="text" id="madeIn" name="madeIn">
+                </div>
+                <div class="form-row">
+                    <label for="madeFactory">제조사</label>
+                    <input type="text" id="madeFactory" name="madeFactory">
+                </div>
+                <div class="form-row">
+                    <label for="caution">주의사항</label>
+                    <textarea id="caution" name="caution" class="auto-resize" placeholder="상품 주의사항을 입력하세요"></textarea>
+                </div>
+                <div class="form-row">
+                    <label for="csPhone">상담전화번호</label>
+                    <input type="tel" id="csPhone" name="csPhone">
+                </div>
+            </fieldset>
+            
+            <!-- 등록 버튼 -->
+            <div class="form-submit">
+                <button type="submit">상품 등록</button>
+            </div>
+        </form>
+    </main>
+    
+    <!-- js: 대부류 선택 시 소분류 자동 변경 -->
+    <script>
+        const category = document.getElementById("category");
+        const smallCategory = document.getElementById("smallCategory");
+        
+        // 대분류별 소분류 옵션 정의
+        const subOptions = {
+            drink: [
+            {value: "soda", text:"탄산"},
+            {value: "nonSoda", text: "비탄산"},
+            {value: "powder", text:"분말"}
+            ],
+            snack: [
+            {value: "cookie",text:"과자"},
+            {value: "candy",text:"사탕류"},
+            {value: "chocolate",text:"초콜릿"},
+            {value: "icecream",text:"아이스크림"},
+            {value: "bread",text:"빵"}
+            ]
+        };
+        
+        // 대분류 선택 시 소분류 채우기
+        category.addEventListener("change", function() {
+            const selected = this.value;
+            smallCategory.innerHTML = '<option value="">선택</option>'; // 초기화
+            if (subOptions[selected]) {
+                subOptions[selected].forEach(function(opt) {
+                    const option = document.createElement("option"); 
+                    option.value = opt.value;
+                    option.textContent = opt.text;
+                    smallCategory.appendChild(option);
+                });
+            }
+        });
+        
+        // 모든 auto-resize textarea에 적용
+        document.addEventListener("input", function(e) {
+            if (e.target.tagName.toLowerCase() !== "textarea" || !e.target.classList.contains("auto.resize")) return;
+            
+            e.target.style.height = "auto"; // 높이 초기화
+            e.target.style.height = e.target.scrollHeight + "px"; // 내용 높이에 맞게 다시 설정
+        });
+        
+        // 숫자만 남기고 콤바 붙이는 함수 
+        function formatNumber(num){
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        
+        //입력 이벤트 
+        document.querySelectorAll("#goodsPrice, #deliveryFee").forEach(input => {
+            input.addEventListener("input",(e) =>{
+                // 숫자만 남기기
+                let value = e.target.value.replace(/,/g, ""); // 기준 콤마 제거
+                if (!isNaN(value) && value !== "") {
+                    e.target.value = formatNumber(value);
+                } else{
+                    e.target.value = "";
+                }
+            });
+        });
+        
+        // 전송 전에 콤마 제거 (숫자만 남기기)
+        document.querySelector("form").addEventListener("submit", () => {
+            ["goodsPrice", "deliveryFee"].forEach(id => {
+                const input = document.getElementById(id);
+                input.value = input.value.replace(/,/g, "");
+            });
+        });
+
+        // 파일명 표시
+        document.querySelectorAll(".file-upload input[type=file]").forEach(input => {
+            input.addEventListener("change", (e) => {
+                const fileName = e.target.files.length ? e.target.files[0].name : "선택된 파일 없음";
+                e.target.closest(".file-upload").querySelector(".file-name").textContent = fileName;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+/* 브라우저 기본 초기화 */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+}
+
+html,body{
+    height: 100%;
+    font-family: "Noto Sans KR", sans-serif;
+    line-height: 1.4;
+    background: #fafafa;
+    color: #222;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  border: none;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 상품 등록 페이지 전용 스타일 */
+
+header{
+    background: #f5d9d9; /*파스텔 핑크*/
+    padding: 15px 20px;
+    text-align: center; /* 텍스트 가운데 정렬 */
+    border-bottom: 1px solid #ddd;
+}
+
+h1{
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.register-form{
+    max-width: 500px; /* 전체 폭 줄임 */
+    margin: 15px auto;
+    background: #fff;
+    padding: 20px 15px; /*내부 여백 확 줄임*/
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+fieldset{
+    border: 1px solid #ddd;
+    padding: 10px 15px; /* 내부 여백 줄임 */
+    margin-bottom: 15px; /* 구역 간격 좁힘 */
+    border-radius: 6px;
+}
+
+legend{
+    font-weight: bold;
+    padding: 0 8px;
+    font-size: 14px;
+}
+
+label{
+    display: block;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+label input,
+label select,
+label textarea{
+    margin-left: 10px;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+input[type="file"] {
+    padding: 6px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.file-upload{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.file-upload input[type="file"] {
+  display: none; /* 기본 브라우저 파일 버튼 숨김 */
+}
+
+.file-label {
+  background: #f5d9d9;        /* 파스텔 핑크 버튼 */
+  color: #333;
+  padding: 8px 14px;          /* 버튼 크기 조정 */
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.file-label:hover {
+  background: #f2bdbd;
+}
+
+.file-name {
+  font-size: 13px;
+  color: #555;
+}
+
+textarea{
+    width: 100%;
+    height: 80px;
+    resize: vertical;
+}
+
+.form-submit{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form-submit button{
+    background: #444;
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.form-submit button:hover{
+    background: #222;
+}
+
+/* 라벨 + 인풋을 한 줄로 */
+.form-row{
+    display: grid;
+    grid-template-columns: 100px 1fr; /* 왼쪽 라벨 100px, 오른쪽 입력창 가변 */
+    align-items: center;
+    margin-bottom: 8px; /* 줄 간격 줄임 */
+    gap: 8px;
+}
+
+.form-row label{
+    font-weight: 600;
+    text-align: right; /* 라벨 오른족 정렬 */
+    font-size: 13px;
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea{
+    width: 100%;
+    padding: 4px 8px; /* 내부 여백 줄임 */
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 28px; /* 높이 줄임 */
+}
+
+textarea{
+    height: 60px; /* 설명칸 높이 축소 */
+}
+
+textarea.auto-resize {
+    width: 100%; 
+    min-height: 100px; /* 최소 높이 */
+    resize: none; /* 사용자가 직접 드래그로 늘리지 못하게 */
+    overflow-y: hidden; /*스크롤 숨기기*/
+}
+
+.form-submit{
+    text-align: center;
+    margin-top: 15px;
+}
+
+.form-submit button{
+    background: #444;
+    color: #444;
+    padding: 8px 16px; /* 버튼 크기 줄임 */
+    font-size: 14px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+.form-submit button:hover{
+    background: #222;
+}
+
+/* 체크박스 가로 배치 */
+.checkbox-row {
+  display: flex;          /* 가로 배치 */
+  align-items: center;    /* 세로 중앙 정렬 */
+  gap: 20px;              /* 체크박스 간격 */
+}
+
+.checkbox-row label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+
+/* 숫자 입력 + 원 단위 정렬 */
+
+.input-with-unit{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.input-with-unit input{
+    flex: 1;
+    padding: 4px 8px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 28px;
+    text-align: right; /* 금액 오른쪽 정렬 */
+}
+
+.input-with-unit span{
+    font-size: 13px;
+    color: #333;
+}

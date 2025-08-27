@@ -55,6 +55,24 @@ public class MemberService {
         return true;
     }
 
+    // 판매자 회원가입
+    @Transactional
+    public boolean sellerJoin(SellerDto sellerDto) {
+        SellerEntity sellerEntity = sellerDto.toEntity();
+        if (mDao.isUsedId(sellerEntity.getM_id())){
+            return false;
+        }
+        BCryptPasswordEncoder ecd = new BCryptPasswordEncoder();
+        String ecdPw = ecd.encode(sellerEntity.getM_pw());
+        sellerEntity.setM_pw(ecdPw);
+
+        int memberUid = mDao.maxSellerUid() +1;
+        sellerEntity.setM_uid(memberUid);
+        mDao.sMemberJoin(sellerEntity);
+        mDao.sellerJoin(sellerEntity);
+        return true;
+    }
+
     // 회원가입 아이디 중복체크
     public boolean isUsedId(String userId) {
         return mDao.isUsedId(userId);
@@ -188,4 +206,5 @@ public class MemberService {
         }
         return false;
     }
+
 }

@@ -22,7 +22,13 @@ public class SearchController {
         return null;
     }
 
-
+    @GetMapping("/brand")
+    public String brandList(HttpSession session) {
+        if(serSer.brandList(session)){
+            return null;
+        }
+        return null;
+    }
 
     @GetMapping("/category")
     public String categoryList(String categoryName, int pNum, HttpSession session){

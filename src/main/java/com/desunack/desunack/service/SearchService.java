@@ -57,4 +57,15 @@ public class SearchService {
         }
         return false;
     }
+
+    public boolean brandList(HttpSession session) {
+        ArrayList<String> bList = searchDao.getAllBrand();
+
+        if(bList != null){
+            session.setAttribute("bList", bList);
+            return true;
+        }
+
+        return false;
+    }
 }

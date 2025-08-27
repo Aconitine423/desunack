@@ -27,11 +27,17 @@ public class HomeController {
         return "/signup/customerFrm";
     }
 
+    @GetMapping("/signup/sellerfrm")
+    public String sellerJoin() {
+        return "/signup/sellerFrm";
+    }
+
     @GetMapping("/member/login")
-    public String login1(){
+    public String login1() {
         log.info("=======login1이동");
         return "/member/login";
     }
+
     @GetMapping("/")
     public String home(HttpSession session) {
         Object userKind = session.getAttribute("m_kind");

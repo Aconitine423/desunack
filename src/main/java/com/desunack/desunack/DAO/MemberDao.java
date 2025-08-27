@@ -42,4 +42,7 @@ public interface MemberDao {
 
     String getCompanySales(int m_uid);
 
+    String getCustomerInfo(int uid);
+
+    String getSellerInfo(int uid);
 }

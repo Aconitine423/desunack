@@ -1,3 +1,5 @@
+const $termsBox = $('#joinTermsBox');
+const $termsCheckbox = $('#joinTermsCheckBox');
 const $signupForm = $('#signupForm');
 const $messageBox = $('#messageBox');
 
@@ -70,7 +72,7 @@ function checkUserNickname() {
 }
 
 // 전화번호 입력 필드에 숫자만 입력 가능하도록
-$('#phone2, #phone3').on('input', function() {
+$('#phone2, #phone3').on('input', function () {
     const $this = $(this);
     // 숫자 이외의 문자 제거
     $this.val($this.val().replace(/[^0-9]/g, '').substring(0, 4));
@@ -143,140 +145,131 @@ function validateForm() {
         $('#nicknameError').text('닉네임 중복 체크를 해주세요.').css('color', 'red');
         isValid = false;
     }
-        // 6. 성별 유효성 검사
-        if (!($('input[name="userGender"]:checked').val())) {
-            $('#genderError').text('성별을 선택해주세요.').css('color', 'red');
-            isValid = false;
+    // 6. 성별 유효성 검사
+    if (!($('input[name="userGender"]:checked').val())) {
+        $('#genderError').text('성별을 선택해주세요.').css('color', 'red');
+        isValid = false;
+    }
+
+    // 7. 생년월일 유효성 검사 (전부 선택여부)
+    const userBirthYear = $('#birthYear').val();
+    const userBirthMonth = $('#birthMonth').val();
+    const userBirthDay = $('#birthDay').val();
+    if (!userBirthYear || !userBirthMonth || !userBirthDay) {
+        $('#birthError').text('생년월일을 모두 선택해주세요.').css('color', 'red');
+        isValid = false;
+    }
+
+    // 8. 휴대폰번호 유효성 검사 (필수, 형식)
+    const userPhone2 = $('#phone2').val();
+    const userPhone3 = $('#phone3').val();
+    const phoneRegex = /^\d{4}$/;
+    if (userPhone2 === '' || userPhone3 === '') {
+        $('#phoneError').text('휴대폰 번호는 필수 입력 항목입니다.').css('color', 'red');
+        isValid = false;
+    } else if (!(phoneRegex.test(userPhone2)) || !(phoneRegex.test(userPhone3))) {
+        $('#phoneError').text('휴대폰 번호는 4자리 숫자로 입력해주세요.').css('color', 'red');
+        isValid = false;
+    }
+
+    // 9. 이메일 유효성 검사 (필수, 형식)
+    const userEmailLocal = $('#emailLocal').val();
+    const userEmailDomain = $('#emailDomain').val();
+    const emailRegex = /[^\s@]+\.[^\s@]+$/;
+    if (userEmailLocal === '' || userEmailDomain === '') {
+        $('#emailError').text('이메일은 필수 입력 항목입니다.').css('color', 'red');
+        isValid = false;
+    } else if (emailRegex.test(userEmailDomain)) {
+        $('#emailError').text('유효한 이메일 형식이 아닙니다.').css('color', 'red');
+        isValid = false;
+    }
+
+    // 10. 주소 유효성 검사
+    const userPost = $('#sample3_postcode').val();
+    const userAddress = $('#sample3_address').val();
+    const userExtraAddress = $('#sample3_extraAddress').val();
+    const userAddressDetail = $('#sample3_detailAddress').val();
+    if (userPost === '' || userAddress === '') {
+        $('#addressError').text('주소 검색을 통해 주소를 입력해주세요.').css('color', 'red');
+        isValid = false;
+    }
+
+    // 11. 약관 동의 체크 여부 확인
+    if (!($termsCheckbox.prop('checked'))) {
+        $messageBox.text('이용약관에 동의해주세요.').css('display', 'block');
+        return;
+    }
+
+    // 최종 유효성검사 통과시
+    if (isValid) {
+        // 날짜를 두 자리로 포맷하는 함수
+        function formatNumber(num) {
+            return num.toString().padStart(2, '0');
         }
 
-        // 7. 생년월일 유효성 검사 (전부 선택여부)
-        const userBirthYear = $('#birthYear').val();
-        const userBirthMonth = $('#birthMonth').val();
-        const userBirthDay = $('#birthDay').val();
-        if (!userBirthYear || !userBirthMonth || !userBirthDay) {
-            $('#birthError').text('생년월일을 모두 선택해주세요.').css('color', 'red');
-            isValid = false;
-        }
+        // 날짜 포맷팅
+        const birthYear = $year.val();
+        const formattedMonth = formatNumber($('#birthMonth').val());
+        const formattedDay = formatNumber($('#birthDay').val());
+        const userBirth = `${birthYear}-${formattedMonth}-${formattedDay}`;
 
-        // 8. 휴대폰번호 유효성 검사 (필수, 형식)
-        const userPhone2 = $('#phone2').val();
-        const userPhone3 = $('#phone3').val();
-        const phoneRegex = /^\d{4}$/;
-        if (userPhone2 === '' || userPhone3 === '') {
-            $('#phoneError').text('휴대폰 번호는 필수 입력 항목입니다.').css('color', 'red');
-            isValid = false;
-        } else if (!(phoneRegex.test(userPhone2)) || !(phoneRegex.test(userPhone3))) {
-            $('#phoneError').text('휴대폰 번호는 4자리 숫자로 입력해주세요.').css('color', 'red');
-            isValid = false;
-        }
-
-        // 9. 이메일 유효성 검사 (필수, 형식)
-        const userEmailLocal = $('#emailLocal').val();
-        const userEmailDomain = $('#emailDomain').val();
-        const emailRegex = /[^\s@]+\.[^\s@]+$/;
-        if (userEmailLocal === '' || userEmailDomain === '') {
-            $('#emailError').text('이메일은 필수 입력 항목입니다.').css('color', 'red');
-            isValid = false;
-        } else if (emailRegex.test(userEmailDomain)) {
-            $('#emailError').text('유효한 이메일 형식이 아닙니다.').css('color', 'red');
-            isValid = false;
-        }
-
-        // 10. 주소 유효성 검사
-        const userPost = $('#sample3_postcode').val();
-        const userAddress = $('#sample3_address').val();
-        const userExtraAddress = $('#sample3_extraAddress').val();
-        const userAddressDetail = $('#sample3_detailAddress').val();
-        if (userPost === '' || userAddress === '') {
-            $('#addressError').text('주소 검색을 통해 주소를 입력해주세요.').css('color', 'red');
-            isValid = false;
-        }
-
-        // 이용약관 스크롤링 해야 약관 동의 체크박스 활성화
-        const $termsBox = $('#joinTermsBox');
-        $termsBox.on('scroll', function () {
-            if (this.scrollHeight - this.scrollTop === this.clientHeight) {
-                $termsCheckbox.prop('disabled', false);
-            }
-        })
-
-        // 11. 약관 동의 체크 여부 확인
-        const $termsCheckbox = $('#joinTermsCheckBox');
-        if (!($termsCheckbox.prop('checked'))) {
-            $messageBox.text('이용약관에 동의해주세요.').css('display', 'block');
-            return;
-        }
-
-        // 최종 유효성검사 통과시
-        if (isValid) {
-            // 날짜를 두 자리로 포맷하는 함수
-            function formatNumber(num) {
-                return num.toString().padStart(2, '0');
-            }
-
-            // 날짜 포맷팅
-            const birthYear = $year.val();
-            const formattedMonth = formatNumber(birthMonth);
-            const formattedDay = formatNumber(birthDay);
-            const userBirth = `${birthYear}-${formattedMonth}-${formattedDay}`;
-
-            // 입력된 이메일 합치기
-            let userEmail = `${userEmailLocal}@${userEmailDomain}`;
+        // 입력된 이메일 합치기
+        let userEmail = `${userEmailLocal}@${userEmailDomain}`;
 
 
-            // 선택된 전화번호 합치기
-            const phone1 = $('#phone1').val();
-            const phone2 = $('#phone2').val();
-            const phone3 = $('#phone3').val();
-            const userPhone = `${phone1}-${phone2}-${phone3}`;
+        // 선택된 전화번호 합치기
+        const phone1 = $('#phone1').val();
+        const phone2 = $('#phone2').val();
+        const phone3 = $('#phone3').val();
+        const userPhone = `${phone1}-${phone2}-${phone3}`;
 
-            // 입력된 주소 합치기
-            const userAddress = userAddress + userExtraAddress;
+        // 입력된 주소 합치기
+        const userAddress = userAddress + userExtraAddress;
 
-            // 입력된 파라미터 묶음
-            const formData = {
-                userId: $('#userId').val(),
-                userPw: $('#userPassword').val(),
-                userName: $('#userName').val(),
-                customerNickname: $('#userNickname').val(),
-                customerGender: $('input[name="userGender"]:checked').val(),
-                customerBDay: userBirth,
-                userPhone: userPhone,
-                userEmail: userEmail,
-                userPost: $('#sample3_postcode').val(),
-                userAddress: userAddress,
-                userAddressDetail: $('#sample3_detailAddress').val(),
-                userKind: 'C',
-                userStatus: '1',
-                userSignupDate: new Date(),
-                userRecentDate: new Date()
-            };
+        // 입력된 파라미터 묶음
+        const formData = {
+            userId: $('#userId').val(),
+            userPw: $('#userPassword').val(),
+            userName: $('#userName').val(),
+            customerNickname: $('#userNickname').val(),
+            customerGender: $('input[name="userGender"]:checked').val(),
+            customerBDay: userBirth,
+            userPhone: userPhone,
+            userEmail: userEmail,
+            userPost: $('#sample3_postcode').val(),
+            userAddress: userAddress,
+            userAddressDetail: $('#sample3_detailAddress').val(),
+            userKind: 'C',
+            userStatus: '1',
+            userSignupDate: new Date(),
+            userRecentDate: new Date()
+        };
 
-            console.log('formData', formData);
+        console.log('formData', formData);
 
-            // 엑시오스로 데이터 전송
-            axios.post('/signup/customerJoin', formData)
-                .then(function (response) {
-                    console.log("회원가입 성공: ", response.data);
-                    $messageBox.text('회원가입이 완료되었습니다.').css('display', 'block').css('color', 'blue');
-                    setTimeout(function () {
-                        $messageBox.hide();
-                        window.location.href = '/member/login'; // 로그인 페이지로
-                    }, 3000);
-                })
-                .catch(function (error) {
-                    console.log("회원가입 실패:", error);
-                    if (error.response && error.response.data) {
-                        $messageBox.text(error.response.data).css('display', 'block').css('color', 'red');
-                    } else {
-                        $messageBox.text('회원가입에 실패했습니다.').css('display', 'block').css('color', 'red');
-                    }
-                });
-        } else {
-            // 유효성검사 실패시 메시지박스에 표시
-            $messageBox.text('입력 정보를 다시 확인해주세요.').css('display', 'block').css('color', 'red');
-        }
-        return isValid;
+        // 엑시오스로 데이터 전송
+        axios.post('/signup/customerJoin', formData)
+            .then(function (response) {
+                console.log("회원가입 성공: ", response.data);
+                $messageBox.text('회원가입이 완료되었습니다.').css('display', 'block').css('color', 'blue');
+                setTimeout(function () {
+                    $messageBox.hide();
+                    window.location.href = '/member/login'; // 로그인 페이지로
+                }, 3000);
+            })
+            .catch(function (error) {
+                console.log("회원가입 실패:", error);
+                if (error.response && error.response.data) {
+                    $messageBox.text(error.response.data).css('display', 'block').css('color', 'red');
+                } else {
+                    $messageBox.text('회원가입에 실패했습니다.').css('display', 'block').css('color', 'red');
+                }
+            });
+    } else {
+        // 유효성검사 실패시 메시지박스에 표시
+        $messageBox.text('입력 정보를 다시 확인해주세요.').css('display', 'block').css('color', 'red');
+    }
+    return isValid;
 }
 
 // 회원가입 버튼 클릭시 이벤트 제어
@@ -286,6 +279,12 @@ $signupForm.on('submit', function (event) {
     $messageBox.show().removeClass().addClass('message-box');
 })
 
+// 이용약관 스크롤링 해야 약관 동의 체크박스 활성화
+$termsBox.on('scroll', function () {
+    if (this.scrollHeight - this.scrollTop === this.clientHeight) {
+        $termsCheckbox.prop('disabled', false);
+    }
+})
 // 입력필드 포커스아웃 이벤트 발생 추가 (실시간으로 유효성 검사)
 // 1. 아이디 입력창
 $('#userId').on('focusout', function () {
@@ -349,7 +348,7 @@ $('#userNickname').on('focusout', function () {
 });
 
 // 6. 휴대폰번호 입력창
-    const phoneRegex = /^\d{4}$/;
+const phoneRegex = /^\d{4}$/;
 $('#phone2').on('focusout', function () {
     const userPhone2 = $('#phone2').val();
     if (userPhone2 === '') {

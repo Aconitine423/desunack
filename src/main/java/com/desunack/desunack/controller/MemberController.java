@@ -33,7 +33,6 @@ public class MemberController {
         }
     }
 
-
     // 회원가입 아이디 중복체크
     @PostMapping("/signup/checkUserId")
     public ResponseEntity<Boolean> checkUserId(@RequestBody UserDto userDto){
@@ -76,5 +75,22 @@ public class MemberController {
             }
         }
         return null;
+    }
+    @PostMapping("/find-id")
+    public String findId(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr){
+        if(mSer.findId(userDto.getUserName(),userDto.getUserEmail(), rttr)){
+            return "/";
+        }
+        rttr.addFlashAttribute("msg", "일치하는 결과가 없습니다.");
+        return "/";
+    }
+
+    @PostMapping("/find-pw")
+    public String findPw(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr){
+        if(mSer.findPw(userDto.getUserId(),userDto.getUserEmail(),rttr)){
+            return "/";
+        }
+        rttr.addFlashAttribute("msg", "일치하는 결과가 없습니다");
+        return "/";
     }
 }

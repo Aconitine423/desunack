@@ -123,9 +123,12 @@ function validateSellerForm() {
     }
 
     // 7. 이메일 유효성 검사 (필수, 형식)
-    const sellerEmailLocal = $('#sellerEmailLocal').val();
-    const sellerEmailDomain = $('#sellerEmailDomain').val();
-    const emailRegex = /^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}/;
+    const sellerEmailLocal = $('#sellerEmailLocal').val().trim();
+    const sellerEmailDomain = $('#sellerEmailDomain').val().trim();
+    const emailRegex = /[^\s@]+\.[^\s@]+$/;
+    // /^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/gm
+    // /^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/
+    // /[^\s@]+\.[^\s@]+$/gm
     if (sellerEmailLocal === '' || sellerEmailDomain === '') {
         $('#sellerEmailError').text('이메일은 필수 입력 항목입니다.').css('color', 'red');
         isValid = false;
@@ -172,7 +175,7 @@ function validateSellerForm() {
         const sellerTel = `${tel1}-${tel2}-${tel3}`;
 
         // 입력된 주소 합치기
-        const sellerAddress = sellerAddress + sellerExtraAddress;
+        const userAddress = sellerAddress + sellerExtraAddress;
 
         // 입력된 파라미터 묶음
         const sellerFormData = {
@@ -186,7 +189,7 @@ function validateSellerForm() {
             userEmail: sellerEmail,
             sellerDelivery: $('#sellerDelivery').val(),
             userPost: $('#seller_sample3_postcode').val(),
-            userAddress: sellerAddress,
+            userAddress: userAddress,
             userAddressDetail: $('#seller_sample3_detailAddress').val(),
             userKind: 'S',
             userStatus: '1',
@@ -319,7 +322,7 @@ $tel.on('focusout', function () {
 
 // 7. 이메일 입력창
 $('#sellerEmailLocal').on('focusout', function () {
-    const sellerEmailLocal = $('#sellerEmailLocal').val();
+    const sellerEmailLocal = $('#sellerEmailLocal').val().trim();
     if (sellerEmailLocal === '') {
         $('#sellerEmailError').text('이메일 주소 아이디를 입력해주세요.').css('color', 'red');
     } else {
@@ -327,10 +330,13 @@ $('#sellerEmailLocal').on('focusout', function () {
     }
 })
 $('#sellerEmailDomain').on('focusout', function () {
-    const sellerEmailDomain = $('#sellerEmailDomain').val();
+    const sellerEmailDomain = $('#sellerEmailDomain').val().trim();
+    const emailRegex = /[^\s@]+\.[^\s@]+$/;
     if (sellerEmailDomain === '') {
         $('#sellerEmailError').text('이메일 주소 도메인을 입력해주세요.').css('color', 'red');
-    } else {
+    } else if (!emailRegex.test(sellerEmailDomain)) {
+        $('#sellerEmailError').text('유효한 이메일 형식이 아닙니다.').css('color', 'red');
+    }else {
         $('#sellerEmailError').text('');
     }
 })

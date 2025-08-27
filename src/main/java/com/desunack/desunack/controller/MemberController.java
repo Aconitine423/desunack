@@ -49,7 +49,7 @@ public class MemberController {
         return ResponseEntity.ok(isUsedNickname);
     }
 
-
+    //로그인
     @PostMapping("/member/login1")
     public String login1(@RequestParam String id, String pw, Model model, HttpSession session, RedirectAttributes rttr){
 
@@ -61,5 +61,36 @@ public class MemberController {
         rttr.addFlashAttribute("msg","로그인에 실패했습니다. 아이디 혹은 비밀번호를 확인해주세요");
 
         return null;
+    }
+
+    @PostMapping("/mypage")
+    public String getCustomerInfo(@RequestBody UserDto uDto, HttpSession session){
+        if(uDto.getUserKind() == 'C') {
+            if (mSer.getCustomerInfo(uDto.getUserUid(), session)) {
+                return null;
+            }
+        }else if(uDto.getUserKind() == 'S') {
+            if (mSer.getSellerInfo(uDto.getUserUid(), session)) {
+                return null;
+            }
+        }
+        return null;
+    }
+    @PostMapping("/find-id")
+    public String findId(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr){
+        if(mSer.findId(userDto.getUserName(),userDto.getUserEmail(), rttr)){
+            return "/";
+        }
+        rttr.addFlashAttribute("msg", "일치하는 결과가 없습니다.");
+        return "/";
+    }
+
+    @PostMapping("/find-pw")
+    public String findPw(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr){
+        if(mSer.findPw(userDto.getUserId(),userDto.getUserEmail(),rttr)){
+            return "/";
+        }
+        rttr.addFlashAttribute("msg", "일치하는 결과가 없습니다");
+        return "/";
     }
 }

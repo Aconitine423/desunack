@@ -117,10 +117,27 @@
         </div>
         <span id="sellerEmailError" class="errorMsg"></span>
     </div>
+<!--  계약된 택배사 (선택)  -->
+    <div class="inputGroup">
+        <label for="sellerDelivery">택배사</label>
+        <div class="inputContainer">
+            <select id="sellerDelivery" name="sellerDelivery">
+                <option value="" selected disabled hidden>택배사 선택</option>
+                <option value="CJ대한통운">CJ대한통운</option>
+                <option value="우체국택배">우체국택배</option>
+                <option value="한진택배">한진택배</option>
+                <option value="롯데택배">롯데택배</option>
+                <option value="로젠택배">로젠택배</option>
+                <option value="경동택배">경동택배</option>
+                <option value="자체배송">자체배송</option>
+            </select>
+        </div>
+<!--        <span id="sellerDeliveryError" class="errorMsg"></span>-->
+    </div>
     <!--  주소 입력  -->
     <!--  카카오 우편번호 api 활용  -->
     <div class="inputGroup">
-        <label for="searchPostBtn">주소</label>
+        <label for="seller_searchPostBtn">주소</label>
         <div class="inputContainer addressContainer">
             <input type="text" class="inputForm" id="seller_sample3_postcode" size="4" name="userPost" placeholder="우편번호">
             <input type="button" id="seller_searchPostBtn" onclick="sample3_execDaumPostcode()" class="checkBtn"
@@ -142,23 +159,6 @@
             </div>
             <span id="sellerAddressError" class="errorMsg"></span>
         </div>
-    </div>
-<!--  계약된 택배사  -->
-    <div class="inputGroup">
-        <label for="sellerDelivery">택배사</label>
-        <div class="inputContainer">
-            <select id="sellerDelivery" name="sellerDelivery">
-                <option value="" selected disabled hidden>택배사 선택</option>
-                <option value="CJ대한통운">CJ대한통운</option>
-                <option value="우체국택배">우체국택배</option>
-                <option value="한진택배">한진택배</option>
-                <option value="롯데택배">롯데택배</option>
-                <option value="로젠택배">로젠택배</option>
-                <option value="경동택배">경동택배</option>
-                <option value="자체배송">자체배송</option>
-            </select>
-        </div>
-        <span id="sellerDeliveryError" class="errorMsg"></span>
     </div>
     <!--  이용약관  -->
     <div class="inputGroup termsGroup">
@@ -191,7 +191,7 @@
         </div>
     </div>
     <!--  submit 메시지 박스  -->
-    <div id="messageBox" class="messageBox" role="alert"></div>
+    <div id="sellerMessageBox" class="messageBox" role="alert"></div>
 
     <!--  가입하기 / 취소  -->
     <div class="signupFormBtn btnGroup">

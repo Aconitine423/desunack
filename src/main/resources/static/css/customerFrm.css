@@ -20,6 +20,7 @@ body{
     max-width: 800px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: flow-root;
 }
 
 /* 인풋 그룹: 라벨, 인풋창 정렬용 flexbox 컨테이너 */

@@ -126,13 +126,10 @@ function validateSellerForm() {
     const sellerEmailLocal = $('#sellerEmailLocal').val().trim();
     const sellerEmailDomain = $('#sellerEmailDomain').val().trim();
     const emailRegex = /[^\s@]+\.[^\s@]+$/;
-    // /^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/gm
-    // /^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/
-    // /[^\s@]+\.[^\s@]+$/gm
     if (sellerEmailLocal === '' || sellerEmailDomain === '') {
         $('#sellerEmailError').text('이메일은 필수 입력 항목입니다.').css('color', 'red');
         isValid = false;
-    } else if (emailRegex.test(sellerEmailDomain)) {
+    } else if (!emailRegex.test(sellerEmailDomain)) {
         $('#sellerEmailError').text('유효한 이메일 형식이 아닙니다.').css('color', 'red');
         isValid = false;
     }

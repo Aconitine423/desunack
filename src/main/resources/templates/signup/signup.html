@@ -100,7 +100,7 @@
             height: 90%;
             max-width: 120rem;
             position: relative;
-            overflow: auto;
+            overflow: hidden;
         }
 
     /*  iframe 스타일  */
@@ -136,13 +136,13 @@
     <p>가입하려는 회원 유형을 선택해주세요.</p>
     <div class="btnContainer">
 <!--    소비자 회원가입 버튼    -->
-        <a href="/js/customerfrm" id="customerJoinBtn" class="signupBtn">
+        <a href="/signup/customerfrm" id="customerJoinBtn" class="signupBtn">
             <h2>일반 회원</h2>
             <p>개인 구매를 하는 소비자 회원</p>
         </a>
 
 <!--    판매자 회원가입 버튼    -->
-        <a href="/js/sellerfrm" id="sellerJoinBtn" class="signupBtn">
+        <a href="/signup/sellerfrm" id="sellerJoinBtn" class="signupBtn">
             <h2>판매 회원</h2>
             <p>상품 판매를 하는 판매자 회원</p>
         </a>
@@ -153,43 +153,57 @@
     <div class="modalContent">
         <span class="closeBtn">&times;</span>
 <!--    customerFrm.html 로드할 iframe    -->
-        <iframe id="customerModalIframe" class="modalIframe" src="" title="소비자 회원가입 페이지"></iframe>
+        <iframe id="signupModalIframe" class="modalIframe" src="" title="회원가입 페이지"></iframe>
     </div>
 </div>
 </body>
 <script th:inline="javascript">
-    const $customerModalIframe = $('#customerModalIframe');
+    const $signupModalIframe = $('#signupModalIframe');
     // iframe의 높이를 내부 콘텐츠에 맞게 조절하는 함수
-    function resizeIframe() {
-        try {
-            // iframe 내부 문서의 body 높이를 가져와서 iframe에 적용
-            const iframeBody = $customerModalIframe.contents().find('body')[0];
-            if (iframeBody) {
-                $customerModalIframe.css('height', iframeBody.scrollHeight + 'px');
-            }
-        } catch (e) {
-            console.error("Iframe content cannot be accessed due to security restrictions:", e);
-            // 외부 도메인일 경우 예외 처리
-            // 여기서는 동일 출처이므로 발생하지 않음
-        }
-    }
+    // function resizeIframe() {
+    //     try {
+    //         // iframe 내부 문서의 body 높이를 가져와서 iframe에 적용
+    //         const customerIframeBody = $customerModalIframe.contents().find('body')[0];
+    //         const sellerIframeBody = $sellerModalIframe.contents().find('body')[0];
+    //         if (customerIframeBody) {
+    //             $customerModalIframe.css('height', customerIframeBody.scrollHeight + 'px');
+    //         }
+    //         if (sellerIframeBody) {
+    //             $sellerModalIframe.css('height', sellerIframeBody.scrollHeight + 'px');
+    //         }
+    //     } catch (e) {
+    //         console.error("Iframe content cannot be accessed due to security restrictions:", e);
+    //         // 외부 도메인일 경우 예외 처리
+    //         // 여기서는 동일 출처이므로 발생하지 않음
+    //     }
+    // }
 
     // 일반회원 버튼 클릭시 모달 열기
     $("#customerJoinBtn").on('click', function (event) {
         event.preventDefault();
-        $("#customerModalIframe").attr("src", "/signup/customerfrm");
+        $("#signupModalIframe").attr("src", "/signup/customerfrm");
+        $("#signupModal").css("display", "flex");
+    })
+
+    // 판매회원 버튼 클릭시 모달 열기
+    $("#sellerJoinBtn").on('click', function (event) {
+        event.preventDefault();
+        $("#signupModalIframe").attr("src", "/signup/sellerfrm");
         $("#signupModal").css("display", "flex");
     })
 
     // iframe 로드가 완료되면 높이 조절 함수 호출
-    $customerModalIframe.on('load', function() {
-        resizeIframe();
-    });
+    // $customerModalIframe.on('load', function() {
+    //     resizeIframe();
+    // });
+    // $sellerModalIframe.on('load', function() {
+    //     resizeIframe();
+    // })
 
     // 닫기 버튼 클릭시 모달 닫기
     $(".closeBtn").on('click', function () {
         $("#signupModal").css("display", "none");
-        $("#customerModalIframe").attr("src", "");
+        $signupModalIframe.attr("src", "");
     })
 </script>
 </html>

@@ -30,6 +30,9 @@
         on goods.g_id = goods_total_sales.gts_g_id join category on goods.g_cat_key = category.cat_key where cat_name = #{categoryName}
         order by goods_total_sales.gts_sales desc;
     </select>
+    <select id="getAllBrand" resultType="java.lang.String">
+        select distinct brand_name from goods order by brand_name;
+    </select>
 
 
 </mapper>

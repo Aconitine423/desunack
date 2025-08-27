@@ -367,12 +367,13 @@ $('#userNickname').on('focusout', function () {
 });
 
 // 6. 휴대폰번호 입력창
+    const phoneRegex = /^\d{4}$/;
 $('#phone2').on('focusout', function () {
     const userPhone2 = $('#phone2').val();
     if (userPhone2 === '') {
         $('#phoneError').text('휴대폰 번호는 필수 입력 항목입니다.').css('color', 'red');
-    } else if (typeof userPhone2 !== 'number') {
-        $('#phoneError').text('휴대폰 번호는 숫자로 입력해주세요.').css('color', 'red');
+    } else if (!phoneRegex.test(userPhone2)) {
+        $('#phoneError').text('휴대폰 번호는 4자리 숫자로 입력해주세요.').css('color', 'red');
     } else {
         $('#phoneError').text('');
     }
@@ -381,8 +382,8 @@ $('#phone3').on('focusout', function () {
     const userPhone3 = $('#phone3').val();
     if (userPhone3 === '') {
         $('#phoneError').text('휴대폰 번호는 필수 입력 항목입니다.').css('color', 'red');
-    } else if (typeof userPhone3 !== 'number') {
-        $('#phoneError').text('휴대폰 번호는 숫자로 입력해주세요.').css('color', 'red');
+    } else if (!phoneRegex.test(userPhone3)) {
+        $('#phoneError').text('휴대폰 번호는 4자리 숫자로 입력해주세요.').css('color', 'red');
     } else {
         $('#phoneError').text('');
     }

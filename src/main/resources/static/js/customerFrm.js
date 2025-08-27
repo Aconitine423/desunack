@@ -175,7 +175,7 @@ function validateForm() {
     // 9. 이메일 유효성 검사 (필수, 형식)
     const userEmailLocal = $('#emailLocal').val();
     const userEmailDomain = $('#emailDomain').val();
-    const emailRegex = /[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}/;
     if (userEmailLocal === '' || userEmailDomain === '') {
         $('#emailError').text('이메일은 필수 입력 항목입니다.').css('color', 'red');
         isValid = false;

@@ -11,4 +11,6 @@ public interface SearchDao {
     ArrayList<Integer> sweetenerFilter(ArrayList<String> sweetenerList);
 
     ArrayList<Integer> AllergyFilter(ArrayList<String> AllergyList);
+
+    String categorySearch(String categoryName, int startIdx, int size);
 }

@@ -8,7 +8,7 @@ let isSellerIdChecked = false; // 중복 체크 여부
 let isSellerIdAvailable = false; // 중복 체크 여부 상태 저장
 
 // 아이디 중복체크
-function checkSellerId() {
+$('#checkSellerId').on('click', function () {
     const sellerId = $('#sellerId').val();
     // 중복 체크 여부 초기화
     isSellerIdChecked = false;
@@ -35,8 +35,10 @@ function checkSellerId() {
         .catch(function (error) {
             console.log('아이디 중복체크 실패: ', error);
             $('#sellerIdError').text('아이디 중복체크에 실패했습니다.').css('color', 'red');
-        })
-}
+        });
+});
+// function checkSellerId() {
+// }
 
 // 전화번호 입력 필드에 숫자만 입력 가능하도록
 $('#tel2, #tel3').on('input', function () {
@@ -123,7 +125,7 @@ function validateSellerForm() {
     // 7. 이메일 유효성 검사 (필수, 형식)
     const sellerEmailLocal = $('#sellerEmailLocal').val();
     const sellerEmailDomain = $('#sellerEmailDomain').val();
-    const emailRegex = /[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}/;
     if (sellerEmailLocal === '' || sellerEmailDomain === '') {
         $('#sellerEmailError').text('이메일은 필수 입력 항목입니다.').css('color', 'red');
         isValid = false;
@@ -132,16 +134,15 @@ function validateSellerForm() {
         isValid = false;
     }
 
-    // 8. 택배사 유효성 검사 (선택여부)
-    // const userBirthYear = $('#birthYear').val();
-    // const userBirthMonth = $('#birthMonth').val();
-    // const userBirthDay = $('#birthDay').val();
-    // if (!userBirthYear || !userBirthMonth || !userBirthDay) {
-    //     $('#birthError').text('생년월일을 모두 선택해주세요.').css('color', 'red');
-    //     isValid = false;
-    // }
+    // 8. 사업자번호 유효성 검사
+    const sellerNum = $('#sellerNum').val();
+    if (sellerNum === '') {
+        $('#sellerNumError').text('사업자번호는 필수 입력 항목입니다.').css('color', 'red');
+    } else if (sellerNum.length !== 12) {
+        $('#sellerNumError').text('사업자번호는 하이픈 (-) 포함하여 12자로 입력해주세요.').css('color', 'red');
+    }
 
-    // 10. 주소 유효성 검사
+    // 9. 주소 유효성 검사
     const sellerPost = $('#seller_sample3_postcode').val();
     const sellerAddress = $('#seller_sample3_address').val();
     const sellerExtraAddress = $('#seller_sample3_extraAddress').val();
@@ -288,9 +289,9 @@ $('#sellerName').on('focusout', function () {
 $('#sellerNum').on('focusout', function () {
     const sellerNum = $('#sellerNum').val();
     if (sellerNum === '') {
-        $('#sellerNumError').text('닉네임은 필수 입력 항목입니다.').css('color', 'red');
-    } else if (sellerNum.length < 20) {
-        $('#sellerNumError').text('닉네임은 최대 20자까지 가능합니다.').css('color', 'red');
+        $('#sellerNumError').text('사업자번호는 필수 입력 항목입니다.').css('color', 'red');
+    } else if (sellerNum.length !== 12) {
+        $('#sellerNumError').text('사업자번호는 하이픈 (-) 포함하여 12자로 입력해주세요.').css('color', 'red');
     } else {
         $('#sellerNumError').text('');
     }

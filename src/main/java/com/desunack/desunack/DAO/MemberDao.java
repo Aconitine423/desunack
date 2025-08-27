@@ -27,8 +27,15 @@ public interface MemberDao {
 
     boolean customerJoin(CustomerEntity customerEntity);
 
-    @Select("select ifnull(max(m_uid),0) from member where m_kind = 'C'")
+    @Select("select ifnull(max(m_uid), 0) from member where m_kind = 'C'")
     int maxCustomerUid();
+
+    @Select("select ifnull(max(m_uid), 0) from member where m_kind = 'S'")
+    int maxSellerUid();
+
+    void sMemberJoin(SellerEntity sellerEntity);
+
+    void sellerJoin(SellerEntity sellerEntity);
 
     @Select("select count(*) from member where m_id = #{mId}")
     boolean isUsedId(String mId);
@@ -45,4 +52,5 @@ public interface MemberDao {
     String getCustomerInfo(int uid);
 
     String getSellerInfo(int uid);
+
 }

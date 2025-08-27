@@ -1,6 +1,7 @@
 package com.desunack.desunack.controller;
 
 import com.desunack.desunack.DTO.CustomerDto;
+import com.desunack.desunack.DTO.SellerDto;
 import com.desunack.desunack.DTO.UserDto;
 import com.desunack.desunack.service.MemberService;
 import jakarta.servlet.http.HttpSession;
@@ -26,6 +27,17 @@ public class MemberController {
     public ResponseEntity<String> joinCustomer(@RequestBody CustomerDto customerDto){
         log.info("======customerDto={}", customerDto);
         boolean result = mSer.customerJoin(customerDto);
+        if(result){
+            return ResponseEntity.ok("회원가입 성공");
+        } else {
+            return ResponseEntity.badRequest().body("회원가입 실패");
+        }
+    }
+    // 판매자 회원가입
+    @PostMapping("/signup/sellerJoin")
+    public ResponseEntity<String> joinSeller(@RequestBody SellerDto sellerDto){
+        log.info("======sellerDto={}", sellerDto);
+        boolean result = mSer.sellerJoin(sellerDto);
         if(result){
             return ResponseEntity.ok("회원가입 성공");
         } else {

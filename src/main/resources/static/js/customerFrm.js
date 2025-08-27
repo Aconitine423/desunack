@@ -142,7 +142,7 @@ function validateForm() {
     } else if (!isNicknameChecked || !isNicknameAvailable) {
         $('#nicknameError').text('닉네임 중복 체크를 해주세요.').css('color', 'red');
         isValid = false;
-
+    }
         // 6. 성별 유효성 검사
         if (!($('input[name="userGender"]:checked').val())) {
             $('#genderError').text('성별을 선택해주세요.').css('color', 'red');
@@ -277,7 +277,6 @@ function validateForm() {
             $messageBox.text('입력 정보를 다시 확인해주세요.').css('display', 'block').css('color', 'red');
         }
         return isValid;
-    }
 }
 
 // 회원가입 버튼 클릭시 이벤트 제어

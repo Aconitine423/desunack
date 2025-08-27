@@ -1,3 +1,5 @@
+const $sellerTermsBox = $('#sellerJoinTermsBox');
+const $sellerTermsCheckbox = $('#sellerJoinTermsCheckBox');
 const $sellerSignupForm = $('#sellerSignupForm');
 const $sellerMessageBox = $('#sellerMessageBox');
 
@@ -44,7 +46,7 @@ $('#tel2, #tel3').on('input', function () {
 });
 
 // 유효성 검사
-function validateForm() {
+function validateSellerForm() {
     let isValid = true;
 
 
@@ -118,229 +120,229 @@ function validateForm() {
         isValid = false;
     }
 
-        // 7. 이메일 유효성 검사 (필수, 형식)
-        const sellerEmailLocal = $('#sellerEmailLocal').val();
-        const sellerEmailDomain = $('#sellerEmailDomain').val();
-        const emailRegex = /[^\s@]+\.[^\s@]+$/;
-        if (sellerEmailLocal === '' || sellerEmailDomain === '') {
-            $('#sellerEmailError').text('이메일은 필수 입력 항목입니다.').css('color', 'red');
-            isValid = false;
-        } else if (emailRegex.test(sellerEmailDomain)) {
-            $('#sellerEmailError').text('유효한 이메일 형식이 아닙니다.').css('color', 'red');
-            isValid = false;
-        }
+    // 7. 이메일 유효성 검사 (필수, 형식)
+    const sellerEmailLocal = $('#sellerEmailLocal').val();
+    const sellerEmailDomain = $('#sellerEmailDomain').val();
+    const emailRegex = /[^\s@]+\.[^\s@]+$/;
+    if (sellerEmailLocal === '' || sellerEmailDomain === '') {
+        $('#sellerEmailError').text('이메일은 필수 입력 항목입니다.').css('color', 'red');
+        isValid = false;
+    } else if (emailRegex.test(sellerEmailDomain)) {
+        $('#sellerEmailError').text('유효한 이메일 형식이 아닙니다.').css('color', 'red');
+        isValid = false;
+    }
 
-        // 8. 택배사 유효성 검사 (선택여부)
-        // const userBirthYear = $('#birthYear').val();
-        // const userBirthMonth = $('#birthMonth').val();
-        // const userBirthDay = $('#birthDay').val();
-        // if (!userBirthYear || !userBirthMonth || !userBirthDay) {
-        //     $('#birthError').text('생년월일을 모두 선택해주세요.').css('color', 'red');
-        //     isValid = false;
-        // }
+    // 8. 택배사 유효성 검사 (선택여부)
+    // const userBirthYear = $('#birthYear').val();
+    // const userBirthMonth = $('#birthMonth').val();
+    // const userBirthDay = $('#birthDay').val();
+    // if (!userBirthYear || !userBirthMonth || !userBirthDay) {
+    //     $('#birthError').text('생년월일을 모두 선택해주세요.').css('color', 'red');
+    //     isValid = false;
+    // }
 
-        // 10. 주소 유효성 검사
-        const sellerPost = $('#seller_sample3_postcode').val();
-        const sellerAddress = $('#seller_sample3_address').val();
-        const sellerExtraAddress = $('#seller_sample3_extraAddress').val();
-        const sellerAddressDetail = $('#seller_sample3_detailAddress').val();
-        if (sellerPost === '' || sellerAddress === '') {
-            $('#sellerAddressError').text('주소 검색을 통해 주소를 입력해주세요.').css('color', 'red');
-            isValid = false;
-        }
-
-        // 이용약관 스크롤링 해야 약관 동의 체크박스 활성화
-        const $sellerTermsBox = $('#sellerJoinTermsBox');
-        const $sellerTermsCheckbox = $('#sellerJoinTermsCheckBox');
-        $sellerTermsBox.on('scroll', function () {
-            if (this.scrollHeight - this.scrollTop === this.clientHeight) {
-                $sellerTermsCheckbox.prop('disabled', false);
-            }
-        })
-
-        // 11. 약관 동의 체크 여부 확인
-        if (!($sellerTermsCheckbox.prop('checked'))) {
-            $sellerMessageBox.text('이용약관에 동의해주세요.').css('display', 'block');
-            return;
-        }
-
-        // 최종 유효성검사 통과시
-        if (isValid) {
-            // 입력된 이메일 합치기
-            let sellerEmail = `${sellerEmailLocal}@${sellerEmailDomain}`;
+    // 10. 주소 유효성 검사
+    const sellerPost = $('#seller_sample3_postcode').val();
+    const sellerAddress = $('#seller_sample3_address').val();
+    const sellerExtraAddress = $('#seller_sample3_extraAddress').val();
+    const sellerAddressDetail = $('#seller_sample3_detailAddress').val();
+    if (sellerPost === '' || sellerAddress === '') {
+        $('#sellerAddressError').text('주소 검색을 통해 주소를 입력해주세요.').css('color', 'red');
+        isValid = false;
+    }
 
 
-            // 선택된 전화번호 합치기
-            const tel1 = $('#tel1').val();
-            const tel2 = $('#tel2').val();
-            const tel3 = $('#tel3').val();
-            const userPhone = `${phone1}-${phone2}-${phone3}`;
+    // 11. 약관 동의 체크 여부 확인
+    if (!($sellerTermsCheckbox.prop('checked'))) {
+        $sellerMessageBox.text('이용약관에 동의해주세요.').css('display', 'block');
+        return;
+    }
 
-            // 입력된 주소 합치기
-            const userAddress = userAddress + userExtraAddress;
+    // 최종 유효성검사 통과시
+    if (isValid) {
+        // 입력된 이메일 합치기
+        let sellerEmail = `${sellerEmailLocal}@${sellerEmailDomain}`;
 
-            // 입력된 파라미터 묶음
-            const formData = {
-                userId: $('#userId').val(),
-                userPw: $('#userPassword').val(),
-                userName: $('#userName').val(),
-                customerNickname: $('#userNickname').val(),
-                customerGender: $('input[name="userGender"]:checked').val(),
-                customerBDay: userBirth,
-                userPhone: userPhone,
-                userEmail: userEmail,
-                userPost: $('#sample3_postcode').val(),
-                userAddress: userAddress,
-                userAddressDetail: $('#sample3_detailAddress').val(),
-                userKind: 'C',
-                userStatus: '1',
-                userSignupDate: new Date(),
-                userRecentDate: new Date()
-            };
 
-            console.log('formData', formData);
+        // 선택된 전화번호 합치기
+        const tel1 = $('#tel1').val();
+        const tel2 = $('#tel2').val();
+        const tel3 = $('#tel3').val();
+        const sellerTel = `${tel1}-${tel2}-${tel3}`;
 
-            // 엑시오스로 데이터 전송
-            axios.post('/signup/customerJoin', formData)
-                .then(function (response) {
-                    console.log("회원가입 성공: ", response.data);
-                    $messageBox.text('회원가입이 완료되었습니다.').css('display', 'block').css('color', 'blue');
-                    setTimeout(function () {
-                        $messageBox.hide();
-                        window.location.href = '/member/login'; // 로그인 페이지로
-                    }, 3000);
-                })
-                .catch(function (error) {
-                    console.log("회원가입 실패:", error);
-                    if (error.response && error.response.data) {
-                        $messageBox.text(error.response.data).css('display', 'block').css('color', 'red');
-                    } else {
-                        $messageBox.text('회원가입에 실패했습니다.').css('display', 'block').css('color', 'red');
-                    }
-                });
-        } else {
-            // 유효성검사 실패시 메시지박스에 표시
-            $messageBox.text('입력 정보를 다시 확인해주세요.').css('display', 'block').css('color', 'red');
-        }
-        return isValid;
+        // 입력된 주소 합치기
+        const sellerAddress = sellerAddress + sellerExtraAddress;
+
+        // 입력된 파라미터 묶음
+        const sellerFormData = {
+            userId: $('#sellerId').val(),
+            userPw: $('#sellerPassword').val(),
+            userName: $('#sellerName').val(),
+            sellerNum: $('#sellerNum').val(),
+            userPhone: sellerTel,
+            sellerBank: $('#sellerBank').val(),
+            sellerAccount: $('#sellerAccount').val(),
+            userEmail: sellerEmail,
+            sellerDelivery: $('#sellerDelivery').val(),
+            userPost: $('#seller_sample3_postcode').val(),
+            userAddress: sellerAddress,
+            userAddressDetail: $('#seller_sample3_detailAddress').val(),
+            userKind: 'S',
+            userStatus: '1',
+            userSignupDate: new Date(),
+            userRecentDate: new Date()
+        };
+
+        console.log('sellerFormData', sellerFormData);
+
+        // 엑시오스로 데이터 전송
+        axios.post('/signup/sellerJoin', sellerFormData)
+            .then(function (response) {
+                console.log("회원가입 성공: ", response.data);
+                $sellerMessageBox.text('회원가입이 완료되었습니다.').css('display', 'block').css('color', 'blue');
+                setTimeout(function () {
+                    $sellerMessageBox.hide();
+                    window.location.href = '/member/login'; // 로그인 페이지로
+                }, 3000);
+            })
+            .catch(function (error) {
+                console.log("회원가입 실패:", error);
+                if (error.response && error.response.data) {
+                    $sellerMessageBox.text(error.response.data).css('display', 'block').css('color', 'red');
+                } else {
+                    $sellerMessageBox.text('회원가입에 실패했습니다.').css('display', 'block').css('color', 'red');
+                }
+            });
+    } else {
+        // 유효성검사 실패시 메시지박스에 표시
+        $sellerMessageBox.text('입력 정보를 다시 확인해주세요.').css('display', 'block').css('color', 'red');
+    }
+    return isValid;
 }
 
 // 회원가입 버튼 클릭시 이벤트 제어
-$signupForm.on('submit', function (event) {
+$sellerSignupForm.on('submit', function (event) {
     event.preventDefault();
-    validateForm();
-    $messageBox.show().removeClass().addClass('message-box');
+    validateSellerForm();
+    $sellerMessageBox.show().removeClass().addClass('message-box');
+})
+
+// 이용약관 스크롤링 해야 약관 동의 체크박스 활성화
+$sellerTermsBox.on('scroll', function () {
+    if (this.scrollHeight - this.scrollTop === this.clientHeight) {
+        $sellerTermsCheckbox.prop('disabled', false);
+    }
 })
 
 // 입력필드 포커스아웃 이벤트 발생 추가 (실시간으로 유효성 검사)
 // 1. 아이디 입력창
-$('#userId').on('focusout', function () {
-    const userId = $('#userId').val();
-    if (userId === '') {
-        $('#idError').text('아이디는 필수 입력 항목입니다.').css('color', 'red');
-    } else if (userId.length < 5 || userId.length > 20) {
-        $('#idError').text('아이디는 5~20자 사이로 입력해주세요.').css('color', 'red');
+$('#sellerId').on('focusout', function () {
+    const sellerId = $('#sellerId').val();
+    if (sellerId === '') {
+        $('#sellerIdError').text('아이디는 필수 입력 항목입니다.').css('color', 'red');
+    } else if (sellerId.length < 5 || sellerId.length > 20) {
+        $('#sellerIdError').text('아이디는 5~20자 사이로 입력해주세요.').css('color', 'red');
     } else {
-        $('#idError').text('');
+        $('#sellerIdError').text('');
     }
 });
 
 // 2. 비밀번호 입력창
-$('#userPassword').on('focusout', function () {
-    const userPw = $('#userPassword').val();
-    if (userPw === '') {
-        $('#pwError').text('비밀번호는 필수 입력 항목입니다.').css('color', 'red');
-    } else if (userPw.length < 8) {
-        $('#pwError').text('비밀번호는 8자 이상이어야 합니다.').css('color', 'red');
+$('#sellerPassword').on('focusout', function () {
+    const sellerPw = $('#sellerPassword').val();
+    if (sellerPw === '') {
+        $('#sellerPwError').text('비밀번호는 필수 입력 항목입니다.').css('color', 'red');
+    } else if (sellerPw.length < 8) {
+        $('#sellerPwError').text('비밀번호는 8자 이상이어야 합니다.').css('color', 'red');
     } else {
-        $('#pwError').text('');
+        $('#sellerPwError').text('');
     }
 });
 
 // 3. 비밀번호 확인창
-$('#passwordConfirm').on('focusout', function () {
-    const userPw = $('#userPassword').val();
-    const userPwConfirm = $('#userPasswordConfirm').val();
-    if (userPwConfirm === '') {
-        $('#checkPwError').text('비밀번호를 다시 한 번 입력해주세요.').css('color', 'red');
-    } else if (userPw !== userPwConfirm) {
-        $('#checkPwError').text('비밀번호가 일치하지 않습니다.').css('color', 'red');
+$('#sellerPasswordConfirm').on('focusout', function () {
+    const sellerPw = $('#sellerPassword').val();
+    const sellerPwConfirm = $('#sellerPasswordConfirm').val();
+    if (sellerPwConfirm === '') {
+        $('#checkSellerPwError').text('비밀번호를 다시 한 번 입력해주세요.').css('color', 'red');
+    } else if (sellerPw !== sellerPwConfirm) {
+        $('#checkSellerPwError').text('비밀번호가 일치하지 않습니다.').css('color', 'red');
     } else {
-        $('#checkPwError').text('');
+        $('#checkSellerPwError').text('');
     }
 });
 
 // 4. 이름 입력창
-$('#userName').on('focusout', function () {
-    const userName = $('#userName').val();
-    if (userName === '') {
-        $('#nameError').text('이름은 필수 입력 항목입니다.').css('color', 'red');
-    } else if (userName.length > 20) {
-        $('#nameError').text('이름은 최대 20자까지 가능합니다.').css('color', 'red');
+$('#sellerName').on('focusout', function () {
+    const sellerName = $('#sellerName').val();
+    if (sellerName === '') {
+        $('#sellerNameError').text('이름은 필수 입력 항목입니다.').css('color', 'red');
+    } else if (sellerName.length > 20) {
+        $('#sellerNameError').text('이름은 최대 20자까지 가능합니다.').css('color', 'red');
     } else {
-        $('#nameError').text('');
+        $('#sellerNameError').text('');
     }
 });
 
-// 5. 계좌번호 입력창
-$('#userNickname').on('focusout', function () {
-    const userNickname = $('#userNickname').val();
-    if (userNickname === '') {
-        $('#nicknameError').text('닉네임은 필수 입력 항목입니다.').css('color', 'red');
-    } else if (userNickname.length < 20) {
-        $('#nicknameError').text('닉네임은 최대 20자까지 가능합니다.').css('color', 'red');
+// 5. 사업자번호 입력창
+$('#sellerNum').on('focusout', function () {
+    const sellerNum = $('#sellerNum').val();
+    if (sellerNum === '') {
+        $('#sellerNumError').text('닉네임은 필수 입력 항목입니다.').css('color', 'red');
+    } else if (sellerNum.length < 20) {
+        $('#sellerNumError').text('닉네임은 최대 20자까지 가능합니다.').css('color', 'red');
     } else {
-        $('#nicknameError').text('');
+        $('#sellerNumError').text('');
     }
 });
 
 // 6. 전화번호 입력창
-$('#phone2').on('focusout', function () {
-    const userPhone2 = $('#phone2').val();
-    if (userPhone2 === '') {
-        $('#phoneError').text('휴대폰 번호는 필수 입력 항목입니다.').css('color', 'red');
-    } else if (typeof userPhone2 !== 'number') {
-        $('#phoneError').text('휴대폰 번호는 숫자로 입력해주세요.').css('color', 'red');
+const $tel = ($('#tel2') || $('#tel3'));
+$tel.on('focusout', function () {
+    // const tel1Regex = /^\d{2,3}$/;
+    const tel2Regex = /^\d{3,4}$/;
+    const tel3Regex = /^\d{4}$/;
+    // const sellerTel1 = $('#tel1').val();
+    const sellerTel2 = $('#tel2').val();
+    const sellerTel3 = $('#tel3').val();
+    if (sellerTel2 === '' || sellerTel3 === '') {
+        $('#sellrTelError').text('전화번호는 필수 입력 항목입니다.').css('color', 'red');
+    } else if (!tel2Regex.test(sellerTel2)) {
+        $('#sellerTelError').text('전화번호 두번째 자리는 3~4자리 숫자로 입력해주세요.').css('color', 'red');
+    } else if (!tel3Regex.test(sellerTel3)) {
+        $('#sellerTelError').text('전화번호 세번째 자리는 4자리 숫자로 입력해주세요.').css('color', 'red');
     } else {
-        $('#phoneError').text('');
+        $('#sellerTelError').text('');
     }
 });
-$('#phone3').on('focusout', function () {
-    const userPhone3 = $('#phone3').val();
-    if (userPhone3 === '') {
-        $('#phoneError').text('휴대폰 번호는 필수 입력 항목입니다.').css('color', 'red');
-    } else if (typeof userPhone3 !== 'number') {
-        $('#phoneError').text('휴대폰 번호는 숫자로 입력해주세요.').css('color', 'red');
-    } else {
-        $('#phoneError').text('');
-    }
-})
 
 // 7. 이메일 입력창
-$('#emailLocal').on('focusout', function () {
-    const userEmailLocal = $('#emailLocal').val();
-    if (userEmailLocal === '') {
-        $('#emailError').text('이메일 주소 아이디를 입력해주세요.').css('color', 'red');
+$('#sellerEmailLocal').on('focusout', function () {
+    const sellerEmailLocal = $('#sellerEmailLocal').val();
+    if (sellerEmailLocal === '') {
+        $('#sellerEmailError').text('이메일 주소 아이디를 입력해주세요.').css('color', 'red');
     } else {
-        $('#emailError').text('');
+        $('#sellerEmailError').text('');
     }
 })
-$('#emailDomain').on('focusout', function () {
-    const userEmailDomain = $('#emailDomain').val();
-    if (userEmailDomain === '') {
-        $('#emailError').text('이메일 주소 도메인을 입력해주세요.').css('color', 'red');
+$('#sellerEmailDomain').on('focusout', function () {
+    const sellerEmailDomain = $('#sellerEmailDomain').val();
+    if (sellerEmailDomain === '') {
+        $('#sellerEmailError').text('이메일 주소 도메인을 입력해주세요.').css('color', 'red');
     } else {
-        $('#emailError').text('');
+        $('#sellerEmailError').text('');
     }
 })
 
 // 이메일 도메인 선택시 직접입력창에 value값 입력
-const $emailDomain = $("#emailDomain");
-const $selectDomain = $("#selectDomain");
-$selectDomain.on('change', function () {
-    if ($selectDomain.val() === "custom") {
-        $emailDomain.val("");
+const $sellerEmailDomain = $("#sellerEmailDomain");
+const $sellerSelectDomain = $("#sellerSelectDomain");
+$sellerSelectDomain.on('change', function () {
+    if ($sellerSelectDomain.val() === "custom") {
+        $sellerEmailDomain.val("");
     } else {
-        $emailDomain.val($selectDomain.val());
+        $sellerEmailDomain.val($sellerSelectDomain.val());
     }
 });
+
+// 사업자등록번호 이미지 등록 함수

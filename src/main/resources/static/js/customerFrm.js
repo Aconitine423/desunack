@@ -301,10 +301,13 @@ $('#userId').on('focusout', function () {
 // 2. 비밀번호 입력창
 $('#userPassword').on('focusout', function () {
     const userPw = $('#userPassword').val();
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; // 영문자, 숫자 포함 8자 이상
     if (userPw === '') {
         $('#pwError').text('비밀번호는 필수 입력 항목입니다.').css('color', 'red');
     } else if (userPw.length < 8) {
         $('#pwError').text('비밀번호는 8자 이상이어야 합니다.').css('color', 'red');
+    } else if (!passwordRegex.test(userPw)) {
+        $('#pwError').text('비밀번호는 영문자와 숫자를 모두 포함해야 합니다.');
     } else {
         $('#pwError').text('');
     }

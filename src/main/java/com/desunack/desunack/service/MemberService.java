@@ -171,4 +171,21 @@ public class MemberService {
         return false;
     }
 
+    public boolean getCustomerInfo(int uid, HttpSession session) {
+        String Json = mDao.getCustomerInfo(uid);
+        if(Json != null){
+            session.setAttribute("Json", Json);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean getSellerInfo(int uid, HttpSession session) {
+        String Json = mDao.getSellerInfo(uid);
+        if(Json != null){
+            session.setAttribute("Json", Json);
+            return true;
+        }
+        return false;
+    }
 }

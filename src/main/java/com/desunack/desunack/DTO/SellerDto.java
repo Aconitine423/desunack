@@ -37,6 +37,7 @@ public class SellerDto {
     private String sellerAccount;
     private String sellerBank;
     private String sellerDelivery;
+    private String sellerNum;
 
 //    public SellerEntity toEntity(UserDto uDto) {
 //        return SellerEntity.builder().s_picture(this.sellerNumImage)
@@ -48,6 +49,6 @@ public class SellerDto {
                 .m_address_detail(this.userAddressDetail).m_phone(this.userPhone).m_kind(this.userKind)
                 .m_status(this.userStatus).m_join_date(this.userSignupDate).m_recent_date(this.userRecentDate)
                 .s_picture(this.sellerNumImage).s_account(this.sellerAccount).s_bank(this.sellerBank)
-                .s_delivery(this.sellerDelivery).build();
+                .s_delivery(this.sellerDelivery).s_seller_num(this.sellerNum).build();
     }
 }

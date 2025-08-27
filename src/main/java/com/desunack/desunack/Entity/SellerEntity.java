@@ -38,6 +38,7 @@ public class SellerEntity {
     private String s_account;
     private String s_bank;
     private String s_delivery;
+    private String s_seller_num;
 
 //    public SellerDto toDto(MemberEntity mem) {
 //        return SellerDto.builder().sellerNumImage(this.s_picture)
@@ -49,6 +50,7 @@ public class SellerEntity {
                 .userPhone(this.m_phone).userEmail(this.m_email).userPost(this.m_post).userAddress(this.m_address)
                 .userAddressDetail(this.m_address_detail).userKind(this.m_kind).userStatus(this.m_status)
                 .userSignupDate(this.m_join_date).userRecentDate(this.m_recent_date).sellerNumImage(this.s_picture)
-                .sellerAccount(this.s_account).sellerBank(this.s_bank).sellerDelivery(this.s_delivery).build();
+                .sellerAccount(this.s_account).sellerBank(this.s_bank).sellerDelivery(this.s_delivery)
+                .sellerNum(this.s_seller_num).build();
     }
 }

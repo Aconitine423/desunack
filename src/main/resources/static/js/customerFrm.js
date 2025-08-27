@@ -384,8 +384,11 @@ $('#emailLocal').on('focusout', function () {
 })
 $('#emailDomain').on('focusout', function () {
     const userEmailDomain = $('#emailDomain').val();
+    const emailRegex = /[^\s@]+\.[^\s@]+$/;
     if (userEmailDomain === '') {
         $('#emailError').text('이메일 주소 도메인을 입력해주세요.').css('color', 'red');
+    } else if (emailRegex.test(userEmailDomain)) {
+        $('#emailError').text('유효한 이메일 형식이 아닙니다.').css('color', 'red');
     } else {
         $('#emailError').text('');
     }

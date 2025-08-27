@@ -15,8 +15,18 @@ import java.util.ArrayList;
 public class SearchController {
     private final SearchService serSer;
     @GetMapping("/search")
-    public String filterSearch(ArrayList<String> checkedSweetener, ArrayList<String> checkedAllergy, HttpSession session) {
-        if(serSer.filterSearch(checkedSweetener, checkedAllergy, session)){
+    public String filterSearch(int pNum, ArrayList<String> checkedSweetener, ArrayList<String> checkedAllergy, HttpSession session) {
+        if(serSer.filterSearch(pNum, checkedSweetener, checkedAllergy, session)){
+            return null;
+        }
+        return null;
+    }
+
+
+
+    @GetMapping("/category")
+    public String categoryList(String categoryName, int pNum, HttpSession session){
+        if(serSer.categoryList(pNum, categoryName, session)){
             return null;
         }
         return null;

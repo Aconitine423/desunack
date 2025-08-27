@@ -22,8 +22,8 @@ public class SearchService {
         return searchDao.sweetenerFilter(checkedAllergy);
     }
 
-    public boolean filterSearch(ArrayList<String> checkedSweetener, ArrayList<String> checkedAllergy, HttpSession session) {
-        int startIdx = 0;
+    public boolean filterSearch(int pNum, ArrayList<String> checkedSweetener, ArrayList<String> checkedAllergy, HttpSession session) {
+        int startIdx = (pNum-1)*10;
         int size = 10;
         ArrayList<Integer> sList = sweetenerFilter(checkedSweetener);
         ArrayList<Integer> aList = allergyFilter(checkedAllergy);
@@ -38,6 +38,19 @@ public class SearchService {
         }
 
         String Json = searchDao.filterSearch(filterList, startIdx, size);
+        if(Json != null){
+            session.setAttribute("Json", Json);
+            return true;
+        }
+        return false;
+    }
+
+
+    public boolean categoryList(int pNum, String categoryName, HttpSession session) {
+        int startIdx = (pNum-1)*10;
+        int size = 10;
+
+        String Json = searchDao.categorySearch(categoryName, startIdx, size);
         if(Json != null){
             session.setAttribute("Json", Json);
             return true;

@@ -43,6 +43,20 @@ img {
 
 /* 상품 등록 페이지 전용 스타일 */
 
+/* 상품 등록 페이지 전용 레이아웃 보정 */
+
+body.registration-page main.register-form{
+    max-width: 500px; /* 원하는 폼 너비  */
+    margin: 40px auto !important; /* auto로 중앙 정렬 강제 */
+    float: none !important; /* 혹시 float 걸려 있으면 해제 */
+    text-align: left /* 본문 내용은 왼쪽 정렬  */
+}
+/* 상품등록 제목만 가운데 정렬 */
+body.registration-page h1{
+    text-align: center;
+    margin: 20px 0;
+}
+
 header{
     background: #f5d9d9; /*파스텔 핑크*/
     padding: 15px 20px;
@@ -201,7 +215,7 @@ textarea.auto-resize {
 
 .form-submit button{
     background: #444;
-    color: #444;
+    color: #ffffff;
     padding: 8px 16px; /* 버튼 크기 줄임 */
     font-size: 14px;
     border-radius: 6px;

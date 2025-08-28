@@ -1,5 +1,6 @@
 package com.desunack.desunack.controller;
 
+import com.desunack.desunack.common.FileManager;
 import com.desunack.desunack.dto.CustomerDto;
 import com.desunack.desunack.dto.SellerDto;
 import com.desunack.desunack.dto.UserDto;
@@ -11,7 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @Controller
@@ -19,33 +23,51 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping
 public class MemberController {
     private final MemberService mSer;
+    private final FileManager fileManager;
 
     // 소비자 회원가입
     @PostMapping("/signup/customerJoin")
-    public ResponseEntity<String> joinCustomer(@RequestBody CustomerDto customerDto){
+    public ResponseEntity<String> joinCustomer(@RequestBody CustomerDto customerDto) {
         log.info("======customerDto={}", customerDto);
         boolean result = mSer.customerJoin(customerDto);
-        if(result){
+        if (result) {
             return ResponseEntity.ok("회원가입 성공");
         } else {
             return ResponseEntity.badRequest().body("회원가입 실패");
         }
     }
+
     // 판매자 회원가입
     @PostMapping("/signup/sellerJoin")
-    public ResponseEntity<String> joinSeller(@RequestBody SellerDto sellerDto){
-        log.info("======sellerDto={}", sellerDto);
-        boolean result = mSer.sellerJoin(sellerDto);
-        if(result){
-            return ResponseEntity.ok("회원가입 성공");
-        } else {
-            return ResponseEntity.badRequest().body("회원가입 실패");
+    public ResponseEntity<String> joinSeller(@RequestBody SellerDto sellerDto, @RequestPart("file") MultipartFile file) {
+        String filePath = null;
+        try {
+            // 파일 저장 및 경로 반환된거 받기
+            filePath = fileManager.saveSellerNumFile(file);
+            // 파일 경로 DTO에 저장
+            sellerDto.setSellerNumImage(filePath);
+            log.info("======sellerDto={}", sellerDto);
+            boolean result = mSer.sellerJoin(sellerDto);
+            if (result) {
+                return ResponseEntity.ok("회원가입 성공");
+            } else {
+                // sellerJoin 실패시 파일 삭제
+                fileManager.deleteFile(filePath);
+                return ResponseEntity.badRequest().body("회원가입 실패");
+            }
+        } catch (IOException e) {
+            // 파일 업로드 실패시 에러처리하면서 파일 삭제
+            if (filePath != null) {
+                fileManager.deleteFile(filePath);
+            }
+//            throw new RuntimeException(e);
+            return ResponseEntity.status(500).body("파일 업로드 실패");
         }
     }
 
     // 회원가입 아이디 중복체크
     @PostMapping("/signup/checkUserId")
-    public ResponseEntity<Boolean> checkUserId(@RequestBody UserDto userDto){
+    public ResponseEntity<Boolean> checkUserId(@RequestBody UserDto userDto) {
         String userId = userDto.getUserId();
         boolean isUsedId = mSer.isUsedId(userId); // true면 중복
         return ResponseEntity.ok(isUsedId);
@@ -53,7 +75,7 @@ public class MemberController {
 
     // 회원가입 닉네임 중복체크
     @PostMapping("/signup/checkUserNickname")
-    public ResponseEntity<Boolean> checkUserNickname(@RequestBody CustomerDto customerDto){
+    public ResponseEntity<Boolean> checkUserNickname(@RequestBody CustomerDto customerDto) {
         String userNickname = customerDto.getCustomerNickname();
         boolean isUsedNickname = mSer.isUsedNickname(userNickname); // true면 중복
         return ResponseEntity.ok(isUsedNickname);
@@ -61,34 +83,35 @@ public class MemberController {
 
     //로그인
     @PostMapping("/member/login1")
-    public String login1(@RequestParam String id, String pw, Model model, HttpSession session, RedirectAttributes rttr){
+    public String login1(@RequestParam String id, String pw, Model model, HttpSession session, RedirectAttributes rttr) {
 
-        if(mSer.login1(id, pw, session)){
-           log.info("======login success={}", id);
+        if (mSer.login1(id, pw, session)) {
+            log.info("======login success={}", id);
             return "redirect:/index";
         }
         log.info("======login fail={}", id);
-        rttr.addFlashAttribute("msg","로그인에 실패했습니다. 아이디 혹은 비밀번호를 확인해주세요");
+        rttr.addFlashAttribute("msg", "로그인에 실패했습니다. 아이디 혹은 비밀번호를 확인해주세요");
 
         return null;
     }
 
     @PostMapping("/mypage")
-    public String getCustomerInfo(@RequestBody UserDto uDto, HttpSession session){
-        if(uDto.getUserKind() == 'C') {
+    public String getCustomerInfo(@RequestBody UserDto uDto, HttpSession session) {
+        if (uDto.getUserKind() == 'C') {
             if (mSer.getCustomerInfo(uDto.getUserUid(), session)) {
                 return null;
             }
-        }else if(uDto.getUserKind() == 'S') {
+        } else if (uDto.getUserKind() == 'S') {
             if (mSer.getSellerInfo(uDto.getUserUid(), session)) {
                 return null;
             }
         }
         return null;
     }
+
     @PostMapping("/find-id")
-    public String findId(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr){
-        if(mSer.findId(userDto.getUserName(),userDto.getUserEmail(), rttr)){
+    public String findId(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr) {
+        if (mSer.findId(userDto.getUserName(), userDto.getUserEmail(), rttr)) {
             return "/";
         }
         rttr.addFlashAttribute("msg", "일치하는 결과가 없습니다.");
@@ -96,8 +119,8 @@ public class MemberController {
     }
 
     @PostMapping("/find-pw")
-    public String findPw(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr){
-        if(mSer.findPw(userDto.getUserId(),userDto.getUserEmail(),rttr)){
+    public String findPw(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr) {
+        if (mSer.findPw(userDto.getUserId(), userDto.getUserEmail(), rttr)) {
             return "/";
         }
         rttr.addFlashAttribute("msg", "일치하는 결과가 없습니다");

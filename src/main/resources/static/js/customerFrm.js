@@ -179,7 +179,7 @@ function validateForm() {
     if (userEmailLocal === '' || userEmailDomain === '') {
         $('#emailError').text('이메일은 필수 입력 항목입니다.').css('color', 'red');
         isValid = false;
-    } else if (!emailRegex.test(userEmailDomain)) {
+    } else if (emailRegex.test(userEmailDomain)) {
         $('#emailError').text('유효한 이메일 형식이 아닙니다.').css('color', 'red');
         isValid = false;
     }

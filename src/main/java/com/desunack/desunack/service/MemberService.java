@@ -1,17 +1,16 @@
 package com.desunack.desunack.service;
 
 
-import com.desunack.desunack.DAO.MemberDao;
-import com.desunack.desunack.DTO.CustomerDto;
-import com.desunack.desunack.DTO.SellerDto;
-import com.desunack.desunack.DTO.UserDto;
-import com.desunack.desunack.Entity.CustomerEntity;
-import com.desunack.desunack.Entity.MemberEntity;
-import com.desunack.desunack.Entity.SellerEntity;
+import com.desunack.desunack.dao.MemberDao;
+import com.desunack.desunack.dto.CustomerDto;
+import com.desunack.desunack.dto.SellerDto;
+import com.desunack.desunack.dto.UserDto;
+import com.desunack.desunack.entity.CustomerEntity;
+import com.desunack.desunack.entity.MemberEntity;
+import com.desunack.desunack.entity.SellerEntity;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

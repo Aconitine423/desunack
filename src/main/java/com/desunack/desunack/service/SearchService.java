@@ -1,13 +1,12 @@
 package com.desunack.desunack.service;
 
-import com.desunack.desunack.DAO.SearchDao;
+import com.desunack.desunack.dao.SearchDao;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 @Slf4j

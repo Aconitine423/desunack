@@ -10,10 +10,6 @@ body{
     margin: 0;
     box-sizing: border-box;
 }
-/*.container {*/
-/*    display: flow-root;*/
-/*    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);*/
-/*}*/
 
 /* 폼 래퍼 */
 .signupForm{

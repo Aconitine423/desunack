@@ -22,7 +22,7 @@
                     order by ga.ga_g_id desc;
     </select>
     <select id="categorySearch" resultType="java.lang.String">
-        select JSON_ARRAYAGG(('g_id',g_id,'g_m_uid',g_m_uid,'brand_name',brand_name,'g_name',g_name,'company_name',company_name,
+        select JSON_ARRAYAGG(json_object('g_id',g_id,'g_m_uid',g_m_uid,'brand_name',brand_name,'g_name',g_name,'company_name',company_name,
                               'g_value',g_value, 'g_qty',g_qty,'g_startday',g_startday,'g_endday',g_endday,'g_cat_key',g_cat_key,
                               'g_image',g_image,'g_detail',g_detail,'g_delivery_kind',g_delivery_kind,'g_status',g_status,
                               'g_toal_rating',g_total_rating,'g_review_count',g_review_count, 'gts_sales', gts_sales, 'cat_name', cat_name))
@@ -32,6 +32,13 @@
     </select>
     <select id="getAllBrand" resultType="java.lang.String">
         select distinct brand_name from goods order by brand_name;
+    </select>
+    <select id="getBMap" resultType="java.lang.String">
+        select JSON_ARRAYAGG(json_object('g_id',g_id,'g_m_uid',g_m_uid,'brand_name',brand_name,'g_name',g_name,'company_name',company_name,
+                                         'g_value',g_value, 'g_qty',g_qty,'g_startday',g_startday,'g_endday',g_endday,'g_cat_key',g_cat_key,
+                                         'g_image',g_image,'g_detail',g_detail,'g_delivery_kind',g_delivery_kind,'g_status',g_status,
+                                         'g_toal_rating',g_total_rating,'g_review_count',g_review_count))
+        from goods where brand_name = #{bName} order by brand_name;
     </select>
 
 

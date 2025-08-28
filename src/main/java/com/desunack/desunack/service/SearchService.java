@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 @Slf4j
 @Service
@@ -58,14 +60,29 @@ public class SearchService {
         return false;
     }
 
-    public boolean brandList(HttpSession session) {
+    public ArrayList<String> brandList(HttpSession session) {
         ArrayList<String> bList = searchDao.getAllBrand();
 
         if(bList != null){
             session.setAttribute("bList", bList);
-            return true;
+            return bList;
         }
 
-        return false;
+        return null;
+    }
+
+    public boolean getBMap(ArrayList<String> bList, HttpSession session) {
+        LinkedHashMap<String, String> bMap = new LinkedHashMap<String, String>();
+        for(String s : bList){
+            String Json = searchDao.getBMap(s);
+            bMap.put(s, Json);
+        }
+        for(String s : bMap.keySet()){
+            if(bMap.get(s) == null){
+                return false;
+            }
+        }
+        session.setAttribute("bMap", bMap);
+        return true;
     }
 }

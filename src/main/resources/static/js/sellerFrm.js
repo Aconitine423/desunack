@@ -203,7 +203,7 @@ function validateSellerForm() {
                 $sellerMessageBox.text('회원가입이 완료되었습니다.').css('display', 'block').css('color', 'blue');
                 setTimeout(function () {
                     $sellerMessageBox.hide();
-                    window.location.href = '/member/login'; // 로그인 페이지로
+                    window.parent.location.href = '/member/login'; // 로그인 페이지로
                 }, 3000);
             })
             .catch(function (error) {

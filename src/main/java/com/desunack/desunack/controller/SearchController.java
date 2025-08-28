@@ -24,7 +24,9 @@ public class SearchController {
 
     @GetMapping("/brand")
     public String brandList(HttpSession session) {
-        if(serSer.brandList(session)){
+        ArrayList<String> bList = serSer.brandList(session);
+        if(bList != null){
+            serSer.getBMap(bList, session);
             return null;
         }
         return null;

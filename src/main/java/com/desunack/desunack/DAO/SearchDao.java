@@ -15,4 +15,6 @@ public interface SearchDao {
     String categorySearch(String categoryName, int startIdx, int size);
 
     ArrayList<String> getAllBrand();
+
+    String getBMap(String bName);
 }

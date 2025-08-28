@@ -152,31 +152,13 @@
 <div id="signupModal" class="modal">
     <div class="modalContent">
         <span class="closeBtn">&times;</span>
-<!--    customerFrm.html 로드할 iframe    -->
+<!--    회원가입페이지들 로드할 iframe    -->
         <iframe id="signupModalIframe" class="modalIframe" src="" title="회원가입 페이지"></iframe>
     </div>
 </div>
 </body>
 <script th:inline="javascript">
     const $signupModalIframe = $('#signupModalIframe');
-    // iframe의 높이를 내부 콘텐츠에 맞게 조절하는 함수
-    // function resizeIframe() {
-    //     try {
-    //         // iframe 내부 문서의 body 높이를 가져와서 iframe에 적용
-    //         const customerIframeBody = $customerModalIframe.contents().find('body')[0];
-    //         const sellerIframeBody = $sellerModalIframe.contents().find('body')[0];
-    //         if (customerIframeBody) {
-    //             $customerModalIframe.css('height', customerIframeBody.scrollHeight + 'px');
-    //         }
-    //         if (sellerIframeBody) {
-    //             $sellerModalIframe.css('height', sellerIframeBody.scrollHeight + 'px');
-    //         }
-    //     } catch (e) {
-    //         console.error("Iframe content cannot be accessed due to security restrictions:", e);
-    //         // 외부 도메인일 경우 예외 처리
-    //         // 여기서는 동일 출처이므로 발생하지 않음
-    //     }
-    // }
 
     // 일반회원 버튼 클릭시 모달 열기
     $("#customerJoinBtn").on('click', function (event) {
@@ -191,14 +173,6 @@
         $("#signupModalIframe").attr("src", "/signup/sellerfrm");
         $("#signupModal").css("display", "flex");
     })
-
-    // iframe 로드가 완료되면 높이 조절 함수 호출
-    // $customerModalIframe.on('load', function() {
-    //     resizeIframe();
-    // });
-    // $sellerModalIframe.on('load', function() {
-    //     resizeIframe();
-    // })
 
     // 닫기 버튼 클릭시 모달 닫기
     $(".closeBtn").on('click', function () {

@@ -39,11 +39,12 @@ public class MemberController {
 
     // 판매자 회원가입
     @PostMapping("/signup/sellerJoin")
-    public ResponseEntity<String> joinSeller(@RequestBody SellerDto sellerDto, @RequestPart("file") MultipartFile file) {
+    public ResponseEntity<String> joinSeller(@RequestPart("sellerDto") SellerDto sellerDto, @RequestPart("file") MultipartFile file) {
+        log.info("요청 진입: {}", sellerDto);
         String filePath = null;
         try {
             // 파일 저장 및 경로 반환된거 받기
-            filePath = fileManager.saveSellerNumFile(file);
+            filePath = fileManager.saveSellerNumFile(file, "seller/");
             // 파일 경로 DTO에 저장
             sellerDto.setSellerNumImage(filePath);
             log.info("======sellerDto={}", sellerDto);

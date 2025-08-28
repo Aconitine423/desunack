@@ -175,7 +175,7 @@ function validateSellerForm() {
         const userAddress = sellerAddress + sellerExtraAddress;
 
         // 입력된 파라미터 묶음
-        const sellerFormData = {
+        const sellerDto = {
             userId: $('#sellerId').val(),
             userPw: $('#sellerPassword').val(),
             userName: $('#sellerName').val(),
@@ -193,11 +193,28 @@ function validateSellerForm() {
             userSignupDate: new Date(),
             userRecentDate: new Date()
         };
+        console.log('sellerDto', sellerDto);
 
-        console.log('sellerFormData', sellerFormData);
+        // 업로드받는 파일 관련
+        const sellerNumFileInput = $('#uploadSellerNum');
+        const sellerNumFile = sellerNumFileInput[0].files[0];
+        console.log('File:', sellerNumFile);
+
+        const sellerFormData = new FormData();
+        sellerFormData.append('file', sellerNumFile);
+        sellerFormData.append('sellerDto', new Blob([JSON.stringify(sellerDto)], { type: 'application/json' }));
+
+        console.log("FormData content:");
+        for(let pair of sellerFormData.entries()) {
+            console.log(pair[0]+ ': ' + pair[1]);
+        }
 
         // 엑시오스로 데이터 전송
-        axios.post('/signup/sellerJoin', sellerFormData)
+        axios.post('/signup/sellerJoin', sellerFormData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
             .then(function (response) {
                 console.log("회원가입 성공: ", response.data);
                 $sellerMessageBox.text('회원가입이 완료되었습니다.').css('display', 'block').css('color', 'blue');
@@ -350,6 +367,6 @@ $sellerSelectDomain.on('change', function () {
 });
 
 // 사업자등록번호 이미지 등록 함수
-$('#uploadSellerNum').on('click', function () {
-
-})
+// $('#uploadSellerNum').on('click', function () {
+//
+// })

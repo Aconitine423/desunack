@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Builder
 @Accessors(chain = true)
 public class SellerEntity {
-    private MemberEntity memberEntity;
+//    private MemberEntity memberEntity;
     // 회원공통 Entity
     private int m_uid;
     private String m_id;

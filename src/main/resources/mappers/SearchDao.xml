@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 
-<mapper namespace="com.desunack.desunack.DAO.SearchDao">
+<mapper namespace="com.desunack.desunack.dao.SearchDao">
     <select id="filterSearch" resultType="java.lang.String">
         select JSON_ARRAYAGG(JSON_OBJECT('g_id',g_id,'g_m_uid',g_m_uid,'brand_name',brand_name,'g_name',g_name,'company_name',company_name,
                                          'g_value',g_value, 'g_qty',g_qty,'g_startday',g_startday,'g_endday',g_endday,'g_cat_key',g_cat_key,

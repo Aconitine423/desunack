@@ -350,3 +350,6 @@ $sellerSelectDomain.on('change', function () {
 });
 
 // 사업자등록번호 이미지 등록 함수
+$('#uploadSellerNum').on('click', function () {
+
+})

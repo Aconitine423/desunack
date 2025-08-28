@@ -1,14 +1,12 @@
 package com.desunack.desunack.controller;
 
-import com.desunack.desunack.DTO.CustomerDto;
-import com.desunack.desunack.DTO.SellerDto;
-import com.desunack.desunack.DTO.UserDto;
+import com.desunack.desunack.dto.CustomerDto;
+import com.desunack.desunack.dto.SellerDto;
+import com.desunack.desunack.dto.UserDto;
 import com.desunack.desunack.service.MemberService;
 import jakarta.servlet.http.HttpSession;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

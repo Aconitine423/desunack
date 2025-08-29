@@ -28,7 +28,7 @@
                               'g_toal_rating',g_total_rating,'g_review_count',g_review_count, 'gts_sales', gts_sales, 'cat_name', cat_name))
         from goods join goods_total_sales
         on goods.g_id = goods_total_sales.gts_g_id join category on goods.g_cat_key = category.cat_key where cat_name = #{categoryName}
-        order by goods_total_sales.gts_sales desc;
+        order by goods_total_sales.gts_sales desc limit #{startIdx}, #{size};
     </select>
     <select id="getAllBrand" resultType="java.lang.String">
         select distinct brand_name from goods order by brand_name;

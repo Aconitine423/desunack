@@ -33,9 +33,9 @@ public interface MemberDao {
     @Select("select ifnull(max(m_uid), 0) from member where m_kind = 'S'")
     int maxSellerUid();
 
-    void sMemberJoin(SellerEntity sellerEntity);
+    boolean sMemberJoin(SellerEntity sellerEntity);
 
-    void sellerJoin(SellerEntity sellerEntity);
+    boolean sellerJoin(SellerEntity sellerEntity);
 
     @Select("select count(*) from member where m_id = #{mId}")
     boolean isUsedId(String mId);

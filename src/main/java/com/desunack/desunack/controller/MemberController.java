@@ -23,7 +23,7 @@ import java.io.IOException;
 @RequestMapping
 public class MemberController {
     private final MemberService mSer;
-    private final FileManager fileManager;
+
 
     // 소비자 회원가입
     @PostMapping("/signup/customerJoin")
@@ -41,28 +41,15 @@ public class MemberController {
     @PostMapping("/signup/sellerJoin")
     public ResponseEntity<String> joinSeller(@RequestPart("sellerDto") SellerDto sellerDto, @RequestPart("file") MultipartFile file) {
         log.info("요청 진입: {}", sellerDto);
-        String filePath = null;
         try {
-            // 파일 저장 및 경로 반환된거 받기
-            filePath = fileManager.saveSellerNumFile(file, "seller/");
-            // 파일 경로 DTO에 저장
-            sellerDto.setSellerNumImage(filePath);
-            log.info("======sellerDto={}", sellerDto);
-            boolean result = mSer.sellerJoin(sellerDto);
-            if (result) {
-                return ResponseEntity.ok("회원가입 성공");
-            } else {
-                // sellerJoin 실패시 파일 삭제
-                fileManager.deleteFile(filePath);
-                return ResponseEntity.badRequest().body("회원가입 실패");
-            }
+            mSer.sellerJoin(sellerDto, file);
+            return ResponseEntity.ok("회원가입 성공");
         } catch (IOException e) {
-            // 파일 업로드 실패시 에러처리하면서 파일 삭제
-            if (filePath != null) {
-                fileManager.deleteFile(filePath);
-            }
-//            throw new RuntimeException(e);
+            log.error("파일 업로드 중 에러 발생", e);
             return ResponseEntity.status(500).body("파일 업로드 실패");
+        } catch (Exception e) {
+            log.error("회원가입 처리 중 에러 발생", e);
+            return ResponseEntity.badRequest().body("회원가입 실패");
         }
     }
 

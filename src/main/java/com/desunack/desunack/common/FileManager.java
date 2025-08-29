@@ -3,6 +3,7 @@ package com.desunack.desunack.common;
 import jakarta.servlet.ServletContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,8 +14,13 @@ import java.util.UUID;
 @Component
 @Slf4j
 public class FileManager {
-    @Autowired
-    private ServletContext servletContext;
+
+    // application.properties에서 설정한 경로 주입
+    @Value("${file.upload.path}")
+    private String uploadPath;
+
+    //    @Autowired
+//    private ServletContext servletContext;
 
     // 파일이 저장될 기본 경로
 //    private final String basePath = "src/main/resources/img/";
@@ -27,8 +33,8 @@ public class FileManager {
             return null;
         }
 
-    // 파일이 저장될 실제 서버 경로 (절대 경로) 얻기
-    String realPath = servletContext.getRealPath("/static/img/") + subPath;
+    // 파일이 저장될 실제 경로
+    String realPath = uploadPath + subPath;
 
         // 파일명 가져온 뒤 확장자 파악 후 고유한 UUID 파일명 생성
         String originalFileName = file.getOriginalFilename();
@@ -48,7 +54,7 @@ public class FileManager {
         log.info("파일 저장 완료: {}", destinationFile.getAbsolutePath());
 
         // DB로 저장할 상대 경로 반환
-        return "/static/img/" + subPath + uniqueFileName;
+        return "/img/" + subPath + uniqueFileName;
     }
 
     // 파일 확장자 추출하는 메소드
@@ -60,21 +66,23 @@ public class FileManager {
         return fileName.substring(index + 1);
     }
 
-    public void deleteFile(String filePath) {
+    public void deleteFile(String filePath, String subPath) {
         if (filePath == null || filePath.isEmpty()) {
             return;
         }
-        // 웹 접근 경로를 실제 서버 경로로 전환
-        String realPath = null;
-        if (servletContext != null) {
-            realPath = servletContext.getRealPath(filePath);
-        }
+//        String realPath = null;
+//        if (servletContext != null) {
+//            realPath = servletContext.getRealPath(filePath);
+//        }
 
+        // 웹 접근 경로를 실제 서버 경로로 전환
         // 파일 경로에서 파일명만 추출
-//        String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+        String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+
+
 
         // 실제 파일 경로 생성
-        File fileToDelete = new File(realPath);
+        File fileToDelete = new File(uploadPath + subPath + fileName);
 
         if (fileToDelete.exists()) {
             if (fileToDelete.delete()) {

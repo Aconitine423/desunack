@@ -1,0 +1,384 @@
+/* ============================================================
+checkout.css  —  Checkout 화면 전용 스타일
+목적:
+- 브라우저 기본값 초기화(Reset)
+- 디자인 토큰(색/간격/그림자 등) 정의
+- 레이아웃(좌/우 2열), 폼, 요약, 결제 아코디언, 모달, 약관, 반응형 구성
+연결:
+- checkout.html 에서 <link rel="stylesheet" href="checkout.css" />
+- checkout.js 와 셀렉터/구조가 1:1 매칭됨
+표기:
+- 한글 설명 중심 + 소제목에 (영문 용어) 병기
+============================================================ */
+
+
+/* 브라우저 초기화 */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+html, body, h1, h2, h3, h4, h5, h6,
+p, figure, blockquote, dl, dd, ul, ol, li {
+    margin: 0;   /* 모든 기본 바깥여백 제거 */
+    padding: 0;  /* 모든 기본 안쪽여백 제거 */
+}
+
+ul, ol { list-style: none; }            /* 불릿/번호 없애기 */
+a { text-decoration: none; color: inherit; }  /* 링크 밑줄 제거 + 부모 색상 상속 */
+img, video { max-width: 100%; height: auto; display: block; } /* 반응형 미디어 */
+
+button, input, select, textarea {
+    /* 폰트/색을 부모로부터 상속 → 폰트 불일치 방지 */
+    font: inherit; color: inherit;
+    
+    /* 브라우저 기본 배경/테두리 제거 후 우리 기준으로 재정의 */
+    background: transparent; border: 1px solid #dcdcdc;
+    
+    /* iOS 기본 스타일 제거(둥근 모서리/그림자 등) */
+    outline: none; -webkit-appearance: none; appearance: none;
+}
+
+button { cursor: pointer; }             /* 버튼에 손가락 커서 */
+html { -webkit-text-size-adjust: 100%; }/* iOS 글자 확대 방지 */
+
+/* 키보드 포커스가 보이도록 (접근성 향상) */
+:focus-visible {
+    outline: 2px solid #7aa7ff;           /* 파란 포커스 링 */
+    outline-offset: 2px;                   /* 요소에서 약간 떨어지게 */
+}
+
+/* 디자인 토근 */
+:root{
+    /* 색상 (Colors) */
+    --bg:        #f7f8fb;  /* 페이지 배경 */
+    --panel:     #ffffff;  /* 카드/패널 배경 */
+    --text:      #222222;  /* 기본 본문 텍스트 */
+    --muted:     #6b7280;  /* 보조 텍스트(설명 등) */
+    --line:      #e5e7eb;  /* 경계선/구분선 */
+    --primary:   #4f46e5;  /* 주요 버튼/포커스 */
+    --primary-600:#4338ca; /* 주요 버튼 호버 */
+    --danger:    #dc2626;  /* 오류/경고 강조 */
+    
+    /* 간격/모서리/그림자 (Spacing/Radius/Shadow) */
+    --gap-2: 10px;
+    --gap-3: 16px;
+    --gap-4: 24px;
+    --gap-5: 32px;
+    --radius: 12px;
+    --shadow: 0 6px 18px rgba(0,0,0,.06); /* 은은한 카드 그림자 */
+}
+
+/* 베이스 */
+html, body{
+    height: 100%;
+}
+body{
+    /* 한국어 가독성 좋은 기본 폰트 스택 */
+    font-family: "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue",
+    Arial, "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+    
+    font-size: 16px;       /* 루트 폰트 크기 */
+    line-height: 1.55;     /* 가독성 좋은 줄간격 */
+    color: var(--text);    /* 기본 글자색 */
+    background: var(--bg); /* 페이지 배경색 */
+} 
+
+.muted{
+    color: var(--muted); /* 보조 텍스트용 유틸*/
+}
+
+.btn{
+    /* 인라인 요소들을 좌우/상하 중앙 정렬한 버튼 */
+    display:inline-flex;
+    align-items:center;
+    justify-content: center;
+    gap: 8px;
+    
+    /* 버튼 패딩 / 모서리 / 테두리 */
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    /* 배경 /기본 상태*/
+    background:#fff;
+}
+
+.bnt:hover{ 
+    background:#f3f4f6; /* 호버 시 은은한 배경 변화 */
+}
+
+.btn-primary{
+    /* 주요 버튼: 브랜드 컬러 */
+    background:var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+}
+.btn-primary:hover{
+    background:var(--primary-600); /* 호버 톤 다운 */
+}
+
+.btn-block{
+    width: 100%; /* 가로폭 100% 버튼 */
+}
+
+/* ---------- 레이아웃 (Layout) ----------
+- 컨테이너: 가운데 정렬 + 좌우 패딩
+- checkout: 좌(입력) / 우(요약) 2열 그리드
+- summary(우측): 스크롤 따라오는 sticky 패널 */
+
+.container{
+    max-width: 1200px; /* 데스크톱 폭 제한 */
+    margin: 0 auto; /* 가운데 정렬 */
+    padding:var(--gap-4); /* 좌우 여백 */
+}
+
+.card, .panel{
+    /* 카드 형태 공통: 흰 배경 + 테두리 + 동근 모서리 + 그림자 */
+    background:var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow:var(--shadow);
+}
+
+.checkout{
+    /* 좌우 2열: 왼쪽 넓게(2fr), 오른쪽 요약(1fr) */
+    display: grid;
+    grid-template-columns:minmax(0,2fr) minmax(280px, 1fr);
+    gap:var(--gap-4);
+    align-items:start;
+    
+    /* 패널 안쪽 여백 (카드 안쪽 여백은 프로젝트 취향에 따라 조절) */
+    padding: var(--gap-4);
+}
+
+.checkout-main{
+    padding: 0; /* 왼쪽 메인은 별도 내부 섹션들이 자체 여백 가짐 */
+}
+
+.summary{
+    padding:var(--gap-4);
+    position:sticky; /* 스크롤해도 우측 고정 느낌 */
+    top: 16px; /* 상단 고정 기준점(헤더 높이에 맞춰 조절) */
+}
+
+.section-title{
+    /*  섹션 제목: 일정한 타이포/간격 */
+    font-size: 18px;
+    font-weight: 700;
+    margin: 4px 0 var(--gap-3);
+}
+
+/* ---------- [E] 폼 (Form) ----------
+- 그리드 폼 레이아웃 + 필드 라벨/컨트롤 통일.
+- is-invalid: 유효성 실패 시 테두리 빨강. */
+.form-grid{
+    display:grid;
+    gap:var(--gap-3); /* 섹션 내부 세로 간격 */
+}
+.form-row-2{
+    /* 2열 배치: 라벨/필드가 양쪽으로 나란히 */
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:var(--gap-3);
+}
+
+.field > label{
+    /* 라벨은 블록 + 라벨과 입력 간 작은 간격 */
+    display:block;
+    margin-bottom:6px;
+    font-size: 14px;
+    color:var(--muted);
+}
+
+.field > input,
+.field > select,
+.field > textarea{
+    /* 모든 입력 컨트롤 공통 디자인 */
+    width: 100%;
+    border-radius: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    background: #fff; 
+}
+
+.field-inline{
+    /* 체크박스 / 라디오 + 설명 텍스트 가로 정렬 */
+    display: flex; 
+    align-items: center;
+    gap: 10px;
+}
+
+.is-invalid{
+    border-color: var(--danger) !important; /* 에러 강조 */
+}
+
+.helper{
+    /* 입력 아래 작은 도움말/오류 메모 */
+    font-size: 12px; 
+    color: var(--muted);
+    margin-top: 6px;
+}
+
+.helper.error{
+    color: var(--danger); /* 오류 메시지용 색 */
+}
+
+/* (호환) 기존 코드가: row-2 / form-group를 사용해도 동일하게 보이도록 매핑 */
+.row-2{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-3);
+}
+.form-group{
+    display:grid;
+    gap:var(--gap-3);
+}
+
+/* ---------- [F] 주문 요약 (Order Summary) ----------
+- 금액/배송비/할인/총액을 일관된 행 형식으로 표시. */
+
+.summary-box{
+    display:grid;
+    gap:var(--gap-3);
+}
+
+.summary-row{
+    /* 좌측 라벨, 우측 값이 한 줄에 배치되도록 */
+    display:flex; 
+    align-items: center;
+    justify-content: space-between;
+    font-size: 15px;
+}
+
+.summary-row.total{
+    /* 총액은 구분선을 주고 크기/굵기 강조 */
+    padding-top:var(--gap-3);
+    border-top: 1px dashed var(--line);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.products{
+    display:grid;
+    gap: 12px; /* 상품 목록 컨테이너 기본 간격 */
+}
+
+.placeholder{
+    /* 서버 렌더 전에 보여주는 가이드 텍스트 */
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 8px;
+}
+
+/* ---------- [G] 결제 아코디언 (Payment Accordion) ----------
+- 각 결제 수단을 접었다 펼 수 있는 구조.
+- .item.active 가 현재 펼쳐진 상태. */
+
+.pay-accordion{
+    display:grid;
+    gap: 12px;
+}
+
+.pay-accordion .item{
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow:hidden;  /* 둥근 모서리 클리핑 */
+    background: #fff;
+}
+
+.pay-accordion .head{
+    /* 헤더 버튼: 좌 텍스트/우 보조 텍스트 배치 */
+    width: 100%;
+    text-align: left;
+    padding: 14px 16px;
+    background: #fafafa;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.pay-accordion .body{
+    /* 닫힘 상태에서는 숨김 */
+    display:none; 
+    padding: 16px;
+}
+
+.pay-accordion .item.active .body{
+    /* 활성화된 아이템만 내용 표시  */
+    display:block;
+}
+
+/* ---------- [H] 모달 (주소 검색 등 공통) ----------
+- 백드롭 + 카드 구조.
+- hidden 속성으로 열고 닫기(자바스크립트에서 토글). */
+
+.modal{
+    position:fixed; /* 화면 전체 덮기 */
+    display: grid;
+    place-items:center; /* 중앙 정렬 */
+    background:rgba(0,0,0,.35); /* 어둡게(백드롭) */
+    z-index: 50; /* 헤더/콘텐츠 위로 */
+    inset: 0; 
+}
+
+.modal-card{
+    background: #fff;
+    width:min(560px, 92vw); /* 모바일 고려: 뷰포트*/
+    border-radius: 12px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+}
+
+.modal-head{
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    font-weight: 700;
+}
+
+.modal-body{
+    padding: 16px;
+    display: grid;
+    gap: 12px;
+}
+
+.modal-foot{
+    padding: 12px 16px;
+    border-top: 1px solid var(--line);
+    display:flex; 
+    gap: 8px;
+    justify-content: flex-end; /*우측 버튼 정렬 */
+}
+
+/* ---------- [I] 약관 동의 (Agreements) ----------
+- 체크박스 목록 형태. 선택/필수 섞여 있음.
+- JS에서 (필수) 전체 체크 여부 따라 결제 버튼 활성화. */
+
+.agree{
+    display:grid; 
+    gap: 8px;
+    padding: 12px 0;
+}
+.agree label{
+    display:flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ---------- [J] 반응형 (Responsive) ----------
+- 1024px 이하: 1열로 전환(우측 요약이 아래로)
+- 640px 이하: 폼 2열 → 1열, 컨테이너 패딩 축소 */
+
+@media (max-width: 1024px){
+    .checkout{
+        grid-template-columns: 1fr; }/* 2열 -> 1열*/
+        .summary{
+            position:static;} /* sticky 해제(모바일 스크롤 대비) */
+        }
+        
+        @media (max-width: 640px){
+            .form-row-2, .row-2{ grid-template-columns:1fr; } /* 인풋 2열 → 1열 */
+            .container{ padding:var(--gap-3); }                /* 좌우 여백 소폭 축소 */
+        }
+

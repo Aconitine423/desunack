@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지</title>
+    <!-- 마이페이지 전용 스타일  -->
+    <link rel="stylesheet" href="mypagebackup.css">
+    <link rel="stylesheet" href="/My_page/mpheader/mpheader.css">
+    <link rel="stylesheet" href="/My_page/mpFooter/mpFooter.css">
+    
+    <!-- Font Awesome 6 (CDN) -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-Sl1iXyF2p3iC9...=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head> 
+<body>
+    <!-- 헤더 자리 -->
+    <div id="site-header" data-include="/My_page/mpheader/mpheader.html"></div>
+    
+    
+    <!-- 자바스크립트가 꺼져 있을 때 안내 -->
+    <noscript>이 페이지의 일부 기능은 자바스크립트를 필요로 합니다.</noscript>
+    
+    <!-- data-role 값으로 메뉴가 달라짐
+    -consumer: 일반(소비자) 회원 
+    - seller : 판매자 회원 필요 시 서버 값으로 바인딩하거나 js에서 setAttribute로 교체 가능 -->
+    
+    <section class="mypage" data-role="consumer" data-user-uid="U123456">
+        
+        <!-- [상단 탭] : 프로필 / 주문내역 / 찜한 상품 -->
+        <nav class="mypage-tabs" role="tablist" aria-label="마이페이지 탭">
+            <!-- 프로필(프로필: fa-user) -->
+            <button class="mypage-tab is-active" data-tab="profile" role="tab" aria-selected="true">
+                <span class="i"><i class="fa-regular fa-user"></i></span>프로필
+            </button>
+            
+            <!-- 주문내역(영수증: fa-receipt) -->
+            <button class="mypage-tabs" data-tab="orders" role="tab" aria-selected="false">
+                <span class="i"><i class="fa-solid fa-receipt"></i></span>주문내역
+            </button>
+            
+            <!-- 찜한상품(하트: fa-heart) -->
+            <button class="mypage-tabs" data-tab="wish" role="tab" aria-selected="false">
+                <span class="i"><i class="fa-regular fa-heart"></i></span>찜한상품 
+            </button>
+        </nav>
+        
+        <div class="mypage-grid">
+            <!-- [L] 좌측 사이드 메뉴 -->
+            <aside class="mypage-side" aria-label="마이페이지 메뉴">
+                <!-- JS 렌더 대상 -->
+                <div id="mypage-menu"></div>
+                
+                <!--소비자용 템플릿 -->
+                <template id="tpl-menu-consumer">
+                    <section class="menu-section">
+                        <p class="menu-title">주문 관리</p>
+                        <ul class="menu-list">
+                            <li><span class="i"><i class="fa-solid fa-receipt"></i>주문 내역</span></li>
+                            <li><span class="i"><i class="fa-solid fa-truck-fast"></i>택배배송 조회</span></li>
+                        </ul>
+                    </section>
+                    <section class="menu-section">
+                        <p class="menu-title">혜택 관리</p>
+                        <ul class="menu-list">
+                            <li><span class="i"><i class="fa-solid fa-coins"></i>포인트 조회</span></li>
+                            <li><span class="i"><i class="fa-solid fa-ticket"></i>쿠폰</span></li>
+                            <li><span class="i"><i class="fa-regular fa-star"></i>관심 상품</span></li>
+                            <li><span class="i"><i class="fa-regular fa-heart"></i>찜 목록</span></li>
+                        </ul>
+                    </section>
+                    <section class="menu-section">
+                        <p class="menu-title">회원 정보</p>
+                        <ul class="menu-list">
+                            <li><span class="i"><i class="fa-regular fa-id-card"></i>회원정보 수정</span></li>
+                            <li><span class="i"><i class="fa-solid fa-person-walking-arrow-right"></i>회원 탈퇴</span></li>
+                        </ul>
+                    </section>
+                </template>
+                
+                <!-- 판매자용 템플릿 -->
+                
+                <template id="tpl-menu-seller">
+                    <section class="menu-section">
+                        <p class="menu-title">상품 관리</p>
+                        <ul class="menu-list">
+                            <li><span class="i"><i class="fa-solid fa-boxes-stacked"></i>상품 관리</span></li>
+                            <li><span class="i"><i class="fa-regular fa-square-plus"></i>상품 등록</span></li>
+                        </ul>
+                    </section>
+                    
+                    <section class="menu-section">
+                        <p class="menu-title">주문 관리</p>
+                        <ul class="menu-list">
+                            <li><span class="i"><i class="fa-solid fa-clipboard-list"></i>주문 관리</span></li>
+                            <li><span class="i"><i class="fa-solid fa-receipt"></i>주문내역 관리</span></li>
+                        </ul>
+                    </section>
+                    
+                    <section class="menu-section">
+                        <p class="menu-title">배송 관리</p>
+                        <ul class="menu-list">
+                            <li><span class="i"><i class="fa-solid fa-truck"></i>배송 관리</span></li>
+                            <li><span class="i"><i class="fa-solid fa-route"></i>내 배송현황 관리</span></li>
+                        </ul>
+                    </section>
+                    
+                    <section class="menu-section">
+                        <p class="menu-title">혜택/회원</p>
+                        <ul class="menu-list">
+                            <li><span class="i"><i class="fa-solid fa-ticket"></i>쿠폰 관리</span></li>
+                            <li><span class="i"><i class="fa-regular fa-id-card"></i>회원정보 수정</span></li>
+                            <li><span class="i"><i class="fa-solid fa-person-walking-arrow-right"></i>회원 탈퇴</span></li>
+                        </ul>
+                    </section>
+                </template>
+            </aside>
+            
+            <!-- [R] 우측 컨텐츠 -->
+            <main class="mypage-main">
+                <!-- (탭) 프로필 -->
+                <section class="mypage-card" data-pane="profile" aria-labelledby="title-profile">
+                    <header class="mypage-card-head">
+                        <h2 id="title-profile">프로필 정보</h2>
+                        <div style="display:flex; gap:8px">
+                            <button class="btn ghost" id="btn-edit">수정</button>
+                            <button class="btn" id="btn-passcheck">비밀번호 확인</button>
+                        </div>
+                    </header>
+                    <!-- 프로필 요약 카드 -->
+                    <div class="mypage-proflie">
+                        <!-- 아바타 -->
+                        <div clss="avatar" aria-hidden="true"><i class="fa-regular fa-user"></i></div>
+                        
+                        <!-- 기본 정보 -->
+                        <div class="col">
+                            <div class="row"><span class="label">이름</span><span class="value" id="pf-name"></span></div>
+                            <div class="row"><span class="label">연락처</span><span class="value" id="pf-phone"></span></div>
+                            <div class="row"><span class="label">이메일</span><span class="value" id="pf-email"></span></div>
+                            <div class="row"><span class="label">생년월일</span><span class="value" id="pf-birth"></span></div>
+                        </div>
+                        <div class="summary">
+                            <div class="sum-item"><spasn class="s-label">적립금</spasn><strong class="s-value" id="val-point"></strong></div>
+                            <div class="sum-item"><spasn class="s-label">쿠폰</spasn><strong class="s-value" id="val-coupon"></strong></div>
+                            <div class="sum-item"><spasn class="s-label">등급</spasn><strong class="s-value" id="val-grade"></strong></div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- (탭) 주문내역 -->
+                <section class="mypage-card is-hidden" data-pane="orders" aria-labelledby="title-orders">
+                    <header class="mypage-card-head">
+                        <h2 id="title-opders">주문 내역</h2>
+                        <div class="tools">
+                            <select id="sel-period" aria-label="조회 기간">
+                                <option value="3m">3개월</option>
+                                <option value="6m">6개월</option>
+                                <option value="12m">12개월</option>
+                            </select>
+                            <label class="search">
+                                <input id="q" type="search" placeholder="상품명으로 검색해 보세요" aria-label="주문 검색" />
+                                <button id="btn-search" type="button" aria-label="검색"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </label>
+                        </div>
+                    </header>
+                    
+                    <div id="orders-root" class="list">
+                        <div class="skeleton" data-skel="orders"></div>
+                    </div>
+                    
+                    <div id="orders-empty" class="empty is-hidden" role="status">
+                        <div class="ico" aria-hidden="true"><i class="fa-regular fa-clipboard"></i></div>
+                        <p>기간 내 주문 내역이 없습니다.</p>
+                        <button class="btn primary"> 베스트 상품 보기 </button>
+                    </div>
+                </section>
+                
+                <!-- (탭) 찜한 상품 -->
+                <section class="mypage-card is-hidden" data-pane="wish" aria-labelledby="title-wish">
+                    <header class="mypage-card-head"><h2 id="title-wish">찜한 상품</h2></header>
+                    
+                    <div id="wish-root" class="grid">
+                        <div class="skeleton" data-skel="wish"></div>
+                    </div>
+                    
+                    <div id="wish-empty" class="empty is-hidden" role="status">
+                        <div clss="ico" aria-hidden="true"><i class="fa-regular fa-heart"></i></div>
+                        <p>찜한 상품이 없습니다.</p>
+                        <button class="btn primary">상품 보러가기</button>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </section>
+    
+    <!-- 모달: 프로필 수정 -->
+    <div class="modal" id="modal-profile" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-profile-title">
+        <div clas="modal-inner">
+            <header class="modal-head">
+                <h3 id="modal-profile-title">프로필 수정</h3>
+                <button class="modal-close" data-close aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+            </header>
+            
+            <form id="form-profile" class="form">
+                <!-- 이름 -->
+                <label class="f-row">
+                    <span class="f-label">이름</span>
+                    <input type="text" id="name" name="name" required />
+                </label>
+                
+                <!-- 연락처 3분할 -->
+                <div class="f-row">
+                    <span class="f-label">연락처</span>
+                    <div class="f-phone">
+                        <input type="text" id="phone1" name="phone1" inputmode="numeric" maxlength="3" placeholder="010" />
+                        <span>-</span>
+                        <input type="text" id="phone2" name="phone2" inputmode="numeric" maxlength="4" placeholder="1234" />
+                        <span>-</span>
+                        <input type="text" id="phone3" name="phone3" inputmode="numeric" maxlength="4" placeholder="5678" />
+                    </div>
+                </div>
+                
+                <!-- 이메일 local@domain -->
+                <div class="f-row">
+                    <span class="f-label">이메일</span>
+                    <div class="f-email">
+                        <input type="text" id="emailLocal" palceholder="minsu.kim" />
+                        <span>@</span>
+                        <input type="text" id="emailDomain" placeholder="example.com" list="mailDomains" />
+                        <datalist id="mailDomains">
+                            <option value="gmail.com"></option>
+                            <option value="naver.com"></option>
+                            <option value="daum.net"></option>
+                        </datalist>
+                    </div>
+                </div>
+                
+                <!-- 주소 -->
+                <div class="f-row">
+                    <span class="f-label">주소</span>
+                    <div class="f-addr">
+                        <input type="text" id="postcode" placeholder="우편번호" />
+                        <button type="button" class="btn" id="btn-postcode">주소 찾기</button>
+                        <input type="text" id="addr1" placeholder="기본 주소" />
+                        <input type="text" id="addr2" placeholder="상세 주소" />
+                    </div>
+                </div>
+                
+                <!-- 기본 배송지 -->
+                <label class="f-check">
+                    <input type="checkbox" id="isDefaultAddr" />
+                    <span>기본 배송지로 설정</span>
+                </label>
+                
+                <div class="modal-foot">
+                    <button type="submit" class="btn primary">저장</button>
+                    <button type="button" class="btn ghost" data-close>취소</button>
+                </div>
+            </form>
+        </div>
+        <div class="modal-dim" data-close></div>
+    </div>
+    
+    <!-- 모달: 비밀번호 확인  -->
+    <div class="modal" id="modal-pass" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-pass-title">
+        <div class="modal-inner">
+            <header class="model-head">
+                <h3 id="modal-pass-title">비밀번호 확인</h3>
+                <button class="modal-close" data-close aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+            </header>
+            <form id="form-pass" class="form">
+                <label class="f-row">
+                    <span class="f-label">비밀번호</span>
+                    <input type="password" id="password" required />
+                </label>
+                <div class="modal-foot">
+                    <button type="submit" class="btn primary">확인</button>
+                    <button type="button" class="btn ghost" data-close>취소</button>
+                </div>
+            </form>
+        </div>
+        <div class="modal-dim" data-close></div>
+    </div>
+    
+    <!-- 푸터 자리 -->
+    <div id="site-footer" data-include="/My_page/mpFooter/mpFooter.html"></div>
+    <!-- 토스트 컨테이너  -->
+    <div id="toast" aria-live="polite" aria-atomic="true"></div>
+    
+    
+    <script>
+        // [공통 include 로더] - 페이지 내 모든 [data-include] 처리
+        async function doInclude(host) {
+            const url = host.getAttribute('data-include');
+            if (!url) return;
+            try {
+                const res = await fetch(url, { cache: 'no-cache', credentials: 'same-origin' });
+                if (!res.ok) throw new Error(res.status + ' ' + res.statusText);
+                
+                const html = await res.text();
+                host.innerHTML = html; // 조각 HTML 삽입
+                
+                // 조각 기준으로 link/src 상대경로 보정
+                const base = new URL(url, location.href);
+                host.querySelectorAll('[href],[src]').forEach(el => {
+                    const attr = el.hasAttribute('src') ? 'src' : 'href';
+                    const val  = el.getAttribute(attr);
+                    if (!val || /^(https?:|\/\/|data:|blob:|about:|mailto:|tel:|#|\/)/i.test(val)) return;
+                    el.setAttribute(attr, new URL(val, base).href);
+                });
+                
+                // 조각 안 <script> 실행 보정 (innerHTML로는 실행 안 됨)
+                    host.querySelectorAll('script').forEach(old => {
+                        const s = document.createElement('script');
+                        if (old.src) s.src = new URL(old.getAttribute('src'), base).href;
+                        else s.textContent = old.textContent;
+                        document.body.appendChild(s);
+                        old.remove();
+                    });
+                    
+                    host.dispatchEvent(new CustomEvent('include:ready', { detail: { url } }));
+                } catch (e) {
+                    console.error('[include 실패]', url, e);
+                    host.innerHTML = '<!-- include 실패: ' + url + ' -->';
+                }
+            }
+            
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('[data-include]').forEach(doInclude);
+            });
+            
+            // (선택) 헤더 전용 JS가 있으면 헤더 include 후에만 로드
+            document.getElementById('site-header')?.addEventListener('include:ready', () => {
+                const s = document.createElement('script');
+                s.src = 'mpheader/mpheader.js'; // 필요하면 경로 조정
+                document.body.appendChild(s);
+            });
+        </script>
+<!-- 
+        <script>
+            // header include 완료 후 header js 로드 + 초기화
+            document.getElementById('site-header')?.addEventListener('include:ready', () => {
+                const s = document.createElement('script');
+                s.src = 'mpheader/mpheader.js';
+                s.onload = () => {
+                    // 1) 헤더 js가 init 함수를 노출한다면 호출 (없으면 그냥 지나감)
+                    if (window.headerInit) window.headerInit();
+
+                    // 2) 헤더 js가 'DOMContentLoaded'만 기다리는 구조 대비 (이미 지나갔을 수 있음)
+                    if (document.redyState !== 'loading') {
+                        document.dispatchEvent(new Event('DOMContentLoaded'));
+                    }
+                };
+                document.body.appendChild(s);
+            })
+
+            </script> -->
+        <!-- 분리된 js -->
+        <script src="./mypage.js"></script>
+        <script src="./mpheader/mpheader.js"></script>
+        
+        
+    </body>
+    </html>

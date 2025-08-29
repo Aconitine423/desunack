@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>checkout</title>
+
+  <!-- 페이지 전용 스타일 -->
+  <link rel="stylesheet" href="checkout.css">
+
+  <!-- 헤더/푸터 전용 스타일 (경로 유지) -->
+  <link rel="stylesheet" href="/Checkout/Chheader/Chheader.css">
+  <link rel="stylesheet" href="/Checkout/chFooter/ChFooter.css">
+</head>
+
+<body class="dsnk" data-user-uid="0" data-order-id="0">
+  <!-- 헤더 자리 -->
+  <div id="site-header" data-include="/Checkout/Chheader/Chheader.html"></div>
+
+  <div class="container">
+    <!-- 좌*우 레이아웃 -->
+    <div class="card panel checkout" aria-label="주문/결제">
+
+      <!-- [좌] 모든 입력 -->
+      <main class="checkout-main">
+        <!-- 1. 주문자 정보 -->
+        <h2 class="section-title">주문자 정보</h2>
+        <div class="form-grid">
+          <div class="form-row-2">
+            <div class="field">
+              <label for="buyerName">이름</label>
+              <input id="buyerName" type="text" placeholder="주문자 이름" data-autosave />
+            </div>
+            <div class="field">
+              <label for="buyerPhone">연락처</label>
+              <input id="buyerPhone" type="tel" placeholder="010-0000-0000" inputmode="tel" data-autosave />
+            </div>
+          </div>
+          <div class="field">
+            <label for="buyerEmail">이메일</label>
+            <input id="buyerEmail" type="email" placeholder="example@domain.com" data-autosave />
+          </div>
+          <label class="field-inline">
+            <input type="checkbox" id="copyToReceiver" /> 수령인 정보에 주문자 정보 복사
+          </label>
+        </div>
+
+        <!-- 2. 수령인 정보 -->
+        <h2 class="section-title" style="margin-top:20px">수령인 정보</h2>
+        <div class="form-grid">
+          <div class="form-row-2">
+            <div class="field">
+              <label for="rcvName">받는 사람</label>
+              <input id="rcvName" type="text" placeholder="이름" data-autosave />
+            </div>
+            <div class="field">
+              <label for="rcvPhone">휴대폰 번호</label>
+              <input id="rcvPhone" type="tel" placeholder="010-0000-0000" inputmode="tel" data-autosave />
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="field">
+              <label for="zip">우편번호</label>
+              <input id="zip" type="text" placeholder="우편번호" data-autosave />
+            </div>
+            <div class="field" style="align-self:end">
+              <button type="button" class="btn" id="btnFindAddr">주소 검색</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="addr1">주소</label>
+            <input id="addr1" type="text" placeholder="기본 주소" data-autosave />
+          </div>
+
+          <div class="field">
+            <label for="addr2">상세 주소</label>
+            <input id="addr2" type="text" placeholder="상세 주소" data-autosave />
+          </div>
+
+          <div class="field">
+            <label for="memo">배송 요청사항</label>
+            <textarea id="memo" placeholder="문 앞, 경비실 등" data-autosave></textarea>
+          </div>
+        </div>
+
+        <!-- 할인 정보 -->
+        <h2 class="section-title" style="margin-top:20px;">할인 정보</h2>
+        <div class="form-grid">
+          <div class="form-row-2">
+            <div class="field">
+              <label for="couponSelect">쿠폰 선택</label>
+              <select id="couponSelect">
+                <option value="">사용할 쿠폰 없음</option>
+                <!-- 서버 렌더 예시:
+                <option value="FREESHIP">[배송무료] 프리쉽</option>
+                <option value="PERCENT:10">[10%] 여름 할인</option>
+                <option value="AMOUNT:3000">[3,000원] 즉시할인</option>
+                -->
+              </select>
+              <div id="couponStatus" class="helper"></div>
+            </div>
+            <div class="field">
+              <label for="pointUse">포인트 사용</label>
+              <input id="pointUse" type="number" min="0" step="1" placeholder="0" />
+              <div class="helper">보유 포인트는 서버에서 검증</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. 배송 정보 -->
+        <h2 class="section-title" style="margin-top:20px">배송 정보</h2>
+        <div class="form-grid">
+          <div class="form-row-2">
+            <div class="field"><!-- clss → class 고침 -->
+              <label for="shipType">배송 종류</label>
+              <select id="shipType">
+                <option value="parcel">택배</option>
+                <option value="quick">퀵</option>
+                <option value="pickup">방문 수령</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>배송 부담</label>
+              <div class="radio-line">
+                <label><input type="radio" name="shipPay" value="prepay" checked /> 선불</label>
+                <label><input type="radio" name="shipPay" value="collect" /> 착불</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="shipFee">배송료(원)</label>
+            <input id="shipFee" type="number" min="0" step="100" placeholder="0" />
+          </div>
+        </div>
+
+        <!-- 5. 결제 정보 -->
+        <h2 class="section-title" style="margin-top:20px;">결제 정보</h2>
+        <div id="payAccordion" class="pay-accordion" role="tablist">
+          <!-- ✅ 중복 .item 제거, 단일 .item만 유지 -->
+          <div class="item active" data-pay="card">
+            <button type="button" class="head" aria-expanded="true">
+              <h4>신용카드/체크카드</h4>
+              <span class="muted">카드 선택 시 상세 옵션 표시</span>
+            </button>
+            <div class="body" role="region">
+              <div class="form-row-2">
+                <div class="field">
+                  <label for="cardCompany">카드사 선택</label>
+                  <select id="cardCompany">
+                    <option value="">선택하세요</option>
+                    <option>국민</option><option>신한</option>
+                    <option>현대</option><option>롯데</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="instalment">할부 개월 수</label>
+                  <select id="instalment">
+                    <option value="0">일시불</option>
+                    <option value="2">2개월</option>
+                    <option value="3">3개월</option>
+                    <option value="6">6개월</option>
+                    <option value="12">12개월</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="item" data-pay="bank">
+            <button type="button" class="head" aria-expanded="false">
+              <h4>계좌이체</h4><span class="muted">실시간 계좌이체</span>
+            </button>
+            <div class="body" role="region">
+              <div class="field">
+                <label for="bankName">은행 선택</label>
+                <select id="bankName">
+                  <option>국민은행</option><option>신한은행</option>
+                  <option>하나은행</option><option>우리은행</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="item" data-pay="vbank">
+            <button type="button" class="head" aria-expanded="false">
+              <h4>가상계좌</h4><span class="muted">무통장 입금</span>
+            </button>
+            <div class="body" role="region">
+              <div class="helper">주문 완료 후 입금 계좌가 발급됩니다.</div>
+            </div>
+          </div>
+
+          <div class="item" data-pay="mobile">
+            <button type="button" class="head" aria-expanded="false">
+              <h4>휴대폰 결제</h4><span class="muted">통신사 소액결제</span>
+            </button>
+            <div class="body" role="region">
+              <div class="helper">월 한도는 통신사 정책을 따릅니다.</div>
+            </div>
+          </div>
+        </div><!-- ✅ payAccordion 닫힘 -->
+
+        <!-- 6. 약관 동의 (아코디언 밖) -->
+        <h2 class="section-title" style="margin-top:20px">약관 동의</h2>
+        <div class="agree">
+          <label><input type="checkbox" id="agreeAll" /> 전체 동의</label>
+          <label><input type="checkbox" class="agree-item" data-required="1" /> (필수) 결제대행 서비스 약관</label>
+          <label><input type="checkbox" class="agree-item" data-required="1" /> (필수) 개인정보 제3자 제공 동의</label>
+          <label><input type="checkbox" class="agree-item" /> (선택) 마케팅 정보 수집 동의</label>
+        </div>
+
+        <!-- 결제 버튼 -->
+        <div style="margin-top:16px">
+          <button type="button" class="btn btn-primary btn-block" id="btnPay" disabled>결제하기</button>
+        </div>
+      </main>
+      <!-- [/좌] -->
+
+      <!-- [우] 주문 요약 -->
+      <aside id="orderSummary" class="card panel summary" aria-label="주문 요약" data-subtotal="0" data-shipping="0">
+        <h3 class="section-title">주문 상품</h3>
+
+        <!-- 서버에서 상품 li들을 렌더링하는 컨테이너 -->
+        <div class="products" id="summaryProducts"></div>
+
+        <!-- 비어 있을 때만 보이는 안내 -->
+        <div class="placeholder" id="productsEmpty">상품 정보는 주문서 생성 후 서버에서 주입됩니다.</div>
+
+        <div class="summary-box" style="margin-top:12px">
+          <div class="summary-row"><span>상품 금액</span><strong id="sumProducts">0원</strong></div>
+          <div class="summary-row"><span>배송비</span><strong id="sumShipFee">0원</strong></div>
+          <div class="summary-row"><span>할인</span><strong id="sumDiscount">0원</strong></div>
+          <div class="summary-row total"><span>총 결제 금액</span><strong id="sumTotal">0원</strong></div>
+        </div>
+      </aside>
+      <!-- [/우] -->
+
+    </div><!-- /.checkout -->
+  </div><!-- /.container -->
+
+  <!-- 주소 검색 모달(퍼블리싱 더미) -->
+  <div id="addrModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="addrTitle" hidden>
+    <div class="modal-card">
+      <div class="modal-head" id="addrTitle">주소 검색</div>
+      <div class="modal-body">
+        <div class="field">
+          <label for="addrSearch">주소/건물명으로 검색</label>
+          <input id="addrSearch" type="text" placeholder="예) 대체당로 123, 역삼동..." />
+        </div>
+        <div class="muted">* 퍼블리싱 더미, 선택 시 입력란이 자동 기입됩니다.</div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn" id="addrCancel">닫기</button>
+        <button type="button" class="btn btn-primary" id="addrApply">선택</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 푸터 자리 -->
+  <div id="site-footer" data-include="/Checkout/ChFooter/ChFooter.html"></div>
+
+  <!-- include 로더 (경로는 그대로) -->
+  <script>
+    // [공통 include 로더] - 페이지 내 모든 [data-include] 처리
+    async function doInclude(host) {
+      const url = host.getAttribute('data-include');
+      if (!url) return;
+      try {
+        const res = await fetch(url, { cache: 'no-cache', credentials: 'same-origin' });
+        if (!res.ok) throw new Error(res.status + ' ' + res.statusText);
+
+        const html = await res.text();
+        host.innerHTML = html; // 조각 HTML 삽입
+
+        // 조각 기준으로 link/src 상대경로 보정
+        const base = new URL(url, location.href);
+        host.querySelectorAll('[href],[src]').forEach(el => {
+          const attr = el.hasAttribute('src') ? 'src' : 'href';
+          const val = el.getAttribute(attr);
+          if (!val || /^(https?:|\/\/|data:|blob:|about:|mailto:|tel:|#|\/)/i.test(val)) return;
+          el.setAttribute(attr, new URL(val, base).href);
+        });
+
+        // 조각 안 <script> 실행 보정 (innerHTML로는 실행 안 됨)
+        host.querySelectorAll('script').forEach(old => {
+          const s = document.createElement('script');
+          if (old.src) s.src = new URL(old.getAttribute('src'), base).href;
+          else s.textContent = old.textContent;
+          document.body.appendChild(s);
+          old.remove();
+        });
+
+        host.dispatchEvent(new CustomEvent('include:ready', { detail: { url } }));
+      } catch (e) {
+        console.error('[include 실패]', url, e);
+        host.innerHTML = '<!-- include 실패: ' + url + ' -->';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[data-include]').forEach(doInclude);
+    });
+
+    // (선택) 헤더 전용 JS가 있으면 헤더 include 후에만 로드
+    document.getElementById('site-header')?.addEventListener('include:ready', () => {
+      const s = document.createElement('script');
+      s.src = '/Checkout/Chheader/Chheader.js';  // 경로 유지
+      document.body.appendChild(s);
+    });
+  </script>
+
+  <!-- 분리된 js (경로 유지) -->
+  <script>
+    document.getElementById('site-header')?.addEventListener('include:ready', () => {
+      const s = document.createElement('script');
+      s.src = 'mpheader/mpheader.js';
+      s.defer = true;
+      document.body.appendChild(s);
+    });
+  </script>
+  <script src="./Chheader/Chheader.js"></script>
+  <script src="checkout.js" defer></script>
+</body>
+</html>

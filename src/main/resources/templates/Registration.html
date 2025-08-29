@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 상품 등록 </title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <link rel="stylesheet" href="/css/product-register.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/breadcrumb.css">
+    <!-- Font Awesome 아이콘 라이브러리 연결 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- href: CDN(Content Delivery Network) 경로
+    Font Awesome: 웹 아이콘(icon) 폰트 라이브러리 -->
+</head>
+<body class="registration-page">
+    <header>
+        <nav class="navbar">
+  <ul class="nav-menu">
+    <li class="mega-dropdown">
+      <a href="#" class="mega-toggle"><i class="fa fa-bars"></i></a>
+      <div class="mega-menu">
+        <div class="mega-column">
+          <h4 class="active" data-main="headerDrink">음료</h4>
+          <a href="#" data-main="headerDrink" data-sub="headerSoda">탄산</a>
+          <a href="#" data-main="headerDrink" data-sub="headerNonSoda">비탄산</a>
+          <a href="#" data-main="headerDrink" data-sub="headerPowder">분말</a>
+        </div>
+        <div class="mega-column">
+          <h4 class="active" data-main="headerSnack">스낵</h4>
+          <a href="#" data-main="headerSnack" data-sub="headerCookie">과자</a>
+          <a href="#" data-main="headerSnack" data-sub="headerCandy">사탕류</a>
+          <a href="#" data-main="headerSnack" data-sub="headerChocolate">초콜릿</a>
+          <a href="#" data-main="headerSnack" data-sub="headerIcecream">아이스크림</a>
+          <a href="#" data-main="headerSnack" data-sub="headerBread">빵</a>
+        </div>
+      </div>
+    </li>
+    <li><a href="brand.html">브랜드</a></li>
+    <li class="has-dropdown">
+      <a href="#" class="dropdown-toggle" data-main="headerDrink">음료</a>
+      <ul class="dropdown-menu">
+        <li><a href="#" data-main="headerDrink" data-sub="headerSoda">탄산</a></li>
+        <li><a href="#" data-main="headerDrink" data-sub="headerNonSoda">비탄산</a></li>
+        <li><a href="#" data-main="headerDrink" data-sub="headerPowder">분말</a></li>
+      </ul>
+    </li>
+    <li class="has-dropdown">
+      <a href="#" class="dropdown-toggle" data-main="headerSnack">스낵</a>
+      <ul class="dropdown-menu">
+        <li><a href="#" data-main="headerSnack" data-sub="headerCookie">과자</a></li>
+        <li><a href="#" data-main="headerSnack" data-sub="headerCandy">사탕류</a></li>
+        <li><a href="#" data-main="headerSnack" data-sub="headerChocolate">초콜릿</a></li>
+        <li><a href="#" data-main="headerSnack" data-sub="headerIcecream">아이스크림</a></li>
+        <li><a href="#" data-main="headerSnack" data-sub="headerBread">빵</a></li>
+      </ul>
+    </li>
+  </ul>
+  <div class="auth-buttons">
+                                   <!-- 검색 버튼 -->
+                                   <div class="search-container">
+                                        <button id="search-btn" class="search-btn">
+                                             <i class="fa fa-search"></i>
+                                             <span>검색</span>
+                                        </button>
+                                        <!-- 팝업 -->
+                                        <div id="search-popup" class="search-popup">
+                                             <div id="popup-content" class="popup-content">
+                                                  <div class="popup-header">
+                                                       <h3>검색 옵션</h3>
+                                                       <button class="close-btn" id="close-popup">&times;</button>
+                                                  </div>
+                                                  <!-- 체크박스 그룹 전체 래퍼 -->
+                                                  <div class="checkbox-group">
+                                                       
+                                                       <!-- 1)대체당 카테고리  -->
+                                                       <fieldset class="filter-category">
+                                                            <legend>대체당</legend>
+                                                            <!-- 각 레벨에 display:inline-block/grid로 배치됩니다-->
+                                                            <label><input type="checkbox" name="sweetener" value="sucralose">수크랄로스</label>
+                                                            <label><input type="checkbox" name="sweetener" value="stevia">스테비아</label>
+                                                            <label><input type="checkbox" name="sweetener" value="allulose">알룰로스</label>
+                                                            <label><input type="checkbox" name="sweetener" value="maltitol">말티톨</label>
+                                                            <label><input type="checkbox" name="sweetener" value="sorbitol">소르비톨</label>
+                                                            <label><input type="checkbox" name="sweetener" value="srythritol">에리스리톨</label>
+                                                            <label><input type="checkbox" name="sweetener" value="xylitol">자일리톨</label>
+                                                            <label><input type="checkbox" name="sweetener" value="saccharin">사카린</label>
+                                                            <label><input type="checkbox" name="sweetener" value="aspartame">아스파탐</label>
+                                                            <label><input type="checkbox" name="sweetener" value="acesulfame-potassium">아세설팜칼륨</label>
+                                                       </fieldset>
+                                                       
+                                                       <!-- 2) 알러지 카테고리 -->
+                                                       <fieldset class="filter-category">
+                                                            <legend>알러지</legend>
+                                                            <label><input type="checkbox" name="allergy" value="peanut">땅콩</label>
+                                                            <label><input type="checkbox" name="allergy" value="nuts">견과류</label>
+                                                            <label><input type="checkbox" name="allergy" value="soybean">대두</label>
+                                                            <label><input type="checkbox" name="allergy" value="wheat">밀</label>
+                                                            <label><input type="checkbox" name="allergy" value="egg">달걀</label>
+                                                            <label><input type="checkbox" name="allergy" value="milk">우유</label>
+                                                            <label><input type="checkbox" name="allergy" value="fish">생선</label>
+                                                            <label><input type="checkbox" name="allergy" value="shellfish">패류</label>
+                                                       </fieldset>
+                                                  </div>
+                                                  <button class="search-submit-btn">검색</button>
+        </div>
+      </div>
+    </div>
+    <!-- 로그인/회원가입 -->
+    <a href="login.html" class="login-btn"><i class="fa-regular fa-user"></i><span>로그인</span></a>
+    <a href="signup.html" class="signup-btn"><i class="fa-solid fa-user-plus"></i><span>회원가입</span></a>
+  </div>
+</nav>
+    </header>
+    
+    <!-- 브레드크럼이 들어가는 자리 -->
+    <nav class="breadcrumb-nav">
+        <a href="/">홈</a>
+        <span class="breadcrumb-sep">&gt;</span>
+        
+        <!-- 대분류 드롭다운 -->
+        <div class="breadcrumb-item dropdown" id="main-dropdown">
+            <button class="dropdown-toggle">
+                <span id="main-label" data-value="">대분류</span>
+                <span class="arrow">▼</span>
+            </button>
+            <ul class="dropdown-menu" id="main-menu">
+                <!-- js가 여기에 "음료/간식" 항목을 삽입 -->
+            </ul>
+        </div>
+        
+        <span class="breadcrumb-sep">&gt;</span>
+        
+        <!-- 소분류 드롭다운 -->
+        <div class="breadcrumb-item dropdown" id="sub-dropdown">
+            <button class="dropdown-toggle">
+                <span id="sub-label" data-value="">소분류</span>
+                <span class="arrow">▼</span>
+            </button>
+            <ul class="dropdown-menu" id="sub-menu">
+                <!-- js가 여기에 선택된 대분류의 소분류를 삽입 -->
+            </ul>
+        </div>
+    </nav>
+                          <h1> 상품 등록 </h1>
+    </header>
+    
+    <main class="register-form">
+        <form action="/product/register" id="registerFrm" method="post" enctype="multipart/form-data">
+            <!-- 기본 정보 -->
+            <fieldset>
+                <legend>기본 정보</legend>
+                <div class="form-row">
+                    <label for="goodsName">상품명</label>
+                    <input type="text" id="goodsName" name="goodsName" required>
+                </div>
+                <div class="form-row">
+                    <label for="goodsPrice">가격</label>
+                    <div class="input-with-unit">
+                        <input type="text" id="goodsPrice" name="goodsPrice" inputmode="numeric" placeholder="0">
+                        <span>원</span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label for="goodsQuantity">재고수량</label>
+                    <input type="number" id="goodsQuantity" name="goodsQuantity" required>
+                </div>
+                <div class="form-row">
+                    <label for="goodsDate">판매 기간</label>
+                    <select id="goodsDate" name="goodsDate">
+                        <option value="month1">30일</option>
+                        <option value="month2">60일</option>
+                        <option value="month3">90일</option>
+                    </select>
+                </div>
+            </fieldset>
+            
+            <!-- 카테고리 -->
+            <fieldset>
+                <legend>카테고리 설정</legend>
+                <div class="form-row">
+                    <label for="category">대분류</label>
+                    <select id="category" name="category">
+                        <option>선택</option>
+                        <option value="drink">음료</option>
+                        <option value="snack">스낵</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="smallCategory">소분류</label>
+                    <select id="smallCategory" name="smallCategory" required>
+                        <option value="">선택</option>
+                    </select>
+                </div>
+            </fieldset>
+            
+            <!-- 이미지 등록 -->
+            <fieldset>
+                <legend> 상품 이미지 등록 </legend>
+                <div class="file-upload">
+                    <label for="mainImage" class="file-label">메인 이미지 선택</label>
+                    <input type="file" id="mainImage" name="mainImage">
+                    <span class="flie-name">선택된 파일 없음 </span>
+                </div>
+                <div class="file-upload">
+                    <label for="detailContent" class="file-label">상세 설명 이미지 선택</label>
+                    <input type="file" id="detailContent" name="detailContent">
+                    <span class="flie-name">선택된 파일 없음 </span>
+                </div>
+            </fieldset>
+            <!-- 성분 정보 -->
+            <fieldset>
+                <legend>성분 정보</legend>
+                <div class="checkbox-row">
+                    <label>
+                        <input type="checkbox" id="acesulfame_potassium" name="goodsSweetener" value="아세설팜칼륨">
+                        아세설팜칼륨
+                        <input type="checkbox" id="allulose" name="goodsSweetener" value="알룰로스">
+                        알룰로스
+                        <input type="checkbox" id="aspartame" name="goodsSweetener" value="아스파탐">
+                        아스파탐
+                        <input type="checkbox" id="erythritol" name="goodsSweetener" value="에리스리톨">
+                        에리스리톨
+                        <input type="checkbox" id="maltitol" name="goodsSweetener" value="말티톨">
+                        말티톨
+                        <input type="checkbox" id="saccharin" name="goodsSweetener" value="사카린">
+                        사카린
+                        <input type="checkbox" id="sorbitol" name="goodsSweetener" value="솔비톨">
+                        솔비톨
+                        <input type="checkbox" id="stevia" name="goodsSweetener" value="스테비아">
+                        스테비아
+                        <input type="checkbox" id="sucralose" name="goodsSweetener" value="수크랄로스">
+                        수크랄로스
+                        <input type="checkbox" id="xylitol" name="goodsSweetener" value="자일리톨">
+                        자일리톨
+                    </label>
+                    <hr>
+                    <label>
+                        <input type="checkbox" id="egg" name="goodsAllergy" value="난류">
+                        난류
+                        <input type="checkbox" id="fish" name="goodsAllergy" value="어류">
+                        어류
+                        <input type="checkbox" id="milk" name="goodsAllergy" value="우유">
+                        우유
+                        <input type="checkbox" id="nuts" name="goodsAllergy" value="견과류">
+                        견과류
+                        <input type="checkbox" id="peanut" name="goodsAllergy" value="땅콩">
+                        땅콩
+                        <input type="checkbox" id="shellfish" name="goodsAllergy" value="패류">
+                        패류
+                        <input type="checkbox" id="soybean" name="goodsAllergy" value="대두">
+                        대두
+                        <input type="checkbox" id="wheat" name="goodsAllergy" value="밀">
+                        밀
+                    </label>
+                </div>
+            </fieldset>
+            <!-- 배송 정보 -->
+            <fieldset>
+                <legend>배송 정보</legend>
+                <div class="form-row">
+                    <label for="deliveryType">배송 종류</label>
+                    <select id="deliveryType" name="deliveryType">
+                        <option value="normal">일반 배송</option>
+                        <option value="quick">자체 배송</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="deliveryPaidType">선불/착불</label>
+                    <select id="deliveryPaidType" name="deliveryPaidType">
+                        <option value="pre">선불</option>
+                        <option value="post">착불</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="deliveryFee">배송료</label>
+                    <div class="input-with-unit">
+                        <input type="text" id="deliveryFee" name="deliveryFee" inputmode="numeric" placeholder="0">
+                        <span>원</span>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- 추가 정보 -->
+            <fieldset>
+                <legend>상품 추가 정보</legend>
+                <div class="form-row">
+                    <label for="brandName">브랜드명</label>
+                    <input type="text" id="brandName" name="brandName">
+                </div>
+                <div class="form-row">
+                    <label for="foodType">식품유형</label>
+                    <input type="text" id="foodType" name="foodType">
+                </div>
+                <div class="form-row">
+                    <label for="madeIn">원산지</label>
+                    <input type="text" id="madeIn" name="madeIn">
+                </div>
+                <div class="form-row">
+                    <label for="madeFactory">제조사</label>
+                    <input type="text" id="madeFactory" name="madeFactory">
+                </div>
+                <div class="form-row">
+                    <label for="caution">주의사항</label>
+                    <textarea id="caution" name="caution" class="auto-resize" placeholder="상품 주의사항을 입력하세요"></textarea>
+                </div>
+                <div class="form-row">
+                    <label for="csPhone">상담전화번호</label>
+                    <input type="tel" id="csPhone" name="csPhone">
+                </div>
+            </fieldset>
+            
+            <!-- 등록 버튼 -->
+            <div id="messageBox" class="messageBox" role="alert"></div>
+            <div class="form-submit">
+                <button type="submit">상품 등록</button>
+            </div>
+        </form>
+    </main>
+     <table class="footer-menu" border="0" cellpadding="4" cellspacing="0">
+                              <!-- 1행: 메뉴 링크를 각각의 셀에 넣으면, 자동으로 각 열 위치가 맞춰집니다 -->
+                              <tr>
+                                   <td rowspan="2">
+                                        <img src="../프로젝트/header/img/232333.png" alt="대체당" style="width:150px; vertical-align:middle;">
+                                   </td>
+                                   <td><a href="company.html">회사 소개</a></td>
+                                   <td><a href="terms.html">이용약관</a></td>
+                                   <td><a href="privacy.html">개인정보처리방침</a></td>
+                                   <td><a href="notice.html">공지사항</a></td>
+                                   <td><a href="contact.html">1:1 문의</a></td>
+                                   <td><a href="faq.html">자주 묻는 질문</a></td>
+                              </tr>
+                              
+                              <!-- 2행: 각 링크 아래에 들어갈 상세 정보 -->
+                              
+                              <tr>
+                                   <td>
+                                        회사정보<br>
+                                        사업자등록번호
+                                   </td>
+                                   <td></td>
+                                   <td>
+                                        메일<br>
+                                        전화번호<br>
+                                        주소
+                                   </td>
+                                   <td></td>
+                                   <td></td>
+                                   <td></td>
+                              </tr>
+                              
+                              <!--  3행: 칸을 합쳐서 저작권 표시-->
+                              <tr>
+                                   <td colspan="7" class="footer-copy">
+                                        © 2025 대체당. All rights reserved.
+                                   </td>
+                              </tr>
+                         </table>
+                    </footer>
+    <script src="../프로젝트/header/header1.js"></script>
+    <!-- js: 대부류 선택 시 소분류 자동 변경 -->
+    <script>
+        const category = document.getElementById("category");
+        const smallCategory = document.getElementById("smallCategory");
+        console.log($('input[name="goodsSweetener"]').val());
+        // 대분류별 소분류 옵션 정의
+        const subOptions = {
+            drink: [
+            {value: "11", text:"탄산"},
+            {value: "12", text: "비탄산"},
+            {value: "13", text:"분말"}
+            ],
+            snack: [
+            {value: "21",text:"과자"},
+            {value: "22",text:"사탕류"},
+            {value: "23",text:"초콜릿"},
+            {value: "24",text:"아이스크림"},
+            {value: "25",text:"빵"}
+            ]
+        };
+        
+        // 대분류 선택 시 소분류 채우기
+        category.addEventListener("change", function() {
+            const selected = this.value;
+            smallCategory.innerHTML = '<option value="">선택</option>'; // 초기화
+            if (subOptions[selected]) {
+                subOptions[selected].forEach(function(opt) {
+                    const option = document.createElement("option"); 
+                    option.value = opt.value;
+                    option.textContent = opt.text;
+                    smallCategory.appendChild(option);
+                });
+            }
+        });
+        
+        // 모든 auto-resize textarea에 적용
+        document.addEventListener("input", function(e) {
+            if (e.target.tagName.toLowerCase() !== "textarea" || !e.target.classList.contains("auto.resize")) return;
+            
+            e.target.style.height = "auto"; // 높이 초기화
+            e.target.style.height = e.target.scrollHeight + "px"; // 내용 높이에 맞게 다시 설정
+        });
+        
+        // 숫자만 남기고 콤바 붙이는 함수 
+        function formatNumber(num){
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        
+        //입력 이벤트 
+        document.querySelectorAll("#goodsPrice, #deliveryFee").forEach(input => {
+            input.addEventListener("input",(e) =>{
+                // 숫자만 남기기
+                let value = e.target.value.replace(/,/g, ""); // 기준 콤마 제거
+                if (!isNaN(value) && value !== "") {
+                    e.target.value = formatNumber(value);
+                } else{
+                    e.target.value = "";
+                }
+            });
+        });
+        
+        // 전송 전에 콤마 제거 (숫자만 남기기)
+        document.querySelector("form").addEventListener("submit", () => {
+            ["goodsPrice", "deliveryFee"].forEach(id => {
+                const input = document.getElementById(id);
+                input.value = input.value.replace(/,/g, "");
+            });
+        });
+        
+        // 파일명 표시
+        document.querySelectorAll(".file-upload input[type=file]").forEach(input => {
+            input.addEventListener("change", (e) => {
+                const fileName = e.target.files.length ? e.target.files[0].name : "선택된 파일 없음";
+                e.target.closest(".file-upload").querySelector(".file-name").textContent = fileName;
+            });
+        });
+    </script>
+</body>
+</html>

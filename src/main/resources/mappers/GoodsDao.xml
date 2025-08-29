@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.desunack.desunack.dao.GoodsDao">
+    <insert id="goodsRegistrate">
+        insert into goods(g_id, g_m_uid, brand_name, g_name, company_name, g_value, g_qty, g_startday,
+                          g_endday, g_cat_key, g_image, g_detail, g_delivery_kind, g_status, g_total_rating, g_review_count)
+        values (#{g_id}, #{g_m_uid}, #{brand_name}, #{g_name}, #{company_name}, #{g_value}, #{g_qty}, #{g_startday}, #{g_endday},
+                #{g_cat_key}, #{g_image}, #{g_detail}, #{g_delivery_kind}, #{g_status}, #{g_total_rating}, #{g_review_count})
+    </insert>
+    <insert id="goodsTotalSales">
+        insert into goods_total_sales(gts_g_id, gts_sales) values(#{g_id}, default)
+    </insert>
+    <insert id="goodsSweetener">
+        <foreach collection="sList" item = "sweetener">insert into goods_sweetener(gs_g_id, gs_s_key) values(#{g_id}, #{sweetener})</foreach>
+    </insert>
+    <insert id="goodsAllergy">
+        <foreach collection="aList" item = "allergy">insert into goods_allergy(ga_g_id, ga_a_key) values(#{g_id}, #{allergy})</foreach>
+    </insert>
+</mapper>

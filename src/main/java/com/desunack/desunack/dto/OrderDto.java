@@ -26,6 +26,7 @@ public class OrderDto {
     private String order_payments;
     private int order_total_cost;
     private char order_status;
+    private int order_earned_point;
 
     public OrderEntity toEntity() {
         return OrderEntity.builder().go_num(this.order_num).go_m_uid(this.order_m_uid)
@@ -35,6 +36,6 @@ public class OrderDto {
                 .go_receiver_address_detail(this.order_receiver_address_detail)
                 .go_receiver_post(this.order_receiver_post).go_coupon(this.order_coupon)
                 .go_point(this.order_point).go_payments(this.order_payments)
-                .go_total_cost(this.order_total_cost).go_status(this.order_status).build();
+                .go_total_cost(this.order_total_cost).go_status(this.order_status).go_earned_point(this.order_earned_point).build();
     }
 }

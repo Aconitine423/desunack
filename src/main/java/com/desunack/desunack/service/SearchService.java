@@ -38,7 +38,7 @@ public class SearchService {
             }
         }
 
-        String Json = searchDao.filterSearch(filterList, startIdx, size);
+        ArrayList<String> Json = searchDao.filterSearch(filterList, startIdx, size);
         if(Json != null){
             session.setAttribute("Json", Json);
             return true;
@@ -51,7 +51,7 @@ public class SearchService {
         int startIdx = (pNum-1)*10;
         int size = 10;
 
-        String Json = searchDao.categorySearch(categoryName, startIdx, size);
+        ArrayList<String> Json = searchDao.categorySearch(categoryName, startIdx, size);
         if(Json != null){
             session.setAttribute("Json", Json);
             return true;

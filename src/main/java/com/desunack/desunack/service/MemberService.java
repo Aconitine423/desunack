@@ -17,12 +17,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import java.util.ArrayList;
 
 @Slf4j
 @Service
@@ -115,7 +118,7 @@ public class MemberService {
         return mDao.isUsedNickname(userNickname);
     }
 
-    public boolean login1(String id, String pw, HttpSession session){
+    public boolean login1(String id, String pw, Model model, HttpSession session){
         String ecdpw = mDao.getSecurityPw(id);
         if(ecdpw != null){
             log.info("========id ok========");
@@ -125,6 +128,7 @@ public class MemberService {
                 memberEntity = mDao.getMemberEntity(id);
                 switch(memberEntity.getM_kind()){
                     case 'A':
+                        model.addAttribute("member",memberEntity);
                         session.setAttribute("member", memberEntity);
 
                         break;
@@ -139,6 +143,7 @@ public class MemberService {
                         session.setAttribute("member", sDto);
                         break;
                 }
+                log.info(session.getAttribute("member").toString());
                 return true;
             }
             return false;
@@ -205,7 +210,7 @@ public class MemberService {
         //select * from 상품 join 상품판매
         // on 상품ID = 상품판매ID and 상품판매성별 = 회원성별 and 상품판매나이 = 회원나이대
         //order by 상품판매량 desc;
-        String Json = mDao.getGoodsSales(m_gender, m_age);
+        ArrayList<String> Json = mDao.getGoodsSales(m_gender, m_age);
         if(Json != null){
             session.setAttribute("Json", Json);
             return true;
@@ -219,7 +224,7 @@ public class MemberService {
         //쿼리문
         //select * from 상품 join 전체판매 on 상품ID = 상품판매ID
         //where 판매자ID = m_id order by 상품판매량 desc
-        String Json = mDao.getCompanySales(m_uid);
+        ArrayList<String> Json = mDao.getCompanySales(m_uid);
         if(Json != null){
             session.setAttribute("Json", Json);
             return true;
@@ -245,4 +250,13 @@ public class MemberService {
         return false;
     }
 
+    public boolean getSales(HttpSession session) {
+        ArrayList<String> Json = mDao.getSales();
+        if(Json != null){
+            session.setAttribute("Json", Json);
+
+            return true;
+        }
+        return false;
+    }
 }

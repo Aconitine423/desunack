@@ -6,6 +6,8 @@ import com.desunack.desunack.entity.SellerEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.ArrayList;
+
 @Mapper
 public interface MemberDao {
 
@@ -46,12 +48,13 @@ public interface MemberDao {
 
     boolean updatePw(String m_id, String ecdpw);
 
-    String getGoodsSales(char m_gender, int m_age);
+    ArrayList<String> getGoodsSales(char m_gender, int m_age);
 
-    String getCompanySales(int m_uid);
+    ArrayList<String> getCompanySales(int m_uid);
 
     String getCustomerInfo(int uid);
 
     String getSellerInfo(int uid);
 
+    ArrayList<String> getSales();
 }

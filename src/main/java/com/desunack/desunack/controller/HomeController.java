@@ -1,7 +1,5 @@
 package com.desunack.desunack.controller;
 
-import com.desunack.desunack.entity.CustomerEntity;
-import com.desunack.desunack.entity.MemberEntity;
 import com.desunack.desunack.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +18,7 @@ public class HomeController {
     public String signup() {
         return "/signup/signup";
     }
+
     @GetMapping("/signup/customerfrm")
     public String customerJoin() {
         return "/signup/customerFrm";
@@ -34,11 +33,6 @@ public class HomeController {
     public String login1() {
         log.info("=======login1이동");
         return "/member/login";
-    }
-
-    @GetMapping("/member/find-info")
-    public String findIdPw() {
-        return "/member/findInfoFrm";
     }
 
     @GetMapping("/")
@@ -56,18 +50,18 @@ public class HomeController {
                 char gender = customer.getC_gender();
                 if(mSer.getGoodsSales(gender, age, session)){
                     log.info(session.getAttribute("Json").toString());
-                    return "index";
+                    return "redirect:/";
                 }
             }else if(kind == 'S'){
                 int id = user.getM_uid();
                 if(mSer.getCompanySales(id, session)){
                     log.info(session.getAttribute("Json").toString());
-                    return "index";
+                    return "redirect:/";
                 }
             }else{
                 if(mSer.getSales(session)){
                     log.info(session.getAttribute("Json").toString());
-                    return "index";
+                    return "redirect:/";
                 }
             }
         }

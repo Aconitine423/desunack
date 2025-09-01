@@ -65,7 +65,7 @@ public class MemberService {
         String filePath = null;
         try {
             // 파일 저장 및 경로 반환된거 받기
-            filePath = fileManager.saveSellerNumFile(file, "seller/");
+            filePath = fileManager.saveFile(file, "seller/");
 
             // 파일 경로 DTO에 저장
             sellerDto.setSellerNumImage(filePath);

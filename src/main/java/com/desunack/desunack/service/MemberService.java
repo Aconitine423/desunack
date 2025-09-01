@@ -79,7 +79,7 @@ public class MemberService {
             log.info("======sellerDto={}", sellerDto);
         SellerEntity sellerEntity = sellerDto.toEntity();
         if (mDao.isUsedId(sellerEntity.getM_id())){
-            return;
+            return ;
         }
         BCryptPasswordEncoder ecd = new BCryptPasswordEncoder();
         String ecdPw = ecd.encode(sellerEntity.getM_pw());
@@ -107,6 +107,7 @@ public class MemberService {
         }
 
     }
+
 
     // 회원가입 아이디 중복체크
     public boolean isUsedId(String userId) {

@@ -60,7 +60,7 @@ public class FileManager {
         return fileName.substring(index + 1);
     }
 
-    public void deleteFile(String filePath) {
+    public void deleteFile(String filePath, String subPath) throws IOException {
         if (filePath == null || filePath.isEmpty()) {
             return;
         }

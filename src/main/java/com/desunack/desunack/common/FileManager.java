@@ -22,7 +22,7 @@ public class FileManager {
     // @param file : 업로드할 파일
     // @param subPath : 파일을 저장할 하위 경로
     // 판매자 사업자등록증 파일 저장
-    public String saveSellerNumFile(MultipartFile file, String subPath) throws IOException {
+    public String saveFile(MultipartFile file, String subPath) throws IOException {
         if (file.isEmpty()) {
             return null;
         }

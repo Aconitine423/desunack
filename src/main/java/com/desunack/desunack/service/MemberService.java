@@ -1,6 +1,7 @@
 package com.desunack.desunack.service;
 
 
+import com.desunack.desunack.common.FileManager;
 import com.desunack.desunack.dao.MemberDao;
 import com.desunack.desunack.dto.CustomerDto;
 import com.desunack.desunack.dto.SellerDto;
@@ -14,10 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
+import java.io.IOException;
 
 @Slf4j
 @Service
@@ -27,6 +28,7 @@ public class MemberService {
     private UserDto uDto;
     private  CustomerDto cDto;
     private MemberEntity memberEntity;
+    private final FileManager fileManager;
 
     // 소비자 회원가입
     @Transactional
@@ -59,10 +61,18 @@ public class MemberService {
 
     // 판매자 회원가입
     @Transactional
-    public boolean sellerJoin(SellerDto sellerDto) {
+    public void sellerJoin(SellerDto sellerDto, MultipartFile file) throws Exception {
+        String filePath = null;
+        try {
+            // 파일 저장 및 경로 반환된거 받기
+            filePath = fileManager.saveFile(file, "seller/");
+
+            // 파일 경로 DTO에 저장
+            sellerDto.setSellerNumImage(filePath);
+            log.info("======sellerDto={}", sellerDto);
         SellerEntity sellerEntity = sellerDto.toEntity();
         if (mDao.isUsedId(sellerEntity.getM_id())){
-            return false;
+            return;
         }
         BCryptPasswordEncoder ecd = new BCryptPasswordEncoder();
         String ecdPw = ecd.encode(sellerEntity.getM_pw());
@@ -70,9 +80,25 @@ public class MemberService {
 
         int memberUid = mDao.maxSellerUid() +1;
         sellerEntity.setM_uid(memberUid);
-        mDao.sMemberJoin(sellerEntity);
-        mDao.sellerJoin(sellerEntity);
-        return true;
+        boolean sMemberResult = mDao.sMemberJoin(sellerEntity);
+        boolean sellerResult = mDao.sellerJoin(sellerEntity);
+        if (!(sMemberResult && sellerResult)) {
+            // DB 저장 실패 시 강제로 예외를 발생시켜 트랜잭션 롤백
+            throw new Exception("회원가입 데이터 저장 실패");
+        }
+        } catch (IOException e) {
+            // 파일 업로드 실패시 에러처리하면서 파일 삭제
+            if (filePath != null) {
+                fileManager.deleteFile(filePath, "seller/");
+            }
+            throw e;
+        } catch (Exception e) {
+            if (filePath != null) {
+                fileManager.deleteFile(filePath, "seller/");
+            }
+            throw e;
+        }
+
     }
 
     // 회원가입 아이디 중복체크
@@ -85,7 +111,7 @@ public class MemberService {
         return mDao.isUsedNickname(userNickname);
     }
 
-    public boolean login1(String id, String pw, Model model, HttpSession session){
+    public boolean login1(String id, String pw, HttpSession session){
         String ecdpw = mDao.getSecurityPw(id);
         if(ecdpw != null){
             log.info("========id ok========");
@@ -95,7 +121,6 @@ public class MemberService {
                 memberEntity = mDao.getMemberEntity(id);
                 switch(memberEntity.getM_kind()){
                     case 'A':
-                        model.addAttribute("member",memberEntity);
                         session.setAttribute("member", memberEntity);
 
                         break;
@@ -110,7 +135,6 @@ public class MemberService {
                         session.setAttribute("member", sDto);
                         break;
                 }
-                log.info(session.getAttribute("member").toString());
                 return true;
             }
             return false;
@@ -171,7 +195,7 @@ public class MemberService {
         //select * from 상품 join 상품판매
         // on 상품ID = 상품판매ID and 상품판매성별 = 회원성별 and 상품판매나이 = 회원나이대
         //order by 상품판매량 desc;
-        ArrayList<String> Json = mDao.getGoodsSales(m_gender, m_age);
+        String Json = mDao.getGoodsSales(m_gender, m_age);
         if(Json != null){
             session.setAttribute("Json", Json);
             return true;
@@ -185,7 +209,7 @@ public class MemberService {
         //쿼리문
         //select * from 상품 join 전체판매 on 상품ID = 상품판매ID
         //where 판매자ID = m_id order by 상품판매량 desc
-        ArrayList<String> Json = mDao.getCompanySales(m_uid);
+        String Json = mDao.getCompanySales(m_uid);
         if(Json != null){
             session.setAttribute("Json", Json);
             return true;
@@ -211,14 +235,4 @@ public class MemberService {
         return false;
     }
 
-    public boolean getSales(HttpSession session) {
-        ArrayList<String> Json = mDao.getSales();
-        if(Json != null){
-            session.setAttribute("Json", Json);
-
-            return true;
-        }
-        return false;
-
-    }
 }

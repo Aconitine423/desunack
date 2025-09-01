@@ -34,6 +34,11 @@ public class HomeController {
         return "/member/login";
     }
 
+    @GetMapping("/member/find-info")
+    public String findIdPw() {
+        return "/member/findInfoFrm";
+    }
+
     @GetMapping("/")
     public String home(HttpSession session) {
         Object userKind = session.getAttribute("m_kind");

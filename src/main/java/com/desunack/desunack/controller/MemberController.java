@@ -86,9 +86,9 @@ public class MemberController {
     @PostMapping("/member/login1")
     public String login1(@RequestParam String id, String pw, Model model, HttpSession session, RedirectAttributes rttr) {
 
-        if (mSer.login1(id, pw, session)) {
+        if (mSer.login1(id, pw, model, session)) {
             log.info("======login success={}", id);
-            return "redirect:/index";
+            return "redirect:/";
         }
         log.info("======login fail={}", id);
         rttr.addFlashAttribute("msg", "로그인에 실패했습니다. 아이디 혹은 비밀번호를 확인해주세요");

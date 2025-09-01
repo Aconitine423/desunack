@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!-- DOCTYPE 선언: 문서 유형을 HTML5로 지정 (문서 상단에 반드시 위치해야 함) -->
 
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <!-- <html> 요소: 문서의 최상위 루트 요소(root element)
 lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어) -->
 
@@ -25,7 +25,7 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
 
     <!-- 기본 스타일시트 연결 -->
     <link rel="stylesheet" href="/css/main.css">
-    <!-- <link rel="stylesheet" href="../프로젝트/common/reset.css"> -->
+     <link rel="stylesheet" href="/common/reset.css">
     <!-- <link> 요소: 외부 리소스 연결
     rel 속성: 스타일시트(stylesheet)임을 지정
     href 속성: 연결할 CSS 파일 경로 -->
@@ -34,6 +34,7 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- href: CDN(Content Delivery Network) 경로
     Font Awesome: 웹 아이콘(icon) 폰트 라이브러리 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body>
 <!-- <body> 요소: 화면에 실제 표시되는 콘텐츠(container)를 포함 -->
@@ -190,14 +191,26 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
         <!-- class="grid-container": CSS Grid 레이아웃 사용, 4열(column) 구성 -->
 
         <!-- 각 그리드 아이템: 배경색으로 구분 -->
-        <div class="grid-item" style="background-color: #ff6d9d;"></div>
-        <div class="grid-item" style="background-color: #4ecdc4;"></div>
-        <div class="grid-item" style="background-color: #45b7d1;"></div>
-        <div class="grid-item" style="background-color: #96ceb4;"></div>
-        <div class="grid-item" style="background-color: #feca57;"></div>
-        <div class="grid-item" style="background-color: #ff9ff3;"></div>
-        <div class="grid-item" style="background-color: #54a0ff;"></div>
-        <div class="grid-item" style="background-color: #5f27cd;"></div>
+        <th:block th:if="${#lists.isEmpty(session.Json)}">
+            <span>리스트가 없습니다.</span>
+        </th:block>
+        <th:block th:unless="${#lists.isEmpty(session.Json)}">
+            <th:block th:each="goods:${session.Json}">
+                    <div class="grid-item" th:text="${goods}"></div>
+            </th:block>
+        </th:block>
+<!--        <div class="grid-item" id="item1" style="background-color: #ff6d9d;">-->
+<!--            [[${session.Json}]]-->
+<!--        </div>-->
+<!--        <div class="grid-item" id="item2" style="background-color: #4ecdc4;"></div>-->
+<!--        <div class="grid-item" id="item3" style="background-color: #45b7d1;"></div>-->
+<!--        <div class="grid-item" id="item4" style="background-color: #96ceb4;"></div>-->
+<!--        <div class="grid-item" id="item5" style="background-color: #feca57;"></div>-->
+<!--        <div class="grid-item" id="item6" style="background-color: #ff9ff3;"></div>-->
+<!--        <div class="grid-item" id="item7" style="background-color: #54a0ff;"></div>-->
+<!--        <div class="grid-item" id="item8" style="background-color: #5f27cd;"></div>-->
+<!--        <div class="grid-item" id="item9" style="background-color: #00ff1f;"></div>-->
+<!--        <div class="grid-item" id="item10" style="background-color: #ff001f;"></div>-->
     </div>
 </section>
 
@@ -288,7 +301,12 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
 <!-- 외부 JavaScript 파일 로드: 슬라이더 동작 및 팝업 위치 제어 -->
 <!-- ================================================================= -->
 <script src="/js/script-copy.js"></script>
+<script src="/js/main.js"></script>
 <!-- <script> 요소: 외부 JavaScript 파일 연결
      src 속성: script.js 경로 지정 -->
+<script th:inline="javascript">
+console.log([[${session.Json}]])
+
+</script>
 </body>
 </html>

@@ -1,7 +1,10 @@
 package com.desunack.desunack.controller;
 
+import com.desunack.desunack.entity.CustomerEntity;
+import com.desunack.desunack.entity.MemberEntity;
 import com.desunack.desunack.service.MemberService;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,14 +13,13 @@ import java.time.LocalDate;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
-    public MemberService mSer;
-
+    private final MemberService mSer;
     @GetMapping("/signup")
     public String signup() {
         return "/signup/signup";
     }
-
     @GetMapping("/signup/customerfrm")
     public String customerJoin() {
         return "/signup/customerFrm";
@@ -34,30 +36,41 @@ public class HomeController {
         return "/member/login";
     }
 
-    @GetMapping("/member/find-info")
-    public String findIdPw() {
-        return "/member/findInfoFrm";
-    }
-
     @GetMapping("/")
     public String home(HttpSession session) {
-        Object userKind = session.getAttribute("m_kind");
-        if (userKind != null) {
-            char kind = (char) userKind;
-            if (kind == 'C') {
-                char gender = (char) session.getAttribute("m_gender");
-                int age = (LocalDate.now().getYear() - (int) session.getAttribute("m_birth")) / 10 * 10; // << 현재 연도와 태어난 연도의 차를 통해서 계산하기
-                if (mSer.getGoodsSales(gender, age, session)) {
-                    return "/index";
+        MemberEntity user = (MemberEntity) session.getAttribute("member");
+        log.info("=======user={}", user);
+        if (user != null){
+            char kind = user.getM_kind();
+            log.info("=======kind={}", kind);
+
+
+            if(kind == 'C'){
+                CustomerEntity customer = (CustomerEntity) session.getAttribute("member");
+                int age =  (LocalDate.now().getYear() - (int) session.getAttribute("m_birth"))/10 * 10; // << 현재 연도와 태어난 연도의 차를 통해서 계산하기
+                char gender = customer.getC_gender();
+                if(mSer.getGoodsSales(gender, age, session)){
+                    log.info(session.getAttribute("Json").toString());
+                    return "redirect:/";
                 }
-            } else if (kind == 'S') {
-                int id = (int) session.getAttribute("m_id");
-                if (mSer.getCompanySales(id, session)) {
-                    return "/index";
+            }else if(kind == 'S'){
+                int id = user.getM_uid();
+                if(mSer.getCompanySales(id, session)){
+                    log.info(session.getAttribute("Json").toString());
+                    return "redirect:/";
+                }
+            }else{
+                if(mSer.getSales(session)){
+                    log.info(session.getAttribute("Json").toString());
+                    return "redirect:/";
                 }
             }
         }
-        return "/index";
+        if(mSer.getSales(session)){
+            log.info(session.getAttribute("Json").toString());
+            return "index";
+        }
+        return "index";
     }
 
 }

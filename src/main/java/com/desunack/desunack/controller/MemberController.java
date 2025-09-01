@@ -75,7 +75,7 @@ public class MemberController {
     @PostMapping("/member/login")
     public String login1(@RequestParam String id, String pw, Model model, HttpSession session, RedirectAttributes rttr) {
 
-        if (mSer.login1(id, pw, session)) {
+        if (mSer.login1(id, pw, model, session)) {
             log.info("======login success={}", id);
             return "redirect:/";
         }

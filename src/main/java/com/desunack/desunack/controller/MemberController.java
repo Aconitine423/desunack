@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Controller
@@ -70,7 +72,7 @@ public class MemberController {
     }
 
     //로그인
-    @PostMapping("/member/login1")
+    @PostMapping("/member/login")
     public String login1(@RequestParam String id, String pw, Model model, HttpSession session, RedirectAttributes rttr) {
 
         if (mSer.login1(id, pw, session)) {
@@ -83,7 +85,7 @@ public class MemberController {
         return null;
     }
 
-    @PostMapping("/mypage")
+    @PostMapping("/member/mypage")
     public String getCustomerInfo(@RequestBody UserDto uDto, HttpSession session) {
         if (uDto.getUserKind() == 'C') {
             if (mSer.getCustomerInfo(uDto.getUserUid(), session)) {
@@ -97,16 +99,9 @@ public class MemberController {
         return null;
     }
 
-    @PostMapping("/find-id")
-    public String findId(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr) {
-        if (mSer.findId(userDto.getUserName(), userDto.getUserEmail(), rttr)) {
-            return "/";
-        }
-        rttr.addFlashAttribute("msg", "일치하는 결과가 없습니다.");
-        return "/";
-    }
 
-    @PostMapping("/find-pw")
+
+    @PostMapping("/member/find-pw")
     public String findPw(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr) {
         if (mSer.findPw(userDto.getUserId(), userDto.getUserEmail(), rttr)) {
             return "/";

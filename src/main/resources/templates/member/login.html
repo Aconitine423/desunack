@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/common/reset.css">
     <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
@@ -16,19 +19,25 @@
     <!-- 2 로그인 폼 컨테이너 -->
     <div class="form-container">
         <!-- 일반회원 로그인 폼: name 속성으로 userId, passward 고정 -->
-        <form id="normal" class="login-form active" action="/member/login1" method="post">
+        <form id="login" class="login-form active" th:action="@{/member/login}" method="post">
             <!-- ID 입력 -->
             <input type="text" name="id" placeholder="아이디" required>
             <!-- Password 입력 -->
             <input type="password" name="pw" placeholder="비밀번호" required>
             <!-- 로그인 버튼 -->
-            <button type="submit" class="btn-signin">로그인</button>
+            <button type="submit" id="loginBtn" class="btn-login">로그인</button>
             <!-- 추가 링크 -->
             <div class="links">
                 <a href="/signup">회원가입</a>
-                <a href="#" class="modal-trigger">비밀번호 찾기</a>
+                <a href="#" class="modal-trigger">아이디 / 비밀번호 찾기</a>
             </div>
         </form>
+    </div>
+</div>
+<!-- 아이디/비밀번호 찾기 모달 -->
+<div id="findModal" class="modal">
+    <div class="modal-content">
+        <!-- findInfoFrm.html -->
     </div>
 </div>
 <script src="/js/login.js"></script>

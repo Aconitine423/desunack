@@ -1,7 +1,9 @@
 let isValid = false; // 필수 입력칸 채웠는지 확인
 const $registerFrm = $('#registerFrm');
 const $messageBox = $('#messageBox');
-
+const $mainImg = $('#mainImage').val();
+const $subImg = $('#detailContent').val();
+const fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
 function checkValid(){
     isValid = false; // 유효성 초기화
 
@@ -27,7 +29,27 @@ function checkValid(){
     if (!($('input[name="goodsSweetener"]:checked').val())) { // 대체당을 하나도 선택하지 않았다면
         isValid = false;
     }
-    //파일 유효성 검사 코드 작성해야함
+
+    if($mainImg !== '' && $mainImg != null){ //파일을 업로드 했다면
+        if(!$mainImg.match(fileForm)){
+            isvalid = false;
+        }else{
+            isValid = true;
+        }
+    }else{
+        isValid = false;
+    }
+
+    if($subImg !== '' && $subImg != null){ //파일을 업로드 했다면
+        if(!$subImg.match(fileForm)){
+            isvalid = false;
+        }else{
+            isValid = true;
+        }
+    }else{
+        isValid = false;
+    }
+
     if($('#deliveryFee').val() === ''){ // 배송료를 입력하지 않았다면
         isValid = false;
         return;

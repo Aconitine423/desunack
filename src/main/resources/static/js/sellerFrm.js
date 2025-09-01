@@ -141,8 +141,10 @@ function validateSellerForm() {
     const sellerNum = $('#sellerNum').val();
     if (sellerNum === '') {
         $('#sellerNumError').text('사업자번호는 필수 입력 항목입니다.').css('color', 'red');
+        isValid = false;
     } else if (sellerNum.length !== 12) {
         $('#sellerNumError').text('사업자번호는 하이픈 (-) 포함하여 12자로 입력해주세요.').css('color', 'red');
+        isValid = false;
     }
 
     // 9. 주소 유효성 검사
@@ -155,6 +157,16 @@ function validateSellerForm() {
         isValid = false;
     }
 
+    // 10. 파일 첨부 유효성 검사
+    const uploadSellerNum = $('#uploadSellerNum').val();
+    const uploadSellerNumFileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+    if (uploadSellerNum === '') {
+        $('#sellerNumError').text('사업자등록번호가 포함된 이미지 파일을 등록해주세요.').css('color', 'red');
+        isValid = false;
+    } else if (!uploadSellerNum.match(uploadSellerNumFileForm)) {
+        $('#sellerNumError').text('이미지 파일만 등록 가능합니다.').css('color', 'red');
+        isValid = false;
+    }
 
     // 11. 약관 동의 체크 여부 확인
     if (!($sellerTermsCheckbox.prop('checked'))) {

@@ -155,14 +155,17 @@ function validateSellerForm() {
     }
 
     // 10. 파일 첨부 유효성 검사
-    const uploadSellerNum = $('#uploadSellerNum').val();
-    const uploadSellerNumFileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
-    if (uploadSellerNum === '') {
+    const uploadSellerNum = $('#uploadSellerNum');
+    if (uploadSellerNum[0].files.length === 0) {
         $('#sellerNumError').text('사업자등록번호가 포함된 이미지 파일을 등록해주세요.').css('color', 'red');
         isValid = false;
-    } else if (!uploadSellerNum.match(uploadSellerNumFileForm)) {
-        $('#sellerNumError').text('이미지 파일만 등록 가능합니다.').css('color', 'red');
-        isValid = false;
+    } else {
+        const uploadSellerNumFileFormList = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'pdf'];
+        const uploadSellerNumFileExtension = uploadSellerNum[0].files[0].name.split('.').pop().toLowerCase();
+        if (!uploadSellerNumFileFormList.includes(uploadSellerNumFileExtension)) {
+            $('#sellerNumError').text('이미지 파일만 등록 가능합니다.').css('color', 'red');
+            isValid = false;
+        }
     }
 
     // 11. 약관 동의 체크 여부 확인
@@ -214,11 +217,11 @@ function validateSellerForm() {
 
         const sellerFormData = new FormData();
         sellerFormData.append('file', sellerNumFile);
-        sellerFormData.append('sellerDto', new Blob([JSON.stringify(sellerDto)], { type: 'application/json' }));
+        sellerFormData.append('sellerDto', new Blob([JSON.stringify(sellerDto)], {type: 'application/json'}));
 
         console.log("FormData content:");
-        for(let pair of sellerFormData.entries()) {
-            console.log(pair[0]+ ': ' + pair[1]);
+        for (let pair of sellerFormData.entries()) {
+            console.log(pair[0] + ': ' + pair[1]);
         }
 
         // 엑시오스로 데이터 전송
@@ -362,7 +365,7 @@ $('#sellerEmailDomain').on('focusout', function () {
         $('#sellerEmailError').text('이메일 주소 도메인을 입력해주세요.').css('color', 'red');
     } else if (!emailRegex.test(sellerEmailDomain)) {
         $('#sellerEmailError').text('유효한 이메일 형식이 아닙니다.').css('color', 'red');
-    }else {
+    } else {
         $('#sellerEmailError').text('');
     }
 })

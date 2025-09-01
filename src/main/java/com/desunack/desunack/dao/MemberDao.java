@@ -21,6 +21,7 @@ public interface MemberDao {
 
     SellerEntity getSellerEntity(int m_uid);
 
+    @Select("select m_id from member where m_name = #{m_name} and m_email = #{m_email}")
     String findId(String m_name, String m_email);
 
     int findPw(String m_id, String m_email);

@@ -12,6 +12,7 @@ import com.desunack.desunack.entity.SellerEntity;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -142,14 +146,20 @@ public class MemberService {
         return false;
     }
 
-    public boolean findId(String m_name, String m_email, RedirectAttributes rttr) {
-        String id = mDao.findId(m_name, m_email);
-        if(id != null){
-            String msg = m_name + "님의 ID는 " + id + "입니다";
-            rttr.addFlashAttribute("msg", msg);
-            return true;
+    public Map<String, Object> findId(UserDto userDto) {
+        Map<String, Object> response =  new HashMap<>();
+        MemberEntity memberEntity = userDto.toEntity();
+        String name = memberEntity.getM_name();
+        String email = memberEntity.getM_email();
+        String findId = mDao.findId(name, email);
+        if (findId != null) {
+            response.put("result", true);
+            response.put("data", findId);
+        } else {
+            response.put("result", false);
+            response.put("msg", "일치하는 회원 정보가 없습니다.");
         }
-        return false;
+        return response;
     }
 
 

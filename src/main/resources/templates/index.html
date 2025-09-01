@@ -25,7 +25,7 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
 
     <!-- 기본 스타일시트 연결 -->
     <link rel="stylesheet" href="/css/main.css">
-     <link rel="stylesheet" href="/common/reset.css">
+    <link rel="stylesheet" href="/common/reset.css">
     <!-- <link> 요소: 외부 리소스 연결
     rel 속성: 스타일시트(stylesheet)임을 지정
     href 속성: 연결할 CSS 파일 경로 -->
@@ -35,6 +35,7 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
     <!-- href: CDN(Content Delivery Network) 경로
     Font Awesome: 웹 아이콘(icon) 폰트 라이브러리 -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
 <!-- <body> 요소: 화면에 실제 표시되는 콘텐츠(container)를 포함 -->
@@ -114,7 +115,8 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
                                 <label><input type="checkbox" name="sweetener" value="xylitol">자일리톨</label>
                                 <label><input type="checkbox" name="sweetener" value="saccharin">사카린</label>
                                 <label><input type="checkbox" name="sweetener" value="aspartame">아스파탐</label>
-                                <label><input type="checkbox" name="sweetener" value="acesulfame-potassium">아세설팜칼륨</label>
+                                <label><input type="checkbox" name="sweetener"
+                                              value="acesulfame-potassium">아세설팜칼륨</label>
                             </fieldset>
 
                             <!-- 2) 알러지 카테고리 -->
@@ -187,30 +189,30 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
          class="section-title": 섹션 제목 디자인용 -->
 
     <!-- 4열 그리드 컨테이너 -->
-    <div class="grid-container">
+    <div class="grid-container" id="product-results-container">
         <!-- class="grid-container": CSS Grid 레이아웃 사용, 4열(column) 구성 -->
 
         <!-- 각 그리드 아이템: 배경색으로 구분 -->
-        <th:block th:if="${#lists.isEmpty(session.Json)}">
-            <span>리스트가 없습니다.</span>
-        </th:block>
-        <th:block th:unless="${#lists.isEmpty(session.Json)}">
-            <th:block th:each="goods:${session.Json}">
-                    <div class="grid-item" th:text="${goods}"></div>
-            </th:block>
-        </th:block>
-<!--        <div class="grid-item" id="item1" style="background-color: #ff6d9d;">-->
-<!--            [[${session.Json}]]-->
-<!--        </div>-->
-<!--        <div class="grid-item" id="item2" style="background-color: #4ecdc4;"></div>-->
-<!--        <div class="grid-item" id="item3" style="background-color: #45b7d1;"></div>-->
-<!--        <div class="grid-item" id="item4" style="background-color: #96ceb4;"></div>-->
-<!--        <div class="grid-item" id="item5" style="background-color: #feca57;"></div>-->
-<!--        <div class="grid-item" id="item6" style="background-color: #ff9ff3;"></div>-->
-<!--        <div class="grid-item" id="item7" style="background-color: #54a0ff;"></div>-->
-<!--        <div class="grid-item" id="item8" style="background-color: #5f27cd;"></div>-->
-<!--        <div class="grid-item" id="item9" style="background-color: #00ff1f;"></div>-->
-<!--        <div class="grid-item" id="item10" style="background-color: #ff001f;"></div>-->
+        <!--        <th:block th:if="${#lists.isEmpty(session.Json)}">-->
+        <!--            <span>리스트가 없습니다.</span>-->
+        <!--        </th:block>-->
+        <!--        <th:block th:unless="${#lists.isEmpty(session.Json)}">-->
+        <!--            <th:block th:each="goods:${session.Json}">-->
+        <!--                    <div class="grid-item" th:text="${goods}"></div>-->
+        <!--            </th:block>-->
+        <!--        </th:block>-->
+        <!--        <div class="grid-item" id="item1" style="background-color: #ff6d9d;">-->
+        <!--            [[${session.Json}]]-->
+        <!--        </div>-->
+        <!--        <div class="grid-item" id="item2" style="background-color: #4ecdc4;"></div>-->
+        <!--        <div class="grid-item" id="item3" style="background-color: #45b7d1;"></div>-->
+        <!--        <div class="grid-item" id="item4" style="background-color: #96ceb4;"></div>-->
+        <!--        <div class="grid-item" id="item5" style="background-color: #feca57;"></div>-->
+        <!--        <div class="grid-item" id="item6" style="background-color: #ff9ff3;"></div>-->
+        <!--        <div class="grid-item" id="item7" style="background-color: #54a0ff;"></div>-->
+        <!--        <div class="grid-item" id="item8" style="background-color: #5f27cd;"></div>-->
+        <!--        <div class="grid-item" id="item9" style="background-color: #00ff1f;"></div>-->
+        <!--        <div class="grid-item" id="item10" style="background-color: #ff001f;"></div>-->
     </div>
 </section>
 
@@ -305,8 +307,47 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
 <!-- <script> 요소: 외부 JavaScript 파일 연결
      src 속성: script.js 경로 지정 -->
 <script th:inline="javascript">
-console.log([[${session.Json}]])
+    // console.log([[${session.Json}]])
+    const createGridItem = (product) => {
+        // 상품 이름과 이미지 URL 가져오기
+        const name = product.g_name;
+        const imageUrl = product.g_image;
 
+        // HTML 요소 생성
+        return `
+        <div class="grid-item">
+            <img src="${imageUrl}" alt="${name}" class="product-image" />
+            <span class="product-name">${name}</span>
+        </div>
+    `;
+    };
+
+    const fetchAndRenderProducts = async () => {
+        const $container = $('#product-results-container');
+        $container.empty(); // 기존 내용 초기화
+
+        try {
+            // 서버 API에서 상품 데이터(JSON)를 가져옵니다.
+            const response = await axios.get('/goods/registrate'); // API URL을 프로젝트에 맞게 수정하세요.
+            const products = response.data; // JSON 데이터 배열
+
+            if (products.length === 0) {
+                $container.html('<span class="no-results">상품이 없습니다.</span>');
+                return;
+            }
+
+            // 각 상품에 대해 HTML을 생성하고 컨테이너에 추가합니다.
+            const html = products.map(product => createGridItem(product)).join('');
+            $container.html(html);
+
+        } catch (error) {
+            console.error('상품 데이터를 불러오는 중 오류가 발생했습니다:', error);
+            $container.html('<span class="error-message">데이터를 불러오는 데 실패했습니다.</span>');
+        }
+    };
+
+    // 페이지 로드 시 함수 실행
+    $(document).ready(fetchAndRenderProducts);
 </script>
 </body>
 </html>

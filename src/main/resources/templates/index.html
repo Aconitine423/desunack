@@ -333,46 +333,85 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
      src 속성: script.js 경로 지정 -->
 <script th:inline="javascript">
     // console.log([[${session.Json}]])
-    const createGridItem = (product) => {
-        // 상품 이름과 이미지 URL 가져오기
-        const name = product.g_name;
-        const imageUrl = product.g_image;
-
-        // HTML 요소 생성
-        return `
-        <div class="grid-item">
-            <img src="${imageUrl}" alt="${name}" class="product-image" />
+    let goods = [[${session.Json}]];
+    const createHtml = (goods) =>{
+        console.log(goods);
+        let html = "";
+        for (const str of goods) {
+            let substr = str.replaceAll('{','');
+            substr = substr.replaceAll('}','');
+            substr = substr.replaceAll(' ','');
+            substr = substr.replaceAll('"','');
+            console.log(substr);
+            subgoods = substr.split(',');
+            let startname = substr.indexOf('g_name')+7;
+            let endname = substr.indexOf('g_image')-1;
+            console.log(subgoods);
+            let name = substr.substring(startname, endname);
+            let startimage = substr.indexOf('g_image')+8;
+            let endimage = substr.indexOf('g_m_uid')-1;
+            let imageUrl = substr.substring(startimage, endimage);
+            console.log(name, imageUrl);
+            html += `<div class="grid-item">
+            <img src="${imageUrl}" alt="${name}" class="product-image"/>
             <span class="product-name">${name}</span>
-        </div>
-    `;
-    };
-
-    const fetchAndRenderProducts = async () => {
-        const $container = $('#product-results-container');
-        $container.empty(); // 기존 내용 초기화
-
-        try {
-            // 서버 API에서 상품 데이터(JSON)를 가져옵니다.
-            const response = await axios.get('/goods/registrate'); // API URL을 프로젝트에 맞게 수정하세요.
-            const products = response.data; // JSON 데이터 배열
-
-            if (products.length === 0) {
-                $container.html('<span class="no-results">상품이 없습니다.</span>');
-                return;
-            }
-
-            // 각 상품에 대해 HTML을 생성하고 컨테이너에 추가합니다.
-            const html = products.map(product => createGridItem(product)).join('');
-            $container.html(html);
-
-        } catch (error) {
-            console.error('상품 데이터를 불러오는 중 오류가 발생했습니다:', error);
-            $container.html('<span class="error-message">데이터를 불러오는 데 실패했습니다.</span>');
+        </div>`;
         }
-    };
+        return html;
 
-    // 페이지 로드 시 함수 실행
-    $(document).ready(fetchAndRenderProducts);
+    }
+    $(document).ready(function(){
+        const $container = $('#product-results-container');
+        $container.empty();
+        try{
+            const html = createHtml(goods);
+            $container.html(html);
+        }catch(e){
+            console.log(e);
+            $container.html('<span class="error-message">데이터를 불러오는 데 실패했습니다.</span>')
+        }
+
+    })
+    // const createGridItem = (product) => {
+    //     // 상품 이름과 이미지 URL 가져오기
+    //     const name = product.g_name;
+    //     const imageUrl = product.g_image;
+    //
+    //     // HTML 요소 생성
+    //     return `
+    //     <div class="grid-item">
+    //         <img src="${imageUrl}" alt="${name}" class="product-image" />
+    //         <span class="product-name">${name}</span>
+    //     </div>
+    // `;
+    // };
+    //
+    // const fetchAndRenderProducts = async () => {
+    //     const $container = $('#product-results-container');
+    //     $container.empty(); // 기존 내용 초기화
+    //
+    //     try {
+    //         // 서버 API에서 상품 데이터(JSON)를 가져옵니다.
+    //         const response = await axios.get('/'); // API URL을 프로젝트에 맞게 수정하세요.
+    //         const products = response.data; // JSON 데이터 배열
+    //         console.log(products);
+    //         if (products.length === 0) {
+    //             $container.html('<span class="no-results">상품이 없습니다.</span>');
+    //             return;
+    //         }
+    //
+    //         // 각 상품에 대해 HTML을 생성하고 컨테이너에 추가합니다.
+    //         const html = products.map(product => createGridItem(product)).join('');
+    //         $container.html(html);
+    //
+    //     } catch (error) {
+    //         console.error('상품 데이터를 불러오는 중 오류가 발생했습니다:', error);
+    //         $container.html('<span class="error-message">데이터를 불러오는 데 실패했습니다.</span>');
+    //     }
+    // };
+    //
+    // // 페이지 로드 시 함수 실행
+    // $(document).ready(fetchAndRenderProducts);
 </script>
 </body>
 </html>

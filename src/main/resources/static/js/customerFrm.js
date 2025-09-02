@@ -100,7 +100,7 @@ function validateForm() {
     }
 
     // 2. 비밀번호 유효성 검사 (필수, 길이, 영문자포함)
-    const userPw = $('#userPassword').val();
+    const userPw = $('#userPassword').val().trim();
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; // 영문자, 숫자 포함 8자 이상
     if (userPw === '') {
         $('#pwError').text('비밀번호는 필수 입력 항목입니다.').css('color', 'red');
@@ -114,7 +114,7 @@ function validateForm() {
     }
 
     // 3. 비밀번호 확인 유효성 검사
-    const userPwConfirm = $('#userPasswordConfirm').val();
+    const userPwConfirm = $('#passwordConfirm').val().trim();
     if (userPwConfirm === '') {
         $('#checkPwError').text('비밀번호를 다시 한 번 입력해주세요.').css('color', 'red');
         isValid = false;
@@ -138,7 +138,7 @@ function validateForm() {
     if (userNickname === '') {
         $('#nicknameError').text('닉네임은 필수 입력 항목입니다.').css('color', 'red');
         isValid = false;
-    } else if (userNickname.length < 20) {
+    } else if (userNickname.length > 20) {
         $('#nicknameError').text('닉네임은 최대 20자까지 가능합니다.').css('color', 'red');
         isValid = false;
     } else if (!isNicknameChecked || !isNicknameAvailable) {
@@ -186,10 +186,10 @@ function validateForm() {
 
     // 10. 주소 유효성 검사
     const userPost = $('#sample3_postcode').val();
-    const userAddress = $('#sample3_address').val();
+    const userAddressInput = $('#sample3_address').val();
     const userExtraAddress = $('#sample3_extraAddress').val();
     const userAddressDetail = $('#sample3_detailAddress').val();
-    if (userPost === '' || userAddress === '') {
+    if (userPost === '' || userAddressInput === '') {
         $('#addressError').text('주소 검색을 통해 주소를 입력해주세요.').css('color', 'red');
         isValid = false;
     }
@@ -224,7 +224,7 @@ function validateForm() {
         const userPhone = `${phone1}-${phone2}-${phone3}`;
 
         // 입력된 주소 합치기
-        const userAddress = userAddress + userExtraAddress;
+        const userAddress = userAddressInput + userExtraAddress;
 
         // 입력된 파라미터 묶음
         const formData = {
@@ -315,8 +315,8 @@ $('#userPassword').on('focusout', function () {
 
 // 3. 비밀번호 확인창
 $('#passwordConfirm').on('focusout', function () {
-    const userPw = $('#userPassword').val();
-    const userPwConfirm = $('#userPasswordConfirm').val();
+    const userPw = $('#userPassword').val().trim();
+    const userPwConfirm = $('#passwordConfirm').val().trim();
     if (userPwConfirm === '') {
         $('#checkPwError').text('비밀번호를 다시 한 번 입력해주세요.').css('color', 'red');
     } else if (userPw !== userPwConfirm) {
@@ -343,7 +343,7 @@ $('#userNickname').on('focusout', function () {
     const userNickname = $('#userNickname').val();
     if (userNickname === '') {
         $('#nicknameError').text('닉네임은 필수 입력 항목입니다.').css('color', 'red');
-    } else if (userNickname.length < 20) {
+    } else if (userNickname.length > 20) {
         $('#nicknameError').text('닉네임은 최대 20자까지 가능합니다.').css('color', 'red');
     } else {
         $('#nicknameError').text('');
@@ -387,7 +387,7 @@ $('#emailDomain').on('focusout', function () {
     const emailRegex = /[^\s@]+\.[^\s@]+$/;
     if (userEmailDomain === '') {
         $('#emailError').text('이메일 주소 도메인을 입력해주세요.').css('color', 'red');
-    } else if (emailRegex.test(userEmailDomain)) {
+    } else if (!emailRegex.test(userEmailDomain)) {
         $('#emailError').text('유효한 이메일 형식이 아닙니다.').css('color', 'red');
     } else {
         $('#emailError').text('');

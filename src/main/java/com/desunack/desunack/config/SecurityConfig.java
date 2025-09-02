@@ -23,42 +23,26 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
        // 인증(Authentication, 로그인 여부)
-        http.formLogin(
-                form -> form.loginPage("/member/login") // 로그인 페이지 열기 url
-                        .loginProcessingUrl("/member/login") // 로그인 진행 url, 컨트롤러 정의 불필요
-                        .defaultSuccessUrl("/") // 로그인 성공시 이동할 url
-                        // 실패시 기본값(로그인 페이지 열기 url)
-//                        .failureUrl("/member/login/error") // 선택사항
-//                        .failureHandler(authenticationFailureHandler)
-//                        .usernameParameter("username") // 기본값, 파라미터 받을 지칭을 바꿈 (ex. id)
-//                        .passwordParameter("password") // 기본값, 파라미터 받을 지칭을 바꿈 (ex. pw)
-                        .permitAll() // 권한 상관없이 모든 사용자들에게 접근을 허용함 (비권장)
-                // permitAll() 해서 authorizeHttpRequests()로 각 요청 url마다 개별적으로 권한을 따로 지정하는 것보단
-                // 컨트롤러에 @PreAuthorize @Secured 로 명시하는 것이 편할 수도 있다.
-        );
+//        http.formLogin(form -> form
+//                .loginPage("/member/login") // 로그인 페이지 URL
+//                .loginProcessingUrl("/member/login") // 로그인 폼 데이터가 제출될 URL
+//                .defaultSuccessUrl("/") // 로그인 성공 후 이동할 기본 페이지
+//                .permitAll() // 위 URL들을 모든 사용자에게 허용
+//        );
         // CSRF 보호 비활성화
         http.csrf(AbstractHttpConfigurer::disable);
 
         // 접근 개별 허용
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/img/**", "/css/**", "/js/**", "/common/**").permitAll()
-                        .requestMatchers("/", "/login1", "/signup/**", "/member/**").permitAll() // 공개 URL
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자 URL
-                        .anyRequest().authenticated() // 나머지 모든 요청은 인증 필요
+                // 1. 로그인, 회원가입 관련 URL을 모든 사용자에게 허용
+                .requestMatchers("/", "/signup/**", "/member/**", "/member/**").permitAll()
+                // 2. 정적 리소스 (이미지, CSS, JS)에 대한 접근 허용
+                .requestMatchers("/img/**", "/css/**", "/js/**", "/common/**").permitAll()
+                // 3. 관리자 URL은 'ADMIN' 역할만 접근 허용
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                // 4. 위에 명시되지 않은 모든 요청은 인증 필요
+                .anyRequest().authenticated()
         );
-        //authorizeHttpRequests() 구현 예시
-//        http.authorizeHttpRequests(request -> request
-        //시큐리티6.0부터 forward 방식 페이지 이동에도 default로 인증이 걸리므로 허용.
-//				.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-//				//resources/static/이하폴더 허용
-//				.requestMatchers("/images/**", "/css/**", "/js/**").permitAll()
-//				.requestMatchers("/","/sighnup/**", "/member/login").permitAll()
-//				.requestMatchers("/member/anonymous").anonymous()
-//				.requestMatchers("/admin/**").hasRole("A")
-//				.requestMatchers("/member/user").hasAnyRole("USER","ADMIN")
-//				.anyRequest().authenticated()
-//        );
-
         // 컨트롤러에 정의 할 필요 없음
         // csrf토큰 설정시 post 요청만 처리함
         http.logout(

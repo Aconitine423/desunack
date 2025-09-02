@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
+    <link rel="shortcut icon" href="/img/favicon/favicon-16x16.png" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="/common/reset.css">
@@ -19,7 +20,7 @@
     <!-- 2 로그인 폼 컨테이너 -->
     <div class="form-container">
         <!-- 일반회원 로그인 폼: name 속성으로 userId, passward 고정 -->
-        <form id="login" class="login-form active" th:action="@{/member/login}" method="post">
+        <form id="login" class="login-form active">
             <!-- ID 입력 -->
             <input type="text" name="id" placeholder="아이디" required>
             <!-- Password 입력 -->

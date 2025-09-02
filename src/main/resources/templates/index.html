@@ -22,7 +22,7 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
     <!-- 문서 제목(title) -->
     <title>Desunack</title>
     <!-- <title> 요소: 브라우저 탭(tab)에 표시될 제목(title)을 지정 -->
-
+    <link rel="shortcut icon" href="/img/favicon/favicon-16x16.png" type="image/x-icon">
     <!-- 기본 스타일시트 연결 -->
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/common/reset.css">
@@ -137,8 +137,8 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
                 </div>
             </div>
             <!-- 로그인/회원가입 -->
-            <a href="login.html" class="login-btn"><i class="fa-regular fa-user"></i><span>로그인</span></a>
-            <a href="signup.html" class="signup-btn"><i class="fa-solid fa-user-plus"></i><span>회원가입</span></a>
+            <a href="/member/login" class="login-btn"><i class="fa-regular fa-user"></i><span>로그인</span></a>
+            <a href="/signup" class="signup-btn"><i class="fa-solid fa-user-plus"></i><span>회원가입</span></a>
         </div>
     </nav>
 </header>
@@ -307,7 +307,7 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
 <!-- <script> 요소: 외부 JavaScript 파일 연결
      src 속성: script.js 경로 지정 -->
 <script th:inline="javascript">
-    // console.log([[${session.Json}]])
+    console.log([[${session.Json}]])
     const createGridItem = (product) => {
         // 상품 이름과 이미지 URL 가져오기
         const name = product.g_name;

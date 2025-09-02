@@ -33,20 +33,21 @@ public class MemberRestController {
         return response;
     }
 
-//    @PostMapping("/member/login")
-//    public ResponseEntity<?> login(@RequestBody UserDto userDto, HttpSession session) {
-//        try {
-//            UserDto uDto = mSer.login(userDto);
-//            if (uDto != null) {
-//                session.setAttribute("m_kind", uDto.getUserKind());
-//                session.setAttribute("userUid", uDto.getUserUid());
-//                session.setAttribute("userName", uDto.getUserName());
-//                return ResponseEntity.ok().body(Map.of("success", true, "message", "로그인 성공"));
-//            } else {
-//                return ResponseEntity.ok().body(Map.of("success", false, "message", "아이디 또는 비밀번호가 올바르지 않습니다."));
-//            }
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("success", false, "message", "로그인 중 오류가 발생했습니다."));
-//        }
-//    }
+    @PostMapping("/member/login")
+    public ResponseEntity<?> login(@RequestBody UserDto userDto, HttpSession session) {
+        try {
+            log.info("======login시도={}", userDto);
+            UserDto uDto = mSer.login(userDto);
+            if (uDto != null) {
+                session.setAttribute("m_kind", uDto.getUserKind());
+                session.setAttribute("userUid", uDto.getUserUid());
+                session.setAttribute("userName", uDto.getUserName());
+                return ResponseEntity.ok().body(Map.of("success", true, "message", "로그인 성공"));
+            } else {
+                return ResponseEntity.ok().body(Map.of("success", false, "message", "아이디 또는 비밀번호가 올바르지 않습니다."));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("success", false, "message", "로그인 중 오류가 발생했습니다."));
+        }
+    }
 }

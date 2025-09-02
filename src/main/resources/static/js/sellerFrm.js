@@ -282,7 +282,7 @@ $('#sellerId').on('focusout', function () {
 
 // 2. 비밀번호 입력창
 $('#sellerPassword').on('focusout', function () {
-    const sellerPw = $('#sellerPassword').val();
+    const sellerPw = $('#sellerPassword').val().trim();
     if (sellerPw === '') {
         $('#sellerPwError').text('비밀번호는 필수 입력 항목입니다.').css('color', 'red');
     } else if (sellerPw.length < 8) {
@@ -294,8 +294,8 @@ $('#sellerPassword').on('focusout', function () {
 
 // 3. 비밀번호 확인창
 $('#sellerPasswordConfirm').on('focusout', function () {
-    const sellerPw = $('#sellerPassword').val();
-    const sellerPwConfirm = $('#sellerPasswordConfirm').val();
+    const sellerPw = $('#sellerPassword').val().trim();
+    const sellerPwConfirm = $('#sellerPasswordConfirm').val().trim();
     if (sellerPwConfirm === '') {
         $('#checkSellerPwError').text('비밀번호를 다시 한 번 입력해주세요.').css('color', 'red');
     } else if (sellerPw !== sellerPwConfirm) {

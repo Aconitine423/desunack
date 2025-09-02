@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>주문 내역</title>
+  
+  <!-- 공통 CSS -->
+  <link rel="stylesheet" href="/common/reset.css">
+  <link rel="stylesheet" href="/common/global.css">
+  <link rel="stylesheet" href="/common/header.css">
+  <link rel="stylesheet" href="/common/Footer.css">
+  <link rel="stylesheet" href="review.css">
+  <!-- 주문 페이지 전용 CSS -->
+  <link rel="stylesheet" href="order.css">
+</head>
+
+<body class="dsnk">
+  <!-- 헤더 -->
+  <div id="site-header" data-include="/common/header.html"></div>
+  
+  <!-- 마이페이지 레이아웃 -->
+  <div class="mypage-layout">
+    <!-- 사이드 메뉴 -->
+    <div id="site-side" data-include="/common/sidebar.html"></div>
+    
+    <!-- 메인 콘텐츠 -->
+    <main class="container order-page">
+      <h1 class="page-title">주문 내역</h1>
+      <div id="order-list"></div>
+      </main>
+  </div><!-- /.mypage-layout -->
+  <!-- 푸터 -->
+  <div id="site-footer" data-include="/common/Footer.html"></div>
+  <!-- ===== 리뷰 모달: body 최하단에 둠 ===== -->
+  <div id="reviewModal" class="review-modal" hidden>
+    <div class="review-content">
+      <header class="modal-header">
+        <button class="modal-close" aria-label="닫기">&times;</button>
+        <h3 class="modal-title">리뷰 작성</h3>
+      </header>
+
+      <!-- 탭 -->
+      <nav class="review-tabs">
+        <button class="tab-btn active" data-tab="simple">간단 리뷰</button>
+        <button class="tab-btn" data-tab="detail">상세 리뷰</button>
+      </nav>
+
+      <!-- 공통: 상품 정보 -->
+      <section class="review-item">
+        <img src="" id="reviewItemImg" class="item-thumb" alt="">
+        <div>
+          <p id="reviewItemName"></p>
+          <p id="reviewItemPrice"></p>
+        </div>
+      </section>
+
+      <!-- 공통: 별점 + 리뷰 입력 -->
+      <section class="review-rating">
+        <p>상품은 어떠셨나요?</p>
+        <div class="stars">
+          <span class="star" data-value="1">☆</span>
+          <span class="star" data-value="2">☆</span>
+          <span class="star" data-value="3">☆</span>
+          <span class="star" data-value="4">☆</span>
+          <span class="star" data-value="5">☆</span>
+        </div>
+      </section>
+
+      <section class="review-input">
+        <textarea id="reviewText" placeholder="리뷰를 작성해주세요(최소 10자)"></textarea>
+        <p class="char-count"><span id="charCount">0</span>/500</p>
+      </section>
+
+      <!-- 간단 리뷰 탭 -->
+      <div id="simple" class="tab-content active">
+        <section class="review-upload">
+          <label>사진 선택(선택)
+            <input type="file" id="reviewImage" accept="image/*">
+          </label>
+        </section>
+      </div>
+
+      <!-- 상세 리뷰 탭 -->
+      <div id="detail" class="tab-content">
+        <section class="review-upload">
+          <label>식전 혈당 사진
+            <input type="file" id="beforeBS" accept="image/*">
+          </label>
+          <label>식후 1시간 혈당 사진
+            <input type="file" id="afterBS1" accept="image/*">
+          </label>
+          <label>식후 2시간 혈당 사진
+            <input type="file" id="afterBS2" accept="image/*">
+          </label>
+        </section>
+      </div>
+
+      <!-- 공통 버튼 -->
+      <footer class="modal-footer">
+        <button class="btn-submit">등록</button>
+        <button class="btn-cancel">취소</button>
+      </footer>
+    </div>
+  </div>
+  <!-- 공통 JS -->
+  <script src="/common/common.js" defer></script>
+  <script src="/common/header.js" defer></script>
+  <!-- 주문 전용 JS -->
+  <script src="order.js" defer></script>
+  <!-- 리뷰 모달 js -->
+  <script src="review.js" defer></script>
+  <!-- 커스텀 알림 -->
+   <div id="toast" class="toast">
+    <span id="toast-icon"></span>
+    <span id="toast-message"></span>
+   </div>
+</body>
+</html>

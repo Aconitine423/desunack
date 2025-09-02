@@ -1,0 +1,16 @@
+
+{
+  "page":1,
+  "pageSize":5,
+  "total":37,
+  "orders":[
+    {
+      "orderNumber":"ORD-2024-001",
+      "createdAt":"2024-07-20T10:30:00Z",
+      "status":"delivered",
+      "items":[{"name":"제품","qty":1,"price":12000}],
+      "totalAmount":12000,
+      "canCancel": false
+    }
+  ]
+}

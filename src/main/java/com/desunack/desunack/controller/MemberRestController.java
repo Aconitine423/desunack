@@ -33,6 +33,7 @@ public class MemberRestController {
         return response;
     }
 
+    // 엑시오스 로그인
     @PostMapping("/member/login")
     public ResponseEntity<?> login(@RequestBody UserDto userDto, HttpSession session) {
         try {

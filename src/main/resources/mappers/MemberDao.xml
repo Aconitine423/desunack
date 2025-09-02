@@ -74,8 +74,8 @@
                                          'g_toal_rating',g_total_rating,'g_review_count',g_review_count,'gts_sales',gts_sales)
         from goods join goods_total_sales on goods.g_id = goods_total_sales.gts_g_id limit 10
     </select>
-    <select id="getCustomerCoupon" resultType="java.lang.String">
-        select json_object('cc_cp_id', cc_cp_id,'cc_start', cc_start,'cc_end', cc_end,'cp_detail', cp_detail)
+    <select id="getCustomerCoupon" resultType="int">
+        select count(*)
         from c_coupon join coupon on c_coupon.cc_cp_id = coupon.cp_id where cc_m_uid = #{uid}
     </select>
 </mapper>

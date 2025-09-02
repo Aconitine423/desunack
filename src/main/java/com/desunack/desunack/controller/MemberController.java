@@ -81,11 +81,11 @@ public class MemberController {
     public String getCustomerInfo(@RequestBody UserDto uDto, HttpSession session) {
         if (uDto.getUserKind() == 'C') {
             if (mSer.getCustomerInfo(uDto.getUserUid(), session)) {
-                return null;
+                return "/member/mypage";
             }
         } else if (uDto.getUserKind() == 'S') {
             if (mSer.getSellerInfo(uDto.getUserUid(), session)) {
-                return null;
+                return "/member/mypage";
             }
         }
         return null;

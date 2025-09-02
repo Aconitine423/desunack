@@ -61,5 +61,5 @@ public interface MemberDao {
 
     ArrayList<String> getSales();
 
-    ArrayList<String> getCustomerCoupon(int uid);
+    int getCustomerCoupon(int uid);
 }

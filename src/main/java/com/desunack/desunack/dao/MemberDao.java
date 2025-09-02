@@ -57,4 +57,6 @@ public interface MemberDao {
     String getSellerInfo(int uid);
 
     ArrayList<String> getSales();
+
+    ArrayList<String> getCustomerCoupon(int uid);
 }

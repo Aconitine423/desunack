@@ -1,0 +1,513 @@
+/* 제목 덮어쓰기 */
+main.container.order-page .page-title{
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #111;
+}
+
+/* 리스트 충돌 방지 */
+main.container.order-page .order-items{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+main.container.order-page .order-items li{
+  display: grid;
+  grid-template-columns: 100px 1fr 150px;
+  gap: 16px;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+/* 주문 내역 페이지 전용 스코프 */
+.order-page {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: #f6f6f8;
+  color: #222;
+}
+
+.order-page .page-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.order-page .order-section {
+  background: #fff;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  padding: 16px;
+}
+
+.order-page .order-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.order-page .order-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #1a73e8;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.order-page .order-detail {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+}
+
+.order-page .order-section,
+.order-page .order-detail {
+  position: relative;
+  z-index: 1100;
+}
+
+.order-page .detail-block {
+  margin-bottom: 20px;
+}
+
+.order-page .detail-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.order-page .order-items {
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+.order-page .order-items li {
+  display: grid;
+  grid-template-columns: 100px 1fr 150px;
+  gap: 16px;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.order-page .order-items li:last-child { border-bottom: none; }
+
+.order-page .item-thumb img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.order-page .item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.order-page .item-name { font-size: 15px; font-weight: 600; }
+.order-page .item-qty { font-size: 13px; color: #666; }
+
+.order-page .item-price { text-align: right; }
+.order-page .item-price .original {
+  display: block;
+  font-size: 13px;
+  color: #aaa;
+  text-decoration: line-through;
+}
+.order-page .item-price .discount {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: #d32f2f;
+}
+
+/* 진행바 */
+.order-page .progress-track { margin: 16px 0; }
+.order-page .progress-steps {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 8px;
+  padding: 0;
+  list-style: none;
+}
+.order-page .progress-steps li {
+  flex: 1;
+  text-align: center;
+  color: #aaa;
+}
+
+.order-page .progress-steps li.active { color: #1a73e8; font-weight: 600; }
+.order-page .progress-steps li.done { color: #228b22; }
+
+.order-page .progress-bar {
+  position: relative;
+  height: 6px;
+  background: #eee;
+  border-radius: 3px;
+}
+.order-page .progress-fill {
+  height: 100%;
+  background: #1a73e8;
+  border-radius: 3px;
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+/* 픽업 전용 */
+.order-page .order-statius.pickup{
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.order-page .pickup-card{
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.order-page .pickup-card .pickup-time{
+  margin-top: 8px;
+  font-weight: 600;
+  color: #1a73e8;
+}
+
+/* 픽업 진행바 */
+.order-page .pickup-steps li.active {
+  color: #ff9800;
+  font-weight: 600;
+}
+.order-page .pickup-steps li.done{
+  color: #2e7d32;
+}
+.order-page .pickup-steps li::before{
+  content: "●";
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* 공통 버튼 컨테이너 스타일 */
+.order-actions{
+  margin-top: 16px; /* 위쪽 여백 */
+  display: flex; /* 가로 배치*/
+  gap: 10px; /*버튼 간격*/
+  flex-wrap: wrap; /*버튼이 많아지면 줄바꿈*/
+}
+
+/* 버튼 기본 스타일  */
+.order-actions button{
+  padding: 8px 14px; /* 안쪽 여백 */
+  border: none; /* 테두리 제거 */
+  border-radius: 6px; /* 모서리 둥글게 */
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+/* 리뷰 작성 버튼(녹색) */
+.btn-review{
+  background: #4caf50;
+  color: #fff;
+}
+
+.btn-review:hover{
+  background: #43a047;
+}
+
+/* 주문 취소 버튼 (빨강) */
+.btn-cancel{
+  background: #f44336;
+  color: #fff;
+}
+
+.btn-cancel:hover{
+  background: #e53935;
+}
+
+/* 반품/환불 버튼(주황) */
+.btn-refund{
+  background: #ff9800;
+  color: #fff;
+}
+.btn-refund:hover{
+  background: #fb8c00;
+}
+
+@media (max-width: 480px) {
+  .order-actions {
+    flex-direction: column;   /* 세로 배치 */
+  }
+  .order-actions button {
+    width: 100%;             /* 버튼 가로 전체 */
+    text-align: center;
+  }
+}
+
+.review-modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+.review-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.review-modal[hidden] { display: none !important; }
+
+
+/* ===== 즉시 적용 — 주문/진행 영역 비주얼 업그레이드 (append to order.css) ===== */
+
+/* 조정 가능한 토큰 */
+:root{
+  --ui-accent: #2f8cff;
+  --ui-accent-2: #7cc3ff;
+  --ui-muted: #6b7280;
+  --ui-surface: #ffffff;
+  --ui-bg: #f6f8fb;
+  --ui-radius: 12px;
+  --ui-shadow: 0 18px 40px rgba(16,24,40,0.06);
+  --ui-soft-shadow: 0 8px 20px rgba(16,24,40,0.04);
+}
+
+/* 배경 여백 확보 */
+.container.order-page{
+  background: transparent;
+  padding-bottom: 48px;
+}
+
+/* 진행영역 타이틀 강조 */
+.container.order-page .order-progress + h3,
+.container.order-page .order-progress ~ h3,
+.container.order-page h3,
+.container.order-page .progress-title{
+  font-weight:800;color:#0f1724;margin:6px 0 12px 4px;
+  letter-spacing: -0.2px;
+}
+
+/* 진행바 전체 스타일 업그레이드 */
+.container.order-page .order-progress{
+  padding:8px 12px 18px 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(250,252,255,0.8));
+  border-radius: 14px;
+  border: 1px solid rgba(15,23,42,0.03);
+  box-shadow: var(--ui-soft-shadow);
+  margin-bottom:18px;
+}
+
+/* 단계 텍스트를 위로 올리고 수평정렬 */
+.container.order-page .order-progress .steps{
+  display:flex;
+  gap:0;
+  justify-content:space-between;
+  margin:0 6px 10px;
+  padding:0;
+  list-style:none;
+  font-size:13px;
+  color:var(--ui-muted);
+}
+.container.order-page .order-progress .steps .step{
+  position:relative;
+  flex:1;
+  text-align:center;
+  padding:0 6px;
+  font-weight:700;
+  text-transform:none;
+}
+
+/* 단계 점(원)과 완료 표시 */
+.container.order-page .order-progress .steps .step::before{
+  content:"";
+  width:12px;height:12px;border-radius:50%;
+  display:inline-block;vertical-align:-3px;margin-right:8px;
+  border:2px solid rgba(203,213,225,1);
+  background:#fff;
+  transition:all .28s;
+  box-shadow:0 4px 10px rgba(47,140,255,0.06);
+}
+.container.order-page[data-step="1"] .order-progress .steps .step:nth-child(1)::before,
+.container.order-page[data-step="2"] .order-progress .steps .step:nth-child(-n+2)::before,
+.container.order-page[data-step="3"] .order-progress .steps .step:nth-child(-n+3)::before,
+.container.order-page[data-step="4"] .order-progress .steps .step:nth-child(-n+4)::before{
+  border-color:var(--ui-accent);
+  background: linear-gradient(90deg,var(--ui-accent),var(--ui-accent-2));
+  transform:scale(1.08);
+  box-shadow:0 8px 20px rgba(47,140,255,0.12);
+}
+
+/* 진행 바 트랙 */
+.container.order-page .progress-bar{
+  height:10px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#eef6ff,#f8fbff);
+  overflow:hidden;
+  position:relative;
+  border:1px solid rgba(15,23,42,0.02);
+}
+
+/* 진행 바 채움: 그라디언트 + 애니메이션 광택 */
+.container.order-page .progress-fill{
+  height:100%;
+  width:0%; /* 렌더러에서 style="width:66%"로 제어 */
+  background: linear-gradient(90deg,var(--ui-accent),var(--ui-accent-2));
+  border-radius:999px;
+  position:relative;
+  transition: width .6s cubic-bezier(.2,.9,.3,1);
+  box-shadow:0 10px 26px rgba(47,140,255,0.10), inset 0 -6px 18px rgba(255,255,255,0.06);
+}
+/* 채움에 슬라이딩 하이라이트 레이어 추가 */
+.container.order-page .progress-fill::after{
+  content:"";
+  position:absolute;left:0;top:0;bottom:0;
+  width:40%;background:linear-gradient(90deg, rgba(255,255,255,0.25), rgba(255,255,255,0.06));
+  mix-blend-mode:overlay;
+  transform:translateX(-100%);
+  animation:glint 2.5s linear infinite;
+  pointer-events:none;
+}
+@keyframes glint{from{transform:translateX(-120%)}to{transform:translateX(200%)}}
+
+/* 정보 박스 강조: 왼쪽에 슬림한 액센트 바 추가 */
+.container.order-page .info-grid .info-box{
+  position:relative;
+  overflow:visible;
+  transition:transform .18s;
+}
+.container.order-page .info-grid .info-box::before{
+  content:"";
+  position:absolute;left:12px;top:12px;bottom:12px;width:6px;border-radius:6px;
+  background:linear-gradient(180deg,var(--ui-accent),var(--ui-accent-2));
+  box-shadow:0 6px 18px rgba(47,140,255,0.06);
+  transform-origin:left;
+  opacity:.98;
+}
+
+/* 정보 내부 패딩 보정 */
+.container.order-page .info-grid .info-box > *{margin-left:26px}
+
+/* 결제값 강조 스타일 */
+.container.order-page .pay-list dt{color:var(--ui-muted);font-weight:700}
+.container.order-page .pay-list dd{font-weight:800}
+.container.order-page .pay-list .total dd{
+  color:#0b1220;
+  font-size:16px;
+  background:linear-gradient(90deg, rgba(47,140,255,0.06), rgba(124,195,255,0.02));
+  padding:6px 8px;border-radius:8px;
+}
+
+/* 주문 취소 버튼을 눈에 띄게 */
+.container.order-page .btn-cancel{
+  background: linear-gradient(90deg,#ff6b6b,#ef4444);
+  color:#fff;padding:10px 14px;border-radius:12px;border:none;
+  box-shadow:0 10px 26px rgba(219, 219, 219, 0.14);
+  transition:transform .12s, box-shadow .12s;
+}
+.container.order-page .btn-cancel:hover{transform:translateY(-4px);box-shadow:0 20px 36px rgba(218, 213, 213, 0.18)}
+
+/* 전체 레이아웃 반응형 미세조정 */
+@media (max-width:920px){
+  .container.order-page .progress-bar{height:8px}
+  .container.order-page .order-product{grid-template-columns:64px 1fr 92px}
+  .container.order-page .info-grid{grid-template-columns:1fr}
+  .container.order-page .info-grid .info-box::before{left:10px}
+  .container.order-page .info-grid .info-box > *{margin-left:20px}
+}
+
+/* 마이크로 UX: hover 시 info-box 상승 */
+.container.order-page .info-grid .info-box:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(16,24,40,0.08)}
+
+/* 결제 정보 강조: order.css 끝에 붙여넣기 */
+.order-card .pay-list,
+.order-item .pay-list{
+  display:block;
+  padding:10px 0;
+  margin:0;
+  font-size:14px;
+  line-height:1.6;
+}
+
+/* 각 항목 구분선 + 왼쪽 라벨 굵게 */
+.order-card .pay-list > div{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 14px;
+  border-bottom:1px dashed rgba(15,23,42,0.04);
+  background:transparent;
+}
+
+/* 라벨(왼쪽) 스타일 */
+.order-card .pay-list dt,
+.order-card .pay-list > div > dt{
+  color:var(--od-muted, #6b7280);
+  font-weight:700;
+  min-width:130px;
+}
+
+/* 값(오른쪽) 스타일 - 금액은 강조 */
+.order-card .pay-list dd,
+.order-card .pay-list > div > dd{
+  font-weight:700;
+  color:#111827;
+}
+
+/* 총계 박스 시각적 강조 */
+.order-card .pay-list .total{
+  margin-top:8px;
+  padding:12px;
+  border-radius:10px;
+  background:linear-gradient(90deg, rgba(47,140,255,0.04), rgba(124,195,255,0.02));
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 6px 20px rgba(47,140,255,0.04);
+}
+.order-card .pay-list .total dt{font-size:15px}
+.order-card .pay-list .total dd{font-size:16px;color:#0b1220}
+
+/* 왼쪽 액센트 바(작게) */
+.order-card .info-box.pay{
+  position:relative;
+  padding-left:22px;
+}
+.order-card .info-box.pay::before{
+  content:"";
+  position:absolute;
+  left:12px;top:12px;bottom:12px;width:6px;border-radius:6px;
+  background:linear-gradient(180deg,var(--od-accent, #2f8cff),var(--od-accent2,#7cc3ff));
+  box-shadow:0 6px 18px rgba(47,140,255,0.06);
+}
+
+/* 모바일에서 간격 최적화 */
+@media (max-width:900px){
+  .order-card .pay-list > div{padding:8px 10px}
+  .order-card .pay-list dt{min-width:110px}
+}
+/* 이 페이지 전용 활성 스타일(무조건 먹게) */
+#site-side a.is-active{
+  background:#ffe9e4 !important;
+  color:#ff6f61 !important;
+  font-weight:700 !important;
+  border-radius:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,.06);
+}
+#site-side a.is-active .ico{ color:#ff6f61 !important; }

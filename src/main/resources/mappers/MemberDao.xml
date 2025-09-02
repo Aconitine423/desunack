@@ -27,9 +27,9 @@
         values (#{m_uid}, #{s_picture}, #{s_account}, #{s_bank}, #{s_delivery}, #{s_seller_num})
     </insert>
 
-    <update id="updatePw">
-        update member set m_pw = #{ecdpw} where m_id = #{m_id}
-    </update>
+<!--    <update id="updatePw">-->
+<!--        update member set m_pw = #{ecdpw} where m_id = #{m_id}-->
+<!--    </update>-->
 
     <select id="getMemberEntity" resultType="com.desunack.desunack.entity.MemberEntity">
         select m_uid, m_name, m_post, m_address, m_address_detail, m_kind from member where m_id = #{m_id}
@@ -43,9 +43,9 @@
         select * from s_member where s_m_uid = #{m_id}
     </select>
 
-    <select id="findPw" resultType="java.lang.Integer">
-        select count(*) from member where m_id = #{m_id} and m_email = #{m_email}
-    </select>
+<!--    <select id="findPw" resultType="java.lang.Integer">-->
+<!--        select count(*) from member where m_id = #{m_id} and m_email = #{m_email}-->
+<!--    </select>-->
 
     <select id="getGoodsSales" resultType="java.lang.String">
         select json_object('g_id',g_id,'g_m_uid',g_m_uid,'brand_name',brand_name,'g_name',g_name,'company_name',company_name,

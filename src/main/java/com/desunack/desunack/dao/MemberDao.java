@@ -5,6 +5,7 @@ import com.desunack.desunack.entity.MemberEntity;
 import com.desunack.desunack.entity.SellerEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,7 @@ public interface MemberDao {
     @Select("select m_id from member where m_name = #{m_name} and m_email = #{m_email}")
     String findId(String m_name, String m_email);
 
+    @Select("select count(*) from member where m_id = #{m_id} and m_email = #{m_email}")
     int findPw(String m_id, String m_email);
 
     void memberJoin(CustomerEntity customerEntity);
@@ -46,6 +48,7 @@ public interface MemberDao {
     @Select("select count(*) from c_member where c_nickname = #{userNickname}")
     boolean isUsedNickname(String userNickname);
 
+    @Update("update member set m_pw = #{ecdpw} where m_id = #{m_id}")
     boolean updatePw(String m_id, String ecdpw);
 
     ArrayList<String> getGoodsSales(char m_gender, int m_age);

@@ -23,9 +23,10 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
     <title>Desunack</title>
     <!-- <title> 요소: 브라우저 탭(tab)에 표시될 제목(title)을 지정 -->
     <link rel="shortcut icon" href="/img/favicon/favicon-16x16.png" type="image/x-icon">
+    <!--  브라우저 스타일 초기화  -->
+    <link rel="stylesheet" href="/common/reset.css">
     <!-- 기본 스타일시트 연결 -->
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/common/reset.css">
     <!-- <link> 요소: 외부 리소스 연결
     rel 속성: 스타일시트(stylesheet)임을 지정
     href 속성: 연결할 CSS 파일 경로 -->
@@ -34,7 +35,9 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- href: CDN(Content Delivery Network) 경로
     Font Awesome: 웹 아이콘(icon) 폰트 라이브러리 -->
+    <!--  제이쿼리, 엑시오스 임포트  -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- <meta> 요소: 문서 메타데이터 설정
     charset 속성: 문자 인코딩(character encoding)을 UTF-8로 지정 -->
 
@@ -43,24 +46,6 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
     <!-- name 속성: 메타정보의 이름(viewport)
     content 속성: 설정 값 (width=device-width → 화면 너비에 맞춤,
     initial-scale=1.0 → 초기 확대 비율 1.0) -->
-
-    <!-- 문서 제목(title) -->
-    <title>대체당</title>
-    <!-- <title> 요소: 브라우저 탭(tab)에 표시될 제목(title)을 지정 -->
-
-    <!-- 기본 스타일시트 연결 -->
-    <link rel="stylesheet" href="/css/main.css">
-     <link rel="stylesheet" href="/common/reset.css">
-    <!-- <link> 요소: 외부 리소스 연결
-    rel 속성: 스타일시트(stylesheet)임을 지정
-    href 속성: 연결할 CSS 파일 경로 -->
-
-    <!-- Font Awesome 아이콘 라이브러리 연결 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- href: CDN(Content Delivery Network) 경로
-    Font Awesome: 웹 아이콘(icon) 폰트 라이브러리 -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
 <!-- <body> 요소: 화면에 실제 표시되는 콘텐츠(container)를 포함 -->
@@ -334,22 +319,22 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
 <script th:inline="javascript">
     // console.log([[${session.Json}]])
     let goods = [[${session.Json}]];
-    const createHtml = (goods) =>{
+    const createHtml = (goods) => {
         console.log(goods);
         let html = "";
         for (const str of goods) {
-            let substr = str.replaceAll('{','');
-            substr = substr.replaceAll('}','');
-            substr = substr.replaceAll(' ','');
-            substr = substr.replaceAll('"','');
+            let substr = str.replaceAll('{', '');
+            substr = substr.replaceAll('}', '');
+            substr = substr.replaceAll(' ', '');
+            substr = substr.replaceAll('"', '');
             console.log(substr);
             subgoods = substr.split(',');
-            let startname = substr.indexOf('g_name')+7;
-            let endname = substr.indexOf('g_image')-1;
+            let startname = substr.indexOf('g_name') + 7;
+            let endname = substr.indexOf('g_image') - 1;
             console.log(subgoods);
             let name = substr.substring(startname, endname);
-            let startimage = substr.indexOf('g_image')+8;
-            let endimage = substr.indexOf('g_m_uid')-1;
+            let startimage = substr.indexOf('g_image') + 8;
+            let endimage = substr.indexOf('g_m_uid') - 1;
             let imageUrl = substr.substring(startimage, endimage);
             console.log(name, imageUrl);
             html += `<div class="grid-item">
@@ -360,13 +345,13 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
         return html;
 
     }
-    $(document).ready(function(){
+    $(document).ready(function () {
         const $container = $('#product-results-container');
         $container.empty();
-        try{
+        try {
             const html = createHtml(goods);
             $container.html(html);
-        }catch(e){
+        } catch (e) {
             console.log(e);
             $container.html('<span class="error-message">데이터를 불러오는 데 실패했습니다.</span>')
         }

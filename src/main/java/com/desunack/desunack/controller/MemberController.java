@@ -70,19 +70,11 @@ public class MemberController {
         return ResponseEntity.ok(isUsedNickname);
     }
 
-    //로그인
-//    @PostMapping("/member/login")
-//    public String login1(@RequestParam String id, String pw, Model model, HttpSession session, RedirectAttributes rttr) {
-//
-//        if (mSer.login1(id, pw, model, session)) {
-//            log.info("======login success={}", id);
-//            return "redirect:/";
-//        }
-//        log.info("======login fail={}", id);
-//        rttr.addFlashAttribute("msg", "로그인에 실패했습니다. 아이디 혹은 비밀번호를 확인해주세요");
-//
-//        return null;
-//    }
+    // 아이디-비번찾기 페이지 이동
+    @GetMapping("/member/find-info")
+    public String findInfoFrm() {
+        return "/member/findInfoFrm";
+    }
 
     @PostMapping("/member/mypage")
     public String getCustomerInfo(@RequestBody UserDto uDto, HttpSession session) {

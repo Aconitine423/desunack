@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지</title>
     <!-- 마이페이지 전용 스타일  -->
+    <link rel="stylesheet" href="/common/reset.css">
     <link rel="stylesheet" href="/css/mypage.css">
     <link rel="stylesheet" href="/css/mpheader.css">
     <link rel="stylesheet" href="/css/mpFooter.css">
@@ -291,43 +292,47 @@
     
     <script th:inline="javascript">
         const user = [[${Json}]];
-        const cList = [[${cList}]];
+        const cCount = [[${cCount}]];
 
-        const userHtml = (user) =>{
-            let html = ""
+        $(document).ready(function(){
+            {
             substr = substr.replaceAll('"','');
             substr = substr.replaceAll(' ','');
             const nameStart = substr.indexOf('m_name')+7;
-            const nameEnd = substr.indexOf(/*name 다음으로 반환되는 값*/)-2;
+            const nameEnd = substr.indexOf('m_post')-2;
             $('#pf-name').text(
                 substr.substring(nameStart, nameEnd)
             );
             const phoneStart = substr.indexOf('m_phone')+8;
-            const phoneEnd = substr.indexOf(/*phone 다음으로 반환되는 값*/)-2;
+            const phoneEnd = substr.indexOf('c_gender')-2;
             $('#pf-phone').text(
                 substr.substring(phoneStart, phoneEnd)
             )
             const emailStart = substr.indexOf('m_email')+8;
-            const emailEnd = substr.indexOf(/*email 다음으로 반환되는 값*/)-2;
+            const emailEnd = substr.indexOf('m_phone')-2;
             $('#pf-email').text(
                 substr.substring(emailStart, emailEnd)
             );
             const birthStart = substr.indexOf('c_birth')+8;
-            const birthEnd = substr.indexOf(/*birth 다음으로 반환되는 값*/)-2;
+            const birthEnd = substr.indexOf('c_point')-2;
             $('#pf-birth').text(
                 substr.substring(birthStart, birthEnd)
             );
             const pointStart = substr.indexOf('c_point')+8;
-            const pointEnd = substr.indexOf(/*point 다음으로 반환되는 값*/)-2;
+            const pointEnd = substr.indexOf('m_email')-2;
             $('#val-point').text(
                 substr.substring(pointStart, pointEnd)
             );
             const gradeStart = substr.indexOf('grade')+6;
-            const gradeEnd = substr.indexOf(/*grade 다음으로 반환되는 값*/)-2;
+            const gradeEnd = substr.indexOf('m_uid')-2;
             $('#val-grade').text(
                 substr.substring(gradeStart, gradeEnd)
             );
-        }
+            $('#val-coupon').text(
+                cCount+'장'
+            );
+            }
+        })
     </script>
     <script>
         // [공통 include 로더] - 페이지 내 모든 [data-include] 처리

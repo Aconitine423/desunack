@@ -264,12 +264,19 @@ public class MemberService {
         }
         return false;
     }
-//
-//    public UserDto login(UserDto userDto) {
-//        log.info("======userDto={}",  userDto);
-//        MemberEntity memberEntity = userDto.toEntity();
-//        BCryptPasswordEncoder ecd = new BCryptPasswordEncoder();
-//        String ecdPw = ecd.encode(memberEntity.getM_pw());
-//        memberEntity.setM_pw(ecdPw);
-//    }
+
+    public UserDto login(UserDto userDto) {
+        log.info("======userDto={}",  userDto);
+        String pw = userDto.getUserPw();
+        MemberEntity memberEntity = userDto.toEntity();
+        BCryptPasswordEncoder ecd = new BCryptPasswordEncoder();
+        String id = memberEntity.getM_id();
+        String securityPw = mDao.getSecurityPw(id);
+        log.info("======securityPw={}",securityPw);
+        if (ecd.matches(pw, securityPw)) {
+            memberEntity = mDao.getMemberEntity(id);
+            return memberEntity.toDto();
+        }
+        return null;
+    }
 }

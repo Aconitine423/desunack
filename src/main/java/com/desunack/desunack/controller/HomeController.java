@@ -1,5 +1,7 @@
 package com.desunack.desunack.controller;
 
+import com.desunack.desunack.entity.CustomerEntity;
+import com.desunack.desunack.entity.MemberEntity;
 import com.desunack.desunack.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;

@@ -1,0 +1,6 @@
+[
+  {"orderId":"ORD-2025-001","sellerUID":101,"customer":"김민수","product":"캡틴 제로 콜라","amount":159000,"deliveryStatus":0,"orderedAt":"2025-08-01 14:30","thumbnail":""},
+  {"orderId":"ORD-2025-002","sellerUID":101,"customer":"이영희","product":"저당 스낵 세트","amount":34400,"deliveryStatus":1,"orderedAt":"2025-08-02 12:15","thumbnail":""},
+  {"orderId":"ORD-2025-003","sellerUID":102,"customer":"박철수","product":"무설 설탕 대체 시럽","amount":89000,"deliveryStatus":2,"orderedAt":"2025-08-03 16:45","thumbnail":""},
+  {"orderId":"ORD-2025-004","sellerUID":101,"customer":"정미경","product":"대체당 롤 케이크","amount":120000,"deliveryStatus":3,"orderedAt":"2025-08-04 10:20","thumbnail":""}
+]

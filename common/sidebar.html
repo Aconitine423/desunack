@@ -1,0 +1,187 @@
+<!-- common/sidebar.html -->
+<!-- Font Awesome 사용 (이미 페이지에서 포함되어 있지 않다면 여기에 넣거나 전체 레이아웃 head에 추가) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<nav class="mp-sidebar-nav" aria-label="마이페이지 메뉴" id="mp-sidebar">
+  <!-- role 별 보일 메뉴는 data-role 속성으로 제어 (member | seller) -->
+  <!-- 실제로 어떤 role을 보여줄지는 아래 스크립트가 body.dataset.userRole을 참고해 처리함 -->
+  <ul class="mp-sections">
+
+    <!-- 일반회원 섹션 -->
+    <li class="mp-section" data-role="member">
+      <div class="mp-section-title">마이페이지 (일반회원)</div>
+
+      <ul class="mp-section-list">
+        <li><a href="/My_page/profile/"><i class="fas fa-user"></i><span>회원정보</span></a></li>
+
+        <li class="has-children">
+          <button class="group-toggle" aria-expanded="false">
+            <i class="fas fa-shopping-bag"></i><span>주문 관리</span>
+            <i class="fas fa-chevron-down caret" aria-hidden="true"></i>
+          </button>
+          <ul class="sublist" aria-hidden="true">
+            <li><a href="/My_page/order/"><i class="fas fa-list"></i><span>주문 내역</span></a></li>
+            <li><a href="/My_page/order/delivery/"><i class="fas fa-truck"></i><span>정기배송 조회</span></a></li>
+          </ul>
+        </li>
+
+        <li><a href="/My_page/wishlist/"><i class="fas fa-heart"></i><span>찜한상품</span></a></li>
+
+        <li class="mp-section-title">혜택</li>
+        <li><a href="/My_page/points/"><i class="fas fa-coins"></i><span>포인트</span></a></li>
+        <li><a href="/My_page/coupons/"><i class="fas fa-ticket-alt"></i><span>쿠폰</span></a></li>
+
+        <li class="mp-section-title">회원 정보</li>
+        <li><a href="/My_page/account/edit/"><i class="fas fa-user-edit"></i><span>회원정보 수정</span></a></li>
+        <li><a href="/My_page/account/leave/"><i class="fas fa-sign-out-alt"></i><span>회원 탈퇴</span></a></li>
+      </ul>
+    </li>
+
+    <!-- 판매자 섹션 -->
+    <li class="mp-section" data-role="seller">
+      <div class="mp-section-title">판매자센터 (입점/셀러)</div>
+      <ul class="mp-section-list">
+        <li class="has-children">
+          <button class="group-toggle" aria-expanded="false">
+            <i class="fas fa-box-open"></i><span>상품 관리</span>
+            <i class="fas fa-chevron-down caret" aria-hidden="true"></i>
+          </button>
+          <ul class="sublist" aria-hidden="true">
+            <li><a href="/Seller/product/list/"><span>상품 관리</span></a></li>
+            <li><a href="/Seller/product/add/"><span>상품 등록</span></a></li>
+            <li><a href="/Seller/product/review/"><span>리뷰 관리</span></a></li>
+          </ul>
+        </li>
+
+        <li class="has-children">
+          <button class="group-toggle" aria-expanded="false">
+            <i class="fas fa-shopping-bag"></i><span>주문 관리</span>
+            <i class="fas fa-chevron-down caret" aria-hidden="true"></i>
+          </button>
+          <ul class="sublist" aria-hidden="true">
+            <li><a href="/Seller/order/list/"><span>주문 내역 관리</span></a></li>
+          </ul>
+        </li>
+
+        <li class="has-children">
+          <button class="group-toggle" aria-expanded="false">
+            <i class="fas fa-gift"></i><span>혜택 관리</span>
+            <i class="fas fa-chevron-down caret" aria-hidden="true"></i>
+          </button>
+          <ul class="sublist" aria-hidden="true">
+            <li><a href="/Seller/coupons/"><span>쿠폰 관리</span></a></li>
+          </ul>
+        </li>
+
+        <li class="has-children">
+          <button class="group-toggle" aria-expanded="false">
+            <i class="fas fa-user-cog"></i><span>회원 정보</span>
+            <i class="fas fa-chevron-down caret" aria-hidden="true"></i>
+          </button>
+          <ul class="sublist" aria-hidden="true">
+            <li><a href="/Seller/account/"><span>회원정보 수정</span></a></li>
+            <li><a href="/Seller/membership/"><span>멤버십 관리</span></a></li>
+            <li><a href="/Seller/account/leave/"><span>회원 탈퇴</span></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+  </ul>
+</nav>
+
+<!-- 사이드바 스타일(간단) -->
+<style>
+  /* 기본 */
+  .mp-sidebar-nav{font-family: "Noto Sans KR",sans-serif; background:transparent; }
+  .mp-sidebar-nav .mp-sections{list-style:none;margin:0;padding:0;}
+  .mp-section{margin-bottom:10px;}
+  .mp-section-title{color:#888;font-weight:700;padding:8px 10px;}
+  .mp-section-list{list-style:none;margin:0;padding:0 6px 6px 6px;}
+  .mp-section-list > li{margin:4px 0;}
+  .mp-section-list a,
+  .group-toggle{
+    display:flex; align-items:center; gap:8px;
+    width:100%; text-decoration:none; color:#222; background:transparent;
+    border:0; padding:8px; border-radius:6px; cursor:pointer; font-size:14px;
+  }
+  .mp-section-list a span{display:inline-block}
+  .mp-section-list a .fas{width:18px;text-align:center;color:#777}
+  .group-toggle .fas{width:18px;text-align:center;color:#777}
+  .mp-section-list a.is-active,
+  .mp-section-list li.active > .group-toggle,
+  .mp-section-list li.active > a{
+    background:#fff; color:#ff6f61; font-weight:700;
+  }
+  .sublist{list-style:none;margin:6px 0 0 8px;padding:0;transition:all .18s ease; overflow:hidden}
+  .sublist li a{padding:8px 8px 8px 18px; font-size:13px; color:#444; display:flex;align-items:center}
+  .caret{margin-left:auto;color:#aaa}
+  /* collapsed state */
+  .sublist[aria-hidden="true"]{max-height:0;padding-top:0;padding-bottom:0; opacity:0; pointer-events:none}
+  .sublist[aria-hidden="false"]{max-height:500px;padding-top:6px;padding-bottom:6px; opacity:1; pointer-events:auto}
+  /* responsive */
+  @media(max-width:900px){
+    .mp-sidebar-nav{display:none}
+  }
+</style>
+
+<!-- 동작 스크립트: role 필터링, 그룹 토글, 현재경로 액티브 처리 -->
+<script>
+(function(){
+  // 1) 보여줄 role 결정 (body.dataset.userRole 또는 기본 'member')
+  const role = (document.body && document.body.dataset.userRole) ? document.body.dataset.userRole : 'member';
+  // 모든 section 중 data-role 이 있으면 체크해서 숨기기/보이기
+  document.querySelectorAll('.mp-section').forEach(section=>{
+    const secRole = section.getAttribute('data-role');
+    if (!secRole) { section.style.display = ''; return; }
+    section.style.display = (secRole === role) ? '' : 'none';
+  });
+
+  // 2) 그룹 토글: button.group-toggle 클릭시 aria-expanded / sublist[aria-hidden] 변경
+  document.querySelectorAll('.group-toggle').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      const li = btn.closest('li');
+      const sub = li.querySelector('.sublist');
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      if (sub) sub.setAttribute('aria-hidden', String(expanded));
+      // active 클래스 토글(선택적)
+      if (!expanded) li.classList.add('active'); else li.classList.remove('active');
+    });
+  });
+
+  // 3) 현재 경로에 맞는 링크를 정확히 하이라이트 (가장 긴 href 먼저 매칭)
+  try {
+    const path = location.pathname.replace(/\/+$/, '') || '/';
+    // collect all links
+    const links = Array.from(document.querySelectorAll('.mp-sidebar-nav a'));
+    // sort by href length desc (정확도 우선)
+    links.sort((a,b)=> (b.getAttribute('href')||'').length - (a.getAttribute('href')||'').length);
+    links.forEach(a => a.classList.remove('is-active'));
+    document.querySelectorAll('.mp-sidebar-nav li.active').forEach(li => li.classList.remove('active'));
+
+    for (const a of links){
+      const href = (a.getAttribute('href')||'').replace(/\/+$/,'') || '/';
+      if (href !== '/' && path.startsWith(href)) {
+        a.classList.add('is-active');
+        // 부모 리스트에 active 표시
+        const li = a.closest('li');
+        if (li) li.classList.add('active');
+        // 상위 has-children가 있으면 펼치기
+        const parent = a.closest('.sublist');
+        if (parent) {
+          parent.setAttribute('aria-hidden','false');
+          const toggle = parent.parentElement.querySelector('.group-toggle');
+          if (toggle) toggle.setAttribute('aria-expanded','true');
+          parent.parentElement.classList.add('active');
+        }
+        break; // 가장 긴 매칭 하나만 적용
+      } else if (href === '/' && path === '/') {
+        a.classList.add('is-active');
+        a.closest('li')?.classList.add('active');
+        break;
+      }
+    }
+  } catch(e){ console.warn('sidebar active logic error', e); }
+})();
+</script>

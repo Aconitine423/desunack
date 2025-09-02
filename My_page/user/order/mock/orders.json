@@ -1,0 +1,51 @@
+[
+  {
+    "orderId": 2001,
+    "orderDate": "2025-08-29 18:12",
+    "status": "배송중",
+    "deliveryType": "shipping",
+    "statusStep": 3,
+    "items": [
+      {
+        "name": "달콤한 콤보차",
+        "price": 6000,
+        "quantity": 1,
+        "image": "/common/img/86331053901056188_1120540549.jpg"
+      }
+    ],
+    "receiver": "아무개",
+    "phone": "010-0000-0000",
+    "address": "서울시 강남구 ○○동",
+    "couponDiscount":1000,
+    "usedPoint": 500,
+    "discount": 1500,
+    "finalPrice": 6000,
+    "payment": { "method": "신용카드", "card": "****-****-****-****" }
+  },
+  {
+    "orderId": 1001,
+    "orderDate": "2025-08-31 20:30",
+    "status": "픽업 완료",
+    "deliveryType": "pickup",
+    "statusStep": 3,
+    "items": [
+      {
+        "name": "펩시 제로 콜라 모음",
+        "price": 4000,
+        "quantity": 2,
+        "image": "/common/img/10015742420273123_879185226.jpg"
+      }
+    ],
+    "receiver": "아무개",
+    "phone": "010-0000-0000",
+    "pickupPlace": "인천논현점 지하 1층 고객센터",
+    "pickupTime": "2025-08-31 20:30",
+    "couponDiscount": 0,
+    "usedPoint": 1000,
+    "discount": 1000,
+    "finalPrice": 7000,
+    "payment": { "method": "신용카드", "card": "****-****-****-****" }
+  }
+  
+]
+

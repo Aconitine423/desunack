@@ -1,0 +1,125 @@
+/* 브라우저 초기화 */
+
+/* reset.css
+   - 목적: 브라우저 기본 스타일(마진/패딩/이미지 디스플레이 등)을 일관되게 정리
+   - 주의: 접근성(키보드 포커스 표시)을 제거하지 않도록 :focus-visible을 사용
+   - 저장 경로 예시: /common/reset.css
+*/
+
+/* 1) 전체 box-sizing을 border-box로 통일 (레이아웃 예측성 향상) */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 2) 자주 쓰이는 요소들의 기본 margin/padding 제거 (중복 스타일 방지) */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, figure, figcaption,
+footer, header, hgroup, menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+}
+
+/* 3) HTML5 요소들(구형 브라우저 호환용) */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+/* 4) 기본 html / body 설정
+   - height 100%는 레이아웃 루트에서 유용함
+   - 기본 글꼴은 프로젝트의 global.css에서 명시하는 것이 좋음 */
+html, body {
+  height: 100%;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 5) 이미지/미디어 처리: 반응형으로 동작하게 함 (일반적으로 권장) */
+img, picture, video, canvas, svg {
+  display: block;    /* 인라인 여백 문제 방지 */
+  max-width: 100%;
+  height: auto;
+}
+
+/* 6) 리스트 기본 제거 (프로젝트 CSS에서 필요하면 따로 스타일 추가) */
+ol, ul {
+  list-style: none;
+}
+
+/* 7) 링크 기본(색/밑줄) 제거 — 시각은 프로젝트 CSS에서 책임져라
+   단, 접근성을 위해 포커스 표시(키보드 사용자)를 유지/강화 */
+a {
+  color: inherit;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+/* 8) 폼 요소 기본: 글꼴 계승, 기본 여백 제거 */
+button, input, select, textarea {
+  font: inherit;     /* 폰트 일관성 유지 */
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  appearance: none;  /* 플랫폼 기본 스타일 제거(필요시 복원) */
+}
+
+/* 버튼은 기본적으로 포인터 커서 */
+button { cursor: pointer; }
+button:disabled { cursor: default; opacity: 0.6; }
+
+/* 9) 표 관련 기본 */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* 10) 모바일 터치 하이라이트 최소화 (선택적) */
+a, button, input, textarea {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+/* 11) 포커스/접근성
+   - 절대적으로 outline을 지우지 마세요(키보드 사용자에게 필요).
+   - :focus-visible 을 사용하여 키보드 포커스에만 시각적 표시를 주는 것을 권장합니다.
+   - 브라우저가 :focus-visible을 지원하지 않는 경우 폴백 스타일을 프로젝트 CSS에서 제공하세요. */
+:focus {
+  outline: none; /* 시각적 포커스는 아래 :focus-visible에서 처리 */
+}
+:focus-visible {
+  outline: 3px solid rgba(26,115,232,0.18);
+  outline-offset: 2px;
+}
+
+/* 12) 스크린리더 전용 숨김 유틸리티 (접근성용) */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
+
+/* 13) 간단한 유틸: 숨김(렌더/접근성 모두 숨김) */
+.hidden {
+  display: none !important;
+}
+
+/* --- 사용 팁(짧게) ---
+1) reset.css는 다른 CSS(예: global.css, header.css 등)보다 먼저 로드하세요.
+2) reset는 '모든 것을 0으로' 만드는 파일이므로, 컴포넌트별 스타일에서 필요한 기본값(버튼 크기, 링크 색 등)을 다시 선언해야 합니다.
+3) :focus-visible이 브라우저에서 지원되지 않는 환경에서는 프로젝트 전반에 키보드 포커스 스타일을 별도 제공하세요.
+*/

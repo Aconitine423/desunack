@@ -12,18 +12,15 @@ import com.desunack.desunack.entity.SellerEntity;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.ui.Model;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import java.util.ArrayList;
 
@@ -151,6 +148,7 @@ public class MemberService {
         return false;
     }
 
+    // 아이디 찾기
     public Map<String, Object> findId(UserDto userDto) {
         Map<String, Object> response =  new HashMap<>();
         MemberEntity memberEntity = userDto.toEntity();
@@ -167,10 +165,14 @@ public class MemberService {
         return response;
     }
 
-
-    public boolean findPw(String m_id, String m_email, RedirectAttributes rttr) {
-        int isExist = mDao.findPw(m_id, m_email);
-        if(isExist != 0){
+    // 비밀번호 찾기
+    public Map<String, Object> findPw(UserDto userDto) {
+        Map<String, Object> response =  new HashMap<>();
+        MemberEntity memberEntity = userDto.toEntity();
+        String id =  memberEntity.getM_id();
+        String email = memberEntity.getM_email();
+        int findPw = mDao.findPw(id, email);
+        if(findPw != 0){
             StringBuilder sb = new StringBuilder();
             int randNum;
             char randChar;
@@ -191,16 +193,19 @@ public class MemberService {
             BCryptPasswordEncoder ecd = new BCryptPasswordEncoder();
             String pw = sb.toString();
             String ecdpw = ecd.encode(pw);
-            if(mDao.updatePw(m_id, ecdpw)){
-                String msg = m_id + "님의 임시 비밀번호는 " + pw + "입니다";
-                rttr.addFlashAttribute("msg", msg);
-            }else{
-                String msg = "서버와의 연결이 원활하지 않습니다.";
-                rttr.addFlashAttribute("msg", msg);
+            if(mDao.updatePw(id, ecdpw)){
+                response.put("result", true);
+                response.put("data", pw);
+            } else{
+                response.put("result", false);
+                response.put("msg", "비밀번호 변경에 실패하였습니다.");
             }
-            return true;
+            return response;
+        } else {
+            response.put("result", false);
+            response.put("msg", "일치하는 회원정보가 없습니다.");
         }
-        return false;
+        return response;
     }
 
     public boolean getGoodsSales(char m_gender, int m_age, HttpSession session){
@@ -259,4 +264,12 @@ public class MemberService {
         }
         return false;
     }
+//
+//    public UserDto login(UserDto userDto) {
+//        log.info("======userDto={}",  userDto);
+//        MemberEntity memberEntity = userDto.toEntity();
+//        BCryptPasswordEncoder ecd = new BCryptPasswordEncoder();
+//        String ecdPw = ecd.encode(memberEntity.getM_pw());
+//        memberEntity.setM_pw(ecdPw);
+//    }
 }

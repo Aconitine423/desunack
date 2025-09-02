@@ -101,12 +101,12 @@ public class MemberController {
 
 
 
-    @PostMapping("/member/find-pw")
-    public String findPw(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr) {
-        if (mSer.findPw(userDto.getUserId(), userDto.getUserEmail(), rttr)) {
-            return "/";
-        }
-        rttr.addFlashAttribute("msg", "일치하는 결과가 없습니다");
-        return "/";
-    }
+//    @PostMapping("/member/find-pw")
+//    public String findPw(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr) {
+//        if (mSer.findPw(userDto.getUserId(), userDto.getUserEmail(), rttr)) {
+//            return "/";
+//        }
+//        rttr.addFlashAttribute("msg", "일치하는 결과가 없습니다");
+//        return "/";
+//    }
 }

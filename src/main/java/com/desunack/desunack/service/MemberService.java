@@ -239,12 +239,11 @@ public class MemberService {
 
     public boolean getCustomerInfo(int uid, HttpSession session) {
         String Json = mDao.getCustomerInfo(uid);
-        ArrayList<String> cList = mDao.getCustomerCoupon(uid);
+        int cCount = mDao.getCustomerCoupon(uid);
         if(Json != null){
-            if(cList != null){
-                session.setAttribute("cList", cList);
-            }
+
             session.setAttribute("Json", Json);
+            session.setAttribute("cCount",cCount);
             return true;
         }
         return false;

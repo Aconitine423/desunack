@@ -216,9 +216,9 @@ public class MemberService {
         //select * from 상품 join 상품판매
         // on 상품ID = 상품판매ID and 상품판매성별 = 회원성별 and 상품판매나이 = 회원나이대
         //order by 상품판매량 desc;
-        ArrayList<String> Json = mDao.getGoodsSales(m_gender, m_age);
-        if(Json != null){
-            session.setAttribute("Json", Json);
+        ArrayList<String> gList = mDao.getGoodsSales(m_gender, m_age);
+        if(gList != null){
+            session.setAttribute("gList", gList);
             return true;
         }
         return false;
@@ -230,20 +230,20 @@ public class MemberService {
         //쿼리문
         //select * from 상품 join 전체판매 on 상품ID = 상품판매ID
         //where 판매자ID = m_id order by 상품판매량 desc
-        ArrayList<String> Json = mDao.getCompanySales(m_uid);
-        if(Json != null){
-            session.setAttribute("Json", Json);
+        ArrayList<String> gList = mDao.getCompanySales(m_uid);
+        if(gList != null){
+            session.setAttribute("gList", gList);
             return true;
         }
         return false;
     }
 
     public boolean getCustomerInfo(int uid, HttpSession session) {
-        String Json = mDao.getCustomerInfo(uid);
+        String uInfo = mDao.getCustomerInfo(uid);
         int cCount = mDao.getCustomerCoupon(uid);
-        if(Json != null){
+        if(uInfo != null){
 
-            session.setAttribute("Json", Json);
+            session.setAttribute("uInfo", uInfo);
             session.setAttribute("cCount",cCount);
             return true;
         }
@@ -251,18 +251,18 @@ public class MemberService {
     }
 
     public boolean getSellerInfo(int uid, HttpSession session) {
-        String Json = mDao.getSellerInfo(uid);
-        if(Json != null){
-            session.setAttribute("Json", Json);
+        String uInfo = mDao.getSellerInfo(uid);
+        if(uInfo != null){
+            session.setAttribute("uInfo", uInfo);
             return true;
         }
         return false;
     }
 
     public boolean getSales(HttpSession session) {
-        ArrayList<String> Json = mDao.getSales();
-        if(Json != null){
-            session.setAttribute("Json", Json);
+        ArrayList<String> gList = mDao.getSales();
+        if(gList != null){
+            session.setAttribute("gList", gList);
 
             return true;
         }

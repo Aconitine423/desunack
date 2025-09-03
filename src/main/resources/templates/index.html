@@ -318,7 +318,7 @@ lang 속성(attribute): 문서의 주 언어를 live preview 설정 (en = 영어
      src 속성: script.js 경로 지정 -->
 <script th:inline="javascript">
     // console.log([[${session.Json}]])
-    let goods = [[${session.Json}]];
+    let goods = [[${session.gList}]];
     const createHtml = (goods) => {
         console.log(goods);
         let html = "";

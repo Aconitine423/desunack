@@ -161,7 +161,7 @@ header {
     transition: background .2s, color .2s;
 }
 
-.nav-menu a:hover, .search-btn:hover {
+.nav-menu a:not(.logo-link):hover, .search-btn:hover {
     background: #ff6f61;
     color: #fff;
 }

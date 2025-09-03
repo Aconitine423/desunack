@@ -349,7 +349,7 @@ header {
     padding: .75rem 1rem;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    margin: 0px -12px 1rem;
+    margin: 0 -12px 1rem;
 }
 
 .popup-header h3 {

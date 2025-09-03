@@ -1,0 +1,37 @@
+[
+  {
+    "sellerUID":101,
+    "couponNum":"CPN-2025-001",
+    "startDate":"2025-09-01",
+    "endDate":"2025-09-30",
+    "couponType":"정액할인",
+    "discountPrice":5000,
+    "discountPercent":null,
+    "minPrice":30000,
+    "visible":true
+  },
+  {
+    "sellerUID":101,
+    "couponNum":"CPN-2025-002",
+    "startDate":"2025-10-01",
+    "endDate":"2025-10-31",
+    "couponType":"정률할인",
+    "discountPrice":null,
+    "discountPercent":10,
+    "minPrice":20000,
+    "visible":false
+  },
+
+  {
+  "sellerUID":101,
+  "couponNum":"CPN-2025-010",
+  "startDate":"2025-09-01",
+  "endDate":"2025-09-30",
+  "couponType":"정액할인",
+  "discountPrice":11000,
+  "discountPercent":null,
+  "minPrice":30000,
+  "visible":true,
+  "active":true
+}
+]

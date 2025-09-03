@@ -115,7 +115,7 @@ header {
 /* 네비게이션 */
 .header {
     height: 100%;
-    padding: 8px 16px;
+    padding: 8px 64px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -143,9 +143,9 @@ header {
 }
 
 .nav-menu img {
-    width: 32px;
-    height: 32px;
-    border-radius: 9999px;
+    width: 48px;
+    height: 48px;
+    /*border-radius: 9999px;*/
 }
 
 /* 링크/검색 버튼 공통 */
@@ -164,6 +164,12 @@ header {
 .nav-menu a:not(.logo-link):hover, .search-btn:hover {
     background: #ff6f61;
     color: #fff;
+}
+
+/* 로고 링크는 hover 되어도 배경색과 글자색을 바꾸지 않도록 명시적으로 지정 */
+.nav-menu a.logo-link:hover {
+    background: transparent; /* 배경색 없음 (투명) */
+    color: inherit;      /* 현재 색상(부모로부터 상속받은 색)을 그대로 유지 */
 }
 
 /* 드롭다운 */
@@ -215,7 +221,7 @@ header {
     position: absolute;
     top: var(--hdr-h);
     left: 0;
-    width: 100vw;
+    width: 100%;
     background: #fff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     border-radius: 0 0 8px 8px;
@@ -298,7 +304,7 @@ header {
 }
 
 .search-btn {
-    padding: .5em 1em;
+    padding: 8px 14px;
     border-radius: 6px;
     font-size: 1.05rem;
     text-decoration: none;

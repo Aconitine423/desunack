@@ -1,10 +1,11 @@
 let isValid = false; // 필수 입력칸 채웠는지 확인
 const $registerFrm = $('#registerFrm');
 const $messageBox = $('#messageBox');
-const $mainImg = $('#mainImage').val();
-const $subImg = $('#detailContent').val();
-const fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
-function checkValid(){
+const $mainImg = $('#mainImage');
+const $subImg = $('#detailContent');
+// const fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+$registerFrm.on('submit', function (event) {
+    event.preventDefault();
     isValid = false; // 유효성 초기화
 
     if($('#goodsName').val() === ''){ // 상품 이름을 입력 안했다면
@@ -30,25 +31,29 @@ function checkValid(){
         isValid = false;
     }
 
-    if($mainImg !== '' && $mainImg != null){ //파일을 업로드 했다면
-        if(!$mainImg.match(fileForm)){
-            isvalid = false;
-        }else{
-            isValid = true;
-        }
-    }else{
+    if($mainImg[0].files.length === 0){
         isValid = false;
+    }else{
+        const mainImgFileFormList = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'pdf'];
+        const mainImgFileExtension = $mainImg[0].files[0].name.split('.').pop().toLowerCase();
+        if(!mainImgFileFormList.includes(mainImgFileExtension)) {
+            isValid = false;
+        }
+        isValid = true;
     }
 
-    if($subImg !== '' && $subImg != null){ //파일을 업로드 했다면
-        if(!$subImg.match(fileForm)){
-            isvalid = false;
+
+
+    if($subImg[0].files.length === 0){
+        isValid = false;
         }else{
+            const subImgFileFormList = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'pdf'];
+            const subImgFileExtension = $subImg[0].files[0].name.split('.').pop().toLowerCase();
+            if(!subImgFileFormList.includes(subImgFileExtension)) {
+                isValid = false;
+            }
             isValid = true;
         }
-    }else{
-        isValid = false;
-    }
 
     if($('#deliveryFee').val() === ''){ // 배송료를 입력하지 않았다면
         isValid = false;
@@ -87,60 +92,79 @@ function checkValid(){
         }
 
         // 날짜 포맷팅
-        const startYear = date.getFullYear();
-        const startMonth = date.month();
-        const startDay = formatNumber($('#birthDay').val());
+        const today = new Date();
+        const startYear = today.getFullYear();
+        const startMonth = formatNumber(today.getMonth());
+        const startDay = formatNumber(today.getDate());
         const startDate = `${startYear}-${startMonth}-${startDay}`;
+        const futureDay = new Date();
         let endYear;
         let endMonth;
         let endDay;
         switch ($('#goodsDate').val()){
             case 'month1':
-                endYear = (date.getDate() + 30).getFullYear();
-                endMonth = (date.getMonth() + 30).getMonth();
-                endDay = (date.getDate() + 30).getDate();
+                futureDay.setDate(futureDay.getDate() + 30);
+
                 break;
             case 'month2':
-                 endYear = (date.getDate() + 60).getFullYear();
-                 endMonth = (date.getDate() + 60).getMonth();
-                 endDay = (date.getDate() + 60).getDate();
+                futureDay.setDate(futureDay.getDate() + 60);
                 break;
             case 'month3':
-                endYear = (Date.getDate() + 90).getFullYear();
-                endMonth = (date.getMonth() + 90).getMonth();
-                endDay = (date.getDate() + 90).getDate();
+                futureDay.setDate(futureDay.getDate() + 90);
                 break;
         }
-        const endDate = `${endyear}-${startMonth}-${startDay}`
-
+        endYear = futureDay.getFullYear();
+        endMonth = formatNumber(futureDay.getMonth());
+        endDay = formatNumber(futureDay.getDate());
+        const endDate = `${endYear}-${endMonth}-${endDay}`;
+        const aList = [];
+        $('input[name="goodsAllergy"]:checked').each(function(){
+            aList.push($(this).val());
+        });
+        const sList = [];
+        $('input[name="goodsSweetener"]:checked').each(function(){
+            sList.push($(this).val());
+        })
+        const allergy = JSON.stringify(aList);
+        const sweetener = JSON.stringify(sList);
         // 입력된 파라미터 묶음
-        const formData = {
-            g_m_uid: $('').val(), //판매자 uid 세션에서 받아오기
+        const goodsDto = {
+            g_m_uid: 700001, //판매자 uid 세션에서 받아오기
             brand_name: $('#brandName').val(),
             g_name: $('#goodsName').val(),
-            company_name: $('').val(), //판매자 회사정보 세션에서 받아오기
-            g_value: $('#goodsPrice').val(),
-            g_qty: $('#goodsQuantity').val(),
+            company_name: '펩시', //판매자 회사정보 세션에서 받아오기
+            g_value: Number($('#goodsPrice').val()),
+            g_qty: Number($('#goodsQuantity').val()),
             g_startday: startDate,
             g_endday: endDate,
             g_cat_key: $('#smallCategory').val(),
-            g_image: $('#galleryImage').val(),
-            g_detail: $('#detailContent').val(),
-            g_delivery_kine: $('#deliveryType').val(),
+            g_delivery_kind: $('#deliveryType').val(),
             g_status: '1',
             g_total_rating: 0,
             g_review_count: 0,
-            aList: $('input[name="goodsAllergy"]:checked').val(),
-            sList: $('input[name="goodsSweetener"]:checked').val()
+            aList: allergy,
+            sList: sweetener
         };
-
-        console.log('formData', formData);
-
+        const mainImgFile = $mainImg[0].files[0];
+        console.log('mainImg:', mainImgFile);
+        const subImgFile = $subImg[0].files[0];
+        console.log('File:', subImgFile);
+        console.log('formData', goodsDto);
+        console.log(JSON.stringify(goodsDto));
+        const goodsFormData = new FormData();
+        goodsFormData.append('mainFile', mainImgFile);
+        goodsFormData.append('subFile', subImgFile);
+        goodsFormData.append('goodsDto', new Blob([JSON.stringify(goodsDto)], {type: 'application/json'}));
         // 엑시오스로 데이터 전송
-        axios.post('/goods/registrate', formData)
+        console.log(goodsFormData)
+        axios.post('/goods/registrate', goodsFormData,{
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
             .then(function (response) {
                 console.log("상품등록 성공: ", response.data);
-                location.href = '/goods/registrate/done';
+                location.href = 'redirect:/';
             })
             .catch(function (error) {
                 console.log("상품등록 실패:", error);
@@ -150,8 +174,4 @@ function checkValid(){
         $messageBox.text('입력 정보를 다시 확인해주세요.').css('display', 'block').css('color', 'red');
     }
     return isValid;
-}
-$registerFrm.on('submit', function (event) {
-    event.preventDefault();
-    checkValid();
 })

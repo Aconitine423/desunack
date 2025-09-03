@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -31,6 +32,6 @@ public class GoodsDto {
     private char g_status;
     private int g_total_rating;
     private int g_review_count;
-    private ArrayList<String> aList;
-    private ArrayList<String> sList;
+    private String aList;
+    private String sList;
 }

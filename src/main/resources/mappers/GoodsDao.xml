@@ -4,10 +4,13 @@
 
 <mapper namespace="com.desunack.desunack.dao.GoodsDao">
     <insert id="goodsRegistrate">
-        insert into goods(g_id, g_m_uid, brand_name, g_name, company_name, g_value, g_qty, g_startday,
+        insert into goods(g_m_uid, brand_name, g_name, company_name, g_value, g_qty, g_startday,
                           g_endday, g_cat_key, g_image, g_detail, g_delivery_kind, g_status, g_total_rating, g_review_count)
-        values (#{g_id}, #{g_m_uid}, #{brand_name}, #{g_name}, #{company_name}, #{g_value}, #{g_qty}, #{g_startday}, #{g_endday},
+        values (#{g_m_uid}, #{brand_name}, #{g_name}, #{company_name}, #{g_value}, #{g_qty}, #{g_startday}, #{g_endday},
                 #{g_cat_key}, #{g_image}, #{g_detail}, #{g_delivery_kind}, #{g_status}, #{g_total_rating}, #{g_review_count})
+        <selectKey resultType="int" order="AFTER" keyProperty="g_id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
     <insert id="goodsTotalSales">
         insert into goods_total_sales(gts_g_id, gts_sales) values(#{g_id}, default)

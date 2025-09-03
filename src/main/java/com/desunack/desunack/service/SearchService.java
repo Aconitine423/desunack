@@ -38,9 +38,9 @@ public class SearchService {
             }
         }
 
-        ArrayList<String> Json = searchDao.filterSearch(filterList, startIdx, size);
-        if(Json != null){
-            session.setAttribute("Json", Json);
+        ArrayList<String> gList = searchDao.filterSearch(filterList, startIdx, size);
+        if(gList != null){
+            session.setAttribute("gList", gList);
             return true;
         }
         return false;

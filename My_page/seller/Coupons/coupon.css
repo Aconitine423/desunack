@@ -1,0 +1,241 @@
+/* ===== 레이아웃 공통 ===== */
+.mypage-layout {
+  display: flex;
+  gap: 20px;
+  max-width: 1200px;   /* 전체 너비 */
+  margin: 24px auto;   /* 화면 중앙 정렬 */
+  padding: 0 16px;
+  align-items: flex-start;
+}
+
+#site-side {
+  width: 260px;        /* 사이드바 고정 */
+  flex: 0 0 260px;
+}
+
+.container.coupon-page {
+  flex: 1;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* ===== 상단 검색 영역 ===== */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  z-index: 0 !important;
+}
+
+.search-wrap {
+  display: flex;
+  gap: 8px;
+}
+
+.search-wrap select,
+.search-wrap input,
+.search-wrap button {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.search-wrap button.btn {
+  background: #ff6f61;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.search-wrap button.btn:hover {
+  background: #ff4a3d;
+}
+
+/* ===== 쿠폰 테이블 ===== */
+#coupon-list table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+
+#coupon-list th,
+#coupon-list td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+#coupon-list th {
+  background: #fafafa;
+  font-weight: 600;
+}
+
+#coupon-list tr:hover {
+  background: #f9f9f9;
+}
+
+/* 상태 뱃지 */
+.badge.visible {
+  background: #d1f5df;
+  color: #1a7f37;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge.hidden {
+  background: #ffe2e2;
+  color: #c62828;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge.stopped {
+  background: #ddd;
+  color: #666;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ===== 하단 버튼 ===== */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.actions .left button,
+.actions .right button {
+  padding: 8px 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.actions .left button:hover,
+.actions .right button:hover {
+  background: #f5f5f5;
+}
+
+.actions .right .btn-accent {
+  background: #ff6f61;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+}
+
+.actions .right .btn-accent:hover {
+  background: #ff4a3d;
+}
+
+.modal[hidden] {
+  display: none !important;
+}/* 모달 레이아웃 */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+}
+
+.modal-panel {
+  background: #fff;
+  border-radius: 12px;
+  width: 500px;
+  max-width: 95%;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  animation: fadeIn .25s ease;
+}
+
+/* 헤더 */
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.modal-head strong {
+  font-size: 18px;
+  font-weight: 700;
+}
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #555;
+}
+
+/* 본문 */
+.modal-body {
+  display: grid;
+  gap: 14px;
+}
+.modal-body label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+.modal-body input,
+.modal-body select {
+  margin-top: 6px;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+/* 액션 버튼 */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+.modal-actions .btn-accent {
+  background: #ff6f61;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.modal-actions .btn {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #333;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.modal-actions .btn:hover {
+  background: #eee;
+}
+.modal-actions .btn-accent:hover {
+  background: #e85a4f;
+}
+
+/* 등장 애니메이션 */
+@keyframes fadeIn {
+  from {opacity:0; transform: translateY(-10px);}
+  to {opacity:1; transform: translateY(0);}
+}

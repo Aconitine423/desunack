@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>쿠폰 관리</title>
+
+  <!-- 공통 CSS -->
+  <link rel="stylesheet" href="/common/reset.css">
+  <link rel="stylesheet" href="/common/global.css">
+  <link rel="stylesheet" href="/common/header.css">
+  <link rel="stylesheet" href="/common/footer.css">
+
+  <!-- 전용 CSS -->
+  <link rel="stylesheet" href="coupon.css">
+</head>
+<body class="dsnk" data-user-role="seller">
+  <!-- 공통 헤더 -->
+  <div id="site-header" data-include="/common/header.html"></div>
+
+  <div class="mypage-layout">
+    <!-- 공통 사이드바 -->
+    <div id="site-side" data-include="/common/sidebar.html"></div>
+
+    <!-- 메인 -->
+    <main class="container coupon-page" role="main" aria-labelledby="pageTitle">
+      <!-- 상단 -->
+      <header class="topbar">
+        <h1 id="pageTitle" class="page-title">쿠폰 관리</h1>
+        <div class="search-wrap">
+          <select id="filterType">
+            <option value="all">전체</option>
+            <option value="visible">노출</option>
+            <option value="hidden">비노출</option>
+          </select>
+          <input id="q" type="search" class="search-input" placeholder="검색 항목">
+          <button id="btnSearch" class="btn">검색</button>
+        </div>
+      </header>
+
+      <!-- 쿠폰 리스트 -->
+      <div id="coupon-list">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:40px"><input type="checkbox" id="chkAll"></th>
+              <th>발급일자</th>
+              <th>쿠폰번호</th>
+              <th>쿠폰정보</th>
+              <th>조건</th>
+              <th>상태</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- JS에서 렌더링 -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 하단 버튼 -->
+      <div class="actions">
+        <div class="left">
+          <button id="btnSelectAll">전체 선택</button>
+          <button id="btnStop">발급 중지</button>
+          <button id="btnResume">발급 재개</button>
+          <button id="btnShow">노출</button>
+          <button id="btnHide">비노출</button>
+        </div>
+        <div class="right">
+          <button id="btnAdd" class="btn-accent">발급신청</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!--쿠폰 신청 모달 -->
+  <div id="couponModal" class="modal" hidden>
+    <div class="modal-dim"></div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <strong id="modalTitle">쿠폰 신청</strong>
+        <button type="button" class="modal-close">✕</button>
+      </div>
+      <form id="couponForm" class="modal-body">
+        <label>쿠폰 번호 
+          <input type="text" name="couponNum" readonly value="자동생성">
+        </label>
+        <label>발급 일자
+          <input type="date" name="startDate" required> ~
+          <input type="date" name="endDate" required>
+        </label>
+        <label>쿠폰 종류
+          <input type="text" name="couponType" value="상품할인" readonly>
+        </label>
+        <label>할인 금액 (최대 할인금액)
+          <input type="number" name="discountPrice" placeholder="예: 5000">
+        </label>
+        <label>할인율(%)
+          <select name="discountPercent">
+            <option value="0">0%</option>
+            <option value="5">5%</option>
+            <option value="10">10%</option>
+            <option value="20">20%</option>
+            <option value="30">30%</option>
+            <option value="40">40%</option>
+            <option value="50">50%</option>
+          </select>
+        </label>
+        <label>적용 최소 금액
+          <input type="number" name="minPrice" placeholder="예: 20000">
+        </label>
+        <div class="modal-actions">
+          <button type="submit" class="btn-accent">신청</button>
+          <button type="button" class="btn" id="btnCancel">취소</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 공통 푸터 -->
+  <div id="site-footer" data-include="/common/footer.html"></div>
+
+  <!-- 공통 JS -->
+  <script src="/common/common.js" defer></script>
+  <script src="/common/header.js" defer></script>
+
+  <!-- 전용 JS -->
+  <script src="coupon.js" defer></script>
+</body>
+</html>

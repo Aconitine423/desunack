@@ -50,24 +50,24 @@ public class HomeController {
                 int age =  (LocalDate.now().getYear() - (int) session.getAttribute("m_birth"))/10 * 10; // << 현재 연도와 태어난 연도의 차를 통해서 계산하기
                 char gender = customer.getC_gender();
                 if(mSer.getGoodsSales(gender, age, session)){
-                    log.info(session.getAttribute("Json").toString());
+                    log.info(session.getAttribute("gList").toString());
                     return "redirect:/";
                 }
             }else if(kind == 'S'){
                 int id = user.getM_uid();
                 if(mSer.getCompanySales(id, session)){
-                    log.info(session.getAttribute("Json").toString());
+                    log.info(session.getAttribute("gList").toString());
                     return "redirect:/";
                 }
             }else{
                 if(mSer.getSales(session)){
-                    log.info(session.getAttribute("Json").toString());
+                    log.info(session.getAttribute("gList").toString());
                     return "redirect:/";
                 }
             }
         }
         if(mSer.getSales(session)){
-            log.info(session.getAttribute("Json").toString());
+            log.info(session.getAttribute("gList").toString());
             return "index";
         }
         return "index";

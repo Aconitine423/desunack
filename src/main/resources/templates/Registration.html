@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../css/breadcrumb.css">
     <!-- Font Awesome 아이콘 라이브러리 연결 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- href: CDN(Content Delivery Network) 경로
     Font Awesome: 웹 아이콘(icon) 폰트 라이브러리 -->
 </head>
@@ -147,7 +148,7 @@
     </header>
     
     <main class="register-form">
-        <form action="/product/register" id="registerFrm" method="post" enctype="multipart/form-data">
+        <form th:action="@{/goods/registrate}"  enctype="multipart/form-data" id="registerFrm" method="post">
             <!-- 기본 정보 -->
             <fieldset>
                 <legend>기본 정보</legend>
@@ -359,7 +360,7 @@
                          </table>
                     </footer>
     <script src="../프로젝트/header/header1.js"></script>
-    <script src="../static/js/registration.js"></script>
+    <script src="/js/registration.js"></script>
     <!-- js: 대부류 선택 시 소분류 자동 변경 -->
     <script>
         const category = document.getElementById("category");
@@ -404,38 +405,38 @@
         });
         
         // 숫자만 남기고 콤바 붙이는 함수 
-        function formatNumber(num){
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
+        // function formatNumber(num){
+        //     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        // }
         
         //입력 이벤트 
-        document.querySelectorAll("#goodsPrice, #deliveryFee").forEach(input => {
-            input.addEventListener("input",(e) =>{
-                // 숫자만 남기기
-                let value = e.target.value.replace(/,/g, ""); // 기준 콤마 제거
-                if (!isNaN(value) && value !== "") {
-                    e.target.value = formatNumber(value);
-                } else{
-                    e.target.value = "";
-                }
-            });
-        });
+        // document.querySelectorAll("#goodsPrice, #deliveryFee").forEach(input => {
+        //     input.addEventListener("input",(e) =>{
+        //         // 숫자만 남기기
+        //         let value = e.target.value.replace(/,/g, ""); // 기준 콤마 제거
+        //         if (!isNaN(value) && value !== "") {
+        //             e.target.value = formatNumber(value);
+        //         } else{
+        //             e.target.value = "";
+        //         }
+        //     });
+        // });
         
         // 전송 전에 콤마 제거 (숫자만 남기기)
-        document.querySelector("form").addEventListener("submit", () => {
-            ["goodsPrice", "deliveryFee"].forEach(id => {
-                const input = document.getElementById(id);
-                input.value = input.value.replace(/,/g, "");
-            });
-        });
+        // document.querySelector("form").addEventListener("submit", () => {
+        //     ["goodsPrice", "deliveryFee"].forEach(id => {
+        //         const input = document.getElementById(id);
+        //         input.value = input.value.replace(/,/g, "");
+        //     });
+        // });
         
-        // 파일명 표시
-        document.querySelectorAll(".file-upload input[type=file]").forEach(input => {
-            input.addEventListener("change", (e) => {
-                const fileName = e.target.files.length ? e.target.files[0].name : "선택된 파일 없음";
-                e.target.closest(".file-upload").querySelector(".file-name").textContent = fileName;
-            });
-        });
+        // // 파일명 표시
+        // document.querySelectorAll(".file-upload input[type=file]").forEach(input => {
+        //     input.addEventListener("change", (e) => {
+        //         const fileName = e.target.files.length ? e.target.files[0].name : "선택된 파일 없음";
+        //         e.target.closest(".file-upload").querySelector(".file-name").textContent = fileName;
+        //     });
+        // });
     </script>
 </body>
 </html>

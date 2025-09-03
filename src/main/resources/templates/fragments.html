@@ -5,15 +5,16 @@
     <title>Title</title>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
 </head>
 <body>
 <header th:fragment="header">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/header.css">
     <nav class="navbar">
         <ul class="nav-menu">
             <li>
-                <a href="#"><img src="/img/favicon/favicon-32x32.png" alt="홈으로"></a>
+                <a href="/" class="logo-link"><img src="/img/favicon/favicon-32x32.png" alt="홈으로"></a>
             </li>
             <li class="mega-dropdown" id="mega-dropdown">
                 <a href="#" class="mega-toggle"><i class="fa fa-bars"></i></a>
@@ -117,7 +118,6 @@
     </script>
 </header>
 <footer th:fragment="footer">
-    <link rel="stylesheet" href="/css/footer.css">
     <div class="footer-content">
         <img src="/img/232333.png" alt="대체당 로고" class="footer-logo">
         <div class="footer-info-wrapper">

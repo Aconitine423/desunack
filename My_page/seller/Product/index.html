@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>상품 관리</title>
+
+  <!-- 공통 CSS -->
+  <link rel="stylesheet" href="/common/reset.css">
+  <link rel="stylesheet" href="/common/global.css">
+  <link rel="stylesheet" href="/common/header.css">
+  <link rel="stylesheet" href="/common/footer.css">
+
+  <!-- 전용 CSS -->
+  <link rel="stylesheet" href="product.css">
+</head>
+<body class="dsnk" data-user-role="seller">
+  <!-- 공통 헤더 -->
+  <div id="site-header" data-include="/common/header.html"></div>
+
+  <div class="mypage-layout">
+    <!-- 공통 사이드바 -->
+    <div id="site-side" data-include="/common/sidebar.html"></div>
+
+    <!-- 메인 -->
+    <main class="container product-page" role="main" aria-labelledby="pageTitle">
+      <!-- 상단 -->
+      <header class="topbar">
+        <h1 id="pageTitle" class="page-title">상품 관리</h1>
+        <div class="search-wrap">
+          <select id="filterType">
+            <option value="all">전체</option>
+            <option value="visible">노출</option>
+            <option value="hidden">비노출</option>
+            <option value="selling">판매</option>
+            <option value="stopped">판매중지</option>
+          </select>
+          <input id="q" type="search" class="search-input" placeholder="상품명 / 상품번호 검색">
+          <button id="btnSearch" class="btn-search">검색</button>
+        </div>
+      </header>
+
+      <!-- 상품 리스트 -->
+      <section id="product-list">
+        <!-- 컬럼 헤더 -->
+        <div class="product-header">
+          <div class="col check">선택</div>
+          <div class="col regdate">등록 일자</div>
+          <div class="col code">상품번호</div>
+          <div class="col info">상품정보</div>
+          <div class="col price">가격</div>
+          <div class="col status">상태</div>
+          <div class="col action">관리</div>
+        </div>
+
+        <!-- 실제 데이터 UL -->
+        <ul class="product-list">
+          <!-- JS가 li 렌더링 -->
+        </ul>
+      </section>
+
+      <!-- 하단 버튼 -->
+      <div class="actions">
+        <button id="btnSelectAll">전체 선택</button>
+        <button id="btnSelling">판매 중</button>
+        <button id="btnStopped">판매 중지</button>
+        <button id="btnVisible">전시 노출</button>
+        <button id="btnHidden">전시 비노출</button>
+      </div>
+    </main>
+  </div>
+
+  <!-- 공통 푸터 -->
+  <div id="site-footer" data-include="/common/footer.html"></div>
+
+  <!-- 공통 JS -->
+  <script src="/common/common.js" defer></script>
+  <script src="/common/header.js" defer></script>
+
+  <!-- 전용 JS -->
+  <script src="product.js" defer></script>
+</body>
+</html>

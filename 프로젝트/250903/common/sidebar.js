@@ -46,3 +46,26 @@
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once:true});
   else init();
 })();
+
+document.addEventListener("DOMContentLoaded", () => {
+  const path = window.location.pathname;
+
+  // 현재 페이지 경로와 매칭되는 링크 찾기
+  document.querySelectorAll(".sidebar .menu-link").forEach(link => {
+    const href = link.getAttribute("href");
+    if (href && path.includes(href)) {
+      link.classList.add("active");
+      const parent = link.closest(".menu-item.has-sub");
+      if (parent) parent.classList.add("open");
+    }
+  });
+
+  // 아코디언 토글
+  document.querySelectorAll(".menu-item.has-sub > a").forEach(menu => {
+    menu.addEventListener("click", e => {
+      e.preventDefault();
+      const parent = menu.parentElement;
+      parent.classList.toggle("open");
+    });
+  });
+});

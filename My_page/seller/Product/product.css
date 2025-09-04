@@ -1,0 +1,167 @@
+/* ===== 공통 레이아웃 ===== */
+.mypage-layout {
+  display: flex;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 16px;
+  align-items: flex-start;
+}
+
+#site-side {
+  width: 260px;
+  flex: 0 0 260px;
+}
+
+.container.product-page {
+  flex: 1;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  font-size: 14px;
+  color: #333;
+}
+
+/* ===== 상단 검색/필터 바 ===== */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.search-wrap {
+  display: flex;
+  gap: 8px;
+}
+
+.search-wrap select,
+.search-wrap input {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  height: 34px;
+}
+
+.btn-search {
+  padding: 6px 14px;
+  background: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-search:hover {
+  background: #0056b3;
+}
+
+/* ===== 컬럼 공통 (헤더 + 아이템) ===== */
+.product-header,
+.product-item {
+  display: grid;
+  grid-template-columns:
+    40px     /* 선택 */
+    120px    /* 등록 일자 */
+    120px    /* 상품번호 */
+    1fr      /* 상품정보 */
+    100px    /* 가격 */
+    160px    /* 상태(판매/전시) */
+    100px;   /* 관리 */
+  align-items: center;
+  text-align: center;
+}
+
+/* ===== 컬럼 헤더 ===== */
+.product-header {
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+/* ===== 리스트 ===== */
+.product-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+}
+
+.product-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f1f1f1;
+}
+.product-item:last-child {
+  border-bottom: none;
+}
+
+/* ===== 상품정보 컬럼 ===== */
+.col.info {
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0 8px;
+}
+
+.col.price {
+  font-weight: 600;
+  color: #111;
+}
+
+/* ===== 상태 뱃지 ===== */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  min-width: 60px;
+  text-align: center;
+  margin: 2px;
+}
+.badge.visible { background:#e6f7ec; color:#1a7f37; }
+.badge.hidden  { background:#fdecea; color:#c62828; }
+
+/* ===== 관리 버튼 ===== */
+.btn-edit {
+  background: #ff6f61;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+.btn-edit:hover {
+  background: #ff4a3d;
+}
+
+/* ===== 하단 액션 버튼 ===== */
+.actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.actions button {
+  padding: 8px 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+}
+.actions button:hover {
+  background: #f5f5f5;
+}

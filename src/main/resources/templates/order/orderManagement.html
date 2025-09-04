@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>주문관리(판매자)</title>
+  
+  <!-- 공통 CSS (그대로) -->
+  <link rel="stylesheet" href="/common/reset.css">
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/Footer.css">
+  
+  <!-- 페이지 전용 -->
+  <link rel="stylesheet" href="/css/orderManagement.css">
+</head>
+<body class="dsnk" data-user-role="seller">
+  <!-- 공통 헤더 -->
+  <div id="site-header" data-include="/fragments/header.html"></div>
+  
+  <!-- 레이아웃: order와 동일 -->
+  <div class="mypage-layout">
+    <!-- 공통 사이드바 include. 절대 치환/수정 안 함 -->
+    <div id="site-side" data-include="/fragments/sidebar.html"></div>
+    
+    <!-- 메인 -->
+    <main class="container order-page" role="main" aria-labelledby="pageTitle">
+      <header class="topbar">
+        <h1 id="pageTitle" class="page-title">주문관리 (판매자)</h1>
+        <div class="search-wrap">
+          <label for="q" class="sr-only">검색</label>
+          <input id="q" class="search-input" type="search" placeholder="주문번호 또는 고객명 검색">
+        </div>
+      </header>
+      
+      <!-- 상태 탭 -->
+      <nav id="statusTabs"> 
+        <button data-filter="all"       class="tab active" role="tab">전체 <span class="count">0</span></button>
+        <button data-filter="received"  class="tab" role="tab">주문 접수 <span class="count">0</span></button>
+        <button data-filter="preparing" class="tab" role="tab">준비중 <span class="count">0</span></button>
+        <button data-filter="shipping"  class="tab" role="tab">배송중 <span class="count">0</span></button>
+        <button data-filter="done"      class="tab" role="tab">완료 <span class="count">0</span></button>
+      </nav>
+
+      <!-- 주문 상세 모달  -->
+       <div id="orderDetailModal" class="odm" hidden>
+        <div class="odm-dim"></div>
+        <div class="odm-panel" role="dialog" aria-modal="true" aria-labelledby="odmTitle">
+          <div class="odm-head">
+            <strong id="odmTitle">주문 상세 내역</strong>
+            <botton type="button" class="odm-close" aria-label="닫기">✕</botton>
+          </div>
+          <div class="odm-body" id="odmBody"></div>
+        </div>
+       </div>
+
+      <div id="order-list">
+          <table>
+              <tr>
+                  <td>선택</td>
+                  <td>주문 일시</td>
+                  <td>주문자</td>
+                  <td>주문 번호</td>
+                  <td>주문 상품</td>
+                  <td>주문 갯수</td>
+                  <td>총 가격</td>
+                  <td>주문 상태</td>
+              </tr>
+          <th:block th:if="${#lists.isEmpty(orderList)}">
+              <tr>
+              <td colspan="8" style="text-align:center">출력할 데이터가 없습니다.</td>
+              </tr>
+          </th:block>
+          <th:block th:unless="${#lists.isEmpty(orderList)}">
+                <tr th:each = "order : ${orderList}">
+                    <td><input th:type="checkbox"></td>
+                    <td><p th:text="${order.go_date}"></p></td>
+                    <td><p th:text="${order.c_nickname}"></p></td>
+                    <td><p th:text="${order.go_num}"></p></td>
+                    <td><p th:text="${order.g_name}외 ??개"></p></td><!--추후 수정 필요-->
+                    <td><p th:text="${order.god_qty}"></p></td>
+                    <td><p th:text="${order.go_total_cost}"></p></td>
+                    <td><p th:text="${order.go_status}"></p></td>
+                    <!-- 각각의 스타일에 맞는 id, class부여 필요함 -->
+                </tr>
+          </th:block>
+          </table>
+      </div>
+      
+    </main>
+  </div>
+  
+  <!-- 공통 푸터 -->
+  <div id="site-footer" data-include="/fragments/Footer.html"></div>
+  
+  <!-- 공통 JS (순서 유지). 공통 사이드바 동작은 공통 파일에서 처리됨 -->
+  <script src="/js/common.js" defer></script>
+  <script src="/js/header.js" defer></script>
+  
+  <!-- 페이지 전용: 항상 마지막 -->
+  <script src="/js/orderManagement.js" defer></script>
+</body>
+</html>

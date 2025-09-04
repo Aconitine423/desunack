@@ -117,16 +117,30 @@ $registerFrm.on('submit', function (event) {
         endMonth = formatNumber(futureDay.getMonth());
         endDay = formatNumber(futureDay.getDate());
         const endDate = `${endYear}-${endMonth}-${endDay}`;
-        const aList = [];
-        $('input[name="goodsAllergy"]:checked').each(function(){
-            aList.push($(this).val());
-        });
-        const sList = [];
-        $('input[name="goodsSweetener"]:checked').each(function(){
-            sList.push($(this).val());
-        })
-        const allergy = JSON.stringify(aList);
-        const sweetener = JSON.stringify(sList);
+        const tAllergy = {
+            allergy1: $('#Allergy1').is(":checked"),
+            allergy2: $('#Allergy2').is(":checked"),
+            allergy3: $('#Allergy3').is(":checked"),
+            allergy4: $('#Allergy4').is(":checked"),
+            allergy5: $('#Allergy5').is(":checked"),
+            allergy6: $('#Allergy6').is(":checked"),
+            allergy7: $('#Allergy7').is(":checked"),
+            allergy8: $('#Allergy8').is(":checked"),
+        }
+        const tSweetener = {
+            sweetener1: $('#Sweetener1').is(":checked"),
+            sweetener2: $('#Sweetener2').is(":checked"),
+            sweetener3: $('#Sweetener3').is(":checked"),
+            sweetener4: $('#Sweetener4').is(":checked"),
+            sweetener5: $('#Sweetener5').is(":checked"),
+            sweetener6: $('#Sweetener6').is(":checked"),
+            sweetener7: $('#Sweetener7').is(":checked"),
+            sweetener8: $('#Sweetener8').is(":checked"),
+            sweetener9: $('#Sweetener9').is(":checked"),
+            sweetener10: $('#Sweetener10').is(":checked"),
+        }
+        console.log(tAllergy);
+        console.log(tSweetener);
         // 입력된 파라미터 묶음
         const goodsDto = {
             g_m_uid: 700001, //판매자 uid 세션에서 받아오기
@@ -142,8 +156,6 @@ $registerFrm.on('submit', function (event) {
             g_status: '1',
             g_total_rating: 0,
             g_review_count: 0,
-            aList: allergy,
-            sList: sweetener
         };
         const mainImgFile = $mainImg[0].files[0];
         console.log('mainImg:', mainImgFile);
@@ -155,6 +167,8 @@ $registerFrm.on('submit', function (event) {
         goodsFormData.append('mainFile', mainImgFile);
         goodsFormData.append('subFile', subImgFile);
         goodsFormData.append('goodsDto', new Blob([JSON.stringify(goodsDto)], {type: 'application/json'}));
+        goodsFormData.append('tAllergy', new Blob([JSON.stringify(tAllergy)], {type: 'application/json'}));
+        goodsFormData.append('tSweetener', new Blob([JSON.stringify(tSweetener)], {type: 'application/json'}));
         // 엑시오스로 데이터 전송
         console.log(goodsFormData)
         axios.post('/goods/registrate', goodsFormData,{

@@ -1,6 +1,8 @@
 package com.desunack.desunack.controller;
 
 import com.desunack.desunack.dto.GoodsDto;
+import com.desunack.desunack.dto.TransferAllergyDto;
+import com.desunack.desunack.dto.TransferSweetenerDto;
 import com.desunack.desunack.service.GoodsService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -29,18 +31,20 @@ public class GoodsController {
     public ResponseEntity<String> goodsRegistrate(@RequestPart("goodsDto") GoodsDto goodsDto,
                                                   @RequestPart("mainFile")MultipartFile main,
                                                   @RequestPart("subFile")MultipartFile sub,
+                                                  @RequestPart("tAllergy") TransferAllergyDto taDTO,
+                                                  @RequestPart("tSweetener") TransferSweetenerDto tsDTO,
                                                   HttpSession session) {
         log.info("=====상품등록 시도");
         log.info("=========={}", goodsDto);
         try {
-            gSer.goodsRegistrate(goodsDto, main, sub,
+            gSer.goodsRegistrate(goodsDto, main, sub, taDTO, tsDTO,
                     session);
             return ResponseEntity.ok("상품등록 성공");
         } catch (IOException e) {
             log.error("파일 업로드 중 에러 발생", e);
             return ResponseEntity.status(500).body("파일 업로드 실패");
         } catch (Exception e) {
-            log.error("회원가입 처리 중 에러 발생", e);
+            log.error("상품등록 처리 중 에러 발생", e);
             return ResponseEntity.badRequest().body("상품등록 실패");
         }
     }

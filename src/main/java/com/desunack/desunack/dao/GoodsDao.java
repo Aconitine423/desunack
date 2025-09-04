@@ -14,7 +14,7 @@ public interface GoodsDao {
 
     boolean goodsTotalSales(int g_id);
 
-    boolean goodsSweetener(int g_id, String sList);
+    boolean goodsSweetener(int g_id, ArrayList<Integer> sList);
 
-    boolean goodsAllergy(int g_id, String aList);
+    boolean goodsAllergy(int g_id, ArrayList<Integer> aList);
 }

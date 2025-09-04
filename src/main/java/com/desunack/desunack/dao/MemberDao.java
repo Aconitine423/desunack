@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Mapper
 public interface MemberDao {
@@ -62,4 +63,7 @@ public interface MemberDao {
     ArrayList<String> getSales();
 
     int getCustomerCoupon(int uid);
+
+    @Select("select * from member where m_id = #{userId}")
+    Optional<Object> findByUserId(String userId);
 }

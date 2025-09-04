@@ -1,24 +1,21 @@
 package com.desunack.desunack.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @EnableWebSecurity
 @Slf4j
 @Configuration
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -39,9 +36,9 @@ public class SecurityConfig {
                 // 2. 정적 리소스 (이미지, CSS, JS)에 대한 접근 허용
                 .requestMatchers("/img/**", "/css/**", "/js/**", "/common/**").permitAll()
                 // 3. 관리자 URL은 'ADMIN' 역할만 접근 허용
-                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/admin/**").hasAuthority("ROLE_A")
                 // 4. 회원 URL은 'C' 역할만 접근 허용
-                .requestMatchers("/member/**").hasRole("C")
+                .requestMatchers("/member/**").hasAnyAuthority("ROLE_C", "ROLE_S", "ROLE_A")
                 // 4. 위에 명시되지 않은 모든 요청은 인증 필요
                 .anyRequest().authenticated()
         );
@@ -54,7 +51,7 @@ public class SecurityConfig {
 
         //동일 출처에서만 iframe 허용
         http.headers(headers -> headers
-                .frameOptions(frameOptions -> frameOptions.sameOrigin())
+                .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
         );
         return http.build();
     }

@@ -13,9 +13,11 @@ function renderList(list) {
       <div class="col info">${item.name}</div>
       <div class="col price">${item.price.toLocaleString()}원</div>
       <div class="col status">
+        <!-- 판매 상태 -->
         <span class="badge ${item.status === "selling" ? "visible" : "hidden"}">
           ${item.status === "selling" ? "판매중" : "판매중지"}
         </span>
+        <!-- 전시 상태 -->
         <span class="badge ${item.visible ? "visible" : "hidden"}">
           ${item.visible ? "노출" : "비노출"}
         </span>
@@ -39,10 +41,15 @@ function updateStatus(status) {
 
   products.forEach(p => {
     if (checked.includes(p.goodsId)) {
-      if (status === "selling") p.status = "selling";
-      if (status === "stopped") p.status = "stopped";
-      if (status === "visible") p.visible = true;
-      if (status === "hidden") p.visible = false;
+      if (status === "selling" || status === "stopped") {
+        p.status = status; // 판매 상태 변경
+      }
+      if (status === "visible") {
+        p.visible = true;
+      }
+      if (status === "hidden") {
+        p.visible = false;
+      }
     }
   });
 

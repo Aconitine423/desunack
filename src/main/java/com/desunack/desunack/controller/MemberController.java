@@ -71,33 +71,25 @@ public class MemberController {
     }
 
     // 아이디-비번찾기 페이지 이동
-    @GetMapping("/member/find-info")
+    @GetMapping("/find/info")
     public String findInfoFrm() {
         return "/member/findInfoFrm";
     }
 
-    @PostMapping("/member/mypage")
-    public String getCustomerInfo(@RequestBody UserDto uDto, HttpSession session) {
-        if (uDto.getUserKind() == 'C') {
-            if (mSer.getCustomerInfo(uDto.getUserUid(), session)) {
-                return "/member/mypage";
-            }
-        } else if (uDto.getUserKind() == 'S') {
-            if (mSer.getSellerInfo(uDto.getUserUid(), session)) {
-                return "/member/mypage";
-            }
-        }
-        return null;
+    @GetMapping("/member/mypage")
+    public String mypage() {
+        return "/member/mypage";
     }
-
-
-
-//    @PostMapping("/member/find-pw")
-//    public String findPw(@RequestParam UserDto userDto, Model model, HttpSession session, RedirectAttributes rttr) {
-//        if (mSer.findPw(userDto.getUserId(), userDto.getUserEmail(), rttr)) {
-//            return "/";
+//    public String getCustomerInfo(@RequestBody UserDto uDto, HttpSession session) {
+//        if (uDto.getUserKind() == 'C') {
+//            if (mSer.getCustomerInfo(uDto.getUserUid(), session)) {
+//                return "/member/mypage";
+//            }
+//        } else if (uDto.getUserKind() == 'S') {
+//            if (mSer.getSellerInfo(uDto.getUserUid(), session)) {
+//                return "/member/mypage";
+//            }
 //        }
-//        rttr.addFlashAttribute("msg", "일치하는 결과가 없습니다");
-//        return "/";
+//        return null;
 //    }
 }

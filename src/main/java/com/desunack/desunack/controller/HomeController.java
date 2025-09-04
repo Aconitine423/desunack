@@ -31,7 +31,7 @@ public class HomeController {
         return "/signup/sellerFrm";
     }
 
-    @GetMapping("/member/login")
+    @GetMapping("/login")
     public String login1() {
         log.info("=======login1이동");
         return "/member/login";

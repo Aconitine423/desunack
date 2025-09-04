@@ -3,125 +3,92 @@
 
 <nav class="mp-sidebar-nav" aria-label="마이페이지 메뉴" id="mp-sidebar">
   <ul class="mp-sections">
-    
-    <!-- 일반회원 섹션 -->
-    <li class="mp-section" data-role="member">
-      <div class="mp-section-title">마이페이지 (일반회원)</div>
-      <ul class="mp-section-list">
-        <li><a href="/My_page/profile/"><i class="fas fa-user"></i><span>회원정보</span></a></li>
-        
-        <li class="has-children">
-          <button class="group-toggle" aria-expanded="false">
-            <i class="fas fa-shopping-bag"></i><span>주문 관리</span>
-            <i class="fas fa-chevron-down caret"></i>
-          </button>
-          <ul class="sublist" aria-hidden="true">
-            <li><a href="/My_page/order/list/"><i class="fas fa-list"></i><span>주문 내역</span></a></li>
-            <li><a href="/My_page/order/delivery/"><i class="fas fa-truck"></i><span>정기배송 조회</span></a></li>
-          </ul>
-        </li>
-        
-        <li><a href="/My_page/wishlist/"><i class="fas fa-heart"></i><span>찜한상품</span></a></li>
-        
-        <li class="mp-section-title">혜택</li>
-        <li><a href="/My_page/points/"><i class="fas fa-coins"></i><span>포인트</span></a></li>
-        <li><a href="/My_page/coupons/"><i class="fas fa-ticket-alt"></i><span>쿠폰</span></a></li>
-        
-        <li class="mp-section-title">회원 정보</li>
-        <li><a href="/My_page/account/edit/"><i class="fas fa-user-edit"></i><span>회원정보 수정</span></a></li>
-        <li><a href="/My_page/account/leave/"><i class="fas fa-sign-out-alt"></i><span>회원 탈퇴</span></a></li>
-      </ul>
-    </li>
-    
-    <!-- 판매자 섹션 -->
+
+    <!-- 판매자센터 -->
     <li class="mp-section" data-role="seller">
       <div class="mp-section-title">판매자센터 (입점/셀러)</div>
       <ul class="mp-section-list">
-        <!-- 상품 관리 -->
-        <li class="has-children">
-          <button class="group-toggle" aria-expanded="false">
-            <i class="fas fa-box-open"></i><span>상품 관리</span>
-            <i class="fas fa-chevron-down caret"></i>
-          </button>
-          <ul class="sublist" aria-hidden="true">
-            <li><a href="/My_page/seller/Product/index.html"><span>상품 관리</span></a></li>
-            <li><a href="/My_page/seller/Product/add.html"><span>상품 등록</span></a></li>
-            <li><a href="/My_page/seller/Product/review.html"><span>리뷰 관리</span></a></li>
-          </li>
-          
-          <!-- 주문 관리 -->
-          <li class="has-children">
-            <button class="group-toggle" aria-expanded="false">
-              <i class="fas fa-shopping-bag"></i><span>주문 관리</span>
-              <i class="fas fa-chevron-down caret"></i>
-            </button>
-            <ul class="sublist" aria-hidden="true">
-              <li><a href="/Seller/order/list/"><span>주문 내역 관리</span></a></li>
-            </ul>
-          </li>
-          
-          <!-- 혜택 관리 -->
-          <li class="has-children">
-            <button class="group-toggle" aria-expanded="false">
-              <i class="fas fa-gift"></i><span>혜택 관리</span>
-              <i class="fas fa-chevron-down caret"></i>
-            </button>
-            <ul class="sublist" aria-hidden="true">
-              <li><a href="/Seller/coupons/"><span>쿠폰 관리</span></a></li>
-              <li><a href="/Seller/membership/"><span>멤버십 관리</span></a></li>
-            </ul>
-          </li>
-          
-          <!-- 회원 정보 -->
-          <li class="has-children">
-            <button class="group-toggle" aria-expanded="false">
-              <i class="fas fa-user-cog"></i><span>회원 정보</span>
-              <i class="fas fa-chevron-down caret"></i>
-            </button>
-            <ul class="sublist" aria-hidden="true">
-              <li><a href="/Seller/account/edit/"><span>회원정보 수정</span></a></li>
-              <li><a href="/Seller/account/leave/"><span>회원 탈퇴</span></a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      
-    </ul>
-  </nav>
+        <li><a href="/My_page/seller/Product/index.html"><i class="fas fa-box-open"></i><span>상품 관리</span></a></li>
+        <li><a href="/My_page/seller/Product/add.html"><i class="fas fa-plus-square"></i><span>상품 등록</span></a></li>
+        <li><a href="/My_page/seller/Product/review.html"><i class="fas fa-star"></i><span>리뷰 관리</span></a></li>
+
+        <li><a href="/My_page/seller/order/index.html"><i class="fas fa-shopping-bag"></i><span>주문 관리</span></a></li>
+        <li><a href="/My_page/seller/Coupons/coupon.html"><i class="fas fa-ticket-alt"></i><span>쿠폰 관리</span></a></li>
+        <li><a href="/My_page/seller/membership/index.html"><i class="fas fa-users"></i><span>멤버십 관리</span></a></li>
+
+        <li><a href="/My_page/seller/account/edit.html"><i class="fas fa-user-cog"></i><span>회원정보 수정</span></a></li>
+        <li><a href="/My_page/seller/account/leave.html"><i class="fas fa-sign-out-alt"></i><span>회원 탈퇴</span></a></li>
+      </ul>
+    </li>
+
+  </ul>
+</nav>
   
   <!-- 사이드바 스타일(간단) -->
   <style>
-    /* 기본 */
-    .mp-sidebar-nav{font-family: "Noto Sans KR",sans-serif; background:transparent; }
-    .mp-sidebar-nav .mp-sections{list-style:none;margin:0;padding:0;}
-    .mp-section{margin-bottom:10px;}
-    .mp-section-title{color:#888;font-weight:700;padding:8px 10px;}
-    .mp-section-list{list-style:none;margin:0;padding:0 6px 6px 6px;}
-    .mp-section-list > li{margin:4px 0;}
-    .mp-section-list a,
-    .group-toggle{
-      display:flex; align-items:center; gap:8px;
-      width:100%; text-decoration:none; color:#222; background:transparent;
-      border:0; padding:8px; border-radius:6px; cursor:pointer; font-size:14px;
-    }
-    .mp-section-list a span{display:inline-block}
-    .mp-section-list a .fas{width:18px;text-align:center;color:#777}
-    .group-toggle .fas{width:18px;text-align:center;color:#777}
-    .mp-section-list a.is-active,
-    .mp-section-list li.active > .group-toggle,
-    .mp-section-list li.active > a{
-      background:#fff; color:#ff6f61; font-weight:700;
-    }
-    .sublist{list-style:none;margin:6px 0 0 8px;padding:0;transition:all .18s ease; overflow:hidden}
-    .sublist li a{padding:8px 8px 8px 18px; font-size:13px; color:#444; display:flex;align-items:center}
-    .caret{margin-left:auto;color:#aaa}
-    /* collapsed state */
-    .sublist[aria-hidden="true"]{max-height:0;padding-top:0;padding-bottom:0; opacity:0; pointer-events:none}
-    .sublist[aria-hidden="false"]{max-height:500px;padding-top:6px;padding-bottom:6px; opacity:1; pointer-events:auto}
-    /* responsive */
-    @media(max-width:900px){
-      .mp-sidebar-nav{display:none}
-    }
+    /* 사이드바 기본 */
+.mp-sidebar-nav {
+  font-family: "Noto Sans KR", sans-serif;
+  background: transparent;
+}
+.mp-sections {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.mp-section {
+  margin-bottom: 12px;
+}
+.mp-section-title {
+  color: #888;
+  font-weight: 700;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.mp-section-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 6px 6px 6px;
+}
+.mp-section-list li {
+  margin: 4px 0;
+}
+
+.mp-section-list a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-decoration: none;
+  color: #222;
+  background: transparent;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.mp-section-list a .fas {
+  width: 18px;
+  text-align: center;
+  color: #777;
+}
+
+/* hover & active */
+.mp-section-list a:hover {
+  background: #fff;
+  color: #ff6f61;
+}
+.mp-section-list a.is-active {
+  background: #fff;
+  color: #ff6f61;
+  font-weight: 700;
+}
+
+/* 반응형 */
+@media (max-width: 900px) {
+  .mp-sidebar-nav { display: none; }
+}
+
   </style>
   
   <!-- 동작 스크립트: role 필터링, 그룹 토글, 현재경로 액티브 처리 -->

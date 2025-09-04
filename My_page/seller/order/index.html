@@ -28,8 +28,8 @@
       <header class="topbar">
         <h1 id="pageTitle" class="page-title">주문관리 (판매자)</h1>
         <div class="search-wrap">
-          <label for="q" class="sr-only">검색</label>
           <input id="q" class="search-input" type="search" placeholder="주문번호 또는 고객명 검색">
+          <button type="button" id="btnSearch" class="btn-search">검색</button>
         </div>
       </header>
       
@@ -41,19 +41,19 @@
         <button data-filter="shipping"  class="tab" role="tab">배송중 <span class="count">0</span></button>
         <button data-filter="done"      class="tab" role="tab">완료 <span class="count">0</span></button>
       </nav>
-
+      
       <!-- 주문 상세 모달  -->
-       <div id="orderDetailModal" class="odm" hidden>
+      <div id="orderDetailModal" class="odm" hidden>
         <div class="odm-dim"></div>
         <div class="odm-panel" role="dialog" aria-modal="true" aria-labelledby="odmTitle">
           <div class="odm-head">
             <strong id="odmTitle">주문 상세 내역</strong>
-            <botton type="button" class="odm-close" aria-label="닫기">✕</botton>
+            <button type="button" class="odm-close" aria-label="닫기">✕</button>
           </div>
           <div class="odm-body" id="odmBody"></div>
         </div>
-       </div>
-
+      </div>
+      
       <!-- 여기에 표가 자동으로 렌더됩니다 -->
       <div id="order-list"></div>
       

@@ -11,8 +11,14 @@
   --radius:10px;
 }
 
-/* 전체 레이아웃 전제 (body에 .dsnk 또는 공통이 있으면 충돌 주의) */
-.mypage-layout{ display:flex; gap:24px; align-items:flex-start; padding:28px 24px; background:var(--bg); min-height:calc(100vh - 120px); }
+/* 전체 레이아웃 */
+.mypage-layout{ 
+  display:flex; gap:24px; 
+  align-items:flex-start; 
+  padding:28px 24px; 
+  background:var(--bg); 
+  min-height:calc(100vh - 120px); 
+}
 
 /* 사이드바 영역 */
 #site-side, #mp-sidebar{
@@ -21,42 +27,83 @@
   box-sizing:border-box;
 }
 
-/* 실제 nav 컨테이너 */
-.mp-sidebar-nav{ font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Segoe UI", sans-serif; }
-.mp-sidebar-nav .mp-sections{ list-style:none; padding:0; margin:0; }
+/* nav 컨테이너 */
+.mp-sidebar-nav{ 
+  font-family:"Noto Sans KR","Apple SD Gothic Neo","Segoe UI",sans-serif; 
+}
+.mp-sidebar-nav .mp-sections{ 
+  list-style:none; padding:0; margin:0; 
+}
 
 /* 섹션 제목 */
 .mp-section{ margin-bottom:18px; }
-.mp-section-title{ color:#6e7a80; font-weight:700; padding:6px 12px; font-size:13px; }
+.mp-section-title{ 
+  color:#6e7a80; font-weight:700; 
+  padding:6px 12px; font-size:13px; 
+}
 
-/* 리스트 아이템(링크) */
+/* 리스트 아이템 */
 .mp-section-list{ list-style:none; margin:0; padding:0 6px; }
-.mp-section-list li{ margin:6px 0; }
+.mp-section-list li{ margin:4px 0; }
 .mp-section-list a{
   display:flex; align-items:center; gap:10px;
-  padding:10px 12px; color:#3a4850; text-decoration:none;
+  padding:10px 12px; 
+  color:#3a4850; text-decoration:none;
   border-radius:8px; font-size:14px;
+  transition:background .2s, color .2s;
 }
-.mp-section-list a .icon{ width:18px; text-align:center; color:var(--muted); }
-
-/* 기본 hover / active */
-.mp-section-list a:hover{ background:#fff; box-shadow:0 2px 6px rgba(0,0,0,0.03); color:var(--accent); }
-.mp-section-list a.is-active, .mp-section-list li.active > a{
-  background:#fff; color:var(--accent); font-weight:700;
-  box-shadow:0 6px 14px rgba(19,32,38,0.04);
+.mp-section-list a .icon{ 
+  width:18px; text-align:center; color:var(--muted); 
 }
 
-/* 섹션 그룹(토글 가능한 경우) */
-.has-children > .group-toggle{ display:flex; align-items:center; gap:8px; width:100%; border:0; background:transparent; padding:10px 12px; cursor:pointer; color:#3a4850; border-radius:8px; text-align:left; }
-.sublist{ list-style:none; margin:6px 0 0 8px; padding:0; max-height:0; overflow:hidden; opacity:0; transition:all .14s ease; }
-.sublist[aria-hidden="false"]{ max-height:400px; opacity:1; }
+/* hover */
+.mp-section-list a:hover{ 
+  background:#fff; 
+  color:var(--accent); 
+  font-weight:600;
+  box-shadow:0 2px 6px rgba(0,0,0,0.05); 
+}
 
-/* 간격 확보: 메인 컨텐츠와 어울리게 */
-.container.order-page{ flex:1; background:transparent; padding:0; }
+/* active */
+.mp-section-list a.is-active, 
+.mp-section-list li.active > a{
+  background:#fff; 
+  color:var(--accent); 
+  font-weight:700;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
 
-/* 마이페이지 컨테이너 내부 카드 스타일(일관되게 보이도록) */
-/* 이건 order.css / product.css 와 충돌 가능하니 우선순위 높을 때만 적용 */
-.order-list .card-fallback{ background:var(--panel); padding:18px; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.03); margin-bottom:16px; }
+/* 그룹 토글 */
+.has-children > .group-toggle{ 
+  display:flex; align-items:center; gap:8px; 
+  width:100%; border:0; background:transparent; 
+  padding:10px 12px; cursor:pointer; 
+  color:#3a4850; border-radius:8px; 
+  text-align:left; font-size:14px;
+}
+.has-children > .group-toggle:hover{
+  background:#fff; color:var(--accent);
+}
+
+/* 서브리스트 */
+.sublist{ 
+  list-style:none; margin:4px 0 0 28px; padding:0; 
+  max-height:0; overflow:hidden; opacity:0; 
+  transition:all .18s ease; 
+}
+.sublist[aria-hidden="false"]{ 
+  max-height:500px; opacity:1; 
+}
+.sublist a{ 
+  font-size:13px; padding:8px 10px; 
+  color:#555; border-radius:6px;
+}
+.sublist a:hover{
+  background:#f9f9f9; color:var(--accent);
+}
+.sublist li.active > a{
+  background:#fdecec; color:var(--accent); font-weight:600;
+}
 
 /* 반응형 */
 @media (max-width:900px){

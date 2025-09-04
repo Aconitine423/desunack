@@ -1,0 +1,18 @@
+[
+  {
+    "goodsId": "123459",
+    "regDate": "2025-07-24",
+    "name": "[롯데칠성] 펩시콜라 제로 슈거 리필용량 500ml",
+    "price": 2000,
+    "status": "selling",   
+    "visible": true        
+  },
+  {
+    "goodsId": "123460",
+    "regDate": "2025-07-25",
+    "name": "[롯데칠성] 칠성사이다 제로 500ml",
+    "price": 1800,
+    "status": "stopped",   
+    "visible": false       
+  }
+]

@@ -58,7 +58,7 @@ $('#btn-verify-id').on('click', function () {
     // 입력된 인증번호와 생성된 인증번호 비교
     if (parseInt($authCodeIdInput) === generatedAuthCodeId) {
         // 성공 시, 서버에서 아이디를 가져와서 표시하는 로직
-        axios.post('/member/find-id', {userName: name, userEmail: email})
+        axios.post('/find/id', {userName: name, userEmail: email})
             .then(res => {
                 const result = res.data;
                 if (result) {
@@ -109,7 +109,7 @@ $('#btn-verify-pw').on('click', function () {
     // 입력된 인증번호와 생성된 인증번호 비교
     if (parseInt(authCodePwInput) === generatedAuthCodePw) {
         // 성공 시, 서버에서 임시 비밀번호를 생성하는 로직
-        axios.post('/member/find-pw', {userId: id, userEmail: email})
+        axios.post('/find/pw', {userId: id, userEmail: email})
         .then(res => {
             const result = res.data;
             if (result) {

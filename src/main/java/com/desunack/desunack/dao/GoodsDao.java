@@ -1,6 +1,7 @@
 package com.desunack.desunack.dao;
 
 import com.desunack.desunack.dto.GoodsDto;
+import com.desunack.desunack.dto.GoodsInfoDto;
 import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,4 +18,6 @@ public interface GoodsDao {
     boolean goodsSweetener(int g_id, ArrayList<Integer> sList);
 
     boolean goodsAllergy(int g_id, ArrayList<Integer> aList);
+
+    boolean goodsInfo(int gId, GoodsInfoDto giDto);
 }

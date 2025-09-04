@@ -157,6 +157,13 @@ $registerFrm.on('submit', function (event) {
             g_total_rating: 0,
             g_review_count: 0,
         };
+        const goodsInfoDto ={
+            gi_kind: $('#foodType').val(),
+            gi_origin: $('#madeIn').val(),
+            gi_factory: $('#madeFactory').val(),
+            gi_caution: $('#caution').val(),
+            gi_cs_phone: $('csPhone').val()
+        }
         const mainImgFile = $mainImg[0].files[0];
         console.log('mainImg:', mainImgFile);
         const subImgFile = $subImg[0].files[0];
@@ -169,6 +176,7 @@ $registerFrm.on('submit', function (event) {
         goodsFormData.append('goodsDto', new Blob([JSON.stringify(goodsDto)], {type: 'application/json'}));
         goodsFormData.append('tAllergy', new Blob([JSON.stringify(tAllergy)], {type: 'application/json'}));
         goodsFormData.append('tSweetener', new Blob([JSON.stringify(tSweetener)], {type: 'application/json'}));
+        goodsFormData.append('goodsInfoDto', new Blob([JSON.stringify(goodsInfoDto)], {type: 'application/json'}))
         // 엑시오스로 데이터 전송
         console.log(goodsFormData)
         axios.post('/goods/registrate', goodsFormData,{

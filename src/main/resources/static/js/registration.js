@@ -162,7 +162,7 @@ $registerFrm.on('submit', function (event) {
             gi_origin: $('#madeIn').val(),
             gi_factory: $('#madeFactory').val(),
             gi_caution: $('#caution').val(),
-            gi_cs_phone: $('csPhone').val()
+            gi_cs_phone: $('#csPhone').val()
         }
         const mainImgFile = $mainImg[0].files[0];
         console.log('mainImg:', mainImgFile);

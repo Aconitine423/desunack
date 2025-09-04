@@ -3,6 +3,7 @@ package com.desunack.desunack.service;
 import com.desunack.desunack.common.FileManager;
 import com.desunack.desunack.dao.GoodsDao;
 import com.desunack.desunack.dto.GoodsDto;
+import com.desunack.desunack.dto.GoodsInfoDto;
 import com.desunack.desunack.dto.TransferAllergyDto;
 import com.desunack.desunack.dto.TransferSweetenerDto;
 import com.desunack.desunack.entity.SellerEntity;
@@ -88,7 +89,7 @@ public class GoodsService {
     }
     @Transactional
     public void goodsRegistrate(GoodsDto goodsDto, MultipartFile main, MultipartFile sub, TransferAllergyDto taDTO, TransferSweetenerDto tsDto,
-                                HttpSession session)
+                                GoodsInfoDto giDto, HttpSession session)
             throws Exception {
         String mainPath = null;
         String subPath = null;
@@ -108,13 +109,15 @@ public class GoodsService {
             if (goodsDao.goodsRegistrate(goodsDto)) {
                 int g_id = goodsDto.getG_id();
                 if (goodsDao.goodsTotalSales(g_id)) {
-                    if (goodsDao.goodsSweetener(g_id, sList)) {
-                        if (aList != null) {
-                            if (goodsDao.goodsAllergy(g_id, aList)) {
+                    if(goodsDao.goodsInfo(g_id,giDto)) {
+                        if (goodsDao.goodsSweetener(g_id, sList)) {
+                            if (aList != null) {
+                                if (goodsDao.goodsAllergy(g_id, aList)) {
+
+                                }
+                            } else {
 
                             }
-                        } else {
-
                         }
                     }
                 }

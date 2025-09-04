@@ -1,6 +1,7 @@
 package com.desunack.desunack.controller;
 
 import com.desunack.desunack.dto.GoodsDto;
+import com.desunack.desunack.dto.GoodsInfoDto;
 import com.desunack.desunack.dto.TransferAllergyDto;
 import com.desunack.desunack.dto.TransferSweetenerDto;
 import com.desunack.desunack.service.GoodsService;
@@ -33,12 +34,13 @@ public class GoodsController {
                                                   @RequestPart("subFile")MultipartFile sub,
                                                   @RequestPart("tAllergy") TransferAllergyDto taDTO,
                                                   @RequestPart("tSweetener") TransferSweetenerDto tsDTO,
+                                                  @RequestPart("goodsInfo") GoodsInfoDto giDTO,
                                                   HttpSession session) {
         log.info("=====상품등록 시도");
         log.info("=========={}", goodsDto);
         try {
             gSer.goodsRegistrate(goodsDto, main, sub, taDTO, tsDTO,
-                    session);
+                    giDTO,session);
             return ResponseEntity.ok("상품등록 성공");
         } catch (IOException e) {
             log.error("파일 업로드 중 에러 발생", e);

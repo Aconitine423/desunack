@@ -16,9 +16,11 @@
         insert into goods_total_sales(gts_g_id, gts_sales) values(#{g_id}, default)
     </insert>
     <insert id="goodsSweetener">
-        <foreach collection="sList" item = "sweetener">insert into goods_sweetener(gs_g_id, gs_s_key) values(#{g_id}, #{sweetener})</foreach>
+        insert into goods_sweetener(gs_g_id, gs_s_key) values
+        <foreach collection="sList" item = "sweetener"  separator=","> (#{g_id}, #{sweetener})</foreach>
     </insert>
     <insert id="goodsAllergy">
-        <foreach collection="aList" item = "allergy">insert into goods_allergy(ga_g_id, ga_a_key) values(#{g_id}, #{allergy})</foreach>
+        insert into goods_allergy(ga_g_id, ga_a_key) values
+        <foreach collection="aList" item = "allergy"  separator=","> (#{g_id}, #{allergy})</foreach>
     </insert>
 </mapper>

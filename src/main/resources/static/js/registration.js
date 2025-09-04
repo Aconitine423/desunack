@@ -143,10 +143,10 @@ $registerFrm.on('submit', function (event) {
         console.log(tSweetener);
         // 입력된 파라미터 묶음
         const goodsDto = {
-            g_m_uid: 700001, //판매자 uid 세션에서 받아오기
+            g_m_uid: Number($('#uid')), //판매자 uid 세션에서 받아오기
             brand_name: $('#brandName').val(),
             g_name: $('#goodsName').val(),
-            company_name: '펩시', //판매자 회사정보 세션에서 받아오기
+            company_name: $('#companyName'), //판매자 회사정보 세션에서 받아오기
             g_value: Number($('#goodsPrice').val()),
             g_qty: Number($('#goodsQuantity').val()),
             g_startday: startDate,

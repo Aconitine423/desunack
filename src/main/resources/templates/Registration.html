@@ -152,6 +152,8 @@
             <!-- 기본 정보 -->
             <fieldset>
                 <legend>기본 정보</legend>
+                <input type="hidden" id="uid" name="sellerUid" th:value=${session.uid}>
+                <input type="hidden" id="companyName" name="companyName" th:value=${session.companyName}>
                 <div class="form-row">
                     <label for="goodsName">상품명</label>
                     <input type="text" id="goodsName" name="goodsName" required>

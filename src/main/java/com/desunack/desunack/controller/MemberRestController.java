@@ -21,20 +21,20 @@ import java.util.Map;
 public class MemberRestController {
     private final MemberService mSer;
 
-    @PostMapping("/member/find-id")
+    @PostMapping("/find/id")
     public Map<String, Object> findId(@RequestBody UserDto userDto) {
         Map<String, Object> response = mSer.findId(userDto);
         return response;
     }
 
-    @PostMapping("/member/find-pw")
+    @PostMapping("/find/pw")
     public Map<String, Object> findPw(@RequestBody UserDto userDto) {
         Map<String, Object> response = mSer.findPw(userDto);
         return response;
     }
 
     // 엑시오스 로그인
-    @PostMapping("/member/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDto userDto, HttpSession session) {
         try {
             log.info("======login시도={}", userDto);

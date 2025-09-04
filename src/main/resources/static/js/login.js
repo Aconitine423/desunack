@@ -17,7 +17,7 @@ $('#login').on('submit', function (event) {
         userId: id,
         userPw: pw
     }
-    axios.post('/member/login', loginData)
+    axios.post('/login', loginData)
         .then(function (response) {
             if (response.data.success) {
                 window.location.href = '/';
@@ -42,7 +42,7 @@ const $modal = $('#findModal');
 // 모달을 열고 findInfoFrm.html 내용을 로드
 $('.modal-trigger').on('click', function (e) {
     e.preventDefault();
-    $modal.find('.modal-content').load('/member/find-info', function () {
+    $modal.find('.modal-content').load('/find/info', function () {
         $modal.fadeIn(300);
         initializeModalEvents();
     });

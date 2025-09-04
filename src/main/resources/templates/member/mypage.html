@@ -4,22 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지</title>
-    <!-- 마이페이지 전용 스타일  -->
     <link rel="stylesheet" href="/common/reset.css">
     <link rel="stylesheet" href="/css/mypage.css">
     <link rel="stylesheet" href="/css/mpheader.css">
     <link rel="stylesheet" href="/css/mpFooter.css">
     
-    <!-- Font Awesome 6 (CDN) -->
     <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     integrity="sha512-Sl1iXyF2p3iC9...=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head> 
 <body>
-    <!-- 헤더 자리 -->
-    <div id="site-header" data-include="/fragments/mpheader.html"></div>
-    
+<th:block th:replace="~{fragments :: header}"></th:block>
+<!--    <div id="site-header" data-include="/fragments/mpheader.html"></div>-->
+
     
     <!-- 자바스크립트가 꺼져 있을 때 안내 -->
     <noscript>이 페이지의 일부 기능은 자바스크립트를 필요로 합니다.</noscript>
@@ -286,7 +284,8 @@
     </div>
     
     <!-- 푸터 자리 -->
-    <div id="site-footer" data-include="/My_page/mpFooter/mpFooter.html"></div>
+<th:block th:replace="~{fragments :: footer}"></th:block>
+<!--    <div id="site-footer" data-include="/My_page/mpFooter/mpFooter.html"></div>-->
     <!-- 토스트 컨테이너  -->
     <div id="toast" aria-live="polite" aria-atomic="true"></div>
     

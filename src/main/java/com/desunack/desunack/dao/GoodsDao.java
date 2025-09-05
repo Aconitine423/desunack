@@ -19,5 +19,5 @@ public interface GoodsDao {
 
     boolean goodsAllergy(int g_id, ArrayList<Integer> aList);
 
-    boolean goodsInfo(int gId, GoodsInfoDto giDto);
+    boolean goodsInfo(GoodsInfoDto giDto);
 }

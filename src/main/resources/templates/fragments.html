@@ -89,11 +89,14 @@
                 </div>
             </div>
             <!-- 로그인/회원가입 -->
+            <th:block id="user-info" th:attr="data-user-kind=${session.m_kind}">
+            <span th:text="${session.userName} + '님, 환영합니다.'"></span>
             <a href="/login" class="login-btn" id="login-btn"><i class="fa-regular fa-user"></i><span>로그인</span></a>
             <a href="/signup" class="signup-btn" id="signup-btn"><i class="fa-solid fa-user-plus"></i><span>회원가입</span></a>
             <a href="#" class="logout-btn hidden" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i><span>로그아웃</span></a>
-            <a href="#" class="mypage-btn hidden" id="mypage-btn"><i
+            <a href="/member/mypage" class="mypage-btn hidden" id="mypage-btn"><i
                     class="fa-solid fa-user-gear"></i><span>마이페이지</span></a>
+            </th:block>
         </div>
     </nav>
     <div class="mega-menu" id="mega-menu">

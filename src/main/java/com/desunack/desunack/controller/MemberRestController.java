@@ -43,7 +43,11 @@ public class MemberRestController {
                 session.setAttribute("m_kind", uDto.getUserKind());
                 session.setAttribute("userUid", uDto.getUserUid());
                 session.setAttribute("userName", uDto.getUserName());
-                return ResponseEntity.ok().body(Map.of("success", true, "message", "로그인 성공"));
+                Map<String, Object> response = new HashMap<>();
+                response.put("success", true);
+                response.put("message", "로그인 성공");
+                response.put("m_kind", uDto.getUserKind());
+                return ResponseEntity.ok().body(response);
             } else {
                 return ResponseEntity.ok().body(Map.of("success", false, "message", "아이디 또는 비밀번호가 올바르지 않습니다."));
             }

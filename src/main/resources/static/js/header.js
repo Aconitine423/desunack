@@ -97,9 +97,9 @@ $(document).ready(function () {
 
     /**
      * @brief 회원 분류에 따라 헤더 버튼을 변경합니다.
-     * @param {string|null} kind 회원의 분류 ("C", "S", "A" 또는 null)
+     * @param {string|null} m_kind 회원의 분류 ("C", "S", "A" 또는 null)
      */
-    window.setMembershipKind = function (kind) {
+    window.setMembershipKind = function (m_kind) {
         // 모든 버튼을 초기 상태로 숨김
         loginBtn.addClass('hidden');
         signupBtn.addClass('hidden');
@@ -108,22 +108,22 @@ $(document).ready(function () {
         mypageBtn.attr('href', '#'); // 링크 초기화
 
         // 회원 분류에 따라 버튼 표시
-        if (!kind) { // 비회원
+        if (!m_kind) { // 비회원
             loginBtn.removeClass('hidden');
             signupBtn.removeClass('hidden');
         } else {
             logoutBtn.removeClass('hidden');
             mypageBtn.removeClass('hidden');
 
-            if (kind === 'C') {
+            if (m_kind === 'C') {
                 mypageBtn.find('span').text('내 정보');
-                mypageBtn.attr('href', '/mypage/customer.html');
-            } else if (kind === 'S') {
+                mypageBtn.attr('href', '/member/mypage');
+            } else if (m_kind === 'S') {
                 mypageBtn.find('span').text('판매자 페이지');
-                mypageBtn.attr('href', '/mypage/seller.html');
-            } else if (kind === 'A') {
+                mypageBtn.attr('href', '/member/mypage');
+            } else if (m_kind === 'A') {
                 mypageBtn.find('span').text('관리자 페이지');
-                mypageBtn.attr('href', '/mypage/admin.html');
+                mypageBtn.attr('href', '/admin/mypage.html');
             }
         }
     };

@@ -36,9 +36,9 @@ public class SecurityConfig {
                 // 2. 정적 리소스 (이미지, CSS, JS)에 대한 접근 허용
                 .requestMatchers("/img/**", "/css/**", "/js/**", "/common/**").permitAll()
                 // 3. 관리자 URL은 'ADMIN' 역할만 접근 허용
-                .requestMatchers("/admin/**").hasAuthority("ROLE_A")
+                .requestMatchers("/admin/**").hasRole("A")
                 // 4. 회원 URL은 'C' 역할만 접근 허용
-                .requestMatchers("/member/**").hasAnyAuthority("ROLE_C", "ROLE_S", "ROLE_A")
+                .requestMatchers("/member/**").hasAnyRole("C", "S", "A")
                 // 4. 위에 명시되지 않은 모든 요청은 인증 필요
                 .anyRequest().authenticated()
         );

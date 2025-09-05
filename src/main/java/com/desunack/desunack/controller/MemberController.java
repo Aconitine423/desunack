@@ -77,9 +77,15 @@ public class MemberController {
         return "/member/findInfoFrm";
     }
 
-    @GetMapping("/member/mypage")
-    public String mypage() {
-        return "/member/mypage";
+    @GetMapping("/member/mypage/{userUid}")
+    public String mypage(@PathVariable("userUid") Integer userUid, Model model) {
+        log.info("======userUid:{}", userUid);
+        boolean result = mSer.getUserInfo(userUid, model);
+        if (!result) {
+            log.info("uDto가 null 입니다.");
+            return null;
+        }
+        return "redirect:/member/mypage";
     }
 
     //    public String getCustomerInfo(@RequestBody UserDto uDto, HttpSession session) {

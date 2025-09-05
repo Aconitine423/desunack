@@ -115,39 +115,6 @@ public class MemberService {
         return mDao.isUsedNickname(userNickname);
     }
 
-    public boolean login1(String id, String pw, Model model, HttpSession session){
-        String ecdpw = mDao.getSecurityPw(id);
-        if(ecdpw != null){
-            log.info("========id ok========");
-            BCryptPasswordEncoder ecd = new BCryptPasswordEncoder();
-            if(ecd.matches(pw,ecdpw)){
-                log.info("========success=======");
-                memberEntity = mDao.getMemberEntity(id);
-                switch(memberEntity.getM_kind()){
-                    case 'A':
-                        model.addAttribute("member",memberEntity);
-                        session.setAttribute("member", memberEntity);
-
-                        break;
-                    case 'C':
-                        CustomerEntity cEntity = mDao.getCustomerEntity(memberEntity.getM_uid());
-                        CustomerDto cDto = cEntity.toDto();
-                        session.setAttribute("member", cDto);
-                        break;
-                    case 'S':
-                        SellerEntity sEntity = mDao.getSellerEntity(memberEntity.getM_uid());
-                        SellerDto sDto = sEntity.toDto();
-                        session.setAttribute("member", sDto);
-                        break;
-                }
-                log.info(session.getAttribute("member").toString());
-                return true;
-            }
-            return false;
-        }
-        return false;
-    }
-
     // 아이디 찾기
     public Map<String, Object> findId(UserDto userDto) {
         Map<String, Object> response =  new HashMap<>();

@@ -32,11 +32,15 @@
     </select>
 
     <select id="getCustomerEntity" resultType="com.desunack.desunack.entity.CustomerEntity">
-        select * from c_member where c_m_uid = #{m_id}
+        select m_uid, m_id, m_name, m_phone, m_email, m_post, m_address, m_address_detail
+        ,m_kind, m_status, m_join_date, m_recent_date, c_nickname, c_gender, c_birth, c_point, c_running_total
+        from c_member join member on member.m_uid = c_member.c_m_uid where c_m_uid = #{m_id}
     </select>
 
     <select id="getSellerEntity" resultType="com.desunack.desunack.entity.SellerEntity">
-        select * from s_member where s_m_uid = #{m_id}
+        select m_uid, m_id, m_name, m_phone, m_email, m_post, m_address, m_address_detail, m_kind, m_status, m_join_date, m_recent_date,
+               s_picture, s_account, s_bank, s_delivery, s_seller_num
+        from s_member join member on s_member.s_m_uid = member.m_uid where s_m_uid = #{m_id}
     </select>
 
     <select id="getGoodsSales" resultType="java.lang.String">

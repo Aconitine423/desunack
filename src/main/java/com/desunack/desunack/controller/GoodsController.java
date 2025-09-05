@@ -34,10 +34,11 @@ public class GoodsController {
                                                   @RequestPart("subFile")MultipartFile sub,
                                                   @RequestPart("tAllergy") TransferAllergyDto taDTO,
                                                   @RequestPart("tSweetener") TransferSweetenerDto tsDTO,
-                                                  @RequestPart("goodsInfo") GoodsInfoDto giDTO,
+                                                  @RequestPart("goodsInfoDto") GoodsInfoDto giDTO,
                                                   HttpSession session) {
         log.info("=====상품등록 시도");
         log.info("=========={}", goodsDto);
+        log.info("=========={}", giDTO);
         try {
             gSer.goodsRegistrate(goodsDto, main, sub, taDTO, tsDTO,
                     giDTO,session);

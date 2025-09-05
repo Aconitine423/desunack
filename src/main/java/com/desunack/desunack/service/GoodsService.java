@@ -105,13 +105,14 @@ public class GoodsService {
             goodsDto.setG_image(mainPath);
             goodsDto.setG_detail(subPath);
             log.info("======sellerDto={}", goodsDto);
-
+            log.info("======알러지{}",aList);
             if (goodsDao.goodsRegistrate(goodsDto)) {
                 int g_id = goodsDto.getG_id();
+                giDto.setGi_g_id(g_id);
                 if (goodsDao.goodsTotalSales(g_id)) {
-                    if(goodsDao.goodsInfo(g_id,giDto)) {
+                    if(goodsDao.goodsInfo(giDto)) {
                         if (goodsDao.goodsSweetener(g_id, sList)) {
-                            if (aList != null) {
+                            if (!aList.isEmpty()) {
                                 if (goodsDao.goodsAllergy(g_id, aList)) {
 
                                 }

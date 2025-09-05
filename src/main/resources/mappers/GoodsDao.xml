@@ -25,6 +25,6 @@
     </insert>
     <insert id="goodsInfo">
         insert into goods_info(gi_g_id, gi_kind, gi_origin, gi_factory, gi_caution, gi_cs_phone)
-        values(#{g_id}, #{gi_kind}, #{gi_origin}, #{gi_factory}, #{gi_caution}, #{gi_cs_phone} )
+        values(#{gi_g_id}, #{gi_kind}, #{gi_origin}, #{gi_factory}, #{gi_caution}, #{gi_cs_phone} )
     </insert>
 </mapper>

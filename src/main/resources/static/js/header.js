@@ -99,35 +99,65 @@ $(document).ready(function () {
      * @brief 회원 분류에 따라 헤더 버튼을 변경합니다.
      * @param {string|null} m_kind 회원의 분류 ("C", "S", "A" 또는 null)
      */
-    window.setMembershipKind = function (m_kind) {
-        // 모든 버튼을 초기 상태로 숨김
+    const m_kind = $('#auth-buttons').attr('data-user-kind');
+    const nameCall = $('#name-call');
+    // const loginBtn = $('#login-btn');
+    // const signupBtn = $('#signup-btn');
+    // const logoutBtn = $('#logout-btn');
+    // const mypageBtn = $('#mypage-btn');
+    if (m_kind === 'C' || m_kind === 'S') {
+        nameCall.removeClass('hidden');
         loginBtn.addClass('hidden');
         signupBtn.addClass('hidden');
+        logoutBtn.removeClass('hidden');
+        mypageBtn.removeClass('hidden');
+    } else if (m_kind === 'A') {
+        nameCall.removeClass('hidden');
+        loginBtn.removeClass('hidden');
+        signupBtn.addClass('hidden');
+        logoutBtn.addClass('hidden');
+        mypageBtn.removeClass('hidden');
+    } else {
+        nameCall.addClass('hidden');
+        loginBtn.removeClass('hidden');
+        signupBtn.removeClass('hidden');
         logoutBtn.addClass('hidden');
         mypageBtn.addClass('hidden');
-        mypageBtn.attr('href', '#'); // 링크 초기화
+    }
+    // window.setMembershipKind = function () {
+    //     // 모든 버튼을 초기 상태로 숨김
+    //     loginBtn.removeClass('hidden');
+    //     signupBtn.removeClass('hidden');
+    //     logoutBtn.addClass('hidden');
+    //     mypageBtn.addClass('hidden');
+    //     mypageBtn.attr('href', '#'); // 링크 초기화
 
         // 회원 분류에 따라 버튼 표시
-        if (!m_kind) { // 비회원
-            loginBtn.removeClass('hidden');
-            signupBtn.removeClass('hidden');
-        } else {
-            logoutBtn.removeClass('hidden');
-            mypageBtn.removeClass('hidden');
+        // if (!m_kind) { // 비회원
+        //     loginBtn.removeClass('hidden');
+        //     loginBtn.css('display', 'flex');
+        //     signupBtn.removeClass('hidden');
+        //     signupBtn.css('display', 'flex');
+        //     logoutBtn.css('display', 'none');
+        //     mypageBtn.css('display', 'none');
+        // } else {
+        //     logoutBtn.removeClass('hidden');
+        //     loginBtn.css('display', 'none');
+        //     mypageBtn.removeClass('hidden');
 
-            if (m_kind === 'C') {
-                mypageBtn.find('span').text('내 정보');
-                mypageBtn.attr('href', '/member/mypage');
-            } else if (m_kind === 'S') {
-                mypageBtn.find('span').text('판매자 페이지');
-                mypageBtn.attr('href', '/member/mypage');
-            } else if (m_kind === 'A') {
-                mypageBtn.find('span').text('관리자 페이지');
-                mypageBtn.attr('href', '/admin/mypage.html');
-            }
-        }
-    };
-
-    // 초기 상태 설정
-    window.setMembershipKind(null);
+            // if (m_kind === 'C') {
+            //     mypageBtn.find('span').text('내 정보');
+            //     mypageBtn.attr('href', '/member/mypage');
+            // } else if (m_kind === 'S') {
+            //     mypageBtn.find('span').text('판매자 페이지');
+            //     mypageBtn.attr('href', '/member/mypage');
+            // } else if (m_kind === 'A') {
+            //     mypageBtn.find('span').text('관리자 페이지');
+            //     mypageBtn.attr('href', '/admin/mypage.html');
+            // }
+        // }
+    // };
+    //
+    // // 초기 상태 설정
+    // window.setMembershipKind();
 });

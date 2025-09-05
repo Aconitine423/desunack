@@ -5,8 +5,9 @@
 <mapper namespace="com.desunack.desunack.dao.SellerDao">
 
     <select id="getOrderList" resultType="java.lang.String">
-        select json_object() from member join s_member on member.m_uid = s_member.s_m_uid join goods on s_member.s_m_uid = goods.g_m_uid
+        select json_object('go_date', go_date, 'c_nickname', c_member.c_nickname,'go_num', go_num
+                           'god_qty', god_qty,'go_total_cost', go_total_cost,'go_status', go_status) from member join s_member on member.m_uid = s_member.s_m_uid join goods on s_member.s_m_uid = goods.g_m_uid
         join go_detail on goods.g_id = go_detail.god_g_id join goods_order on go_detail.god_go_num = goods_order.go_num
-        join c_member on goods_order.go_m_uid = c_member.c_m_uid
+        join c_member on goods_order.go_m_uid = c_member.c_m_uid where g_m_uid = #{s_m_uid}
     </select>
 </mapper>

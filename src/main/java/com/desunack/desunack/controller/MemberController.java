@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -79,6 +81,8 @@ public class MemberController {
 
     @GetMapping("/member/mypage/{userUid}")
     public String mypage(@PathVariable("userUid") Integer userUid, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info("=======authentication={}", authentication);
         log.info("======userUid:{}", userUid);
         boolean result = mSer.getUserInfo(userUid, model);
         if (!result) {

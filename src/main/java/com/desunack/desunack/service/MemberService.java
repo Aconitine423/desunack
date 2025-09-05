@@ -282,4 +282,26 @@ public class MemberService {
         }
         return null;
     }
+
+    public boolean getUserInfo(Integer userUid, Model model) {
+        if (userUid == null) {
+                log.info("userUid가 null 이거나 1보다 작습니다.");
+                return false;
+        } else if (userUid >= 100000 && userUid < 700000) { // 소비자
+            CustomerEntity customerEntity = mDao.getCustomerEntity(userUid);
+            CustomerDto customerDto = customerEntity.toDto();
+            log.info("======CustomerDto:{}",customerDto);
+            model.addAttribute("customerDto", customerDto);
+            return true;
+        } else if (userUid >= 700000 && userUid < 1000000) {
+            SellerEntity sellerEntity = mDao.getSellerEntity(userUid);
+            SellerDto sellerDto = sellerEntity.toDto();
+            log.info("======SellerDto:{}",sellerDto);
+            model.addAttribute("sellerDto", sellerDto);
+            return true;
+        } else {
+            return true;
+        }
+
+    }
 }

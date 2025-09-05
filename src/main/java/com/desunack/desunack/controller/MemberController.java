@@ -81,7 +81,8 @@ public class MemberController {
     public String mypage() {
         return "/member/mypage";
     }
-//    public String getCustomerInfo(@RequestBody UserDto uDto, HttpSession session) {
+
+    //    public String getCustomerInfo(@RequestBody UserDto uDto, HttpSession session) {
 //        if (uDto.getUserKind() == 'C') {
 //            if (mSer.getCustomerInfo(uDto.getUserUid(), session)) {
 //                return "/member/mypage";
@@ -93,4 +94,9 @@ public class MemberController {
 //        }
 //        return null;
 //    }
+    @PostMapping("/member/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
 }

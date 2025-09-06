@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>리뷰 관리 | 대체당 판매자센터</title>
+  
+  <!-- 공통 CSS -->
+  <link rel="stylesheet" href="/common/reset.css" />
+  <link rel="stylesheet" href="/common/global.css" />
+  <link rel="stylesheet" href="/common/header.css" />
+  <link rel="stylesheet" href="/common/footer.css" />
+  
+  <!-- 전용 CSS -->
+  <link rel="stylesheet" href="review.css" />
+</head>
+
+<body class="dsnk" data-user-role="seller" data-page="seller-review">
+  <header id="site-header" data-include="/common/header.html"></header>
+  
+  <div class="mypage-layout">
+    <aside id="site-side" data-include="/common/sidebar.html" data-active="/Seller/review/list/"></aside>
+    
+    <main class="container review-page" role="main" aria-labelledby="page-title">
+      <div class="topbar">
+        <h1 id="page-title" class="page-title">리뷰 관리</h1>
+        <div class="actions">
+          <button type="button" class="btn btn-export" aria-label="CSV로 내보내기">내보내기</button>
+        </div>
+      </div>
+      
+      <nav id="statusTabs" class="status-tabs" aria-label="리뷰 상태 필터">
+        <button type="button" class="tab is-active" data-filter="all">전체 <span class="count" id="count-all">0</span></button>
+        <button type="button" class="tab" data-filter="visible">노출 <span class="count" id="count-visible">0</span></button>
+        <button type="button" class="tab" data-filter="hidden">숨김 <span class="count" id="count-hidden">0</span></button>
+        <button type="button" class="tab" data-filter="reported">신고됨 <span class="count" id="count-reported">0</span></button>
+        <button type="button" class="tab" data-filter="answered">답변완료 <span class="count" id="count-answered">0</span></button>
+        <button type="button" class="tab" data-filter="unanswered">미답변 <span class="count" id="count-unanswered">0</span></button>
+      </nav>
+      
+      <form id="searchBar" class="searchbar" autocomplete="off">
+        <label for="q" class="sr-only">검색어</label>
+        <input id="q" name="q" type="search" placeholder="고객명/상품명/내용 검색" />
+        <label for="rating" class="sr-only">별점</label>
+        <select id="rating" name="rating">
+          <option value="">별점 전체</option>
+          <option value="5">★5</option><option value="4">★4</option>
+          <option value="3">★3</option><option value="2">★2</option><option value="1">★1</option>
+        </select>
+        <label for="visibility" class="sr-only">노출 상태</label>
+        <select id="visibility" name="visibility">
+          <option value="">노출 전체</option>
+          <option value="visible">노출</option>
+          <option value="hidden">숨김</option>
+        </select>
+        <label for="from" class="sr-only">시작일</label>
+        <input type="date" id="from" name="from" />
+        <span aria-hidden="true">~</span>
+        <label for="to" class="sr-only">종료일</label>
+        <input type="date" id="to" name="to" />
+        <button type="submit" class="btn btn-primary">검색</button>
+        <button type="reset" class="btn btn-ghost">초기화</button>
+      </form>
+      
+      <div class="toolbar">
+        <div class="left">
+          <label for="sort">정렬</label>
+          <select id="sort" name="sort">
+            <option value="recent">최신순</option>
+            <option value="rating_desc">별점 높은순</option>
+            <option value="rating_asc">별점 낮은순</option>
+            <option value="helpful_desc">도움돼요 많은순</option>
+          </select>
+        </div>
+        <div class="right">
+          <label class="select-all"><input type="checkbox" id="chkAllList" /> 전체선택</label>
+        </div>
+      </div>
+      
+      <div id="bulkBar" class="bulkbar" hidden>
+        <div class="bulk-summary"><strong><span id="bulkCount">0</span>개</strong> 선택됨</div>
+        <div class="bulk-actions">
+          <button type="button" class="btn btn-ghost" id="bulkClear">선택 해제</button>
+          <span class="sep"></span>
+          <button type="button" class="btn" id="bulkHide">숨김</button>
+          <button type="button" class="btn" id="bulkShow">노출</button>
+          <button type="button" class="btn" id="bulkReport">신고</button>
+          <button type="button" class="btn" id="bulkUnreport">신고 해제</button>
+          <button type="button" class="btn" id="bulkExport">선택 내보내기</button>
+          <button type="button" class="btn btn-outline danger" id="bulkDelete">삭제</button>
+        </div>
+      </div>
+      
+      <section class="list-wrap" aria-live="polite">
+        <ul class="review-list" id="reviewList"></ul>
+      </section>
+      
+      <nav id="pagination" class="pagination" aria-label="페이지 이동"></nav>
+    </main>
+  </div>
+  
+  <template id="itemTemplate">
+  <li class="r-item" data-id="">
+    <div class="row-1">
+      <label class="check"><input type="checkbox" class="item-check" aria-label="리뷰 선택" /></label>
+      <div class="avatar">대</div>
+      <div class="u-meta">
+        <div class="u-name"></div>
+        <div class="u-date"></div>
+      </div>
+      <div class="u-rating"><span class="stars"></span><span class="score-badge">0.0</span></div>
+      <div class="badges">
+        <span class="badge-visibility">노출</span>
+        <span class="badge-report" hidden>신고됨</span>
+        <span class="badge-answered" hidden>답변완료</span>
+        <span class="badge-unanswered">미답변</span>
+        <!-- 추가: 답변 수정 -->
+        <button type="button" class="btn btn-sm btn-outline btn-edit-reply" hidden>답변 수정</button>
+      </div>
+    </div>
+
+    <div class="row-2">
+      <img class="p-thumb" alt="대체당 상품" />
+      <div class="p-info">
+        <div class="p-name"></div>
+        <div class="p-order">주문번호: <span class="order-id"></span></div>
+      </div>
+    </div>
+
+    <div class="row-3"><p class="r-content"></p></div>
+
+    <!-- 판매자 답변 작성/수정 영역 -->
+    <div class="row-4 reply">
+      <textarea class="reply-input" rows="3" placeholder="판매자 답변을 입력하세요"></textarea>
+      <div class="reply-actions">
+        <button type="button" class="btn btn-primary btn-reply-save">답변 등록</button>
+        <button type="button" class="btn btn-ghost btn-reply-cancel">취소</button>
+      </div>
+    </div>
+  </li>
+</template>
+  
+  <div id="site-footer" data-include="/common/footer.html"></div>
+  
+  <!-- 스크립트 순서 유지 -->
+  <script src="/common/sidebar.js" defer></script>
+  <script src="/common/common.js" defer></script>
+  <script src="/common/header.js" defer></script>
+  <script src="review.js" defer></script>
+</body>
+</html>

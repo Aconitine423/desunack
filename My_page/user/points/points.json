@@ -1,0 +1,66 @@
+[
+  {
+    "date": "25.09.05",
+    "orderId": "D250905-00123",
+    "items": "[대체당] 제로 콤부차 4팩",
+    "price": 16000,
+    "points": 160,
+    "expiresAt": "25.09.28"
+  },
+  {
+    "date": "25.09.01",
+    "orderId": "D250901-00077",
+    "items": "[펩시] 제로 라임 500ml 외 2개",
+    "price": 9000,
+    "points": 90,
+    "expiresAt": "25-10-10"
+  },
+  {
+    "date": "25.08.29",
+    "orderId": "D250829-00412",
+    "items": "코카콜라 제로 1.5L",
+    "price": 3800,
+    "points": 38,
+    "expiresAt": "25.09.08"
+  },
+  {
+    "date": "25.08.12",
+    "orderId": "D250812-00301",
+    "items": "달콤한 콤보차 6입",
+    "price": 12000,
+    "points": 120,
+    "expiresAt": "25.08.31"
+  },
+  {
+    "date": "25.09.06",
+    "orderId": "D250906-00001",
+    "items": "알룰로스 500g x2",
+    "price": 11000,
+    "points": 110,
+    "expiresAt": "25.10.30"
+  },
+  {
+    "date": "25-07-03",
+    "orderId": "D250730-00221",
+    "items": "에리스리톨 1kg",
+    "price": 7500,
+    "points": 75,
+    "expiresAt": "25-07-30"
+  },
+  {
+    "date": "25.09.03",
+    "orderId": "D250903-00031",
+    "items": "제로 사이다 500ml 6입",
+    "price": 9300,
+    "points": 93,
+    "expiresAt": "25.09.25"
+  },
+  {
+    "date": "25.08.05",
+    "orderId": "D250805-00011",
+    "items": "스테비아 스틱 100포",
+    "price": 14900,
+    "points": 149,
+    "expiresAt": "25.09.05"
+  }
+]

@@ -110,3 +110,6 @@
   #site-side, #mp-sidebar{ display:none; }
   .mypage-layout{ padding:16px; }
 }
+/* 숨김/표시 */
+.sublist[aria-hidden="true"]{display:none}
+.sublist[aria-hidden="false"]{display:block}

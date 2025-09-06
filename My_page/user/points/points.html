@@ -33,6 +33,12 @@
                 <p><strong><span class="member-name">회원</span></strong>님의 포인트는 <strong><span id="totalPoints">0</span>점</strong> 입니다.</p>
                 <p>1달 이내 만료될 포인트: <stroung><span id="exiringPoints">0</span>점</stroung></p>
             </section>
+            <!-- 탭: 적립 / 사용 -->
+            <section class="points-tabs" role="tablist" aria-label="포인트 구분">
+                <button class="tab is-active" data-tab="earn" role="tab" aria-selected="true">적립</button>
+                <button class="tab" data-tab="use" role="tab" aria-selected="false">사용</button>
+            </section>
+            
             
             <!-- 통일된 ul 테이블 레이아웃 -->
             <!-- li.head는 고정 헤더. li.row는 js로 동적 추가 -->
@@ -49,6 +55,7 @@
                     </li>
                     <!-- 데이터 행은 points.js가 생성해서 append 합니다. -->
                 </ul>
+                <nav class="pagination" id="pointsPagination" role="navigation" aria-label="페이지 이동"></nav>
                 <!-- js 미동작 대비 안내 -->
                 <noscript>자바스크립트를 활성화하면 포인트 내역이 표시됩니다.</noscript>
             </section>

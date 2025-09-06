@@ -62,5 +62,13 @@
     "price": 14900,
     "points": 149,
     "expiresAt": "25.09.05"
-  }
+  },
+  
+  { "type":"earn", "date":"25.09.05", "orderId":"D250905-00123", "items":"[대체당] 제로 콤부차 4팩", "price":16000, "points":160, "expiresAt":"25.09.28" },
+  { "type":"earn", "date":"25.09.01", "orderId":"D250901-00077", "items":"[펩시] 제로 라임 500ml 외 2개", "price":9000, "points":90, "expiresAt":"2025-10-10" },
+  { "type":"earn", "date":"25.08.29", "orderId":"D250829-00412", "items":"코카콜라 제로 1.5L", "price":3800, "points":38, "expiresAt":"25.09.08" },
+  { "type":"use",  "date":"25.09.02", "orderId":"D250902-00018", "items":"포인트 결제(장바구니)", "price":0, "points":120, "expiresAt":"" },
+  { "type":"earn", "date":"25.09.06", "orderId":"D250906-00001", "items":"알룰로스 500g x2", "price":11000, "points":110, "expiresAt":"25.10.30" },
+  { "type":"use",  "date":"25.08.31", "orderId":"D250831-00007", "items":"포인트 결제(주문취소차감)", "price":0, "points":60,  "expiresAt":"" }
+
 ]

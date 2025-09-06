@@ -1,200 +1,235 @@
-/**
- * 포인트 조회 페이지 스크립트 (points.js)
- * - 통일된 UL 테이블 레이아웃에 포인트 내역을 렌더링합니다.
- * - 총 포인트와 '30일 이내 만료' 포인트를 계산해 요약 영역에 반영합니다.
- * - 일반회원 사이드바에서 현재 메뉴를 강조합니다.
- *
- * [목데이터 형식]
- *  [
- *    { "date":"25.07.22", "orderId":"123456", "items":"상품명 외 2개", "price":16000, "points":160, "expiresAt":"26.07.22" },
- *    ...
- *  ]
- *
- * [백엔드 연동 시]
- *  - 아래 CONFIG.SRC 를 실제 API URL로 교체하십시오. (예: '/api/member/points')
- */
-
 (() => {
   'use strict';
 
-  /* ================= 설정값 ================= */
+  /* ================= 설정 ================= */
   const CONFIG = {
-    SRC: 'points.json',           // 데이터 소스 (목데이터 파일 경로 또는 API URL)
-    EXPIRY_DAYS: 30,              // '이내 만료'로 간주할 기간(일)
-    SIDEBAR_MATCH: '/My_page/points/' // 사이드바 강조 시 href 매칭 기준
+    SRC: 'points.json',               // 목데이터 or API URL
+    EXPIRY_DAYS: 30,                  // 만료 임계(일)
+    SIDEBAR_MATCH: '/My_page/points/',
+    DEFAULT_TAB: 'earn',              // 초기 탭
+    PAGE_SIZE: 10                     // 페이지당 행 수
   };
 
-  /* ================= DOM 캐시 ================= */
-  const $list = document.getElementById('pointsList');     // UL 테이블
-  const $total = document.getElementById('totalPoints');   // 총 포인트
-  const $expiring = document.getElementById('expiringPoints'); // 만료 예정 포인트
-  const $memberName = document.querySelector('.member-name');   // 선택사항: 회원명 표시
+  /* ================= DOM ================= */
+  const $list = document.getElementById('pointsList');          // UL
+  const $total = document.getElementById('totalPoints');        // 총/잔액
+  const $expiring = document.getElementById('expiringPoints');  // 30일 이내 만료합
+  const $tabsWrap = document.querySelector('.points-tabs');     // 탭 버튼 영역
+  const $pager = document.getElementById('pointsPagination');   // 페이징
 
-  /* ================= 유틸 함수 ================= */
+  /* ================= 상태 ================= */
+  let rowsAll = [];            // 전체 원천 데이터
+  let filtered = [];           // 탭 필터 적용 결과
+  let currentTab = CONFIG.DEFAULT_TAB;
+  let currentPage = 1;
 
-  // (한글 주석) 숫자 안전 변환
+  /* ================= 유틸 ================= */
   const toInt = v => Number(v || 0);
+  const fmt = n => toInt(n).toLocaleString('ko-KR');
+  const daysBetween = (a,b) => Math.floor((b-a)/(1000*60*60*24));
 
-  // (한글 주석) 한국어 천단위 표기
-  const fmtNumber = n => toInt(n).toLocaleString('ko-KR');
-
-  // (한글 주석) 두 날짜 사이 '정수 일수' 차이
-  const daysBetween = (a, b) => Math.floor((b - a) / (1000 * 60 * 60 * 24));
-
-  // (한글 주석) 다양한 문자열 날짜를 Date로 정규화
-  // 허용: '25.07.22' | '2025-07-22' | Date 파싱 가능한 문자열
-  function parseDate(s) {
+  function parseDate(s){
     if (!s) return new Date('Invalid');
-    if (/^\d{2}\.\d{2}\.\d{2}$/.test(s)) {
-      const [yy, mm, dd] = s.split('.');
-      return new Date(2000 + parseInt(yy, 10), parseInt(mm, 10) - 1, parseInt(dd, 10));
-    }
-    if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
-      const [y, m, d] = s.split('-');
-      return new Date(parseInt(y, 10), parseInt(m, 10) - 1, parseInt(d, 10));
-    }
-    const d = new Date(s);
-    return isNaN(d) ? new Date('Invalid') : d;
+    if (/^\d{2}\.\d{2}\.\d{2}$/.test(s)){ const [yy,mm,dd]=s.split('.'); return new Date(2000+ +yy, +mm-1, +dd); }
+    if (/^\d{4}-\d{2}-\d{2}$/.test(s)){ const [y,m,d]=s.split('-'); return new Date(+y, +m-1, +d); }
+    const d = new Date(s); return isNaN(d) ? new Date('Invalid') : d;
   }
 
-  // (한글 주석) 한 행 객체를 안전한 형태로 표준화
-  function normalizeRow(r) {
+  function normalizeRow(r){
     return {
+      type: r.type || 'earn',        // 'earn' | 'use'
       date: r.date ?? '',
       orderId: r.orderId ?? '',
       items: r.items ?? '',
       price: toInt(r.price),
-      points: toInt(r.points),
+      points: toInt(r.points),       // 사용도 양수로 보관. 렌더에서 부호 처리
       expiresAt: r.expiresAt ?? ''
     };
   }
 
-  /* ================= 렌더링 ================= */
+  /* ================= 헤더 보장 / 행 정리 ================= */
+  function ensureHeader(){
+    if (document.querySelector('#pointsList > li.head')) return;
+    const head = document.createElement('li');
+    head.className = 'head';
+    head.innerHTML = `
+      <div>일시</div>
+      <div>주문번호</div>
+      <div>주문 내역</div>
+      <div>가격</div>
+      <div>적립 포인트</div>
+      <div>유효기간</div>
+    `;
+    $list.appendChild(head);
+  }
+  function clearRows(){ document.querySelectorAll('#pointsList > li.row').forEach(n=>n.remove()); }
 
-  // (한글 주석) 데이터 행을 UL 테이블에 그리기
-  function renderRows(rows) {
-    if (!$list) return;
+  /* ================= 합계 ================= */
+  function summarize(all){
+    const now = new Date();
+    const earnSum = all.filter(x=>x.type==='earn').reduce((a,x)=>a+toInt(x.points),0);
+    const useSum  = all.filter(x=>x.type==='use').reduce((a,x)=>a+toInt(x.points),0);
+    const balance = earnSum - useSum;
+    const expiring = all
+      .filter(x=>x.type==='earn')
+      .filter(x=>{
+        const exp = parseDate(x.expiresAt);
+        const left = daysBetween(now, exp);
+        return left >= 0 && left <= CONFIG.EXPIRY_DAYS;
+      })
+      .reduce((a,x)=>a+toInt(x.points),0);
+    return { balance, expiring };
+  }
+
+  /* ================= 렌더 ================= */
+  function renderRows(list){
+    ensureHeader();
+    clearRows();
+
+    if (!list.length){
+      const li = document.createElement('li'); li.className='row';
+      const d = document.createElement('div');
+      d.className='cell cell--center'; d.style.gridColumn='1 / -1';
+      d.textContent='포인트 내역이 없습니다.';
+      li.appendChild(d); $list.appendChild(li); return;
+    }
+
     const frag = document.createDocumentFragment();
-
-    rows.forEach(r => {
+    list.forEach(r=>{
       const li = document.createElement('li');
-      li.className = 'row';
+      li.className = 'row' + (r.type==='use' ? ' is-use' : '');
+      const signedPoints = r.type==='use' ? `-${fmt(r.points)}` : fmt(r.points);
 
-      // (한글 주석) 각 칼럼 셀 정의: [라벨, 값, 클래스]
       const cells = [
         ['일시', r.date, 'cell cell--center'],
         ['주문번호', r.orderId, 'cell cell--center'],
         ['주문 내역', r.items, 'cell item-summary'],
-        ['가격', fmtNumber(r.price), 'cell cell--right'],
-        ['적립 포인트', fmtNumber(r.points), 'cell cell--right'],
-        ['유효기간', r.expiresAt, 'cell cell--center']
+        ['가격', fmt(r.price), 'cell cell--right'],
+        ['적립 포인트', signedPoints, 'cell cell--right'],
+        ['유효기간', r.expiresAt || '-', 'cell cell--center']
       ];
 
-      // (한글 주석) 모바일 대응을 위해 data-label 사용
-      cells.forEach(([label, value, cls]) => {
+      cells.forEach(([label, value, cls])=>{
         const d = document.createElement('div');
-        d.className = cls;
-        d.dataset.label = label;
-        d.textContent = value;
+        d.className = cls; d.dataset.label = label; d.textContent = value;
         li.appendChild(d);
       });
-
       frag.appendChild(li);
     });
-
     $list.appendChild(frag);
   }
 
-  // (한글 주석) 비어있을 때 UI
-  function renderEmpty() {
-    if (!$list) return;
-    const li = document.createElement('li');
-    li.className = 'row';
-    const d = document.createElement('div');
-    d.className = 'cell cell--center';
-    d.style.gridColumn = '1 / -1';
-    d.textContent = '포인트 내역이 없습니다.';
-    li.appendChild(d);
-    $list.appendChild(li);
+  /* ================= 페이징 ================= */
+  function totalPages(){ return Math.max(1, Math.ceil(filtered.length / CONFIG.PAGE_SIZE)); }
+  function sliceByPage(page){
+    const start = (page - 1) * CONFIG.PAGE_SIZE;
+    return filtered.slice(start, start + CONFIG.PAGE_SIZE);
   }
 
-  // (한글 주석) 합계 및 30일 이내 만료 포인트 계산
-  function summarize(rows) {
-    const now = new Date();
-    const total = rows.reduce((acc, r) => acc + toInt(r.points), 0);
-    const expiring = rows.reduce((acc, r) => {
-      const exp = parseDate(r.expiresAt);
-      if (isNaN(exp)) return acc;
-      const left = daysBetween(now, exp);
-      return (left >= 0 && left <= CONFIG.EXPIRY_DAYS) ? acc + toInt(r.points) : acc;
-    }, 0);
-    return { total, expiring };
+  function renderPagination(){
+    if (!$pager) return;
+    $pager.innerHTML = '';
+
+    const tp = totalPages();
+
+    // Prev
+    const prev = document.createElement('button');
+    prev.type='button'; prev.textContent='이전';
+    prev.dataset.page='prev';
+    if (currentPage === 1) prev.disabled = true;
+    $pager.appendChild(prev);
+
+    // Page numbers (1부터)
+    for (let p=1; p<=tp; p++){
+      const btn = document.createElement('button');
+      btn.type='button'; btn.textContent=String(p);
+      btn.dataset.page=String(p);
+      if (p === currentPage) btn.classList.add('is-active');
+      $pager.appendChild(btn);
+    }
+
+    // Next
+    const next = document.createElement('button');
+    next.type='button'; next.textContent='다음';
+    next.dataset.page='next';
+    if (currentPage === tp) next.disabled = true;
+    $pager.appendChild(next);
   }
 
-  /* ================= 사이드바 현재 메뉴 강조 ================= */
+  function bindPagination(){
+    if (!$pager) return;
+    $pager.addEventListener('click', (e)=>{
+      const btn = e.target.closest('button[data-page]');
+      if (!btn) return;
 
-  // (한글 주석) include로 사이드바가 늦게 삽입되는 케이스를 고려해 감시
-  function highlightSidebar() {
-    const side = document.getElementById('site-side');
-    if (!side) return;
+      const tp = totalPages();
+      const token = btn.dataset.page;
 
-    const apply = () => {
-      // (한글 주석) 우선 폴더 기준으로 매칭. 실패 시 파일명 매칭 보조
-      const byFolder = side.querySelector(`a[href*="${CONFIG.SIDEBAR_MATCH}"]`);
-      const byFile = side.querySelector('a[href$="points.html"]');
-      const link = byFolder || byFile;
-      if (link) {
-        link.classList.add('is-active');
-        link.setAttribute('aria-current', 'page');
-        return true;
-      }
-      return false;
-    };
+      if (token === 'prev') currentPage = Math.max(1, currentPage - 1);
+      else if (token === 'next') currentPage = Math.min(tp, currentPage + 1);
+      else currentPage = Math.min(tp, Math.max(1, parseInt(token, 10) || 1));
 
-    if (apply()) return;
-
-    const mo = new MutationObserver(() => {
-      if (apply()) mo.disconnect();
+      renderRows(sliceByPage(currentPage));
+      renderPagination();
     });
-    mo.observe(side, { childList: true, subtree: true });
+  }
+
+  function applyTab(tab){
+    currentTab = tab;
+    // 탭 필터
+    filtered = rowsAll.filter(r => tab === 'earn' ? r.type === 'earn' : r.type === 'use');
+    // 항상 1페이지부터 시작
+    currentPage = 1;
+
+    renderRows(sliceByPage(currentPage));
+    renderPagination();
+
+    // 잔액/만료는 전체 기준
+    const { balance, expiring } = summarize(rowsAll);
+    if ($total) $total.textContent = fmt(balance);
+    if ($expiring) $expiring.textContent = fmt(expiring);
+  }
+
+  /* ================= 탭 ================= */
+  function bindTabs(){
+    if (!$tabsWrap) return;
+    $tabsWrap.addEventListener('click', e=>{
+      const btn = e.target.closest('.tab'); if (!btn) return;
+      $tabsWrap.querySelectorAll('.tab').forEach(t=>{
+        const on = t === btn;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      applyTab(btn.dataset.tab);
+    });
+  }
+
+  /* ================= 사이드바 강조 ================= */
+  function highlightSidebar(){
+    const side = document.getElementById('site-side'); if(!side) return;
+    const link = side.querySelector(`a[href*="${CONFIG.SIDEBAR_MATCH}"]`) || side.querySelector('a[href$="points.html"]');
+    if (link){ link.classList.add('is-active'); link.setAttribute('aria-current','page'); }
   }
 
   /* ================= 초기화 ================= */
-
-  async function init() {
-    try {
-      // (한글 주석) 데이터 로드: 목데이터 또는 API
-      const res = await fetch(CONFIG.SRC, { cache: 'no-store' });
-      if (!res.ok) throw new Error('데이터 로드 실패');
+  async function init(){
+    try{
+      const res = await fetch(CONFIG.SRC, { cache:'no-store' });
+      if (!res.ok) throw new Error('load failed');
       const raw = await res.json();
-
-      // (한글 주석) 배열 또는 {items:[...]} 형태 모두 수용
-      const list = Array.isArray(raw) ? raw : (Array.isArray(raw.items) ? raw.items : []);
-      const rows = list.map(normalizeRow);
-
-      if (rows.length) renderRows(rows);
-      else renderEmpty();
-
-      const { total, expiring } = summarize(rows);
-      if ($total) $total.textContent = fmtNumber(total);
-      if ($expiring) $expiring.textContent = fmtNumber(expiring);
-    } catch (err) {
-      console.error('[points] 로드 오류:', err);
-      renderEmpty();
-      if ($total) $total.textContent = '0';
-      if ($expiring) $expiring.textContent = '0';
-    } finally {
+      const list = Array.isArray(raw) ? raw : (raw.items || []);
+      rowsAll = list.map(normalizeRow);
+    }catch(e){
+      console.error('[points] 데이터 로드 실패:', e);
+      rowsAll = [];
+    }finally{
+      bindTabs();
+      bindPagination();
+      applyTab(CONFIG.DEFAULT_TAB);   // 탭+페이징 초기 상태 -> 페이지 1 표시
       highlightSidebar();
-
-      // (선택) 회원명 자동 주입: 로컬 저장소나 body dataset 등을 사용하려면 아래 예시 활용
-      // const name = document.body?.dataset?.memberName || localStorage.getItem('memberName');
-      // if (name && $memberName) $memberName.textContent = name;
     }
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 })();

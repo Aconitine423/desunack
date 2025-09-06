@@ -152,3 +152,25 @@
   align-items:flex-start;
 }
 #site-side{width:260px; flex:0 0 260px;}
+/* 탭 */
+.points-tabs{display:flex; gap:8px; width:min(100%, var(--content-w)); margin-inline:auto}
+.points-tabs .tab{
+  padding:8px 12px; border:1px solid var(--line); background:#fff; border-radius:8px;
+  font-size:14px; cursor:pointer;
+}
+.points-tabs .tab.is-active{font-weight:700; background:#f5f5f5}
+.ul-table > li.row.is-use .cell--right{color:#c0392b} /* 사용 포인트는 음수 표시 */
+
+/* ========== 페이징 ========== */
+.pagination{
+  display:flex; gap:6px; justify-content:center; align-items:center;
+  width:min(100%, var(--content-w)); margin:12px auto 0;
+  flex-wrap:wrap;
+}
+.pagination button{
+  min-width:36px; height:36px; padding:0 10px; border:1px solid var(--line);
+  background:#fff; border-radius:8px; cursor:pointer; font-size:14px;
+}
+.pagination button.is-active{ font-weight:700; background:#f5f5f5 }
+.pagination button[disabled]{ opacity:.45; cursor:not-allowed }
+

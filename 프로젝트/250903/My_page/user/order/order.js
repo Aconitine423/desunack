@@ -180,3 +180,46 @@ document.addEventListener("click", e=>{
     });
   }
 });
+/* 한글 주석: 상태별 배지 클래스와 포인트 색상 */
+const STATUS_STYLE = {
+  "배송중":     { badge: "badge badge--shipping", accent: "#2f8cff" },
+  "배송 완료":  { badge: "badge badge--done",     accent: "#10b981" },
+  "픽업 준비중": { badge: "badge badge--pickup",   accent: "#f59e0b" },
+  "픽업 완료":  { badge: "badge badge--done",     accent: "#10b981" }
+};
+
+/* 한글 주석: 주문 배열(DB or JSON)을 카드로 렌더링 */
+function renderOrders(orders = []) {
+  const wrap = document.getElementById("order-list");
+  if (!wrap) return;
+  wrap.innerHTML = orders.map(toCardHTML).join("");
+}
+
+/* 한글 주석: 한 건을 카드 HTML 문자열로 변환 */
+function toCardHTML(o) {
+  // o 예시 필드: { orderId, date, statusText, itemCount, totalPrice, deliveryType }
+  const st = STATUS_STYLE[o.statusText] || { badge: "badge badge--shipping", accent: "#2f8cff" };
+  const total = typeof o.totalPrice === "number" ? `₩${o.totalPrice.toLocaleString()}` : (o.totalPrice || "");
+  const typeLabel = o.deliveryType === "pickup" ? "픽업" : "택배";
+  return `
+  <article class="order-card" style="--accent:${st.accent}">
+    <div class="order-head">
+      <a class="order-id" href="/My_page/user/order/${o.orderId || ""}">주문번호: ${o.orderId || "-"}</a>
+      <time class="order-date">${o.date || ""}</time>
+      <span class="status ${st.badge}">${o.statusText || ""}</span>
+    </div>
+    <div class="order-summary">
+      <span>상품 ${o.itemCount ?? "-"}개 · ${typeLabel}</span>
+      <strong class="order-total">${total}</strong>
+    </div>
+  </article>`;
+}
+
+/* 한글 주석: DB에서 받아오면 그 결과로 호출하세요 */
+// fetch('/api/orders').then(r=>r.json()).then(renderOrders);
+
+// 한글 주석: JSON 테스트용 예시
+// renderOrders([
+//   {orderId:2001, date:"2025-08-29 18:12", statusText:"배송중", itemCount:2, totalPrice:34500, deliveryType:"shipping"},
+//   {orderId:1001, date:"2025-08-31 20:30", statusText:"픽업 완료", itemCount:1, totalPrice:12000, deliveryType:"pickup"}
+// ]);

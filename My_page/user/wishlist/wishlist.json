@@ -1,0 +1,22 @@
+{
+  "items": [
+    {
+      "goodsID": "G20250907001",
+      "brand": "롯데칠성",
+      "name": "펩시콜라 제로 라임향 500ml",
+      "option": "500ml PET",
+      "price": 2000,
+      "likedAt": "25.07.22",
+      "image": "/common/img/10015742420273123_879185226.jpg"
+    },
+    {
+      "goodsID": "G20250907002",
+      "brand": "코카콜라",
+      "name": "코카콜라 제로 레몬향 1,000ml",
+      "option": "1,000ml PET",
+      "price": 3300,
+      "likedAt": "25.07.24",
+      "image": "/common/img/10015742420273123_879185226.jpg"
+    }
+  ]
+}

@@ -32,4 +32,6 @@ public class GoodsDto {
     private char g_status;
     private int g_total_rating;
     private int g_review_count;
+    private int gts_sales;
+    private int gsa_sales;
 }

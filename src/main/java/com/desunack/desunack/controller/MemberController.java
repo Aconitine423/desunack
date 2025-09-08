@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -79,6 +80,7 @@ public class MemberController {
         return "/member/findInfoFrm";
     }
 
+    // 마이페이지 이동
     @GetMapping("/member/mypage/{userUid}")
     public String mypage(@PathVariable("userUid") Integer userUid, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -89,7 +91,7 @@ public class MemberController {
             log.info("uDto가 null 입니다.");
             return null;
         }
-        return "redirect:/member/mypage";
+        return "/member/mypage";
     }
 
     //    public String getCustomerInfo(@RequestBody UserDto uDto, HttpSession session) {

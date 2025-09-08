@@ -204,13 +204,12 @@ public class MemberService {
         return false;
     }
 
-    public boolean getCustomerInfo(int uid, HttpSession session) {
+    public boolean getCustomerInfo(int uid) {
         String uInfo = mDao.getCustomerInfo(uid);
         int cCount = mDao.getCustomerCoupon(uid);
         if(uInfo != null){
-
-            session.setAttribute("uInfo", uInfo);
-            session.setAttribute("cCount",cCount);
+//            session.setAttribute("uInfo", uInfo);
+//            session.setAttribute("cCount",cCount);
             return true;
         }
         return false;

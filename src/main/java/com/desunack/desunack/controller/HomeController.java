@@ -1,5 +1,8 @@
 package com.desunack.desunack.controller;
 
+import com.desunack.desunack.dto.CustomerDto;
+import com.desunack.desunack.dto.SellerDto;
+import com.desunack.desunack.dto.UserDto;
 import com.desunack.desunack.entity.CustomerEntity;
 import com.desunack.desunack.entity.MemberEntity;
 import com.desunack.desunack.service.MemberService;
@@ -7,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDate;
@@ -16,10 +20,12 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class HomeController {
     private final MemberService mSer;
+
     @GetMapping("/signup")
     public String signup() {
         return "/signup/signup";
     }
+
     @GetMapping("/signup/customerfrm")
     public String customerJoin() {
         return "/signup/customerFrm";
@@ -37,36 +43,44 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String home(HttpSession session) {
-        MemberEntity user = (MemberEntity) session.getAttribute("member");
-        log.info("=======user={}", user);
-        if (user != null){
-            char kind = user.getM_kind();
-            log.info("=======kind={}", kind);
-
-
-            if(kind == 'C'){
-                CustomerEntity customer = (CustomerEntity) session.getAttribute("member");
-                int age =  (LocalDate.now().getYear() - (int) session.getAttribute("m_birth"))/10 * 10; // << 현재 연도와 태어난 연도의 차를 통해서 계산하기
-                char gender = customer.getC_gender();
-                if(mSer.getGoodsSales(gender, age, session)){
-                    log.info(session.getAttribute("gList").toString());
-                    return "redirect:/";
+    public String home(HttpSession session, Model model) {
+        String kind = session.getAttribute("m_kind").toString();
+        log.info("=======kind={}", kind);
+        if (kind != null) {
+            if (kind.equals("C")) {
+                int customerUid = (int) session.getAttribute("m_uid");
+                boolean result = mSer.getUserInfo(customerUid, model);
+                if (result) {
+                    CustomerDto cDto = (CustomerDto) model.getAttribute("customerDto");
+                    if (cDto != null) {
+                        int age = (LocalDate.now().getYear() - cDto.getCustomerBDay().getYear()) / 10 * 10; // << 현재 연도와 태어난 연도의 차를 통해서 계산하기
+                        char gender = cDto.getCustomerGender();
+                        if (mSer.getGoodsSales(gender, age, session)) {
+                            log.info(session.getAttribute("gList").toString());
+                            return "index";
+                        }
+                    }
                 }
-            }else if(kind == 'S'){
-                int id = user.getM_uid();
-                if(mSer.getCompanySales(id, session)){
-                    log.info(session.getAttribute("gList").toString());
-                    return "redirect:/";
+            } else if (kind.equals("S")) {
+                int sellerUid = (int) session.getAttribute("m_uid");
+                boolean result = mSer.getUserInfo(sellerUid, model);
+                if (result) {
+                    SellerDto sDto = (SellerDto) model.getAttribute("sellerDto");
+                    if (sDto != null) {
+                        if (mSer.getCompanySales(sellerUid, session)) {
+                            log.info(session.getAttribute("gList").toString());
+                            return "index";
+                        }
+                    }
                 }
-            }else{
-                if(mSer.getSales(session)){
+            } else { // 'A' 관리자일때
+                if (mSer.getSales(session)) {
                     log.info(session.getAttribute("gList").toString());
-                    return "redirect:/";
+                    return "index";
                 }
             }
         }
-        if(mSer.getSales(session)){
+        if (mSer.getSales(session)) { // 비로그인
             log.info(session.getAttribute("gList").toString());
             return "index";
         }

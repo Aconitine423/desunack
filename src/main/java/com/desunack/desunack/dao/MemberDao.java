@@ -16,8 +16,8 @@ public interface MemberDao {
     @Select("select m_pw from member where m_id = #{m_id}")
     String getSecurityPw(String m_id);
 
+    @Select("select m_uid, m_name, m_kind from member where m_id = #{m_id}")
     MemberEntity getMemberEntity(String m_id);
-
 
     CustomerEntity getCustomerEntity(int m_uid);
 
@@ -65,5 +65,5 @@ public interface MemberDao {
     int getCustomerCoupon(int uid);
 
     @Select("select * from member where m_id = #{userId}")
-    Optional<Object> findByUserId(String userId);
+    Optional<MemberEntity> findByUserId(String userId);
 }

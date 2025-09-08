@@ -17,29 +17,21 @@
 <body>
 <th:block th:replace="~{fragments :: header}"></th:block>
 <!--    <div id="site-header" data-include="/fragments/mpheader.html"></div>-->
-
-    
-    <!-- 자바스크립트가 꺼져 있을 때 안내 -->
     <noscript>이 페이지의 일부 기능은 자바스크립트를 필요로 합니다.</noscript>
-    
     <!-- data-role 값으로 메뉴가 달라짐
     -consumer: 일반(소비자) 회원 
     - seller : 판매자 회원 필요 시 서버 값으로 바인딩하거나 js에서 setAttribute로 교체 가능 -->
-    
     <section class="mypage" data-role="consumer" data-user-uid="U123456">
-        
         <!-- [상단 탭] : 프로필 / 주문내역 / 찜한 상품 -->
         <nav class="mypage-tabs" role="tablist" aria-label="마이페이지 탭">
             <!-- 프로필(프로필: fa-user) -->
             <button class="mypage-tab is-active" data-tab="profile" role="tab" aria-selected="true">
                 <span class="i"><i class="fa-regular fa-user"></i></span>프로필
             </button>
-            
             <!-- 주문내역(영수증: fa-receipt) -->
             <button class="mypage-tabs" data-tab="orders" role="tab" aria-selected="false">
                 <span class="i"><i class="fa-solid fa-receipt"></i></span>주문내역
             </button>
-            
             <!-- 찜한상품(하트: fa-heart) -->
             <button class="mypage-tabs" data-tab="wish" role="tab" aria-selected="false">
                 <span class="i"><i class="fa-regular fa-heart"></i></span>찜한상품 
@@ -80,7 +72,6 @@
                 </template>
                 
                 <!-- 판매자용 템플릿 -->
-                
                 <template id="tpl-menu-seller">
                     <section class="menu-section">
                         <p class="menu-title">상품 관리</p>
@@ -283,7 +274,6 @@
         <div class="modal-dim" data-close></div>
     </div>
     
-    <!-- 푸터 자리 -->
 <th:block th:replace="~{fragments :: footer}"></th:block>
 <!--    <div id="site-footer" data-include="/My_page/mpFooter/mpFooter.html"></div>-->
     <!-- 토스트 컨테이너  -->
@@ -410,7 +400,7 @@
             });
         </script>
         <script src="/js/mypage.js"></script>
-        <script src="/js/mpheader.js"></script>
+        <script src="/js/header.js"></script>
         
         
     </body>

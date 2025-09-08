@@ -269,6 +269,5 @@ public class MemberService {
         } else {
             return true;
         }
-
     }
 }

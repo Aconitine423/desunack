@@ -258,6 +258,8 @@ public class MemberService {
             CustomerDto customerDto = customerEntity.toDto();
             log.info("======CustomerDto:{}",customerDto);
             model.addAttribute("customerDto", customerDto);
+            int couponCount = mDao.getCustomerCoupon(userUid);
+            model.addAttribute("couponCount", couponCount);
             return true;
         } else if (userUid >= 700000 && userUid < 1000000) {
             SellerEntity sellerEntity = mDao.getSellerEntity(userUid);

@@ -33,8 +33,8 @@
 
     <select id="getCustomerEntity" resultType="com.desunack.desunack.entity.CustomerEntity">
         select m_uid, m_id, m_name, m_phone, m_email, m_post, m_address, m_address_detail
-        ,m_kind, m_status, m_join_date, m_recent_date, c_nickname, c_gender, c_birth, c_point, c_running_total
-        from c_member join member on member.m_uid = c_member.c_m_uid where c_m_uid = #{m_id}
+        ,m_kind, m_status, m_join_date, m_recent_date, c_nickname, c_gender, c_birth, c_point, c_running_total, grade
+        from c_member join member on member.m_uid = c_member.c_m_uid join grade on c_running_total between grade.v_min and grade.v_max where c_m_uid = #{m_id}
     </select>
 
     <select id="getSellerEntity" resultType="com.desunack.desunack.entity.SellerEntity">

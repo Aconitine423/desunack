@@ -273,6 +273,10 @@ public class MemberService {
             SellerEntity sellerEntity = mDao.getSellerEntity(userUid);
             SellerDto sellerDto = sellerEntity.toDto();
             log.info("======SellerDto:{}",sellerDto);
+            int totalSalesCount = mDao.getTotalSalesCount(userUid);
+            int totalSales = mDao.getTotalSales(userUid);
+            model.addAttribute("totalSales", totalSales);
+            model.addAttribute("totalSalesCount", totalSalesCount);
             model.addAttribute("sellerDto", sellerDto);
             return true;
         } else {

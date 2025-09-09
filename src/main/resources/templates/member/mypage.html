@@ -158,16 +158,30 @@
                         <th:block th:case="C">
                             <div class="summary">
                                 <div class="sum-item"><span class="s-label">적립금</span><strong class="s-value"
-                                                                                              th:text="${customerDto.customerPoint}+원"></strong>
+                                                                                              th:text="${#numbers.formatInteger(customerDto.customerPoint, 1, 'COMMA')}+원"></strong>
                                 </div>
                                 <div class="sum-item"><span class="s-label">쿠폰</span><strong class="s-value"
-                                                                                             th:text="${couponCount}+장"></strong>
+                                                                                             th:text="${#numbers.formatInteger(couponCount, 1, 'COMMA')}+장"></strong>
                                 </div>
                                 <div class="sum-item"><span class="s-label">등급</span><strong class="s-value"
                                                                                              th:text="${customerDto.grade}"></strong>
                                 </div>
                             </div>
                         </th:block>
+                        <th:bloack th:case="S">
+                            <div class="summary">
+                                <div class="sum-item"><span class="s-label">주문건수</span><strong class="s-value"
+                                                                                              th:text="${#numbers.formatInteger(totalSalesCount, 1, 'COMMA')}+건"></strong>
+                                </div>
+                                <div class="sum-item"><span class="s-label">총 판매액</span><strong class="s-value"
+                                                                                             th:text="${#numbers.formatInteger(totalSales, 1, 'COMMA')}+원"></strong>
+                                </div>
+                                <div class="sum-item"><span class="s-label">미처리 건수</span><strong class="s-value"
+                                                                                             th:text="0건"></strong>
+<!--                                    추후 주문 기능 제작 후 적용 예정-->
+                                </div>
+                            </div>
+                        </th:bloack>
 
                     </th:block>
                 </div>

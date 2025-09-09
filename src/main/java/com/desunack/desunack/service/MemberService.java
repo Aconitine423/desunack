@@ -204,16 +204,24 @@ public class MemberService {
         return false;
     }
 
-    public boolean getCustomerInfo(int uid) {
-        String uInfo = mDao.getCustomerInfo(uid);
-        int cCount = mDao.getCustomerCoupon(uid);
-        if(uInfo != null){
-//            session.setAttribute("uInfo", uInfo);
-//            session.setAttribute("cCount",cCount);
+    public boolean getCustomerInfo(int uid, Model model) {
+        CustomerEntity cEntity = mDao.getCustomerEntity(uid);
+        CustomerDto cDto = cEntity.toDto();
+        if (cDto != null) {
+            int cCount = mDao.getCustomerCoupon(uid);
+            if (cCount > 0) {
+                model.addAttribute("cCount", cCount);
+            }
+            model.addAttribute("cDto", cDto);
             return true;
         }
         return false;
     }
+//        if(uInfo != null){
+//            session.setAttribute("uInfo", uInfo);
+//            session.setAttribute("cCount",cCount);
+//            return true;
+//        }
 
     public boolean getSellerInfo(int uid, HttpSession session) {
         String uInfo = mDao.getSellerInfo(uid);

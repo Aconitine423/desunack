@@ -65,7 +65,7 @@
                 <section class="menu-section">
                     <p class="menu-title">회원 정보</p>
                     <ul class="menu-list">
-                        <li><span class="i"><i class="fa-regular fa-id-card"></i>회원정보 수정</span></li>
+                        <li><a th:href="@{/member/update/customer/{uid}(uid=${session.userUid})}"><i class="fa-regular fa-id-card"></i><span class="i">회원정보 수정</span></a></li>
                         <li><span class="i"><i class="fa-solid fa-person-walking-arrow-right"></i>회원 탈퇴</span></li>
                     </ul>
                 </section>

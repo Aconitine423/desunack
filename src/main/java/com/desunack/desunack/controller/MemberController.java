@@ -94,6 +94,16 @@ public class MemberController {
         return "/member/mypage";
     }
 
+    // 회원정보수정 페이지 이동
+    @GetMapping("/member/update/customer/{userUid}")
+    public String customerUpdateFrm(@PathVariable("userUid") Integer userUid, Model model) {
+        boolean result = mSer.getCustomerInfo(userUid, model);
+        if (result) {
+            log.info("1");
+        }
+        return "/member/customerUpdateFrm";
+    }
+
     //    public String getCustomerInfo(@RequestBody UserDto uDto, HttpSession session) {
 //        if (uDto.getUserKind() == 'C') {
 //            if (mSer.getCustomerInfo(uDto.getUserUid(), session)) {

@@ -37,6 +37,7 @@ public class CustomerDto {
     private LocalDate customerBDay;
     private int customerPoint;
     private int customerRunningTotal;
+    private String grade;
 
 //    public CustomerEntity toEntity(UserDto uDto) {
 //        return CustomerEntity.builder().c_nickname(this.customerNickname)
@@ -50,6 +51,6 @@ public class CustomerDto {
                 .m_address_detail(this.userAddressDetail).m_phone(this.userPhone).m_kind(this.userKind)
                 .m_status(this.userStatus).m_join_date(this.userSignupDate).m_recent_date(this.userRecentDate)
                 .c_nickname(this.customerNickname).c_gender(this.customerGender).c_birth(this.customerBDay)
-                .c_point(this.customerPoint).c_running_total(this.customerRunningTotal).build();
+                .c_point(this.customerPoint).c_running_total(this.customerRunningTotal).grade(this.grade).build();
     }
 }

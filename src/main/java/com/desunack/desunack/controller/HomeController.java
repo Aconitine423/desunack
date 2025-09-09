@@ -44,39 +44,41 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(HttpSession session, Model model) {
-        String kind = session.getAttribute("m_kind").toString();
-        log.info("=======kind={}", kind);
-        if (kind != null) {
-            if (kind.equals("C")) {
-                int customerUid = (int) session.getAttribute("m_uid");
-                boolean result = mSer.getUserInfo(customerUid, model);
-                if (result) {
-                    CustomerDto cDto = (CustomerDto) model.getAttribute("customerDto");
-                    if (cDto != null) {
-                        int age = (LocalDate.now().getYear() - cDto.getCustomerBDay().getYear()) / 10 * 10; // << 현재 연도와 태어난 연도의 차를 통해서 계산하기
-                        char gender = cDto.getCustomerGender();
-                        if (mSer.getGoodsSales(gender, age, session)) {
-                            log.info(session.getAttribute("gList").toString());
-                            return "index";
+        if(session.getAttribute("m_kind") != null) {
+            String kind = session.getAttribute("m_kind").toString();
+            log.info("=======kind={}", kind);
+            if (kind != null) {
+                if (kind.equals("C")) {
+                    int customerUid = (int) session.getAttribute("userUid");
+                    boolean result = mSer.getUserInfo(customerUid, model);
+                    if (result) {
+                        CustomerDto cDto = (CustomerDto) model.getAttribute("customerDto");
+                        if (cDto != null) {
+                            int age = (LocalDate.now().getYear() - cDto.getCustomerBDay().getYear()) / 10 * 10; // << 현재 연도와 태어난 연도의 차를 통해서 계산하기
+                            char gender = cDto.getCustomerGender();
+                            if (mSer.getGoodsSales(gender, age, session)) {
+                                log.info(session.getAttribute("gList").toString());
+                                return "index";
+                            }
                         }
                     }
-                }
-            } else if (kind.equals("S")) {
-                int sellerUid = (int) session.getAttribute("m_uid");
-                boolean result = mSer.getUserInfo(sellerUid, model);
-                if (result) {
-                    SellerDto sDto = (SellerDto) model.getAttribute("sellerDto");
-                    if (sDto != null) {
-                        if (mSer.getCompanySales(sellerUid, session)) {
-                            log.info(session.getAttribute("gList").toString());
-                            return "index";
+                } else if (kind.equals("S")) {
+                    int sellerUid = (int) session.getAttribute("userUid");
+                    boolean result = mSer.getUserInfo(sellerUid, model);
+                    if (result) {
+                        SellerDto sDto = (SellerDto) model.getAttribute("sellerDto");
+                        if (sDto != null) {
+                            if (mSer.getCompanySales(sellerUid, session)) {
+                                log.info(session.getAttribute("gList").toString());
+                                return "index";
+                            }
                         }
                     }
-                }
-            } else { // 'A' 관리자일때
-                if (mSer.getSales(session)) {
-                    log.info(session.getAttribute("gList").toString());
-                    return "index";
+                } else { // 'A' 관리자일때
+                    if (mSer.getSales(session)) {
+                        log.info(session.getAttribute("gList").toString());
+                        return "index";
+                    }
                 }
             }
         }

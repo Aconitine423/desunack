@@ -115,104 +115,76 @@
             </form>
             <div class="review-list">
                 <div class="review-item">
-                    <strong>홍길동</strong>
-                    <span class="review-date">2024-06-17</span>
-                    <p>정말 맛있어요! 재구매 의사 있습니다.</p>
+<!--                  스크립트로 리뷰 불러와서(JSON형태) 대표 n개만큼 출력시키기-->
                 </div>
-                <div class="review-item">
-                    <strong>김철수</strong>
-                    <span class="review-date">2024-06-16</span>
-                    <p>저당이라서 건강하게 먹을 수 있어 좋아요.</p>
-                </div>
-                <div class="review-item">
-                    <strong>이영희</strong>
-                    <span class="review-date">2024-05-16</span>
-                    <p>배송도 빠르고 포장도 꼼꼼했어요</p>
-                </div>
-                <!-- 더미 리뷰로 스크롤 확보 -->
-                <div class="review-item">
-                    <strong>박민수</strong>
-                    <span class="review-date">2024-06-16</span>
-                    <p>쌈장 맛이 진하고 고기랑 잘 어울려요.</p>
-                </div>
-                <div class="review-item">
-                    <strong>최지은</strong>
-                    <span class="review-date">2024-06-13</span>
-                    <p>가족 모두 만족했습니다</p>
-                </div>
-                <div class="review-item">
-                    <strong>성한빈</strong>
-                    <span class="review-date">2024-06-16</span>
-                    <p>다음에도 또 구매할게요!</p>
-                </div>
+
             </div>
         </section>
         <!-- 문의 섹션 -->
         <section id="section-inquiry" class="section">
-            <h2>문의</h2>
-            <p>상품에 대한 문의는 아래 연락처로 부탁드립니다</p>
-            <ul>
-                <li>고객센터: 02-555-5676 (평일 10:00~16:30)</li>
-                <li>이메일: m.contact@drdiary.co.kr</li>
-            </ul>
+            <h2>상품 정보 제공 고시</h2>
+            <hr>
+            <table>
+                <tr>
+                    <td>상품 번호</td>
+                    <td th:text="${goodsDto.g_id}"></td>
+                </tr>
+                <tr>
+                    <td>브랜드</td>
+                    <td th:text="${goodsDto.brand_name}"></td>
+                </tr>
+                <tr>
+                    <td>원산지</td>
+                    <td th:text="${goodsInfoDto.gi_origin}"></td>
+                </tr>
+            </table>
+            <hr>
+            <table>
+                <tr>
+                    <td>제품명</td>
+                    <td th:text="${goodsDto.g_name}"></td>
+                </tr>
+                <tr>
+                    <td>식품 유형</td>
+                    <td th:text="${goodsInfoDto.gi_kind}"></td>
+                </tr>
+                <tr>
+                    <td>생산지</td>
+                    <td th:text="${goodsInfoDto.gi_factory}"></td>
+                </tr>
+                <tr>
+                <td>제조 연월일, 소비기한</td>
+                    <td>상세 페이지 참조</td>
+                </tr>
+                <tr>
+                    <td>포장단위별 내용물의 용량</td>
+                    <td>상세 페이지 참조</td>
+                </tr>
+                <tr>
+                    <td>원재료명</td>
+                    <td>상세 페이지 참조</td>
+                </tr>
+                <tr>
+                    <td>영양성분</td>
+                    <td>상세 페이지 참조</td>
+                </tr>
+                <tr>
+                    <td>소비자 안전을 위한 주의 사항</td>
+                    <td th:text="${goodsInfoDto.gi_caution}"></td>
+                </tr>
+                <tr>
+                    <td>소비자 상담 관련 전화번호</td>
+                    <td th:text="${goodsInfoDto.gi_cs_phone}"></td>
+                </tr>
+            </table>
             <!-- 스크롤 테스트용 더미 텍스트 추가 -->
-            <p>문의 예시1</p>
-            <p>문의 예시2</p>
-            <p>문의 예시3</p>
-            <p>문의 예시4</p>
-            <p>문의 예시5</p>
-            <p>문의 예시6</p>
-            <p>문의 예시7</p>
-            <p>문의 예시8</p>
-            <p>문의 예시9</p>
-            <p>문의 예시10</p>
         </section>
     </main>
     <div class="scroll-arrow-buttons">
         <button class="scroll-btn up" title= "맨 위로 이동">&#8593;</button>
         <button class="scroll-btn down" title= "맨 아래로 이동">&#8595;</button>
     </div>
-    <footer>
-        <table class="footer-menu" border="0" cellpadding="4" cellspacing="0">
-            <!-- 1행: 메뉴 링크를 각각의 셀에 넣으면, 자동으로 각 열 위치가 맞춰집니다 -->
-            <tr>
-                <td rowspan="2">
-                    <img src="../img/232333.png" alt="대체당" style="width:150px; vertical-align:middle;">
-                </td>
-                <td><a href="company.html">회사 소개</a></td>
-                <td><a href="terms.html">이용약관</a></td>
-                <td><a href="privacy.html">개인정보처리방침</a></td>
-                <td><a href="notice.html">공지사항</a></td>
-                <td><a href="contact.html">1:1 문의</a></td>
-                <td><a href="faq.html">자주 묻는 질문</a></td>
-            </tr>
-            
-            <!-- 2행: 각 링크 아래에 들어갈 상세 정보 -->
-            
-            <tr>
-                <td>
-                    회사정보<br>
-                    사업자등록번호
-                </td>
-                <td></td>
-                <td>
-                    메일<br>
-                    전화번호<br>
-                    주소
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            
-            <!--  3행: 칸을 합쳐서 저작권 표시-->
-            <tr>
-                <td colspan="7" class="footer-copy">
-                    © 2025 대체당. All rights reserved.
-                </td>
-            </tr>
-        </table>
-    </footer>
+    <th:block th:replace="~{fragments :: footer}"></th:block>
     <!-- <script src="../detailedpage/header_copy.js" defer></script> -->
     <script src="detaliedpage.js" defer></script>
    

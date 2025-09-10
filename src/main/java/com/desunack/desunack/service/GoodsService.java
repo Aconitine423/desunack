@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -144,5 +145,20 @@ public class GoodsService {
             }
             throw e;
         }
+    }
+
+    public boolean getGoodsDetail(int g_id, Model model) {
+        GoodsDto gDto = goodsDao.getGoods(g_id);
+        GoodsInfoDto giDto = goodsDao.getGoodsInfo(g_id);
+        String reviews = goodsDao.getReviewList(g_id);
+        if(gDto != null && giDto != null){
+            model.addAttribute("goodsDto", gDto);
+            model.addAttribute("goodsInfoDto", giDto);
+            if(reviews != null){
+                model.addAttribute("reviews", reviews);
+            }
+            return true;
+        }
+        return false;
     }
 }

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -50,5 +51,13 @@ public class GoodsController {
             log.error("상품등록 처리 중 에러 발생", e);
             return ResponseEntity.badRequest().body("상품등록 실패");
         }
+    }
+    @GetMapping("/goods/detail/{g_id}")
+    public String goodsDetail(@PathVariable("g_id") int g_id, Model model){
+        if(gSer.getGoodsDetail(g_id, model)){
+            return "/goodsDetail";
+        }
+        log.info("상품 정보를 불러오는 것을 실패했습니다.");
+        return null;
     }
 }

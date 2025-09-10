@@ -20,4 +20,10 @@ public interface GoodsDao {
     boolean goodsAllergy(int g_id, ArrayList<Integer> aList);
 
     boolean goodsInfo(GoodsInfoDto giDto);
+
+    GoodsDto getGoods(int g_id);
+
+    GoodsInfoDto getGoodsInfo(int g_id);
+
+    String getReviewList(int g_id);
 }

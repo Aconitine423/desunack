@@ -97,9 +97,11 @@ public class MemberController {
     // 회원정보수정 페이지 이동
     @GetMapping("/member/update/customer/{userUid}")
     public String customerUpdateFrm(@PathVariable("userUid") Integer userUid, Model model) {
-        boolean result = mSer.getCustomerInfo(userUid, model);
-        if (result) {
-            log.info("1");
+        CustomerDto cDto = mSer.getCustomerUpdateInfo(userUid);
+        if (cDto != null) {
+            model.addAttribute("cDto", cDto);
+        } else {
+            return null;
         }
         return "/member/customerUpdateFrm";
     }

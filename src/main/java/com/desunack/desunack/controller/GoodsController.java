@@ -55,7 +55,7 @@ public class GoodsController {
     @GetMapping("/goods/detail/{g_id}")
     public String goodsDetail(@PathVariable("g_id") int g_id, Model model){
         if(gSer.getGoodsDetail(g_id, model)){
-            return "/goodsDetail";
+            return "/goods/goodsDetail";
         }
         log.info("상품 정보를 불러오는 것을 실패했습니다.");
         return null;

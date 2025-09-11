@@ -150,7 +150,7 @@ public class GoodsService {
     public boolean getGoodsDetail(int g_id, Model model) {
         GoodsDto gDto = goodsDao.getGoods(g_id);
         GoodsInfoDto giDto = goodsDao.getGoodsInfo(g_id);
-        String reviews = goodsDao.getReviewList(g_id);
+        ArrayList<String> reviews = goodsDao.getReviewList(g_id);
         if(gDto != null && giDto != null){
             model.addAttribute("goodsDto", gDto);
             model.addAttribute("goodsInfoDto", giDto);

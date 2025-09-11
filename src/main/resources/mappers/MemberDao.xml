@@ -27,9 +27,14 @@
         values (#{m_uid}, #{s_picture}, #{s_account}, #{s_bank}, #{s_delivery}, #{s_seller_num})
     </insert>
 
-<!--    <select id="getMemberEntity" resultType="com.desunack.desunack.entity.MemberEntity">-->
-<!--        select m_uid, m_name, m_kind from member where m_id = #{m_id}-->
-<!--    </select>-->
+    <update id="memberUpdate">
+        update member set m_name = #{m_name}, m_phone = #{m_phone}, m_email = #{m_email}, m_post = #{m_post},
+                          m_address = #{m_address}, m_address_detail = #{m_address_detail} where m_uid = #{m_uid}
+    </update>
+
+    <update id="customerUpdate">
+        update c_member set c_nickname = #{c_nickname}, c_gender = #{c_gender}, c_birth = #{c_birth} where c_m_uid = #{m_uid}
+    </update>
 
     <select id="getCustomerEntity" resultType="com.desunack.desunack.entity.CustomerEntity">
         select m_uid, m_id, m_name, m_phone, m_email, m_post, m_address, m_address_detail

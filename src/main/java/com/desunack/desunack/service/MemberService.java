@@ -40,8 +40,11 @@ public class MemberService {
         // DTO -> Entity 변환
         CustomerEntity customerEntity = customerDto.toEntity();
 
-        // ID 중복체크
+        // ID, 닉네임 중복체크
         if (mDao.isUsedId(customerEntity.getM_id())){
+            return false;
+        }
+        if (mDao.isUsedNickname(customerEntity.getC_nickname())) {
             return false;
         }
 
@@ -294,5 +297,15 @@ public class MemberService {
             return null;
         }
         return customerEntity.toDto();
+    }
+
+    @Transactional
+    public boolean customerUpdate(CustomerDto cDto, HttpSession session) {
+        log.info("======cDto={}",  cDto);
+        CustomerEntity cEntity = cDto.toEntity();
+        mDao.memberUpdate(cEntity);
+        mDao.customerUpdate(cEntity);
+        session.setAttribute("userName", cEntity.getM_name());
+        return true;
     }
 }

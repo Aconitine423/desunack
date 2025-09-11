@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <link rel="shortcut icon" href="/img/favicon/favicon-16x16.png" type="image/x-icon">
     <link rel="stylesheet" href="/common/reset.css">
     <link rel="stylesheet" href="/css/mypage.css">
@@ -330,52 +331,6 @@
 <!--    <div id="site-footer" data-include="/My_page/mpFooter/mpFooter.html"></div>-->
 <!-- 토스트 컨테이너  -->
 <div id="toast" aria-live="polite" aria-atomic="true"></div>
-
-<!--<script th:inline="javascript">-->
-<!--    console.log([[${session.m_kind}]]);-->
-<!--    const user = [[${uInfo}]];-->
-<!--    const cCount = [[${cCount}]];-->
-
-<!--    $(document).ready(function () {-->
-<!--        {-->
-<!--            substr = substr.replaceAll('"', '');-->
-<!--            substr = substr.replaceAll(' ', '');-->
-<!--            const nameStart = substr.indexOf('m_name') + 7;-->
-<!--            const nameEnd = substr.indexOf('m_post') - 2;-->
-<!--            $('#pf-name').text(-->
-<!--                substr.substring(nameStart, nameEnd)-->
-<!--            );-->
-<!--            const phoneStart = substr.indexOf('m_phone') + 8;-->
-<!--            const phoneEnd = substr.indexOf('c_gender') - 2;-->
-<!--            $('#pf-phone').text(-->
-<!--                substr.substring(phoneStart, phoneEnd)-->
-<!--            )-->
-<!--            const emailStart = substr.indexOf('m_email') + 8;-->
-<!--            const emailEnd = substr.indexOf('m_phone') - 2;-->
-<!--            $('#pf-email').text(-->
-<!--                substr.substring(emailStart, emailEnd)-->
-<!--            );-->
-<!--            const birthStart = substr.indexOf('c_birth') + 8;-->
-<!--            const birthEnd = substr.indexOf('c_point') - 2;-->
-<!--            $('#pf-birth').text(-->
-<!--                substr.substring(birthStart, birthEnd)-->
-<!--            );-->
-<!--            const pointStart = substr.indexOf('c_point') + 8;-->
-<!--            const pointEnd = substr.indexOf('m_email') - 2;-->
-<!--            $('#val-point').text(-->
-<!--                substr.substring(pointStart, pointEnd)-->
-<!--            );-->
-<!--            const gradeStart = substr.indexOf('grade') + 6;-->
-<!--            const gradeEnd = substr.indexOf('m_uid') - 2;-->
-<!--            $('#val-grade').text(-->
-<!--                substr.substring(gradeStart, gradeEnd)-->
-<!--            );-->
-<!--            $('#val-coupon').text(-->
-<!--                cCount + '장'-->
-<!--            );-->
-<!--        }-->
-<!--    })-->
-<!--</script>-->
 <script>
     // [공통 include 로더] - 페이지 내 모든 [data-include] 처리
     async function doInclude(host) {
@@ -418,43 +373,13 @@
     });
 
     // (선택) 헤더 전용 JS가 있으면 헤더 include 후에만 로드
-    document.getElementById('site-header')?.addEventListener('include:ready', () => {
-        const s = document.createElement('script');
-        s.src = '/js/mpheader.js'; // 필요하면 경로 조정
-        document.body.appendChild(s);
-    });
+    // document.getElementById('site-header')?.addEventListener('include:ready', () => {
+    //     const s = document.createElement('script');
+    //     s.src = '/js/mpheader.js'; // 필요하면 경로 조정
+    //     document.body.appendChild(s);
+    // });
 </script>
-<!--
-<script>
-    // header include 완료 후 header js 로드 + 초기화
-    document.getElementById('site-header')?.addEventListener('include:ready', () => {
-    const s = document.createElement('script');
-    s.src = 'mpheader/mpheader.js';
-    s.onload = () => {
-    // 1) 헤더 js가 init 함수를 노출한다면 호출 (없으면 그냥 지나감)
-    if (window.headerInit) window.headerInit();
-
-    // 2) 헤더 js가 'DOMContentLoaded'만 기다리는 구조 대비 (이미 지나갔을 수 있음)
-    if (document.redyState !== 'loading') {
-    document.dispatchEvent(new Event('DOMContentLoaded'));
-    }
-    };
-    document.body.appendChild(s);
-    })
-
-</script> -->
-<!-- 분리된 js -->
-<!--<script>-->
-<!--    document.getElementById('site-header')?.addEventListener('include:ready', () => {-->
-<!--        const s = document.createElement('script');-->
-<!--        s.src = '/js/mpheader.js';-->
-<!--        s.defer = true;-->
-<!--        document.body.appendChild(s);-->
-<!--    });-->
-<!--</script>-->
-<script src="/js/mypage.js"></script>
-<!--<script src="/js/header.js"></script>-->
-
-
 </body>
+<script src="/js/mypage.js"></script>
+<script src="/js/header.js"></script>
 </html>

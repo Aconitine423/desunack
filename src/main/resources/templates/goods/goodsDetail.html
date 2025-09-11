@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="'['+${goods.brand_name}+']'+${goods.g_name}">[대체당FESTA] 저당 알롤로스 쌈장 2+1 상세페이지</title>
@@ -14,164 +14,213 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- 헤더가 들어간 자리 -->
-    <th:block th:replace="~{fragments :: header}"></th:block>
-    
-    <!-- 브레드크럼이 들어가는 자리 -->
-    <nav class="breadcrumb-nav">
-        <a href="/">홈</a>
-        <span class="breadcrumb-sep">&gt;</span>
-        
-        <!-- 대분류 드롭다운 -->
-        <div class="breadcrumb-item dropdown" id="main-dropdown">
-            <button class="dropdown-toggle">
-                <span id="main-label" data-value="">대분류</span>
-                <span class="arrow">▼</span>
-            </button>
-            <ul class="dropdown-menu" id="main-menu">
-                <!-- js가 여기에 "음료/간식" 항목을 삽입 -->
-            </ul>
-        </div>
-        
-        <span class="breadcrumb-sep">&gt;</span>
-        
-        <!-- 소분류 드롭다운 -->
-        <div class="breadcrumb-item dropdown" id="sub-dropdown">
-            <button class="dropdown-toggle">
-                <span id="sub-label" data-value="">소분류</span>
-                <span class="arrow">▼</span>
-            </button>
-            <ul class="dropdown-menu" id="sub-menu">
-                <!-- js가 여기에 선택된 대분류의 소분류를 삽입 -->
-            </ul>
-        </div>
-    </nav>
-    <main>
-        <!-- 상품 정보 섹션 -->
-        <section id="section-info" class="section">
-            <div class="product-header">
-                <!-- 이미지 대신 색상 박스 -->
-                <div class="image-placeholder">
-                    <img th:src="${goods.g_image}"/>
-                </div>
-                <div class="product-summary">
-                    <h1 th:text="'['+${goods.brand_name}+']'+${goods.g_name}"></h1>
-                    <span th:text="판매자+':'+${goods.company_name}"></span>
-                    <div class="price-area">
-                        <span th:text="${goods.g_value}+원"></span>
-                    </div>
-                    <div class="delivery-info">
-                        <span th:text="3000원"></span>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- 상단 네비게이션 -->
-        <nav id="scrollspy-nav">
-            <ul>
-                <li><a href="#section-info" class="active">상세 정보</a></li>
-                <li><a href="#review-summary">리뷰 요약</a></li>
-                <li><a href="#section-review">리뷰 </a></li>
-                <li><a href="#section-inquiry">문의</a></li>
-            </ul> 
-        </nav>
-        <!-- 리뷰 요약 영역 -->
-        <section id="review-summary" class="section">
-            <div class="review-summary">
-                <a href="#section-review" class="review-link">
-                    리뷰 <span class="review-count" th:text="${goods.g_review_count}">1,284개</span>
-                </a>
-                <div class="review-satisfaction">
-                    평균별점 : <span class="review-percent" th:text="${goods.rating}">점</span>
-                    <span class="rating"></span>
-<!--                    스크립트로 평균별점(전체별점/리뷰수)으로 1점 단위마다 별 활성화시키기-->
-                </div>
-            </div>
-        </section>
-        
-        <div class="product-detail">
-            <h2>상세 정보</h2>
-            <img class="detail" th:src="${goods.g_detail}">
-        </div>
-        <!-- 리뷰(후기) 섹션 -->
-        <section id="section-review" class="section">
-            <h2>리뷰</h2>
-            <!-- 리뷰 작성 폼 -->
-            <div class="review-list">
-                <div class="review-item">
-<!--                  스크립트로 리뷰 불러와서(JSON형태) 대표 n개만큼 출력시키기-->
-                </div>
+<!-- 헤더가 들어간 자리 -->
+<th:block th:replace="~{fragments :: header}"></th:block>
 
-            </div>
-        </section>
-        <!-- 문의 섹션 -->
-        <section id="section-inquiry" class="section">
-            <h2>상품 정보 제공 고시</h2>
-            <hr>
-            <table>
-                <tr>
-                    <td>상품 번호</td>
-                    <td th:text="${goodsDto.g_id}"></td>
-                </tr>
-                <tr>
-                    <td>브랜드</td>
-                    <td th:text="${goodsDto.brand_name}"></td>
-                </tr>
-                <tr>
-                    <td>원산지</td>
-                    <td th:text="${goodsInfoDto.gi_origin}"></td>
-                </tr>
-            </table>
-            <hr>
-            <table>
-                <tr>
-                    <td>제품명</td>
-                    <td th:text="${goodsDto.g_name}"></td>
-                </tr>
-                <tr>
-                    <td>식품 유형</td>
-                    <td th:text="${goodsInfoDto.gi_kind}"></td>
-                </tr>
-                <tr>
-                    <td>생산지</td>
-                    <td th:text="${goodsInfoDto.gi_factory}"></td>
-                </tr>
-                <tr>
-                <td>제조 연월일, 소비기한</td>
-                    <td>상세 페이지 참조</td>
-                </tr>
-                <tr>
-                    <td>포장단위별 내용물의 용량</td>
-                    <td>상세 페이지 참조</td>
-                </tr>
-                <tr>
-                    <td>원재료명</td>
-                    <td>상세 페이지 참조</td>
-                </tr>
-                <tr>
-                    <td>영양성분</td>
-                    <td>상세 페이지 참조</td>
-                </tr>
-                <tr>
-                    <td>소비자 안전을 위한 주의 사항</td>
-                    <td th:text="${goodsInfoDto.gi_caution}"></td>
-                </tr>
-                <tr>
-                    <td>소비자 상담 관련 전화번호</td>
-                    <td th:text="${goodsInfoDto.gi_cs_phone}"></td>
-                </tr>
-            </table>
-            <!-- 스크롤 테스트용 더미 텍스트 추가 -->
-        </section>
-    </main>
-    <div class="scroll-arrow-buttons">
-        <button class="scroll-btn up" title= "맨 위로 이동">&#8593;</button>
-        <button class="scroll-btn down" title= "맨 아래로 이동">&#8595;</button>
+<!-- 브레드크럼이 들어가는 자리 -->
+<nav class="breadcrumb-nav">
+    <a href="/">홈</a>
+    <span class="breadcrumb-sep">&gt;</span>
+
+    <!-- 대분류 드롭다운 -->
+    <div class="breadcrumb-item dropdown" id="main-dropdown">
+        <button class="dropdown-toggle">
+            <span id="main-label" data-value="">대분류</span>
+            <span class="arrow">▼</span>
+        </button>
+        <ul class="dropdown-menu" id="main-menu">
+            <!-- js가 여기에 "음료/간식" 항목을 삽입 -->
+        </ul>
     </div>
-    <th:block th:replace="~{fragments :: footer}"></th:block>
-    <!-- <script src="../detailedpage/header_copy.js" defer></script> -->
-    <script src="detaliedpage.js" defer></script>
-   
-    
+
+    <span class="breadcrumb-sep">&gt;</span>
+
+    <!-- 소분류 드롭다운 -->
+    <div class="breadcrumb-item dropdown" id="sub-dropdown">
+        <button class="dropdown-toggle">
+            <span id="sub-label" data-value="">소분류</span>
+            <span class="arrow">▼</span>
+        </button>
+        <ul class="dropdown-menu" id="sub-menu">
+            <!-- js가 여기에 선택된 대분류의 소분류를 삽입 -->
+        </ul>
+    </div>
+</nav>
+<main>
+    <!-- 상품 정보 섹션 -->
+    <section id="section-info" class="section">
+        <div class="product-header">
+            <!-- 이미지 대신 색상 박스 -->
+            <div class="image-placeholder">
+                <img th:src="${goods.g_image}"/>
+            </div>
+            <div class="product-summary">
+                <h1 th:text="'['+${goods.brand_name}+']'+${goods.g_name}"></h1>
+                <span th:text="판매자+':'+${goods.company_name}"></span>
+                <div class="price-area">
+                    <span th:text="${goods.g_value}+원"></span>
+                </div>
+                <div class="delivery-info">
+                    <span th:text="3000원"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 상단 네비게이션 -->
+    <nav id="scrollspy-nav">
+        <ul>
+            <li><a href="#section-info" class="active">상세 정보</a></li>
+            <li><a href="#review-summary">리뷰 요약</a></li>
+            <li><a href="#section-review">리뷰 </a></li>
+            <li><a href="#section-inquiry">문의</a></li>
+        </ul>
+    </nav>
+    <!-- 리뷰 요약 영역 -->
+    <section id="review-summary" class="section">
+        <div class="review-summary">
+            <a href="#section-review" class="review-link">
+                리뷰 <span class="review-count" th:text="${goods.g_review_count}">1,284개</span>
+            </a>
+            <div class="review-satisfaction">
+                평균별점 : <span class="review-percent" th:text="${goods.rating}">점</span>
+                <span class="rating"></span>
+                <!--                    스크립트로 평균별점(전체별점/리뷰수)으로 1점 단위마다 별 활성화시키기-->
+            </div>
+        </div>
+    </section>
+
+    <div class="product-detail">
+        <h2>상세 정보</h2>
+        <img class="detail" th:src="${goods.g_detail}">
+    </div>
+    <!-- 리뷰(후기) 섹션 -->
+    <section id="section-review" class="section">
+        <h2>리뷰</h2>
+        <!-- 리뷰 작성 폼 -->
+        <div class="review-list">
+            <div class="review-item">
+                <!--                  스크립트로 리뷰 불러와서(JSON형태) 대표 n개만큼 출력시키기-->
+            </div>
+
+        </div>
+    </section>
+    <!-- 문의 섹션 -->
+    <section id="section-inquiry" class="section">
+        <h2>상품 정보 제공 고시</h2>
+        <hr>
+        <table>
+            <tr>
+                <td>상품 번호</td>
+                <td th:text="${goodsDto.g_id}"></td>
+            </tr>
+            <tr>
+                <td>브랜드</td>
+                <td th:text="${goodsDto.brand_name}"></td>
+            </tr>
+            <tr>
+                <td>원산지</td>
+                <td th:text="${goodsInfoDto.gi_origin}"></td>
+            </tr>
+        </table>
+        <hr>
+        <table>
+            <tr>
+                <td>제품명</td>
+                <td th:text="${goodsDto.g_name}"></td>
+            </tr>
+            <tr>
+                <td>식품 유형</td>
+                <td th:text="${goodsInfoDto.gi_kind}"></td>
+            </tr>
+            <tr>
+                <td>생산지</td>
+                <td th:text="${goodsInfoDto.gi_factory}"></td>
+            </tr>
+            <tr>
+                <td>제조 연월일, 소비기한</td>
+                <td>상세 페이지 참조</td>
+            </tr>
+            <tr>
+                <td>포장단위별 내용물의 용량</td>
+                <td>상세 페이지 참조</td>
+            </tr>
+            <tr>
+                <td>원재료명</td>
+                <td>상세 페이지 참조</td>
+            </tr>
+            <tr>
+                <td>영양성분</td>
+                <td>상세 페이지 참조</td>
+            </tr>
+            <tr>
+                <td>소비자 안전을 위한 주의 사항</td>
+                <td th:text="${goodsInfoDto.gi_caution}"></td>
+            </tr>
+            <tr>
+                <td>소비자 상담 관련 전화번호</td>
+                <td th:text="${goodsInfoDto.gi_cs_phone}"></td>
+            </tr>
+        </table>
+        <!-- 스크롤 테스트용 더미 텍스트 추가 -->
+    </section>
+</main>
+<div class="scroll-arrow-buttons">
+    <button class="scroll-btn up" title="맨 위로 이동">&#8593;</button>
+    <button class="scroll-btn down" title="맨 아래로 이동">&#8595;</button>
+</div>
+<th:block th:replace="~{fragments :: footer}"></th:block>
+<!-- <script src="../detailedpage/header_copy.js" defer></script> -->
+<script src="detaliedpage.js" defer></script>
+
+
 </body>
+<script th:inline="javascript">
+    let reviews = [[${reviews}]];
+    const createHtml = (reviews) => {
+        console.log(reviews);
+        let html = "";
+        for (const str of reviews) {
+            let substr = str.replaceAll(' ', '');
+            substr = substr.replaceAll('"', '');
+            console.log(substr);
+            subgoods = substr.split(',');
+            let startname = substr.indexOf('m_name') + 7;
+            let endname = substr.indexOf('r_rating') - 1;
+            console.log(subgoods);
+            let name = substr.substring(startname, endname);
+            let startrating = substr.indexOf('r_rating') + 9;
+            let endrating = substr.indexOf('r_contents') - 1;
+            let rating = substr.substring(startrating, endrating);
+            rating = parseInt(rating);
+            console.log(name, rating);
+            let startcontents = substr.indexOf('r_contents') + 11;
+            let endcontents = substr.indexOf('}');
+            let contents = substr.substring(startcontents, endcontents);
+            console.log(contents);
+
+            html += `<div class="review-item"><p>${name}</p><p class="rating">`;
+            for (let i = 0; i < 5 - rating; i++) {
+                html += `★`;
+            }
+            for (let i = rating; i < 5; i++) {
+                html += `☆`;
+            }
+            html += `</p><br>
+                <p>${contents}</p>
+            </div>`
+        }
+        return html;
+    }
+    $(document).ready(function () {
+        const $container = $('#review-list');
+        $container.empty();
+        try {
+            const html = createHtml(reviews);
+            $container.html(html);
+        } catch (e) {
+            console.log(e);
+            $container.html('<span class="error-message">데이터를 불러오는 데 실패했습니다.</span>')
+        }
+    });
+</script>
 </html>

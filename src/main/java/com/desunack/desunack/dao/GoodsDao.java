@@ -2,12 +2,9 @@ package com.desunack.desunack.dao;
 
 import com.desunack.desunack.dto.GoodsDto;
 import com.desunack.desunack.dto.GoodsInfoDto;
-import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Mapper
 public interface GoodsDao {
@@ -25,5 +22,5 @@ public interface GoodsDao {
 
     GoodsInfoDto getGoodsInfo(int g_id);
 
-    String getReviewList(int g_id);
+    ArrayList<String> getReviewList(int g_id);
 }

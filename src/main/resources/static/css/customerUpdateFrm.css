@@ -12,10 +12,10 @@ body{
 }
 
 /* 폼 래퍼 */
-.signupForm{
+.updateForm{
     /*background: #fff;*/
     padding: 2rem;
-    margin: 0.5rem auto;
+    margin: 0.5rem;
     width: 90%;
     max-width: 800px;
     border-radius: 8px;
@@ -117,6 +117,10 @@ body{
     flex-grow: 0;
     width: 100px;
 }
+.addressContainer #wrap {
+    flex-basis: 100%;
+    height: auto;
+}
 
 /* 생년월일 컨테이너 */
 .birthContainer {
@@ -179,10 +183,28 @@ body{
 }
 
 /* 메시지 박스 */
-.messageBox {
-    display: none;
-    color: red;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 1rem;
+/*.messageBox {*/
+/*    display: none;*/
+/*    color: red;*/
+/*    font-weight: bold;*/
+/*    text-align: center;*/
+/*    margin-top: 1rem;*/
+/*}*/
+/* 토스트 박스 */
+#toast{
+    position:fixed;
+    bottom: 16px;
+    display: grid;
+    gap: 8px;
+    z-index: 9999;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.toast{
+    background: #111;
+    color: #fff;
+    padding: 10px 12px;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.2);
+    font-size: 14px;
 }

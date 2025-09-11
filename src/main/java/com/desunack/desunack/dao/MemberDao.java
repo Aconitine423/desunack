@@ -70,4 +70,7 @@ public interface MemberDao {
 
     @Select("select * from member where m_id = #{userId}")
     Optional<MemberEntity> findByUserId(String userId);
+
+    @Update("update member set m_recent_date = now() where m_id = #{id}")
+    boolean updateRecentDate(String id);
 }

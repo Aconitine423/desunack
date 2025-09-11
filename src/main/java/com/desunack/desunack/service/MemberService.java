@@ -251,8 +251,11 @@ public class MemberService {
         String securityPw = mDao.getSecurityPw(id);
         log.info("======securityPw={}",securityPw);
         if (ecd.matches(pw, securityPw)) {
-            memberEntity = mDao.getMemberEntity(id);
-            return memberEntity.toDto();
+            boolean recentDateResult = mDao.updateRecentDate(id);
+            if (recentDateResult) {
+                memberEntity = mDao.getMemberEntity(id);
+                return memberEntity.toDto();
+            }
         }
         return null;
     }
@@ -282,5 +285,14 @@ public class MemberService {
         } else {
             return true;
         }
+    }
+
+    // 회원정보수정 페이지에서 DB에서 회원정보 불러오기
+    public CustomerDto getCustomerUpdateInfo(Integer userUid) {
+        CustomerEntity customerEntity = mDao.getCustomerEntity(userUid);
+        if (customerEntity == null) {
+            return null;
+        }
+        return customerEntity.toDto();
     }
 }

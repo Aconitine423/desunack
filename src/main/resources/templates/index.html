@@ -155,11 +155,16 @@
             let endimage = substr.indexOf('g_m_uid') - 1;
             let imageUrl = substr.substring(startimage, endimage);
             console.log(name, imageUrl);
-            html += `<div class="grid-item">
-            <img src="${imageUrl}" alt="${name}" class="product-image"/>
+            let startgid = substr.indexOf('g_id') + 5;
+            let endgid = substr.indexOf('g_qty') -1;
+            let g_id = substr.substring(startgid, endgid);
+            html += `<a href="/goods/detail/${g_id}" ><div class="grid-item">
+            <img src="${imageUrl}" alt="${name}" class="product-image" />
             <span class="product-name">${name}</span>
-        </div>`;
+
+        </div></a>`;
         }
+        console.log(html);
         return html;
     }
     $(document).ready(function () {

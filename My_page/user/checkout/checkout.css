@@ -1,0 +1,130 @@
+:root{
+  --content-w: 980px;
+  --radius: 12px;
+  --shadow: 0 8px 20px rgba(0,0,0,.04);
+}
+
+.checkout-page{ font-family:"Noto Sans KR", system-ui, sans-serif; }
+.page-title{ font-size:22px; font-weight:800; margin:10px 0 16px; }
+
+.container.checkout-page > .grid{
+  display:grid; grid-template-columns: 1fr 360px; gap:20px;
+  width:min(100%, var(--content-w)); margin-inline:auto;
+}
+
+.card{
+  background:#fff; border:1px solid rgba(0,0,0,.06); border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:16px;
+}
+.sec-title{ margin:0 0 12px; font-size:16px; font-weight:800; color:#111; }
+.sec-head{ display:flex; align-items:center; justify-content:space-between; }
+
+.row{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin:10px 0; }
+.row .full{ grid-column: 1 / -1; }
+.mt8{ margin-top:8px } .mt12{ margin-top:12px } .mt24{ margin-top:24px }
+
+label{ display:flex; flex-direction:column; gap:6px; font-size:13px; color:#333; }
+input, select{ height:40px; border:1px solid #ddd; border-radius:10px; padding:0 10px; }
+input:focus, select:focus{ outline:2px solid #1a73e8; }
+
+.inline{ display:flex; gap:8px; }
+.addr-line{ display:flex; gap:8px; }
+.chk-inline{ display:inline-flex; align-items:center; gap:8px; }
+
+.btn{ padding:10px 14px; border-radius:10px; background:#f6f7f9; border:1px solid #ddd; cursor:pointer }
+.btn:hover{ background:#eef1f5 }
+.btn-outline{ padding:10px 14px; border-radius:10px; background:#fff; border:1px solid #bbb; cursor:pointer }
+.btn-primary{ width:100%; padding:12px 16px; border:0; border-radius:12px; background:#111; color:#fff; font-weight:800; cursor:pointer }
+.btn-primary:disabled{ background:#aaa; cursor:not-allowed }
+.block{ display:block; width:100% }
+
+.right .summary .totals{ margin:12px 0 0; }
+.right .summary .totals > div{ display:flex; justify-content:space-between; padding:6px 0; }
+.right .summary .totals .total{ padding-top:10px; border-top:1px dashed #eee; font-weight:900; }
+
+.item-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
+.item{ display:grid; grid-template-columns:64px 1fr auto; gap:10px; align-items:center; }
+.item img{ width:64px; height:64px; border-radius:10px; object-fit:cover; border:1px solid #eee; }
+.item .name{ font-weight:700; }
+.item .opt{ font-size:12px; color:#888; }
+
+.pay-tabs{
+  display:flex; gap:10px; margin-bottom:10px;
+}
+.radio{ display:inline-flex; align-items:center; gap:6px; }
+.pay-tabs .radio{
+  position: relative;
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: #f7f8fa;
+  color: #374151;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .06s, box-shadow .12s, background .12s, color .12s, border-color .12s;
+  user-select: none;
+}
+.pay-tabs .radio:hover{ background:#eef1f5 }
+.pay-tabs .radio input{ position:absolute; inset:0; opacity:0; cursor:pointer }
+
+/* 체크 상태 시 하이라이트 */
+.pay-tabs .radio:has(input:checked){
+  background:#111; color:#fff;
+  border-color:#111;
+  box-shadow: 0 10px 24px rgba(0,0,0,.12);
+  transform: translateY(-1px);
+}
+
+/* 포커스 링 */
+.pay-tabs .radio input:focus-visible + * ,
+.pay-tabs .radio:has(input:focus-visible){
+  outline: 2px solid #1a73e8; outline-offset: 2px;
+}
+.pay-box[hidden]{ display:none; }
+
+/* 모달 */
+.modal::backdrop{ background:rgba(0,0,0,.4) }
+.modal{ border:0; border-radius:12px; padding:0; }
+.modal-body{ padding:16px 16px 12px; min-width:360px; background:#fff; border-radius:12px; }
+.addr-list{ list-style:none; margin:10px 0; padding:0; display:flex; flex-direction:column; gap:8px; }
+.addr-item{ padding:10px; border:1px solid #ddd; border-radius:10px; cursor:pointer; }
+.addr-item:hover{ background:#f7f9fc }
+.modal-actions{ display:flex; justify-content:flex-end; gap:8px; }
+/* dialog 중앙 고정 */
+.modal[open]{
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;                /* UA 기본 여백 제거 */
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  z-index: 2000;
+}
+.modal::backdrop{ background: rgba(0,0,0,.45) }
+
+/* 작은 화면 대응 */
+@media (max-width: 480px){
+  .modal-body{ min-width: 92vw; }
+}
+/* 라벨 기본 규칙을 이김 */
+label.chk-inline{
+  display:inline-flex !important;
+  flex-direction:row !important;
+  align-items:center !important;
+  gap:8px;
+}
+:root{ --content-w: 980px; } /* 없으면 추가 */
+
+/* 제목과 본문 컨테이너를 모두 가운데 */
+main.container.checkout-page > .page-title,
+main.container.checkout-page > .grid{
+  width: min(100%, var(--content-w));
+  margin-inline: auto;
+}
+/* 우측 요약 고정 네비처럼 */
+.right { position: relative; }
+.right .summary { position: sticky; top: 16px; }
+@media (max-width: 920px){
+  .right .summary { position: static; } /* 모바일에서는 고정 해제 */
+}

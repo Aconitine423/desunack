@@ -1,5 +1,6 @@
 package com.desunack.desunack.controller;
 
+import com.desunack.desunack.dto.CustomerDto;
 import com.desunack.desunack.dto.UserDto;
 import com.desunack.desunack.service.MemberService;
 import jakarta.servlet.http.HttpSession;
@@ -49,7 +50,7 @@ public class MemberRestController {
                         new UsernamePasswordAuthenticationToken(uDto.getUserId(), userDto.getUserPw())
                 );
 
-// 2. 인증 성공 시, SecurityContextHolder에 저장
+                // 2. 인증 성공 시, SecurityContextHolder에 저장
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 log.info("======authentication={}", authentication);
 
@@ -59,7 +60,7 @@ public class MemberRestController {
                 Map<String, Object> response = new HashMap<>();
                 response.put("success", true);
                 response.put("message", "로그인 성공");
-                response.put("m_kind", uDto.getUserKind());
+//                response.put("m_kind", uDto.getUserKind());
                 return ResponseEntity.ok().body(response);
             } else {
                 return ResponseEntity.ok().body(Map.of("success", false, "message", "아이디 또는 비밀번호가 올바르지 않습니다."));
@@ -69,6 +70,18 @@ public class MemberRestController {
             return ResponseEntity.ok().body(Map.of("success", false, "message", "아이디 또는 비밀번호가 올바르지 않습니다."));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("success", false, "message", "로그인 중 오류가 발생했습니다."));
+        }
+    }
+
+    // 소비자 회원정보 수정
+    @PostMapping("/member/customerUpdate")
+    public ResponseEntity<String> customerUpdate(@RequestBody CustomerDto cDto, HttpSession session) {
+        log.info("======cDto={}", cDto);
+        boolean result = mSer.customerUpdate(cDto, session);
+        if (result) {
+            return ResponseEntity.ok("회원정보 수정 성공");
+        } else {
+            return ResponseEntity.badRequest().body("회원정보 수정 실패");
         }
     }
 }

@@ -1,3 +1,25 @@
+// 토스트 메시지 함수
+function showToast(message, isSuccess = true) {
+    // 1. jQuery로 토스트 요소를 만들고 클래스와 텍스트를 한 번에 설정 (체이닝)
+    const $toast = $('<div>').addClass('toast').text(message);
+
+    // 2. 실패 시 배경색 변경
+    if (!isSuccess) {
+        $toast.css('background-color', '#d9534f');
+    }
+
+    // 3. 토스트 컨테이너에 새로 만든 토스트를 추가
+    $('#toast').append($toast);
+
+    // 4. 2.5초 대기 후, 0.5초 동안 서서히 사라지는 애니메이션 실행.
+    //    애니메이션이 끝나면 DOM에서 완전히 제거.
+    setTimeout(() => {
+        $toast.fadeOut(500, function() {
+            $(this).remove();
+        });
+    }, 2500);
+}
+
 // 카카오 우편번호 api
 // 우편번호 찾기 찾기 화면을 넣을 element
 var element_wrap = document.getElementById('wrap');
@@ -273,23 +295,27 @@ function validateForm() {
         axios.post('/member/customerUpdate', formData)
             .then(function (response) {
                 console.log("회원정보 수정 성공: ", response.data);
-                $messageBox.text('회원정보 수정이 완료되었습니다.').css('display', 'block').css('color', 'blue');
-                setTimeout(function () {
-                    $messageBox.hide();
+                showToast("회원정보 수정이 완료되었습니다.", true);
+                // $messageBox.text('회원정보 수정이 완료되었습니다.').css('display', 'block').css('color', 'blue');
+                // setTimeout(function () {
+                    // $messageBox.hide();
                     // window.parent.location.href = '/member/login'; // 로그인 페이지로
-                }, 3000);
+                // }, 3000);
             })
             .catch(function (error) {
                 console.log("회원정보 수정 실패:", error);
                 if (error.response && error.response.data) {
-                    $messageBox.text(error.response.data).css('display', 'block').css('color', 'red');
+                    showToast(error.response.data.message, false);
+                    // $messageBox.text(error.response.data).css('display', 'block').css('color', 'red');
                 } else {
-                    $messageBox.text('회원정보 수정에 실패했습니다.').css('display', 'block').css('color', 'red');
+                    showToast("회원정보 수정에 실패했습니다.", false);
+                    // $messageBox.text('회원정보 수정에 실패했습니다.').css('display', 'block').css('color', 'red');
                 }
             });
     } else {
         // 유효성검사 실패시 메시지박스에 표시
-        $messageBox.text('입력 정보를 다시 확인해주세요.').css('display', 'block').css('color', 'red');
+        showToast("입력 정보를 다시 확인해주세요.", false);
+        // $messageBox.text('입력 정보를 다시 확인해주세요.').css('display', 'block').css('color', 'red');
     }
     return isValid;
 }
@@ -298,7 +324,7 @@ function validateForm() {
 $updateForm.on('submit', function (event) {
     event.preventDefault();
     validateForm();
-    $messageBox.show().removeClass().addClass('message-box');
+    // $messageBox.show().removeClass().addClass('message-box');
 })
 
 // 입력필드 포커스아웃 이벤트 발생 추가 (실시간으로 유효성 검사)

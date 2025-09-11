@@ -26,15 +26,15 @@ async function fetchAuto(url, options = {}) {
 }
 
 // 간단 토스트
-function toast(msg){
-  const wrap = document.getElementById('toast');
-  if (!wrap) return;
-  const div = document.createElement('div');
-  div.className = 'toast';
-  div.textContent = msg;
-  wrap.appendChild(div);
-  setTimeout(() => div.remove(), 2200);
-}
+// function toast(msg){
+//   const wrap = document.getElementById('toast');
+//   if (!wrap) return;
+//   const div = document.createElement('div');
+//   div.className = 'toast';
+//   div.textContent = msg;
+//   wrap.appendChild(div);
+//   setTimeout(() => div.remove(), 2200);
+// }
 
 // DOM 캐시
 const $wrap = document.querySelector('.mypage');
@@ -356,7 +356,7 @@ document.getElementById('form-pass')?.addEventListener('submit', async (e)=> {
   if (!USER_UID) return;
   const password = document.getElementById('password').value;
   if (!password) { toast('비밀번호를 입력하세요.'); return;}
-  
+
     // TODO: 서버 엔드포인트 확정 시 fetch 연결
   toast('비밀번호 확인 API 엔드포인트가 확정되면 연결하세요. ');
   closeModal('modal-pass');

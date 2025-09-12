@@ -17,7 +17,7 @@ public interface MemberDao {
     String getSecurityPw(String m_id);
 
     @Select("select m_pw from member where m_uid = #{uid}")
-    String getSecurityPw(int uid);
+    String getCheckSecurityPw(int uid);
 
     @Select("select m_id, m_uid, m_name, m_kind from member where m_id = #{m_id}")
     MemberEntity getMemberEntity(String m_id);

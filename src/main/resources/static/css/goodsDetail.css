@@ -440,3 +440,7 @@ main{
     color : #fff;
     text-shadow: -1px 0px #b8743f, 0px 1px #b8743f, 1px 0px #b8743f, 0px -1px #b8743f;
 }
+
+#qty{
+    border : 1px solid #888;
+}

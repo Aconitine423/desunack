@@ -290,7 +290,7 @@ public class MemberService {
         }
     }
 
-    // 회원정보수정 페이지에서 DB에서 회원정보 불러오기
+    // 소비자 회원정보수정 페이지에서 DB에서 회원정보 불러오기
     public CustomerDto getCustomerUpdateInfo(Integer userUid) {
         CustomerEntity customerEntity = mDao.getCustomerEntity(userUid);
         if (customerEntity == null) {
@@ -299,6 +299,7 @@ public class MemberService {
         return customerEntity.toDto();
     }
 
+    // 소비자 회원정보 수정
     @Transactional
     public boolean customerUpdate(CustomerDto cDto, HttpSession session) {
         log.info("======cDto={}",  cDto);
@@ -307,5 +308,15 @@ public class MemberService {
         mDao.customerUpdate(cEntity);
         session.setAttribute("userName", cEntity.getM_name());
         return true;
+    }
+
+    // 비밀번호 확인
+    public boolean checkPw(UserDto uDto) {
+        String pw = uDto.getUserPw();
+        MemberEntity memberEntity = uDto.toEntity();
+        BCryptPasswordEncoder ecdPw = new BCryptPasswordEncoder();
+        int uid = memberEntity.getM_uid();
+        String securityPw = mDao.getSecurityPw(uid);
+        return ecdPw.matches(pw, securityPw);
     }
 }

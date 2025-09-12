@@ -13,10 +13,10 @@
     <link rel="stylesheet" href="/css/customerUpdateFrm.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <div th:replace="~{password-modal :: passwordCheckModalCss}"></div>
+    <div th:replace="~{fragments/password-modal :: passwordCheckModalCss}"></div>
 </head>
 <body>
-<th:block th:replace="~{fragments :: header}"></th:block>
+<th:block th:replace="~{fragments/fragments :: header}"></th:block>
 <section class="mypage" data-role="consumer" data-user-uid="U123456">
     <!-- [상단 탭] : 프로필 / 주문내역 / 찜한 상품 -->
     <nav class="mypage-tabs" role="tablist" aria-label="마이페이지 탭">
@@ -213,11 +213,11 @@
         </main>
     </div>
 </section>
-<th:block th:replace="~{fragments :: footer}"></th:block>
+<th:block th:replace="~{fragments/fragments :: footer}"></th:block>
 <!-- 토스트 컨테이너  -->
 <div id="toast" aria-live="polite" aria-atomic="true"></div>
-<div th:replace="~{password-modal :: passwordCheckModalHtml}"></div>
-<script th:replace="~{password-modal :: passwordCheckModalJs}"></script>
+<div th:replace="~{fragments/password-modal :: passwordCheckModalHtml}"></div>
+<script th:replace="~{fragments/password-modal :: passwordCheckModalJs}"></script>
 </body>
 <script src="/js/customerUpdateFrm.js"></script>
 <script th:inline="javascript">

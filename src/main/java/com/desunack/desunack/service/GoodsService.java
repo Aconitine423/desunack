@@ -170,4 +170,12 @@ public class GoodsService {
             throw e;
         }
     }
+
+    public void insertCart(int g_id, int userUid, int qty)throws Exception {
+        try{
+            goodsDao.insertCart(g_id, userUid, qty);
+        }catch(Exception e){
+            throw e;
+        }
+    }
 }

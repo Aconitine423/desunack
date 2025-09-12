@@ -71,4 +71,15 @@ public class GoodsController {
             return ResponseEntity.badRequest().body("찜목록 등록 실패");
         }
     }
+
+    @PostMapping("/goods/shoppingCart")
+    public ResponseEntity<String> goodsShoppingCart(@RequestPart int g_id, @RequestPart int userUid, @RequestPart int qty){
+        try {
+            gSer.insertCart(g_id,userUid, qty);
+            return ResponseEntity.ok("장바구니 등록 성공");
+        } catch (Exception e) {
+            log.error("찜 목록 등록 중 에러 발생", e);
+            return ResponseEntity.badRequest().body("장바구니 등록 실패");
+        }
+    }
 }

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/css/goodsDetail.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/footer.css">
-<!--    <link rel="stylesheet" href="../breadcrumb/breadcrumb.css">-->
+    <!--    <link rel="stylesheet" href="../breadcrumb/breadcrumb.css">-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -51,23 +51,32 @@
 <main>
     <!-- 상품 정보 섹션 -->
     <section id="section-info" class="section">
-        <div class="product-header">
-            <!-- 이미지 대신 색상 박스 -->
-            <div class="image-placeholder">
-                <img th:src="${goodsDto.g_image}"/>
-            </div>
-            <div class="product-summary">
-                <h1 th:text="'['+${goodsDto.brand_name}+']'+${goodsDto.g_name}"></h1>
-                <span th:text="판매자 +':'+ ${goodsDto.company_name}"></span>
-                <div class="price-area">
-                    <span th:text="가격 +':'+ ${goodsDto.g_value}+원"></span>
+        <form>
+            <input type="hidden" id="goodsId" th:value="${goodsDto.g_id}">
+            <input type="hidden" id="userUId" th:value="${session.userUid}">
+            <div class="product-header">
+                <!-- 이미지 대신 색상 박스 -->
+                <div class="image-placeholder">
+                    <img th:src="${goodsDto.g_image}"/>
                 </div>
-                <div class="delivery-info">
-                    <span>배송비 : </span>
-                    <span th:text="3000원"></span>
+                <div class="product-summary">
+                    <h1 th:text="'['+${goodsDto.brand_name}+']'+${goodsDto.g_name}"></h1>
+                    <span th:text="판매자 +':'+ ${goodsDto.company_name}"></span>
+                    <div class="price-area">
+                        <span th:text="가격 +':'+ ${goodsDto.g_value}+원"></span>
+                    </div>
+                    <div class="delivery-info">
+                        <span>배송비 : </span>
+                        <span th:text="3000원"></span>
+                    </div>
+                    <div class="btn-zone">
+                        <button type="button" onclick="submitCart()" class="shopping-cart-btn"><i class="fa-solid fa-cart-plus"></i>장바구니 담기</button>
+                        <button type="button" onclick="submitBuy()" class="buy-btn">구매</button>
+                        <button type="button" onclick="submitFavorite()" class="favorite-btn"><i class="fa-solid fa-star"></i>찜하기</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </section>
     <!-- 상단 네비게이션 -->
     <nav id="scrollspy-nav">
@@ -87,10 +96,11 @@
         <h2 th:text="리뷰+'('+${goodsDto.g_review_count}+개+')'">리뷰</h2>
         <div class="review-satisfaction">
             <th:block th:if="${goodsDto.g_review_count}!=0">
-            평균별점<br><span class = "rating">★</span><span class="review-percent" th:text="${goodsDto.g_total_rating*1.0/goodsDto.g_review_count*1.0}"></span>
+                평균별점<br><span class="rating">★</span><span class="review-percent"
+                                                           th:text="${goodsDto.g_total_rating*1.0/goodsDto.g_review_count*1.0}"></span>
             </th:block>
             <th:block th:unless="${goodsDto.g_review_count}!=0">
-                평균별점<br><span class ="rating">★</span><span class="review-percent">0.0</span>
+                평균별점<br><span class="rating">★</span><span class="review-percent">0.0</span>
             </th:block>
         </div>
         <!-- 리뷰 작성 폼 -->
@@ -166,7 +176,6 @@
 <!-- <script src="../detailedpage/header_copy.js" defer></script> -->
 
 
-
 </body>
 <!--<script src="C:\Users\silve\IdeaProjects\desunack\프로젝트\250820\detailedpage\oll_menu.js" ></script>-->
 <script src="/js/goodsDetail.js"></script>
@@ -214,7 +223,7 @@
         try {
             const html = createHtml(reviews);
             $container.html(html);
-            $(".rating").css('color','#c5ba22');
+            $(".rating").css('color', '#c5ba22');
         } catch (e) {
             console.log(e);
             $container.html('<span class="error-message">데이터를 불러오는 데 실패했습니다.</span>')

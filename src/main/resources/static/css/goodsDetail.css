@@ -413,3 +413,30 @@ main{
     box-shadow: 0 4px 16px rgba(0,0,0,0.18);
 }
 
+.shopping-cart-btn{
+    background:#b3c4e5;
+    /*border : solid 1px #6c81a6;*/
+    border-radius: 5px;
+    width : 150px;
+    height : 50px;
+    color : #fff;
+    text-shadow: -1px 0px #6c81a6, 0px 1px #6c81a6, 1px 0px #6c81a6, 0px -1px #6c81a6;
+}
+
+.buy-btn{
+    background: #565269;
+    border-radius: 5px;
+    width : 100px;
+    height : 50px;
+    color : #fff;
+    text-shadow: -1px 0px #2f2b42, 0px 1px #2f2b42, 1px 0px #2f2b42, 0px -1px #2f2b42;
+}
+
+.favorite-btn{
+    background: #EEB07F;
+    border-radius : 5px;
+    width : 100px;
+    height : 50px;
+    color : #fff;
+    text-shadow: -1px 0px #b8743f, 0px 1px #b8743f, 1px 0px #b8743f, 0px -1px #b8743f;
+}

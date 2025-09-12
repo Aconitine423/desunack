@@ -325,3 +325,42 @@
         attachEndObserver();
     });
 })();
+
+function submitCart(){
+const formData = new FormData();
+formData.append('g_id', $('#goodsId').val());
+formData.append('userUid', $('#userUId').val());
+    axios.post('/goods/shoppingCart', formData)
+        .then(function (response) {
+            console.log("장바구니 등록 성공: ", response.data);
+        })
+        .catch(function (error) {
+            console.log("장바구니 등록 실패:", error);
+        });
+}
+
+function submitBuy(){
+    const formData = new FormData();
+    formData.append('g_id', $('#goodsId').val());
+    formData.append('userUid', $('#userUId').val());
+    axios.post('/goods/order', formData)
+        .then(function (response) {
+            console.log("구매페이지 이동 성공: ", response.data);
+        })
+        .catch(function (error) {
+            console.log("구매페이지 이동 실패:", error);
+        });
+}
+
+function submitFavorite(){
+    const formData = new FormData();
+    formData.append('g_id', $('#goodsId').val());
+    formData.append('userUid', $('#userUId').val());
+    axios.post('/goods/Favorite', formData)
+        .then(function (response) {
+            console.log("찜한상품 등록 성공: ", response.data);
+        })
+        .catch(function (error) {
+            console.log("찜한상품 등록 실패:", error);
+        });
+}

@@ -8,12 +8,12 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="/common/reset.css">
-    <link rel="stylesheet" href="/css/mypage.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="/css/customerUpdateFrm.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <div th:replace="~{password-modal :: passwordCheckModalCss}"></div>
 </head>
 <body>
 <th:block th:replace="~{fragments :: header}"></th:block>
@@ -63,6 +63,9 @@
                     <ul class="menu-list">
                         <a th:href="@{/member/update/customer/{uid}(uid=${session.userUid})}">
                             <li><i class="fa-regular fa-id-card"></i><span class="i">회원정보 수정</span></li>
+                        </a>
+                        <a th:href="@{/member/pwupdate/customer/{uid}(uid=${session.userUid})}">
+                            <li><i class="fa-solid fa-key"></i><span class="i">비밀번호 수정</span></li>
                         </a>
                         <li><span class="i"><i class="fa-solid fa-person-walking-arrow-right"></i>회원 탈퇴</span></li>
                     </ul>
@@ -213,8 +216,9 @@
 <th:block th:replace="~{fragments :: footer}"></th:block>
 <!-- 토스트 컨테이너  -->
 <div id="toast" aria-live="polite" aria-atomic="true"></div>
+<div th:replace="~{password-modal :: passwordCheckModalHtml}"></div>
+<script th:replace="~{password-modal :: passwordCheckModalJs}"></script>
 </body>
-<script src="/js/mypage.js"></script>
 <script src="/js/customerUpdateFrm.js"></script>
 <script th:inline="javascript">
 

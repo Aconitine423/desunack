@@ -26,15 +26,15 @@ async function fetchAuto(url, options = {}) {
 }
 
 // 간단 토스트
-// function toast(msg){
-//   const wrap = document.getElementById('toast');
-//   if (!wrap) return;
-//   const div = document.createElement('div');
-//   div.className = 'toast';
-//   div.textContent = msg;
-//   wrap.appendChild(div);
-//   setTimeout(() => div.remove(), 2200);
-// }
+function toast(msg){
+  const wrap = document.getElementById('toast');
+  if (!wrap) return;
+  const div = document.createElement('div');
+  div.className = 'toast';
+  div.textContent = msg;
+  wrap.appendChild(div);
+  setTimeout(() => div.remove(), 2200);
+}
 
 // DOM 캐시
 const $wrap = document.querySelector('.mypage');

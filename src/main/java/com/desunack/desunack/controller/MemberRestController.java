@@ -15,6 +15,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -70,6 +71,17 @@ public class MemberRestController {
             return ResponseEntity.ok().body(Map.of("success", false, "message", "아이디 또는 비밀번호가 올바르지 않습니다."));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("success", false, "message", "로그인 중 오류가 발생했습니다."));
+        }
+    }
+
+    // 비밀번호 확인 모달창
+    @PostMapping("/member/checkPw")
+    public ResponseEntity<?> checkPw(@RequestBody UserDto uDto) {
+        boolean result = mSer.checkPw(uDto);
+        if (result) {
+            return ResponseEntity.ok("비밀번호 일치 확인");
+        } else {
+            return ResponseEntity.badRequest().body("비밀번호일치 실패");
         }
     }
 

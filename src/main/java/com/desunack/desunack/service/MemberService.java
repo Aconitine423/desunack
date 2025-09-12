@@ -316,7 +316,7 @@ public class MemberService {
         MemberEntity memberEntity = uDto.toEntity();
         BCryptPasswordEncoder ecdPw = new BCryptPasswordEncoder();
         int uid = memberEntity.getM_uid();
-        String securityPw = mDao.getSecurityPw(uid);
+        String securityPw = mDao.getCheckSecurityPw(uid);
         return ecdPw.matches(pw, securityPw);
     }
 }

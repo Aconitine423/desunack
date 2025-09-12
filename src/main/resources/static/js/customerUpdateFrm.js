@@ -1,3 +1,16 @@
+// DOM 캐시
+const $wrap = document.querySelector('.mypage');
+const USER_UID = $wrap?.dataset.userUid; // 예: "U123456"
+const ROLE = $wrap?.dataset.role || 'consumer';
+
+/* 좌측 메뉴 템플릿 주입: -data-role에 따라 템플릿(#tpl-menu-)을 #mypage-menu에 복사 */
+(function injectSideMenu(){
+    const target = document.getElementById('mypage-menu');
+    const tplId = ROLE === 'seller' ? '#tpl-menu-seller' : '#tpl-menu-consumer';
+    const tpl = document.querySelector(tplId);
+    if (tpl && target) target.appendChild(tpl.content.cloneNode(true));
+})();
+
 // 토스트 메시지 함수
 function showToast(message, isSuccess = true) {
     // 1. jQuery로 토스트 요소를 만들고 클래스와 텍스트를 한 번에 설정 (체이닝)
@@ -165,20 +178,6 @@ function validateForm() {
 
     // 모든 오류 메시지 초기화
     $('.errorMsg').text('');
-
-    // 2. 비밀번호 유효성 검사 (필수, 길이, 영문자포함)
-    // const userPw = $('#userPassword').val().trim();
-    // const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; // 영문자, 숫자 포함 8자 이상
-    // if (userPw === '') {
-    //     $('#pwError').text('비밀번호는 필수 입력 항목입니다.').css('color', 'red');
-    //     isValid = false;
-    // } else if (userPw.length < 8) {
-    //     $('#pwError').text('비밀번호는 8자 이상이어야 합니다.').css('color', 'red');
-    //     isValid = false;
-    // } else if (!(passwordRegex.test(userPw))) {
-    //     $('#pwError').text('비밀번호는 영문자와 숫자를 모두 포함해야 합니다.').css('color', 'red');
-    //     isValid = false;
-    // }
 
     // 4. 이름 유효성 검사 (필수, 길이)
     const userName = $('#userName').val();

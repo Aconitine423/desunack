@@ -61,7 +61,9 @@
                 <section class="menu-section">
                     <p class="menu-title">회원 정보</p>
                     <ul class="menu-list">
-                        <li><span class="i"><i class="fa-regular fa-id-card"></i>회원정보 수정</span></li>
+                        <a th:href="@{/member/update/customer/{uid}(uid=${session.userUid})}">
+                            <li><i class="fa-regular fa-id-card"></i><span class="i">회원정보 수정</span></li>
+                        </a>
                         <li><span class="i"><i class="fa-solid fa-person-walking-arrow-right"></i>회원 탈퇴</span></li>
                     </ul>
                 </section>
@@ -110,9 +112,11 @@
                     <label>성별 선택</label>
                     <div class="inputContainer">
                         <div id="userGender">
-                            <input type="radio" id="male" name="userGender" class="radioLabel" value="1" th:checked="${#strings.equals(cDto.customerGender, '1')}">
+                            <input type="radio" id="male" name="userGender" class="radioLabel" value="1"
+                                   th:checked="${#strings.equals(cDto.customerGender, '1')}">
                             <label for="male">남성</label>
-                            <input type="radio" id="female" name="userGender" class="radioLabel" value="2" th:checked="${#strings.equals(cDto.customerGender, '2')}">
+                            <input type="radio" id="female" name="userGender" class="radioLabel" value="2"
+                                   th:checked="${#strings.equals(cDto.customerGender, '2')}">
                             <label for="female">여성</label><br>
                             <span id="genderError" class="errorMsg"></span>
                         </div>
@@ -122,7 +126,8 @@
                 <div class="inputGroup">
                     <label>생년월일</label>
                     <div class="inputContainer birthContainer">
-                        <input type="date" name="birthDay" id="customerBirthDay" class="inputForm" th:value="${#temporals.format(cDto.customerBDay, 'yyyy-MM-dd')}">
+                        <input type="date" name="birthDay" id="customerBirthDay" class="inputForm"
+                               th:value="${#temporals.format(cDto.customerBDay, 'yyyy-MM-dd')}">
                     </div>
                     <span id="birthError" class="errorMsg"></span>
                 </div>
@@ -132,9 +137,11 @@
                     <div class="inputContainer phoneContainer">
                         <input type="text" class="inputForm" id="phone1" name="phone1" value="010" readonly>
                         <span>-</span>
-                        <input type="text" class="inputForm" id="phone2" name="phone2" autocomplete="off" th:value="${#strings.substring(cDto.userPhone, 4, 8)}">
+                        <input type="text" class="inputForm" id="phone2" name="phone2" autocomplete="off"
+                               th:value="${#strings.substring(cDto.userPhone, 4, 8)}">
                         <span>-</span>
-                        <input type="text" class="inputForm" id="phone3" name="phone3" autocomplete="off" th:value="${#strings.substring(cDto.userPhone, 9, 13)}">
+                        <input type="text" class="inputForm" id="phone3" name="phone3" autocomplete="off"
+                               th:value="${#strings.substring(cDto.userPhone, 9, 13)}">
                     </div>
                     <span id="phoneError" class="errorMsg"></span>
                 </div>
@@ -142,7 +149,8 @@
                 <div class="inputGroup">
                     <label for="emailLocal">이메일</label>
                     <div class="inputContainer emailContainer">
-                        <input type="text" class="inputForm" id="emailLocal" name="emailLocal" autocomplete="off" th:value="${#strings.substringBefore(cDto.userEmail, '@')}">
+                        <input type="text" class="inputForm" id="emailLocal" name="emailLocal" autocomplete="off"
+                               th:value="${#strings.substringBefore(cDto.userEmail, '@')}">
                         <span>@</span>
                         <div id="emailCustomDomainContainer" style="display: flex">
                             <input type="text" class="inputForm" id="emailDomain" name="emailDomain" placeholder="직접입력"
@@ -170,8 +178,10 @@
                         <input type="button" id="searchPostBtn" onclick="sample3_execDaumPostcode()" class="checkBtn"
                                value="우편번호 찾기">
                         <div class="inputContainer">
-                            <input type="text" class="inputForm" id="sample3_address" size="20" placeholder="주소" th:value="${#strings.substringBefore(cDto.userAddress, '(')}">
-                            <input type="text" class="inputForm" id="sample3_extraAddress" size="30" placeholder="참고항목" th:value="${#strings.prepend(#strings.substringAfter(cDto.userAddress, '('),'(')}">
+                            <input type="text" class="inputForm" id="sample3_address" size="20" placeholder="주소"
+                                   th:value="${#strings.substringBefore(cDto.userAddress, '(')}">
+                            <input type="text" class="inputForm" id="sample3_extraAddress" size="30" placeholder="참고항목"
+                                   th:value="${#strings.prepend(#strings.substringAfter(cDto.userAddress, '('),'(')}">
                         </div>
                         <div class="inputContainer">
                             <input type="text" class="inputForm" id="sample3_detailAddress" name="userAddressDetail"
@@ -189,7 +199,7 @@
                     </div>
                 </div>
                 <!--  submit 메시지 박스  -->
-<!--                <div id="messageBox" class="messageBox" role="alert"></div>-->
+                <!--                <div id="messageBox" class="messageBox" role="alert"></div>-->
 
                 <!--  가입하기 / 취소  -->
                 <div class="signupFormBtn btnGroup">

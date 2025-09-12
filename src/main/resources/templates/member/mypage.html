@@ -17,7 +17,7 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
-<th:block th:replace="~{fragments :: header}"></th:block>
+<th:block th:replace="~{fragments/fragments :: header}"></th:block>
 <!--    <div id="site-header" data-include="/fragments/mpheader.html"></div>-->
 <noscript>이 페이지의 일부 기능은 자바스크립트를 필요로 합니다.</noscript>
 <!-- data-role 값으로 메뉴가 달라짐
@@ -328,7 +328,7 @@
     <div class="modal-dim" data-close></div>
 </div>
 
-<th:block th:replace="~{fragments :: footer}"></th:block>
+<th:block th:replace="~{fragments/fragments :: footer}"></th:block>
 <!--    <div id="site-footer" data-include="/My_page/mpFooter/mpFooter.html"></div>-->
 <!-- 토스트 컨테이너  -->
 <div id="toast" aria-live="polite" aria-atomic="true"></div>

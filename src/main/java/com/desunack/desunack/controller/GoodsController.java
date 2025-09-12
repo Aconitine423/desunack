@@ -60,4 +60,15 @@ public class GoodsController {
         log.info("상품 정보를 불러오는 것을 실패했습니다.");
         return null;
     }
+
+    @PostMapping("/goods/favorite")
+    public ResponseEntity<String> goodsFavorite(@RequestPart int g_id, @RequestPart int userUid){
+        try {
+            gSer.insertFavorite(g_id,userUid);
+            return ResponseEntity.ok("찜목록 등록 성공");
+        } catch (Exception e) {
+            log.error("찜 목록 등록 중 에러 발생", e);
+            return ResponseEntity.badRequest().body("찜목록 등록 실패");
+        }
+    }
 }

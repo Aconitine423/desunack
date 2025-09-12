@@ -27,4 +27,7 @@ public interface GoodsDao {
 
     @Insert("insert into favorite(f_g_id, f_m_uid) values(${g_id}, ${userUid})")
     void insertFavorite(int g_id, int userUid);
+
+    @Insert("insert into shopping_cart(sc_g_id, sc_m_uid, sc_qty) values(${g_id}, ${userUid}, ${qty})")
+    void insertCart(int g_id, int userUid, int qty);
 }

@@ -330,6 +330,7 @@ function submitCart(){
 const formData = new FormData();
 formData.append('g_id', $('#goodsId').val());
 formData.append('userUid', $('#userUId').val());
+formData.append('qty', $('#qty').val());
     axios.post('/goods/shoppingCart', formData)
         .then(function (response) {
             console.log("장바구니 등록 성공: ", response.data);
@@ -356,7 +357,7 @@ function submitFavorite(){
     const formData = new FormData();
     formData.append('g_id', $('#goodsId').val());
     formData.append('userUid', $('#userUId').val());
-    axios.post('/goods/Favorite', formData)
+    axios.post('/goods/favorite', formData)
         .then(function (response) {
             console.log("찜한상품 등록 성공: ", response.data);
         })

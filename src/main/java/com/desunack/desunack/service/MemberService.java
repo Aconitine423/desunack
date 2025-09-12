@@ -310,8 +310,9 @@ public class MemberService {
         return true;
     }
 
-    // 비밀번호 확인
+    // 비밀번호 확인 모달창
     public boolean checkPw(UserDto uDto) {
+        log.info("======uDto{}:", uDto);
         String pw = uDto.getUserPw();
         MemberEntity memberEntity = uDto.toEntity();
         BCryptPasswordEncoder ecdPw = new BCryptPasswordEncoder();

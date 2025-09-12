@@ -90,7 +90,7 @@
             </div>
             <!-- 로그인/회원가입 -->
             <!--  회원 uid (히든)  -->
-            <input type="hidden" name="headerUserUid" id="userUid" th:value="${session.userUid}">
+            <input type="hidden" name="headerUserUid" id="headerUserUid" th:value="${session.userUid}">
             <span class="name-call" id="name-call" th:text="${session.userName} + '님, 환영합니다.'"></span>
             <a href="/login" class="login-btn" id="login-btn"><i class="fa-regular fa-user"></i><span>로그인</span></a>
             <a href="/signup" class="signup-btn" id="signup-btn"><i class="fa-solid fa-user-plus"></i><span>회원가입</span></a>

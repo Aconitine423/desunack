@@ -2,6 +2,7 @@ package com.desunack.desunack.dao;
 
 import com.desunack.desunack.dto.GoodsDto;
 import com.desunack.desunack.dto.GoodsInfoDto;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
@@ -23,4 +24,7 @@ public interface GoodsDao {
     GoodsInfoDto getGoodsInfo(int g_id);
 
     ArrayList<String> getReviewList(int g_id);
+
+    @Insert("insert into favorite(f_g_id, f_m_uid) values(${g_id}, ${userUid})")
+    void insertFavorite(int g_id, int userUid);
 }

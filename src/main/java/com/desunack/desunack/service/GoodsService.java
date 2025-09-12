@@ -161,4 +161,13 @@ public class GoodsService {
         }
         return false;
     }
+
+    @Transactional
+    public void insertFavorite(int g_id, int userUid) throws Exception {
+        try{
+            goodsDao.insertFavorite(g_id, userUid);
+        }catch(Exception e){
+            throw e;
+        }
+    }
 }

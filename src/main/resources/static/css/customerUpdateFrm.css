@@ -1,4 +1,4 @@
-/* layout 전체 배경 및 중앙 정렬 */
+/* layout 전체 배경 */
 body{
     /*display: flex;*/
     font-family: 'Noto Sans KR', sans-serif;
@@ -207,4 +207,145 @@ body{
     border-radius: 10px;
     box-shadow: 0 6px 20px rgba(0,0,0,.2);
     font-size: 14px;
+}
+
+/* 마이페이지에서 가져온 스타일 */
+/* 1) 토큰(색/라운드/라인) */
+
+:root{
+    --mp-bg:#f5f7fa;
+    --mp-card:#fff;
+    --mp-line:#e9edf3;
+    --mp-text:#222;
+    --mp-sub:#667085;
+    --mp-primary:#6b8cff;
+    --mp-radius:12px;
+}
+
+/* 2) 레이아웃 / 탭 /사이드 */
+.mypage{
+    padding: 24px;
+}
+.mypage-tabs{
+    display:flex;
+    gap:12px;
+    margin-bottom:16px;
+}
+.mypage-tab{
+    padding: 10px 16px;
+    border:1px solid var(--mp-line);
+    background:#fbfcff;
+    border-radius: 999px;
+}
+.mypage-tab.is-active{
+    background:var(--mp-primary);
+    color: #fff;
+    border-color:var(--mp-primary);
+}
+.i{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+}
+.i > i{
+    font-size: 16px;
+    line-height: 1;
+}
+.mypage-tab .i > i{
+    font-size: 18px;
+}
+
+.mypage-grid{
+    display:grid;
+    grid-template-columns: 260px 1fr;
+    gap: 24px;
+}
+.mypage-side{
+    background:var(--mp-card);
+    border:1px solid var(--mp-line);
+    border-radius:var(--mp-radius);
+    padding:16px;
+}
+
+/* 3) 카드 공통 / 버튼 */
+.mypage-card{
+    background:var(--mp-card);
+    border:1px colid var(--mp-line);
+    border-radius:var(--mp-radius);
+    padding: 16px;
+}
+.mypage-card-head{
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    margin-bottom: 12px;
+}
+.mypage-card-head h2{
+    font-size: 18px;
+}
+.btns{
+    display:flex;
+    gap: 8px;
+}
+.btn{
+    border-radius:10px;
+    padding: 8px 12px;
+    border:1px solid var(--mp-line);
+    background: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.btn.primary{
+    background:var(--mp-primary);
+    color: #fff;
+    border-color:var(--mp-primary);
+}
+.btn.ghost{
+    background:#fff;
+}
+
+/* 4) 프로필 카드 */
+.mypage-profile{
+    display:grid;
+    grid-template-columns: 80px 1fr 340px;
+    gap: 16px;
+    align-items:start;
+}
+
+@keyframes sh{
+    0%{background-position: 0 0}
+    100%{background-position:-200% 0}
+}
+
+.menu-section + .menu-section{
+    margin-top: 16px;
+}
+.menu-title{
+    font-size: 13px;
+    color: var(--mp-sub);
+    margin-bottom: 8px;
+}
+.menu-list li{
+    display:flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.menu-list li:hover{
+    background: #f2f4ff;
+}
+
+@media (max-width:1024px){
+    /*.mypage-grid{ grid-template-columns:1fr; }*/
+    /*.mypage-profile{ grid-template-columns:64px 1fr; }*/
+    .summary{ grid-column:1 / -1; }
+    .grid{ grid-template-columns:repeat(2,1fr); }
+}
+
+/* 7) 유틸/반응형 */
+.is-hidden{
+    display:none !important;
 }

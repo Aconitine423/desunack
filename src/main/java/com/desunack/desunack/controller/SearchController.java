@@ -39,4 +39,9 @@ public class SearchController {
         }
         return null;
     }
+
+    @GetMapping("/search/goodsSearchResult")
+    public String goodsSearchResult() {
+        return "/goods/goodsSearchResult";
+    }
 }

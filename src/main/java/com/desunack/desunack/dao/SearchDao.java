@@ -1,8 +1,11 @@
 package com.desunack.desunack.dao;
 
+import com.desunack.desunack.dto.SearchDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface SearchDao {
@@ -17,4 +20,6 @@ public interface SearchDao {
     ArrayList<String> getAllBrand();
 
     String getBMap(String bName);
+
+    List<Map<String, Object>> searchGoods(SearchDto searchDto);
 }

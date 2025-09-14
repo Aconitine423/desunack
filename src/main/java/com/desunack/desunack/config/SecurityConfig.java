@@ -34,7 +34,7 @@ public class SecurityConfig {
         // 접근 개별 허용
         http.authorizeHttpRequests(auth -> auth
                 // 1. 로그인, 회원가입 관련 URL을 모든 사용자에게 허용
-                .requestMatchers("/", "/signup/**", "/find/**","/login" , "/goods/**", "/member/**").permitAll()
+                .requestMatchers("/", "/signup/**", "/find/**","/login" , "/goods/**", "/member/**", "/search/**").permitAll()
                 // 2. 정적 리소스 (이미지, CSS, JS)에 대한 접근 허용
                 .requestMatchers("/img/**", "/css/**", "/js/**", "/common/**").permitAll()
                 // 3. 관리자 URL은 'ADMIN' 역할만 접근 허용

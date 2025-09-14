@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>검색결과</title>
+    <link rel="shortcut icon" href="/img/favicon/favicon-16x16.png" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/common/reset.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .title {
+            font-size: 2.25rem;
+            font-weight: bold;
+            color: #1f2937;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 24px;
+        }
+        .goods-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            background-color: #ffffff;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .goods-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .goods-image {
+            width: 100%;
+            height: 192px;
+            background-color: #e5e7eb;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+        .goods-image span {
+            color: #6b7280;
+        }
+        .goods-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+        .goods-price {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #ef4444;
+            margin-bottom: 8px;
+        }
+        .goods-description {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        .no-results-message {
+            text-align: center;
+            color: #6b7280;
+            margin-top: 40px;
+            display: none;
+        }
+        .no-results-message p {
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+<body>
+<th:block th:replace="~{fragments/fragments :: header}"></th:block>
+<section>
+    <div class="container">
+        <h1 class="title">상품 검색 결과</h1>
+
+        <!-- 검색 결과가 있을 때만 표시되는 컨테이너 -->
+        <div id="results-container" class="results-grid" th:if="${not #lists.isEmpty(searchResults)}">
+            <!-- 검색 결과는 여기에 동적으로 추가됩니다 -->
+            <div th:each="goods : ${searchResults}" class="goods-card">
+                <div class="goods-image">
+                    <span>이미지 준비 중</span>
+                </div>
+                <h4 class="goods-name" th:text="${goods.g_name}"></h4>
+                <p class="goods-price" th:text="${#numbers.formatDecimal(goods.g_price, 0, 'COMMA', 0, 'POINT')} + '원'"></p>
+                <p class="goods-description" th:text="${goods.g_description != null ? goods.g_description : '설명이 없습니다.'}"></p>
+            </div>
+        </div>
+
+        <!-- 결과가 없을 때 표시될 메시지 -->
+        <div id="no-results-message" class="no-results-message" th:if="${#lists.isEmpty(searchResults)}">
+            <p>검색 결과가 없습니다. 다른 검색 조건을 시도해 보세요.</p>
+        </div>
+    </div>
+</section>
+<th:block th:replace="~{fragments/fragments :: footer}"></th:block>
+</body>
+<script th:inline="javascript">
+    // $(document).ready(function() {
+    //     const resultsContainer = $('#results-container');
+    //     const noResultsMessage = $('#no-results-message');
+    //
+    //     // URL의 쿼리 파라미터에서 검색 데이터를 가져옵니다.
+    //     const urlParams = new URLSearchParams(window.location.search);
+    //     const searchDataString = urlParams.get('data');
+    //
+    //     if (searchDataString) {
+    //         const searchData = JSON.parse(decodeURIComponent(searchDataString));
+    //
+    //         // axios를 사용하여 검색 요청을 보냅니다.
+    //         axios.post('/search/goods', searchData)
+    //             .then(response => {
+    //                 const searchResults = response.data;
+    //                 if (searchResults && searchResults.length > 0) {
+    //                     resultsContainer.empty(); // 기존 내용 초기화
+    //                     $.each(searchResults, (index, goods) => {
+    //                         // 각 상품에 대한 HTML 카드 생성
+    //                         const goodsCard = `
+    //                                 <div class="goods-card">
+    //                                     <div class="goods-image">
+    //                                         <span>이미지 준비 중</span>
+    //                                     </div>
+    //                                     <h4 class="goods-name">${goods.g_name}</h4>
+    //                                     <p class="goods-price">${goods.g_price.toLocaleString()}원</p>
+    //                                     <p class="goods-description">${goods.g_description || '설명이 없습니다.'}</p>
+    //                                 </div>
+    //                             `;
+    //                         resultsContainer.append(goodsCard);
+    //                     });
+    //                     noResultsMessage.hide();
+    //                 } else {
+    //                     // 검색 결과가 없을 경우 메시지 표시
+    //                     noResultsMessage.show();
+    //                     resultsContainer.empty();
+    //                 }
+    //             })
+    //             .catch(error => {
+    //                 console.error("검색 실패:", error);
+    //                 noResultsMessage.show();
+    //                 resultsContainer.empty();
+    //             });
+    //     } else {
+    //         noResultsMessage.show();
+    //     }
+    // });
+</script>
+</html>

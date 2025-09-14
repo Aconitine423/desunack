@@ -41,5 +41,40 @@
         from goods join goods_total_sales gts on gts.gts_g_id = goods.g_id where brand_name = #{bName} order by gts_sales limit 5;
     </select>
 
+    <select id="searchGoods" resultType="java.util.Map">
+        SELECT
+        g.*
+        FROM
+        goods g
+        WHERE 1=1
+        <!-- 대체당 조건 (포함) -->
+        <!-- 사용자가 대체당을 선택한 경우 -->
+        <!-- 대체당 조건 (포함) -->
+        <if test="sweeteners != null and !sweeteners.isEmpty()">
+            AND g.g_id IN (
+            SELECT gs.gs_g_id
+            FROM goods_sweetener gs
+            JOIN sweetener s ON gs.gs_s_key = s.s_key
+            WHERE s.s_name IN
+            <foreach item="sweetenerName" collection="sweeteners" open="(" separator="," close=")">
+                #{sweetenerName}
+            </foreach>
+            )
+        </if>
+
+        <!-- 알러지 조건 (미포함) -->
+        <if test="allergies != null and !allergies.isEmpty()">
+            AND g.g_id NOT IN (
+            SELECT ga.ga_g_id
+            FROM goods_allergy ga
+            JOIN allergy a ON ga.ga_a_key = a.a_key
+            WHERE a.a_name IN
+            <foreach item="allergyName" collection="allergies" open="(" separator="," close=")">
+                #{allergyName}
+            </foreach>
+            )
+        </if>
+    </select>
+
 
 </mapper>

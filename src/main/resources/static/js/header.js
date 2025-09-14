@@ -58,30 +58,36 @@ $(document).ready(function () {
         }
     });
 
-    // 검색 실행 버튼 - Axios 통신 예시
-    searchSubmitBtn.on('click', function (e) {
-        e.preventDefault();
-        const sweeteners = $('input[name="sweetener"]:checked').map(function () {
-            return this.value;
-        }).get();
-        const allergies = $('input[name="allergy"]:checked').map(function () {
-            return this.value;
-        }).get();
+    // 검색 버튼 클릭 이벤트 핸들러
+    searchSubmitBtn.on('click', () => {
+        // 체크된 대체당 값들을 배열로 수집
+        const checkedSweeteners = $('input[name="sweetener"]:checked')
+            .map(function() {
+                return $(this).val();
+            }).get();
 
-        console.log("Axios를 사용하여 검색 요청을 보냅니다:", {sweeteners, allergies});
+        // 체크된 알러지 값들을 배열로 수집
+        const checkedAllergies = $('input[name="allergy"]:checked')
+            .map(function() {
+                return $(this).val();
+            }).get();
 
-        // Axios를 사용하여 검색 데이터를 서버로 전송하는 예시
-        axios.get('/api/search', {
-            params: {
-                sweetener: sweeteners.join(','),
-                allergy: allergies.join(',')
-            }
-        })
+        // 서버로 보낼 데이터 객체
+        const searchData = {
+            sweeteners: checkedSweeteners,
+            allergies: checkedAllergies
+        };
+
+        // axios를 사용하여 검색 요청 전송 (변경 없음)
+        axios.post('/search/goods', searchData)
             .then(response => {
-                console.log('검색 결과:', response.data);
+                console.log("검색 결과:", response.data);
+                // TODO: 검색 결과를 받아 검색결과 페이지로 리다이렉트하거나 결과를 표시하는 로직 추가
+                window.location.href = '/search/goodsSearchResult?data=' + encodeURIComponent(JSON.stringify(searchData));
             })
             .catch(error => {
-                console.error('검색 요청 실패:', error);
+                console.error("검색 실패:", error);
+                alert('검색 중 오류가 발생했습니다.');
             });
     });
 

@@ -334,6 +334,7 @@ const ShoppingCartDto = {
 }
     axios.post('/goods/shoppingCart', ShoppingCartDto)
         .then(function (response) {
+            alert('장바구니 등록이 성공되었습니다.');
             console.log("장바구니 등록 성공: ", response.data);
         })
         .catch(function (error) {
@@ -367,6 +368,7 @@ function submitFavorite(){
 
     axios.post('/goods/favorite', FavoriteDto)
         .then(function (response) {
+            alert('찜 등록이 성공되었습니다.');
             console.log("찜한상품 등록 성공: ", response.data);
         })
         .catch(function (error) {

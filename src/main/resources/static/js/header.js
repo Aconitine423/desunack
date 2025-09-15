@@ -83,7 +83,7 @@ $(document).ready(function () {
             .then(response => {
                 console.log("검색 결과:", response.data);
                 // TODO: 검색 결과를 받아 검색결과 페이지로 리다이렉트하거나 결과를 표시하는 로직 추가
-                window.location.href = '/search/goodsSearchResult?data=' + encodeURIComponent(JSON.stringify(searchData));
+                // window.location.href = '/search/goodsSearchResult?data=' + encodeURIComponent(JSON.stringify(searchData));
             })
             .catch(error => {
                 console.error("검색 실패:", error);

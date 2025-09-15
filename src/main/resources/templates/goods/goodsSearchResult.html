@@ -107,7 +107,7 @@
                 </div>
                 <h4 class="goods-name" th:text="${goods.g_name}"></h4>
                 <p class="goods-price" th:text="${#numbers.formatDecimal(goods.g_price, 0, 'COMMA', 0, 'POINT')} + '원'"></p>
-                <p class="goods-description" th:text="${goods.g_description != null ? goods.g_description : '설명이 없습니다.'}"></p>
+<!--                <p class="goods-description" th:text="${goods.g_description != null ? goods.g_description : '설명이 없습니다.'}"></p>-->
             </div>
         </div>
 

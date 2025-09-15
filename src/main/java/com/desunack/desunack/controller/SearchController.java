@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
@@ -41,7 +42,8 @@ public class SearchController {
     }
 
     @GetMapping("/search/goodsSearchResult")
-    public String goodsSearchResult() {
+    public String goodsSearchResult(Model model) {
+//        model.addAttribute("searchResults", searchResults);
         return "/goods/goodsSearchResult";
     }
 }

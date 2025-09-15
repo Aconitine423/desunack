@@ -37,7 +37,7 @@
         select json_object('r_num', r_num,'r_rating', r_rating,'r_contents', r_contents,'m_name', m_name) from review join member on r_m_uid = m_uid where r_g_id = #{g_id}
     </select>
     <select id="getShoppingCart" resultType="java.lang.String">
-        select json_object('g_image', g_image, 'brand_name', brand_name, 'g_name', g_name, 'g_value', g_value, 'sc_qty', sc_qty) from goods join shopping_cart on goods.g_id = shopping_cart.sc_g_id
+        select json_object('g_image', g_image, 'brand_name', brand_name, 'g_name', g_name, 'g_value', g_value, 'sc_qty', sc_qty, 'g_id', g_id) from goods join shopping_cart on goods.g_id = shopping_cart.sc_g_id
         join c_member on shopping_cart.sc_m_uid = c_member.c_m_uid where sc_m_uid = #{userUid}
     </select>
 </mapper>

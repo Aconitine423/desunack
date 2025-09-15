@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>찜한 상품</title>
+    
+    <!-- 공통 CSS -->
+    <link rel="stylesheet" href="/common/reset.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    
+    <!-- 페이지 전용 -->
+    <link rel="stylesheet" href="/css/shoppingCart.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body class="dsnk" data-user-role="member" data-user-uid="700001">
+    <!-- 공통 헤더/사이드바 인클루드 -->
+    <div id="site-header" data-include="/common/header.html"></div>
+    
+    <div class="mypage-layout">
+        <div id="site-side" data-include="/common/sidebar.html"></div>
+        
+        <main class="container wishlist-page" role="main" aria-labelledby="pageTitle">
+            <h1 id="pageTitle" class="page-title">찜한 상품</h1> 
+            
+            <div class="wishlist-table-wrap">
+                <table class="wishlist-table">
+                    <colgroup>
+                        <col style="width:80px">
+                        <col style="width:90px">
+                        <col style="width:400px">
+                        <col style="width:100px">
+                        <col style="width:120px">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <label class="chk-all">
+                                    <input type="checkbox" id="chkAll" />
+                                    <span>선택</span>
+                                </label>
+                            </th>
+
+                            <th scope="col" colspan="2">상품정보</th>
+                            <th scope="col">가격</th>
+                            <th scope="col">삭제하기</th>
+                        </tr>
+                    </thead>
+                    <tbody id="wishTbody"></tbody>
+                </table>
+            </div>
+            
+            <div class="action-bar">
+                <div class="count"><strong id="selCount">0</strong>개 선택</div>
+                <button type="button" id="btnBuy" class="btn-primary" disabled>구매하기</button>
+            </div>
+        </main>
+    </div>
+    
+    <!-- 푸터 -->
+    <div id="site-footer" data-include="/common/Footer.html"></div>
+    
+<!--    <script src="/js/sidebar.js"></script>-->
+<!--    <script src="/js/common.js"></script>-->
+    <script src="/js/shoppingCart.js"></script>
+<script th:inline="javascript">
+    console.log([[${scList}]]);
+    let shoppingCartList = [[${scList}]];
+
+
+    const createHtml = (shoppingCartList) => {
+        let html = "";
+        for (const shoppingCart of shoppingCartList) {
+            let substr = shoppingCart.replaceAll(' ', '')
+            substr = substr.replaceAll('"', '');
+            console.log(substr);
+            let startname = substr.indexOf('g_name') + 7;
+            let endname = substr.indexOf('sc_qty') - 1;
+            let name = substr.substring(startname, endname);
+            let startimage = substr.indexOf('g_image') + 8;
+            let endimage = substr.indexOf('g_value') - 1;
+            let imageUrl = substr.substring(startimage, endimage);
+            console.log(name, imageUrl);
+            let startgid = substr.indexOf('g_id') + 5;
+            let endgid = substr.indexOf('g_name') -1;
+            let g_id = substr.substring(startgid, endgid);
+            let startqty = substr.indexOf('sc_qty') + 7;
+            let endqty = substr.indexOf('g_image') -1;
+            let qty = substr.substring(startqty, endqty);
+            let startbrand = substr.indexOf('brand_name') + 11;
+            let endbrand = substr.indexOf('}');
+            let brandName = substr.substring(startbrand, endbrand);
+            let startPrice = substr.indexOf('g_value')+8;
+            let endPrice = substr.indexOf('brand_name') -1;
+            let price = substr.substring(startPrice, endPrice);
+            let totalPrice = qty * price;
+            html += `<form><tr><td><input type="checkbox" class="row-chk" id="${g_id}"></td>
+                     <td><div class="prod" tabindex="0">
+                     <img class="prod-img" src="${imageUrl}" alt="${name}">
+</div></td><td><div class="prod-info">
+<div class="prod-brand">${brandName}</div>
+<div class="prod-name">${name}</div>
+<div>구매개수:${qty}</div>
+</div></td>
+ <td>${totalPrice}원</td><td>
+ <button type="button" class="btn btn-danger btn-del" onclick="deleteCart">삭제</button>
+                 </td><tr></form>`;
+            console.log(html);
+
+        }
+        return html;
+    }
+
+    $(document).ready(function () {
+        const shoppingCart = $('#wishTbody');
+        shoppingCart.empty();
+        try{
+            const html = createHtml(shoppingCartList);
+            shoppingCart.html(html);
+        }catch(e){
+            console.log(e);
+            shoppingCart.html('<tr><td colspan="4">데이터를 불러오는 데 실패했습니다.</td></tr>');
+        }
+    })
+</script>
+</body>
+</html>

@@ -67,9 +67,9 @@ public interface MemberDao {
 
     int getCustomerCoupon(int uid);
 
-    int getTotalSalesCount(int uid);
+    Integer getTotalSalesCount(int uid);
 
-    int getTotalSales(int uid);
+    Integer getTotalSales(int uid);
 
     @Select("select * from member where m_id = #{userId}")
     Optional<MemberEntity> findByUserId(String userId);

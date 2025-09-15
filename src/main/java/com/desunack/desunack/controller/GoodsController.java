@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -77,6 +78,18 @@ public class GoodsController {
         } catch (Exception e) {
             log.error("찜 목록 등록 중 에러 발생", e);
             return ResponseEntity.badRequest().body("장바구니 등록 실패");
+        }
+    }
+
+    @PostMapping("/goods/order")
+    public  ResponseEntity<String> goodsOrder(@RequestBody List<ShoppingCartDto> scList, Model model){
+        try{
+            model.addAttribute("scList",scList);
+            return ResponseEntity.ok("페이지 이동 성공");
+        }catch(Exception e){
+            log.error("페이지 이동중 에러 발생", e);
+            return ResponseEntity.badRequest().body("페이지 이동 실패");
+
         }
     }
 }

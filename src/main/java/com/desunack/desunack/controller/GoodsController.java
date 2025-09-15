@@ -92,4 +92,9 @@ public class GoodsController {
 
         }
     }
+
+    @GetMapping("/goods/order")
+    public String goodsOrder(){
+        return "/goods/order";
+    }
 }

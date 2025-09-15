@@ -327,11 +327,12 @@
 })();
 
 function submitCart(){
-const formData = new FormData();
-formData.append('g_id', $('#goodsId').val());
-formData.append('userUid', $('#userUId').val());
-formData.append('qty', $('#qty').val());
-    axios.post('/goods/shoppingCart', formData)
+const ShoppingCartDto = {
+    sc_g_id:$('#goodsId').val(),
+    sc_m_uid:$('#userUId').val(),
+    sc_qty:$('#qty').val()
+}
+    axios.post('/goods/shoppingCart', ShoppingCartDto)
         .then(function (response) {
             console.log("장바구니 등록 성공: ", response.data);
         })
@@ -340,24 +341,33 @@ formData.append('qty', $('#qty').val());
         });
 }
 
-function submitBuy(){
-    const formData = new FormData();
-    formData.append('g_id', $('#goodsId').val());
-    formData.append('userUid', $('#userUId').val());
-    axios.post('/goods/order', formData)
-        .then(function (response) {
-            console.log("구매페이지 이동 성공: ", response.data);
-        })
-        .catch(function (error) {
-            console.log("구매페이지 이동 실패:", error);
-        });
-}
+// function submitBuy(){
+//     const formData = new FormData();
+//     formData.append('g_id', $('#goodsId').val());
+//     formData.append('userUid', $('#userUId').val());
+//     formData.append('qty', $('#qty').val());
+//     console.log($('#goodsId').val());
+//     console.log($('#userUId').val());
+//     console.log($('#qty').val());
+//     console.log(formData);
+//     axios.post('/goods/order', formData,{headers: {
+//         'Content-Type': 'multipart/form-data'
+//     }})
+//         .then(function (response) {
+//             console.log("구매페이지 이동 성공: ", response.data);
+//         })
+//         .catch(function (error) {
+//             console.log("구매페이지 이동 실패:", error);
+//         });
+// }
 
 function submitFavorite(){
-    const formData = new FormData();
-    formData.append('g_id', $('#goodsId').val());
-    formData.append('userUid', $('#userUId').val());
-    axios.post('/goods/favorite', formData)
+    const FavoriteDto = {
+        f_m_uid : $('#userUId').val(),
+        f_g_id : $('#goodsId').val()
+    }
+
+    axios.post('/goods/favorite', FavoriteDto)
         .then(function (response) {
             console.log("찜한상품 등록 성공: ", response.data);
         })

@@ -2,10 +2,7 @@ package com.desunack.desunack.service;
 
 import com.desunack.desunack.common.FileManager;
 import com.desunack.desunack.dao.GoodsDao;
-import com.desunack.desunack.dto.GoodsDto;
-import com.desunack.desunack.dto.GoodsInfoDto;
-import com.desunack.desunack.dto.TransferAllergyDto;
-import com.desunack.desunack.dto.TransferSweetenerDto;
+import com.desunack.desunack.dto.*;
 import com.desunack.desunack.entity.SellerEntity;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -163,17 +160,17 @@ public class GoodsService {
     }
 
     @Transactional
-    public void insertFavorite(int g_id, int userUid) throws Exception {
+    public void insertFavorite(FavoriteDto fDto) throws Exception {
         try{
-            goodsDao.insertFavorite(g_id, userUid);
+            goodsDao.insertFavorite(fDto);
         }catch(Exception e){
             throw e;
         }
     }
 
-    public void insertCart(int g_id, int userUid, int qty)throws Exception {
+    public void insertCart(ShoppingCartDto scDto)throws Exception {
         try{
-            goodsDao.insertCart(g_id, userUid, qty);
+            goodsDao.insertCart(scDto);
         }catch(Exception e){
             throw e;
         }

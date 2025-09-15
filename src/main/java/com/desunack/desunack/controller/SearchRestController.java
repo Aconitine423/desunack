@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Map;
@@ -19,8 +20,9 @@ public class SearchRestController {
 
     // 통합 필터 검색
     @PostMapping("/search/goods")
-    public ResponseEntity<List<Map<String, Object>>> searchGoods(@RequestBody SearchDto searchDto) {
+    public String searchGoods(@RequestBody SearchDto searchDto, RedirectAttributes rttr) {
         List<Map<String, Object>> searchResults =  serSer.searchGoods(searchDto);
-        return ResponseEntity.ok(searchResults);
+        rttr.addFlashAttribute("searchResults", searchResults);
+        return "redirect:/search/goodsSearchResult";
     }
 }

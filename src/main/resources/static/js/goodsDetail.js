@@ -341,25 +341,23 @@ const ShoppingCartDto = {
         });
 }
 
-// function submitBuy(){
-//     const formData = new FormData();
-//     formData.append('g_id', $('#goodsId').val());
-//     formData.append('userUid', $('#userUId').val());
-//     formData.append('qty', $('#qty').val());
-//     console.log($('#goodsId').val());
-//     console.log($('#userUId').val());
-//     console.log($('#qty').val());
-//     console.log(formData);
-//     axios.post('/goods/order', formData,{headers: {
-//         'Content-Type': 'multipart/form-data'
-//     }})
-//         .then(function (response) {
-//             console.log("구매페이지 이동 성공: ", response.data);
-//         })
-//         .catch(function (error) {
-//             console.log("구매페이지 이동 실패:", error);
-//         });
-// }
+function submitBuy(){
+    const ShoppingCartDto = {
+        sc_g_id:$('#goodsId').val(),
+        sc_m_uid:$('#userUId').val(),
+        sc_qty:$('#qty').val()
+    }
+    let scList = [];
+    scList.push(ShoppingCartDto);
+    axios.post('/goods/order', scList)
+        .then(function (response) {
+            console.log("구매페이지 이동 성공: ", response.data);
+            location.href = '/goods/order';
+        })
+        .catch(function (error) {
+            console.log("구매페이지 이동 실패:", error);
+        });
+}
 
 function submitFavorite(){
     const FavoriteDto = {

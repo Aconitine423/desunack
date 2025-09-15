@@ -32,4 +32,6 @@ public interface GoodsDao {
 
     @Insert("insert into shopping_cart(sc_g_id, sc_m_uid, sc_qty) values(${sc_g_id}, ${sc_m_uid}, ${sc_qty})")
     void insertCart(ShoppingCartDto scDto);
+
+    ArrayList<String> getShoppingCart(int userUid);
 }

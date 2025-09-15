@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -79,6 +80,14 @@ public class GoodsController {
             log.error("찜 목록 등록 중 에러 발생", e);
             return ResponseEntity.badRequest().body("장바구니 등록 실패");
         }
+    }
+
+    @GetMapping("/goods/shoppingCart/{userUid}")
+    public String goodsShoppingCart(@PathVariable("userUid")int userUid, Model model){
+        if(gSer.getShoppingCart(userUid, model)){
+            return "/goods/shoppingCart";
+        }
+        return null;
     }
 
     @PostMapping("/goods/order")

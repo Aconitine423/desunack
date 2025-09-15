@@ -1,7 +1,9 @@
 package com.desunack.desunack.dao;
 
+import com.desunack.desunack.dto.FavoriteDto;
 import com.desunack.desunack.dto.GoodsDto;
 import com.desunack.desunack.dto.GoodsInfoDto;
+import com.desunack.desunack.dto.ShoppingCartDto;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -25,9 +27,9 @@ public interface GoodsDao {
 
     ArrayList<String> getReviewList(int g_id);
 
-    @Insert("insert into favorite(f_g_id, f_m_uid) values(${g_id}, ${userUid})")
-    void insertFavorite(int g_id, int userUid);
+    @Insert("insert into favorite(f_g_id, f_m_uid) values(${f_g_id}, ${f_m_uid})")
+    void insertFavorite(FavoriteDto fDto);
 
-    @Insert("insert into shopping_cart(sc_g_id, sc_m_uid, sc_qty) values(${g_id}, ${userUid}, ${qty})")
-    void insertCart(int g_id, int userUid, int qty);
+    @Insert("insert into shopping_cart(sc_g_id, sc_m_uid, sc_qty) values(${sc_g_id}, ${sc_m_uid}, ${sc_qty})")
+    void insertCart(ShoppingCartDto scDto);
 }

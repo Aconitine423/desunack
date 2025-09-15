@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/img/favicon/favicon-16x16.png" type="image/x-icon">
     <title th:text="'['+${goodsDto.brand_name}+']'+${goodsDto.g_name}">[대체당FESTA] 저당 알롤로스 쌈장 2+1 상세페이지</title>
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <link rel="stylesheet" href="/common/reset.css">
     <link rel="stylesheet" href="/css/goodsDetail.css">
@@ -51,9 +51,8 @@
 <main>
     <!-- 상품 정보 섹션 -->
     <section id="section-info" class="section">
-        <form>
-            <input type="hidden" id="goodsId" th:value="${goodsDto.g_id}">
-            <input type="hidden" id="userUId" th:value="${session.userUid}">
+
+
             <div class="product-header">
                 <!-- 이미지 대신 색상 박스 -->
                 <div class="image-placeholder">
@@ -83,11 +82,14 @@
                             </tr>
                         </table>
                     </div>
+                    <form>
+                        <input type="hidden" id="goodsId" th:value="${goodsDto.g_id}">
+                        <input type="hidden" id="userUId" th:value="${session.userUid}">
                     <div class="qty-area">
                         <table>
                             <tr>
                                 <td>갯수 :</td>
-                                <td><input type="number" id="qty"></td>
+                                <td><input type="number" id="qty" value="0"></td>
                             </tr>
                         </table>
                     </div>
@@ -96,9 +98,10 @@
                         <button type="button" onclick="submitBuy()" class="buy-btn">구매</button>
                         <button type="button" onclick="submitFavorite()" class="favorite-btn"><i class="fa-solid fa-star"></i>찜하기</button>
                     </div>
+                    </form>
                 </div>
             </div>
-        </form>
+
     </section>
     <!-- 상단 네비게이션 -->
     <nav id="scrollspy-nav">

@@ -179,7 +179,7 @@ public class GoodsService {
     public boolean getShoppingCart(int userUid, Model model) {
         ArrayList<String> scList = goodsDao.getShoppingCart(userUid);
         if(scList != null){
-            model.addAttribute(scList);
+            model.addAttribute("scList", scList);
             return true;
         }
         return false;

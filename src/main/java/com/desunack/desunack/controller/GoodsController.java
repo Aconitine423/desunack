@@ -1,9 +1,6 @@
 package com.desunack.desunack.controller;
 
-import com.desunack.desunack.dto.GoodsDto;
-import com.desunack.desunack.dto.GoodsInfoDto;
-import com.desunack.desunack.dto.TransferAllergyDto;
-import com.desunack.desunack.dto.TransferSweetenerDto;
+import com.desunack.desunack.dto.*;
 import com.desunack.desunack.service.GoodsService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -62,9 +59,9 @@ public class GoodsController {
     }
 
     @PostMapping("/goods/favorite")
-    public ResponseEntity<String> goodsFavorite(@RequestPart int g_id, @RequestPart int userUid){
+    public ResponseEntity<String> goodsFavorite(@RequestBody FavoriteDto FavoriteDto){
         try {
-            gSer.insertFavorite(g_id,userUid);
+            gSer.insertFavorite(FavoriteDto);
             return ResponseEntity.ok("찜목록 등록 성공");
         } catch (Exception e) {
             log.error("찜 목록 등록 중 에러 발생", e);
@@ -73,9 +70,9 @@ public class GoodsController {
     }
 
     @PostMapping("/goods/shoppingCart")
-    public ResponseEntity<String> goodsShoppingCart(@RequestPart int g_id, @RequestPart int userUid, @RequestPart int qty){
+    public ResponseEntity<String> goodsShoppingCart(@RequestBody ShoppingCartDto ShoppingCartDto){
         try {
-            gSer.insertCart(g_id,userUid, qty);
+            gSer.insertCart(ShoppingCartDto);
             return ResponseEntity.ok("장바구니 등록 성공");
         } catch (Exception e) {
             log.error("찜 목록 등록 중 에러 발생", e);

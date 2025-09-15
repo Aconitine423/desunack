@@ -175,4 +175,13 @@ public class GoodsService {
             throw e;
         }
     }
+
+    public boolean getShoppingCart(int userUid, Model model) {
+        ArrayList<String> scList = goodsDao.getShoppingCart(userUid);
+        if(scList != null){
+            model.addAttribute(scList);
+            return true;
+        }
+        return false;
+    }
 }

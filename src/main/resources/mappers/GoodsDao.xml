@@ -40,4 +40,9 @@
         select json_object('g_image', g_image, 'brand_name', brand_name, 'g_name', g_name, 'g_value', g_value, 'sc_qty', sc_qty, 'g_id', g_id) from goods join shopping_cart on goods.g_id = shopping_cart.sc_g_id
         join c_member on shopping_cart.sc_m_uid = c_member.c_m_uid where sc_m_uid = #{userUid}
     </select>
+    <select id="getFavorite" resultType="java.lang.String">
+        select json_object('g_image', g_image, 'brand_name', brand_name, 'g_name', g_name, 'g_value', g_value, 'g_id', g_id)
+        from favorite join c_member on favorite.f_m_uid = c_member.c_m_uid join goods on favorite.f_g_id = goods.g_id
+        where f_m_uid = #{userUid}
+    </select>
 </mapper>

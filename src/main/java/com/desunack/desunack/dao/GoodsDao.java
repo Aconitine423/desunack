@@ -38,4 +38,7 @@ public interface GoodsDao {
 
     @Delete("delete from shopping_cart where sc_g_id = ${g_id}")
     void deleteShoppingCart(int g_id);
+
+
+    ArrayList<String> getFavorite(int userUid);
 }

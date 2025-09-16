@@ -4,6 +4,7 @@ import com.desunack.desunack.dto.FavoriteDto;
 import com.desunack.desunack.dto.GoodsDto;
 import com.desunack.desunack.dto.GoodsInfoDto;
 import com.desunack.desunack.dto.ShoppingCartDto;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -34,4 +35,7 @@ public interface GoodsDao {
     void insertCart(ShoppingCartDto scDto);
 
     ArrayList<String> getShoppingCart(int userUid);
+
+    @Delete("delete from shopping_cart where sc_g_id = ${g_id}")
+    void deleteShoppingCart(int g_id);
 }

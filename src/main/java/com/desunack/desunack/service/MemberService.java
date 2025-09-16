@@ -290,15 +290,6 @@ public class MemberService {
         }
     }
 
-    // 소비자 회원정보수정 페이지에서 DB에서 회원정보 불러오기
-    public CustomerDto getCustomerUpdateInfo(Integer userUid) {
-        CustomerEntity customerEntity = mDao.getCustomerEntity(userUid);
-        if (customerEntity == null) {
-            return null;
-        }
-        return customerEntity.toDto();
-    }
-
     // 비밀번호 확인 모달창
     public boolean checkPw(UserDto uDto) {
         log.info("======uDto{}:", uDto);
@@ -310,15 +301,28 @@ public class MemberService {
         return ecdPw.matches(pw, securityPw);
     }
 
+    // 소비자 회원정보수정 페이지에서 DB에서 회원정보 불러오기
+    public CustomerDto getCustomerUpdateInfo(Integer userUid) {
+        CustomerEntity customerEntity = mDao.getCustomerEntity(userUid);
+        if (customerEntity == null) {
+            return null;
+        }
+        return customerEntity.toDto();
+    }
+
     // 소비자 회원정보 수정
     @Transactional
     public boolean customerUpdate(CustomerDto cDto, HttpSession session) {
         log.info("======cDto={}",  cDto);
         CustomerEntity cEntity = cDto.toEntity();
-        mDao.memberUpdate(cEntity);
-        mDao.customerUpdate(cEntity);
-        session.setAttribute("userName", cEntity.getM_name());
-        return true;
+        boolean memberCUpdateResult = mDao.memberCUpdate(cEntity);
+        boolean customerUpdateResult = mDao.customerUpdate(cEntity);
+        if (memberCUpdateResult && customerUpdateResult) {
+            session.setAttribute("userName", cEntity.getM_name());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // DB에 있는 판매자 회원정보 불러와서 페이지에 출력
@@ -327,6 +331,44 @@ public class MemberService {
         if (sellerEntity == null) {
             return null;
         }
-        return sellerEntity.toDto();
+        SellerDto sDto = sellerEntity.toDto();
+        // 전화번호 분할
+        String telRemoveHyphen = sDto.getUserPhone().replace("-", "");
+        // 010-4자리-4자리
+        if (telRemoveHyphen.length() == 11) {
+            sDto.setTel1(telRemoveHyphen.substring(0, 3));
+            sDto.setTel2(telRemoveHyphen.substring(3, 7));
+            sDto.setTel3(telRemoveHyphen.substring(7, 11));
+        } else if (telRemoveHyphen.length() == 10) { // 02-4자리-4자리 또는 032-3자리-4자리
+            if (telRemoveHyphen.startsWith("02")) { // ex) 02-4자리-4자리
+                sDto.setTel1(telRemoveHyphen.substring(0, 2));
+                sDto.setTel2(telRemoveHyphen.substring(2, 6));
+                sDto.setTel3(telRemoveHyphen.substring(6, 10));
+            } else { // ex) 0XX-3자리-4자리
+                sDto.setTel1(telRemoveHyphen.substring(0, 3));
+                sDto.setTel2(telRemoveHyphen.substring(3, 6));
+                sDto.setTel3(telRemoveHyphen.substring(6, 10));
+            }
+        } else if (telRemoveHyphen.length() == 12) { // ex) 0504-4자리-4자리
+            sDto.setTel1(telRemoveHyphen.substring(0, 4));
+            sDto.setTel2(telRemoveHyphen.substring(4, 8));
+            sDto.setTel3(telRemoveHyphen.substring(8, 12));
+        }
+        return sDto;
+    }
+
+    // 판매자 회원정보 수정
+    @Transactional
+    public boolean sellerUpdate(SellerDto sDto, HttpSession session) {
+        log.info("======sDto={}",  sDto);
+        SellerEntity sEntity = sDto.toEntity();
+        boolean memberSUpdateResult = mDao.memberSUpdate(sEntity);
+        boolean sellerUpdateResult = mDao.sellerUpdate(sEntity);
+        if (memberSUpdateResult && sellerUpdateResult) {
+            session.setAttribute("userName", sEntity.getM_name());
+            return true;
+        } else {
+            return false;
+        }
     }
 }

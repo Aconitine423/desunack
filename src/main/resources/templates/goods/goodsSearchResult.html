@@ -109,7 +109,7 @@
 </body>
 <script th:inline="javascript">
     $(document).ready(function() {
-        // 💡 페이지 로드 시 세션 스토리지에서 데이터 불러오기
+        // 페이지 로드 시 세션 스토리지에서 데이터 불러오기
         const searchResultsString = sessionStorage.getItem('searchResults');
         const resultsContainer = $('#results-container');
         const noResultsMessage = $('#no-results-message');
@@ -154,7 +154,7 @@
                 noResultsMessage.show();
             }
 
-            // 💡 사용 후 데이터 삭제 (새로운 검색 시 혼란 방지)
+            // 사용 후 데이터 삭제
             sessionStorage.removeItem('searchResults');
 
         } else {

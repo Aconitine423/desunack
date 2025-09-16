@@ -61,7 +61,6 @@
             </foreach>
             )
         </if>
-
         <!-- 알러지 조건 (미포함) -->
         <if test="allergies != null and !allergies.isEmpty()">
             AND g.g_id NOT IN (

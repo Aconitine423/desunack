@@ -30,6 +30,10 @@ public class SellerDto {
     private char userStatus;
     private LocalDate userSignupDate;
     private LocalDate userRecentDate;
+    // 전화번호 하이픈 제거 분할용 (DTO에서만 사용)
+    private String tel1;
+    private String tel2;
+    private String tel3;
 
     // 판매자 DTO
     private String sellerNumImage;

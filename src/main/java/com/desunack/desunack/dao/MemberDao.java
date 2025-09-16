@@ -77,8 +77,11 @@ public interface MemberDao {
     @Update("update member set m_recent_date = now() where m_id = #{id}")
     boolean updateRecentDate(String id);
 
-    void memberUpdate(CustomerEntity cEntity);
+    boolean memberCUpdate(CustomerEntity cEntity);
 
-    void customerUpdate(CustomerEntity cEntity);
+    boolean customerUpdate(CustomerEntity cEntity);
 
+    boolean memberSUpdate(SellerEntity sEntity);
+
+    boolean sellerUpdate(SellerEntity sEntity);
 }

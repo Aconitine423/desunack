@@ -84,7 +84,7 @@
             <form th:action="@{/member/sellerUpdate}" id="updateForm" class="updateForm" method="post">
                 <!--  회원 uid (히든)  -->
                 <input type="hidden" name="userUid" id="userUid" th:value="${sDto.userUid}">
-                <!--  아이디 입력  -->
+                <!--  아이디 출력  -->
                 <div class="inputGroup">
                     <label for="userId">아이디</label>
                     <div class="inputContainer">
@@ -93,64 +93,37 @@
                     </div>
                     <span id="idError" class="errorMsg"></span>
                 </div>
-                <!--  이름 입력  -->
+                <!--  사업자명 출력  -->
                 <div class="inputGroup">
-                    <label for="userName">이름</label>
+                    <label for="sellerName">사업자명</label>
                     <div class="inputContainer">
-                        <input type="text" class="inputForm" id="userName" name="userName" placeholder="이름을 입력하세요."
-                               autocomplete="off" th:value="${cDto.userName}">
+                        <input type="text" class="inputForm" id="sellerName" name="sellerName" placeholder="사업자명을 입력하세요."
+                               autocomplete="off" th:value="${sDto.userName}">
                     </div>
                     <span id="nameError" class="errorMsg"></span>
                 </div>
-                <!--  닉네임 입력  -->
+                <!--  사업자 번호 출력  -->
                 <div class="inputGroup">
-                    <label for="userNickname">닉네임</label>
+                    <label for="sellerNum">사업자등록번호</label>
                     <div class="inputContainer">
-                        <input type="text" class="inputForm" id="userNickname" name="userNickname"
-                               placeholder="닉네임을 입력하세요."
-                               autocomplete="off" th:value="${cDto.customerNickname}">
-                        <input type="hidden" id="originalNickname" th:value="${cDto.customerNickname}">
-                        <input type="button" id="checkNickname" class="checkBtn" value="중복확인"
-                               onclick="checkUserNickname()"
-                               style="cursor: pointer">
+                        <input type="text" class="inputForm" id="sellerNum" name="sellerNum"
+                               placeholder="사업자등록번호를 입력하세요."
+                               autocomplete="off" th:value="${sDto.sellerNum}">
                     </div>
-                    <span id="nicknameError" class="errorMsg"></span>
+                    <span id="sellerNumError" class="errorMsg"></span>
                 </div>
-                <!--  성별 선택  -->
+                <!--  전화번호 출력  -->
                 <div class="inputGroup">
-                    <label>성별 선택</label>
-                    <div class="inputContainer">
-                        <div id="userGender">
-                            <input type="radio" id="male" name="userGender" class="radioLabel" value="1"
-                                   th:checked="${#strings.equals(cDto.customerGender, '1')}">
-                            <label for="male">남성</label>
-                            <input type="radio" id="female" name="userGender" class="radioLabel" value="2"
-                                   th:checked="${#strings.equals(cDto.customerGender, '2')}">
-                            <label for="female">여성</label><br>
-                            <span id="genderError" class="errorMsg"></span>
-                        </div>
-                    </div>
-                </div>
-                <!--  생년월일 입력  -->
-                <div class="inputGroup">
-                    <label>생년월일</label>
-                    <div class="inputContainer birthContainer">
-                        <input type="date" name="birthDay" id="customerBirthDay" class="inputForm"
-                               th:value="${#temporals.format(cDto.customerBDay, 'yyyy-MM-dd')}">
-                    </div>
-                    <span id="birthError" class="errorMsg"></span>
-                </div>
-                <!--  휴대전화 입력  -->
-                <div class="inputGroup">
-                    <label>휴대전화</label>
+                    <label>전화번호</label>
                     <div class="inputContainer phoneContainer">
-                        <input type="text" class="inputForm" id="phone1" name="phone1" value="010" readonly>
+                        <input type="text" class="inputForm" id="tel1" name="tel1" autocomplete="off"
+                               th:value="${sDto.tel1}">
                         <span>-</span>
-                        <input type="text" class="inputForm" id="phone2" name="phone2" autocomplete="off"
-                               th:value="${#strings.substring(cDto.userPhone, 4, 8)}">
+                        <input type="text" class="inputForm" id="tel2" name="tel2" autocomplete="off"
+                               th:value="${sDto.tel2}">
                         <span>-</span>
-                        <input type="text" class="inputForm" id="phone3" name="phone3" autocomplete="off"
-                               th:value="${#strings.substring(cDto.userPhone, 9, 13)}">
+                        <input type="text" class="inputForm" id="tel3" name="tel3" autocomplete="off"
+                               th:value="${sDto.tel3}">
                     </div>
                     <span id="phoneError" class="errorMsg"></span>
                 </div>
@@ -159,11 +132,11 @@
                     <label for="emailLocal">이메일</label>
                     <div class="inputContainer emailContainer">
                         <input type="text" class="inputForm" id="emailLocal" name="emailLocal" autocomplete="off"
-                               th:value="${#strings.substringBefore(cDto.userEmail, '@')}">
+                               th:value="${#strings.substringBefore(sDto.userEmail, '@')}">
                         <span>@</span>
                         <div id="emailCustomDomainContainer" style="display: flex">
                             <input type="text" class="inputForm" id="emailDomain" name="emailDomain" placeholder="직접입력"
-                                   autocomplete="off" th:value="${#strings.substringAfter(cDto.userEmail, '@')}">
+                                   autocomplete="off" th:value="${#strings.substringAfter(sDto.userEmail, '@')}">
                         </div>
                         <select id="selectDomain" name="selectDomain">
                             <!--            <option value="" selected disabled hidden>도메인</option>-->
@@ -183,19 +156,19 @@
                     <label for="searchPostBtn">주소</label>
                     <div class="inputContainer addressContainer">
                         <input type="text" class="inputForm" id="sample3_postcode" size="4" name="userPost"
-                               placeholder="우편번호" th:value="${cDto.userPost}">
+                               placeholder="우편번호" th:value="${sDto.userPost}">
                         <input type="button" id="searchPostBtn" onclick="sample3_execDaumPostcode()" class="checkBtn"
                                value="우편번호 찾기">
                         <div class="inputContainer">
                             <input type="text" class="inputForm" id="sample3_address" size="20" placeholder="주소"
-                                   th:value="${#strings.substringBefore(cDto.userAddress, '(')}">
+                                   th:value="${#strings.substringBefore(sDto.userAddress, '(')}">
                             <input type="text" class="inputForm" id="sample3_extraAddress" size="30" placeholder="참고항목"
-                                   th:value="${#strings.prepend(#strings.substringAfter(cDto.userAddress, '('),'(')}">
+                                   th:value="${#strings.prepend(#strings.substringAfter(sDto.userAddress, '('),'(')}">
                         </div>
                         <div class="inputContainer">
                             <input type="text" class="inputForm" id="sample3_detailAddress" name="userAddressDetail"
                                    placeholder="상세주소"
-                                   autocomplete="off" th:value="${cDto.userAddressDetail}">
+                                   autocomplete="off" th:value="${sDto.userAddressDetail}">
                         </div>
                         <div id="wrap"
                              style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
@@ -206,6 +179,38 @@
                         </div>
                         <span id="addressError" class="errorMsg"></span>
                     </div>
+                </div>
+                <!--  배송 선택  -->
+                <div class="inputGroup">
+                    <label>배송방식 선택</label>
+                    <div class="inputContainer">
+                        <div id="userGender">
+                            <input type="radio" id="own" name="sellerDelivery" class="radioLabel" value="자체배송"
+                                   th:checked="${#strings.equals(sDto.sellerDelivery, '자체배송')}">
+                            <label for="own">자체배송</label>
+<!--                            <input type="radio" id="parcel" name="sellerDelivery" class="radioLabel" value="택배배송"-->
+<!--                                   th:checked="${#strings.equalsIgnoreCase(sDto.sellerDelivery, '자체배송')}">-->
+                            <label for="selectParcel">택배배송</label>
+                            <select id="selectParcel" name="sellerDelivery" th:selected="${sDto.sellerDelivery}">
+                                <option value="CJ대한통운">CJ대한통운</option>
+                                <option value="우체국택배">우체국택배</option>
+                                <option value="한진택배">한진택배</option>
+                                <option value="롯데택배">롯데택배</option>
+                                <option value="로젠택배">로젠택배</option>
+                                <option value="경동택배">경동택배</option>
+                            </select><br>
+                            <span id="genderError" class="errorMsg"></span>
+                        </div>
+                    </div>
+                </div>
+                <!--  계좌 출력  -->
+                <div class="inputGroup">
+                    <label>계좌번호</label>
+                    <div class="inputContainer birthContainer">
+                        <input type="date" name="birthDay" id="customerBirthDay" class="inputForm"
+                               th:value="${#temporals.format(cDto.customerBDay, 'yyyy-MM-dd')}">
+                    </div>
+                    <span id="birthError" class="errorMsg"></span>
                 </div>
                 <!--  submit 메시지 박스  -->
                 <!--                <div id="messageBox" class="messageBox" role="alert"></div>-->

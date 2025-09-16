@@ -134,40 +134,4 @@ $(document).ready(function () {
         logoutBtn.addClass('hidden');
         mypageBtn.addClass('hidden');
     }
-    // window.setMembershipKind = function () {
-    //     // 모든 버튼을 초기 상태로 숨김
-    //     loginBtn.removeClass('hidden');
-    //     signupBtn.removeClass('hidden');
-    //     logoutBtn.addClass('hidden');
-    //     mypageBtn.addClass('hidden');
-    //     mypageBtn.attr('href', '#'); // 링크 초기화
-
-        // 회원 분류에 따라 버튼 표시
-        // if (!m_kind) { // 비회원
-        //     loginBtn.removeClass('hidden');
-        //     loginBtn.css('display', 'flex');
-        //     signupBtn.removeClass('hidden');
-        //     signupBtn.css('display', 'flex');
-        //     logoutBtn.css('display', 'none');
-        //     mypageBtn.css('display', 'none');
-        // } else {
-        //     logoutBtn.removeClass('hidden');
-        //     loginBtn.css('display', 'none');
-        //     mypageBtn.removeClass('hidden');
-
-            // if (m_kind === 'C') {
-            //     mypageBtn.find('span').text('내 정보');
-            //     mypageBtn.attr('href', '/member/mypage');
-            // } else if (m_kind === 'S') {
-            //     mypageBtn.find('span').text('판매자 페이지');
-            //     mypageBtn.attr('href', '/member/mypage');
-            // } else if (m_kind === 'A') {
-            //     mypageBtn.find('span').text('관리자 페이지');
-            //     mypageBtn.attr('href', '/admin/mypage.html');
-            // }
-        // }
-    // };
-    //
-    // // 초기 상태 설정
-    // window.setMembershipKind();
 });

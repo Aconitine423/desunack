@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -20,9 +21,8 @@ public class SearchRestController {
 
     // 통합 필터 검색
     @PostMapping("/search/goods")
-    public String searchGoods(@RequestBody SearchDto searchDto, RedirectAttributes rttr) {
-        List<Map<String, Object>> searchResults =  serSer.searchGoods(searchDto);
-        rttr.addFlashAttribute("searchResults", searchResults);
-        return "redirect:/search/goodsSearchResult";
+    @ResponseBody
+    public List<Map<String, Object>> searchGoods(@RequestBody SearchDto searchDto) {
+        return serSer.searchGoods(searchDto);
     }
 }

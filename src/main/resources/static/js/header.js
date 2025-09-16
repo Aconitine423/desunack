@@ -81,9 +81,13 @@ $(document).ready(function () {
         // axios를 사용하여 검색 요청 전송 (변경 없음)
         axios.post('/search/goods', searchData)
             .then(response => {
-                console.log("검색 결과:", response.data);
-                // TODO: 검색 결과를 받아 검색결과 페이지로 리다이렉트하거나 결과를 표시하는 로직 추가
-                // window.location.href = '/search/goodsSearchResult?data=' + encodeURIComponent(JSON.stringify(searchData));
+                console.log("검색 성공:", response.data);
+
+                // 💡 서버에서 받은 데이터를 세션 스토리지에 저장
+                sessionStorage.setItem('searchResults', JSON.stringify(response.data));
+
+                // 💡 검색 결과 페이지로 이동
+                window.location.href = '/search/goodsSearchResult';
             })
             .catch(error => {
                 console.error("검색 실패:", error);

@@ -88,7 +88,7 @@ public class SearchService {
         return true;
     }
 
-    // 임시 통합검색 코드 작성중
+    // 통합 필터 검색
     public List<Map<String, Object>> searchGoods(SearchDto searchDto) {
         return searchDao.searchGoods(searchDto);
     }

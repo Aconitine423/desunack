@@ -82,11 +82,8 @@ $(document).ready(function () {
         axios.post('/search/goods', searchData)
             .then(response => {
                 console.log("검색 성공:", response.data);
-
-                // 💡 서버에서 받은 데이터를 세션 스토리지에 저장
+                // 서버에서 받은 데이터를 세션 스토리지에 저장
                 sessionStorage.setItem('searchResults', JSON.stringify(response.data));
-
-                // 💡 검색 결과 페이지로 이동
                 window.location.href = '/search/goodsSearchResult';
             })
             .catch(error => {

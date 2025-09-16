@@ -46,15 +46,14 @@ public class SearchController {
         return null;
     }
 
+    // 통합 필터 검색
     @GetMapping("/search/goodsSearchResult")
     public String goodsSearchResult(HttpServletRequest request, Model model) {
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
         if (flashMap != null) {
             // "searchResults"라는 키로 저장했던 데이터를 꺼내기
-            // 원래 타입인 List<Map<String, Object>>로 형변환(casting) 해주기
+            // 원래 타입인 List<Map<String, Object>>로 형변환
             List<Map<String, Object>> searchResults = (List<Map<String, Object>>) flashMap.get("searchResults");
-
-            // 데이터가 실제로 존재하면 Model에 추가합니다.
             if (searchResults != null) {
                 model.addAttribute("searchResults", searchResults);
             }

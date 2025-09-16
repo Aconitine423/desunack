@@ -90,6 +90,14 @@ public class GoodsController {
         return null;
     }
 
+    @GetMapping("/goods/favorite/{userUid}")
+    public String goodsFavorite(@PathVariable("userUid")int userUid, Model model){
+        if(gSer.getFavorite(userUid, model)){
+            return "/goods/favorite";
+        }
+        return null;
+    }
+
     @PostMapping("/goods/shoppingCart/delete")
     public ResponseEntity<String> goodsShoppingCartDelete(@RequestBody ShoppingCartDto ShoppingCartDto){
         try{gSer.deleteShoppingCart(ShoppingCartDto);

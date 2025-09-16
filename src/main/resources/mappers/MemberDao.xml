@@ -27,13 +27,23 @@
         values (#{m_uid}, #{s_picture}, #{s_account}, #{s_bank}, #{s_delivery}, #{s_seller_num})
     </insert>
 
-    <update id="memberUpdate">
+    <update id="memberCUpdate">
         update member set m_name = #{m_name}, m_phone = #{m_phone}, m_email = #{m_email}, m_post = #{m_post},
                           m_address = #{m_address}, m_address_detail = #{m_address_detail} where m_uid = #{m_uid}
     </update>
 
     <update id="customerUpdate">
         update c_member set c_nickname = #{c_nickname}, c_gender = #{c_gender}, c_birth = #{c_birth} where c_m_uid = #{m_uid}
+    </update>
+
+    <update id="memberSUpdate">
+        update member set m_name = #{m_name}, m_phone = #{m_phone}, m_email = #{m_email}, m_post = #{m_post},
+                          m_address = #{m_address}, m_address_detail = #{m_address_detail} where m_uid = #{m_uid}
+    </update>
+
+    <update id="sellerUpdate">
+        update s_member set s_seller_num = #{s_seller_num}, s_bank = #{s_bank}, s_account = #{s_account}, s_delivery = #{s_delivery}
+        where s_m_uid = #{m_uid}
     </update>
 
     <select id="getCustomerEntity" resultType="com.desunack.desunack.entity.CustomerEntity">

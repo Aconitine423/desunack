@@ -1,6 +1,7 @@
 package com.desunack.desunack.controller;
 
 import com.desunack.desunack.dto.CustomerDto;
+import com.desunack.desunack.dto.SellerDto;
 import com.desunack.desunack.dto.UserDto;
 import com.desunack.desunack.service.MemberService;
 import jakarta.servlet.http.HttpSession;
@@ -90,6 +91,18 @@ public class MemberRestController {
     public ResponseEntity<String> customerUpdate(@RequestBody CustomerDto cDto, HttpSession session) {
         log.info("======cDto={}", cDto);
         boolean result = mSer.customerUpdate(cDto, session);
+        if (result) {
+            return ResponseEntity.ok("회원정보 수정 성공");
+        } else {
+            return ResponseEntity.badRequest().body("회원정보 수정 실패");
+        }
+    }
+
+    // 판매자 회원정보 수정
+    @PostMapping("/member/sellerUpdate")
+    public ResponseEntity<String> sellerUpdate(@RequestBody SellerDto sDto, HttpSession session) {
+        log.info("======sDto={}", sDto);
+        boolean result = mSer.sellerUpdate(sDto, session);
         if (result) {
             return ResponseEntity.ok("회원정보 수정 성공");
         } else {

@@ -190,4 +190,13 @@ public class GoodsService {
         goodsDao.deleteShoppingCart(g_id);
 
     }
+
+    public boolean getFavorite(int userUid, Model model) {
+        ArrayList<String> favoriteList = goodsDao.getFavorite(userUid);
+        if(favoriteList != null){
+            model.addAttribute("fList", favoriteList);
+            return true;
+        }
+        return false;
+    }
 }

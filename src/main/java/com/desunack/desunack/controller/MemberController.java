@@ -94,7 +94,7 @@ public class MemberController {
         return "/member/mypage";
     }
 
-    // 회원정보수정 페이지 이동
+    // 소비자 회원정보수정 페이지 이동
     @GetMapping("/member/update/customer/{userUid}")
     public String customerUpdateFrm(@PathVariable("userUid") Integer userUid, Model model) {
         CustomerDto cDto = mSer.getCustomerUpdateInfo(userUid);
@@ -106,18 +106,19 @@ public class MemberController {
         return "/member/customerUpdateFrm";
     }
 
-    //    public String getCustomerInfo(@RequestBody UserDto uDto, HttpSession session) {
-//        if (uDto.getUserKind() == 'C') {
-//            if (mSer.getCustomerInfo(uDto.getUserUid(), session)) {
-//                return "/member/mypage";
-//            }
-//        } else if (uDto.getUserKind() == 'S') {
-//            if (mSer.getSellerInfo(uDto.getUserUid(), session)) {
-//                return "/member/mypage";
-//            }
-//        }
-//        return null;
-//    }
+    // 판매자 회원정보수정 페이지 이동
+    @GetMapping("/member/update/seller/{userUid}")
+    public String sellerUpdateFrm(@PathVariable("userUid") Integer userUid, Model model) {
+        SellerDto sDto = mSer.getSellerUpdateInfo(userUid);
+        if (sDto != null) {
+            model.addAttribute("sDto", sDto);
+        } else {
+            return null;
+        }
+        return "/member/sellerUpdateFrm";
+    }
+
+    // 로그아웃
     @PostMapping("/member/logout")
     public String logout(HttpSession session) {
         session.invalidate();

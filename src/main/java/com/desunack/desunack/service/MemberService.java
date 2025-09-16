@@ -207,33 +207,33 @@ public class MemberService {
         return false;
     }
 
-    public boolean getCustomerInfo(int uid, Model model) {
-        CustomerEntity cEntity = mDao.getCustomerEntity(uid);
-        CustomerDto cDto = cEntity.toDto();
-        if (cDto != null) {
-            int cCount = mDao.getCustomerCoupon(uid);
-            if (cCount > 0) {
-                model.addAttribute("cCount", cCount);
-            }
-            model.addAttribute("cDto", cDto);
-            return true;
-        }
-        return false;
-    }
+//    public boolean getCustomerInfo(int uid, Model model) {
+//        CustomerEntity cEntity = mDao.getCustomerEntity(uid);
+//        CustomerDto cDto = cEntity.toDto();
+//        if (cDto != null) {
+//            int cCount = mDao.getCustomerCoupon(uid);
+//            if (cCount > 0) {
+//                model.addAttribute("cCount", cCount);
+//            }
+//            model.addAttribute("cDto", cDto);
+//            return true;
+//        }
+//        return false;
+//    }
 //        if(uInfo != null){
 //            session.setAttribute("uInfo", uInfo);
 //            session.setAttribute("cCount",cCount);
 //            return true;
 //        }
 
-    public boolean getSellerInfo(int uid, HttpSession session) {
-        String uInfo = mDao.getSellerInfo(uid);
-        if(uInfo != null){
-            session.setAttribute("uInfo", uInfo);
-            return true;
-        }
-        return false;
-    }
+//    public boolean getSellerInfo(int uid, HttpSession session) {
+//        String uInfo = mDao.getSellerInfo(uid);
+//        if(uInfo != null){
+//            session.setAttribute("uInfo", uInfo);
+//            return true;
+//        }
+//        return false;
+//    }
 
     public boolean getSales(HttpSession session) {
         ArrayList<String> gList = mDao.getSales();
@@ -299,6 +299,17 @@ public class MemberService {
         return customerEntity.toDto();
     }
 
+    // 비밀번호 확인 모달창
+    public boolean checkPw(UserDto uDto) {
+        log.info("======uDto{}:", uDto);
+        String pw = uDto.getUserPw();
+        MemberEntity memberEntity = uDto.toEntity();
+        BCryptPasswordEncoder ecdPw = new BCryptPasswordEncoder();
+        int uid = memberEntity.getM_uid();
+        String securityPw = mDao.getCheckSecurityPw(uid);
+        return ecdPw.matches(pw, securityPw);
+    }
+
     // 소비자 회원정보 수정
     @Transactional
     public boolean customerUpdate(CustomerDto cDto, HttpSession session) {
@@ -310,14 +321,12 @@ public class MemberService {
         return true;
     }
 
-    // 비밀번호 확인 모달창
-    public boolean checkPw(UserDto uDto) {
-        log.info("======uDto{}:", uDto);
-        String pw = uDto.getUserPw();
-        MemberEntity memberEntity = uDto.toEntity();
-        BCryptPasswordEncoder ecdPw = new BCryptPasswordEncoder();
-        int uid = memberEntity.getM_uid();
-        String securityPw = mDao.getCheckSecurityPw(uid);
-        return ecdPw.matches(pw, securityPw);
+    // DB에 있는 판매자 회원정보 불러와서 페이지에 출력
+    public SellerDto getSellerUpdateInfo(Integer userUid) {
+        SellerEntity sellerEntity = mDao.getSellerEntity(userUid);
+        if (sellerEntity == null) {
+            return null;
+        }
+        return sellerEntity.toDto();
     }
 }

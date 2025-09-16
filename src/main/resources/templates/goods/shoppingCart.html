@@ -24,9 +24,10 @@
         <div id="site-side" data-include="/common/sidebar.html"></div>
         
         <main class="container wishlist-page" role="main" aria-labelledby="pageTitle">
-            <h1 id="pageTitle" class="page-title">찜한 상품</h1> 
-            
+            <h1 id="pageTitle" class="page-title">찜한 상품</h1>
+            <form>
             <div class="wishlist-table-wrap">
+
                 <table class="wishlist-table">
                     <colgroup>
                         <col style="width:80px">
@@ -57,6 +58,7 @@
                 <div class="count"><strong id="selCount">0</strong>개 선택</div>
                 <button type="button" id="btnBuy" class="btn-primary" disabled>구매하기</button>
             </div>
+            </form>
         </main>
     </div>
     
@@ -67,7 +69,6 @@
 <!--    <script src="/js/common.js"></script>-->
     <script src="/js/shoppingCart.js"></script>
 <script th:inline="javascript">
-    console.log([[${scList}]]);
     let shoppingCartList = [[${scList}]];
 
 
@@ -97,7 +98,7 @@
             let endPrice = substr.indexOf('brand_name') -1;
             let price = substr.substring(startPrice, endPrice);
             let totalPrice = qty * price;
-            html += `<form><tr><td><input type="checkbox" class="row-chk" id="${g_id}"></td>
+            html += `<tr><td><input type="checkbox" class="row-chk" id="${g_id}"></td>
                      <td><div class="prod" tabindex="0">
                      <img class="prod-img" src="${imageUrl}" alt="${name}">
 </div></td><td><div class="prod-info">
@@ -106,8 +107,8 @@
 <div>구매개수:${qty}</div>
 </div></td>
  <td>${totalPrice}원</td><td>
- <button type="button" class="btn btn-danger btn-del" onclick="deleteCart">삭제</button>
-                 </td><tr></form>`;
+ <button type="button" class="btn btn-danger btn-del" data-id="${g_id}">삭제</button>
+                 </td><tr>`;
             console.log(html);
 
         }
@@ -120,11 +121,23 @@
         try{
             const html = createHtml(shoppingCartList);
             shoppingCart.html(html);
+            $('.btn-del').click(function () {
+                const shoppingCartDto = {
+                    sc_g_id: $(this).data('id'),
+                }
+                axios.post('/goods/shoppingCart/delete', shoppingCartDto).then(function(response){
+                    console.log("삭제 성공");
+                    location.reload();
+                }).catch(function(error){
+                    console.log("삭제 실패");
+                })
+            })
         }catch(e){
             console.log(e);
             shoppingCart.html('<tr><td colspan="4">데이터를 불러오는 데 실패했습니다.</td></tr>');
         }
     })
+
 </script>
 </body>
 </html>

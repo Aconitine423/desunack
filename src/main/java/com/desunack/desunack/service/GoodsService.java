@@ -184,4 +184,10 @@ public class GoodsService {
         }
         return false;
     }
+
+    public void deleteShoppingCart(ShoppingCartDto shoppingCartDto) {
+        int g_id = shoppingCartDto.getSc_g_id();
+        goodsDao.deleteShoppingCart(g_id);
+
+    }
 }

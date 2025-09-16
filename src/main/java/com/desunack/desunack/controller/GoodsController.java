@@ -77,7 +77,7 @@ public class GoodsController {
             gSer.insertCart(ShoppingCartDto);
             return ResponseEntity.ok("장바구니 등록 성공");
         } catch (Exception e) {
-            log.error("찜 목록 등록 중 에러 발생", e);
+            log.error("장바구니 등록 중 에러 발생", e);
             return ResponseEntity.badRequest().body("장바구니 등록 실패");
         }
     }
@@ -88,6 +88,16 @@ public class GoodsController {
             return "/goods/shoppingCart";
         }
         return null;
+    }
+
+    @PostMapping("/goods/shoppingCart/delete")
+    public ResponseEntity<String> goodsShoppingCartDelete(@RequestBody ShoppingCartDto ShoppingCartDto){
+        try{gSer.deleteShoppingCart(ShoppingCartDto);
+            return ResponseEntity.ok("장바구니 삭제 성공");
+        }catch(Exception e){
+            log.error("장바구니 삭제중 에러 발생", e);
+            return ResponseEntity.badRequest().body("장바구니 삭제 실패");
+        }
     }
 
     @PostMapping("/goods/order")

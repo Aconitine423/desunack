@@ -15,7 +15,7 @@
             font-family: Arial, sans-serif;
             background-color: #f3f4f6;
             margin: 0;
-            padding: 20px;
+            padding: 0;
         }
         .container {
             max-width: 1200px;
@@ -98,21 +98,9 @@
     <div class="container">
         <h1 class="title">상품 검색 결과</h1>
 
-        <!-- 검색 결과가 있을 때만 표시되는 컨테이너 -->
-        <div id="results-container" class="results-grid" th:if="${not #lists.isEmpty(searchResults)}">
-            <!-- 검색 결과는 여기에 동적으로 추가됩니다 -->
-            <div th:each="goods : ${searchResults}" class="goods-card">
-                <div class="goods-image">
-                    <span>이미지 준비 중</span>
-                </div>
-                <h4 class="goods-name" th:text="${goods.g_name}"></h4>
-                <p class="goods-price" th:text="${#numbers.formatDecimal(goods.g_price, 0, 'COMMA', 0, 'POINT')} + '원'"></p>
-<!--                <p class="goods-description" th:text="${goods.g_description != null ? goods.g_description : '설명이 없습니다.'}"></p>-->
-            </div>
-        </div>
+        <div id="results-container" class="results-grid"></div>
 
-        <!-- 결과가 없을 때 표시될 메시지 -->
-        <div id="no-results-message" class="no-results-message" th:if="${#lists.isEmpty(searchResults)}">
+        <div id="no-results-message" class="no-results-message" style="display: none;">
             <p>검색 결과가 없습니다. 다른 검색 조건을 시도해 보세요.</p>
         </div>
     </div>
@@ -120,52 +108,60 @@
 <th:block th:replace="~{fragments/fragments :: footer}"></th:block>
 </body>
 <script th:inline="javascript">
-    // $(document).ready(function() {
-    //     const resultsContainer = $('#results-container');
-    //     const noResultsMessage = $('#no-results-message');
-    //
-    //     // URL의 쿼리 파라미터에서 검색 데이터를 가져옵니다.
-    //     const urlParams = new URLSearchParams(window.location.search);
-    //     const searchDataString = urlParams.get('data');
-    //
-    //     if (searchDataString) {
-    //         const searchData = JSON.parse(decodeURIComponent(searchDataString));
-    //
-    //         // axios를 사용하여 검색 요청을 보냅니다.
-    //         axios.post('/search/goods', searchData)
-    //             .then(response => {
-    //                 const searchResults = response.data;
-    //                 if (searchResults && searchResults.length > 0) {
-    //                     resultsContainer.empty(); // 기존 내용 초기화
-    //                     $.each(searchResults, (index, goods) => {
-    //                         // 각 상품에 대한 HTML 카드 생성
-    //                         const goodsCard = `
-    //                                 <div class="goods-card">
-    //                                     <div class="goods-image">
-    //                                         <span>이미지 준비 중</span>
-    //                                     </div>
-    //                                     <h4 class="goods-name">${goods.g_name}</h4>
-    //                                     <p class="goods-price">${goods.g_price.toLocaleString()}원</p>
-    //                                     <p class="goods-description">${goods.g_description || '설명이 없습니다.'}</p>
-    //                                 </div>
-    //                             `;
-    //                         resultsContainer.append(goodsCard);
-    //                     });
-    //                     noResultsMessage.hide();
-    //                 } else {
-    //                     // 검색 결과가 없을 경우 메시지 표시
-    //                     noResultsMessage.show();
-    //                     resultsContainer.empty();
-    //                 }
-    //             })
-    //             .catch(error => {
-    //                 console.error("검색 실패:", error);
-    //                 noResultsMessage.show();
-    //                 resultsContainer.empty();
-    //             });
-    //     } else {
-    //         noResultsMessage.show();
-    //     }
-    // });
+    $(document).ready(function() {
+        // 💡 페이지 로드 시 세션 스토리지에서 데이터 불러오기
+        const searchResultsString = sessionStorage.getItem('searchResults');
+        const resultsContainer = $('#results-container');
+        const noResultsMessage = $('#no-results-message');
+
+        if (searchResultsString) {
+            const searchResults = JSON.parse(searchResultsString);
+
+            if (searchResults.length > 0) {
+                // 결과가 있을 경우, HTML을 동적으로 생성
+                noResultsMessage.hide();
+                resultsContainer.show();
+
+                searchResults.forEach(goods => {
+                    // 금액을 쉼표로 포맷팅
+                    const formattedPrice = new Intl.NumberFormat('ko-KR').format(goods.g_value);
+                    // 평점 계산 및 소수점 첫째 자리까지 표시
+                    let ratingText;
+                    if (goods.g_review_count === 0) {
+                        // 리뷰 수가 0일 경우, "별점 없음"으로 표시
+                        ratingText = "별점 없음";
+                    } else {
+                        // 리뷰 수가 있을 경우, 평점 계산 후 소수점 첫째 자리까지 표시
+                        const rating = (goods.g_total_rating / goods.g_review_count).toFixed(1);
+                        ratingText = `★${rating}`;
+                    }
+
+                    const goodsCard = `
+                            <div class="goods-card">
+                                <div class="goods-image">
+                                    <span><a href="/goods/detail/${goods.g_id}"><img src="${goods.g_image}" alt="${goods.g_name}"></a></span>
+                                </div>
+                                <h4 class="goods-name">${goods.g_name}</h4>
+                                <p class="goods-price">${formattedPrice}원</p>
+                                <p class="goods-description">${ratingText}</p>
+                            </div>
+                        `;
+                    resultsContainer.append(goodsCard);
+                });
+            } else {
+                // 결과는 있지만 내용이 없을 경우
+                resultsContainer.hide();
+                noResultsMessage.show();
+            }
+
+            // 💡 사용 후 데이터 삭제 (새로운 검색 시 혼란 방지)
+            sessionStorage.removeItem('searchResults');
+
+        } else {
+            // 세션 스토리지에 데이터가 없을 경우
+            resultsContainer.hide();
+            noResultsMessage.show();
+        }
+    });
 </script>
 </html>

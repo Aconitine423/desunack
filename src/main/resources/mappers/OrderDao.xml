@@ -10,6 +10,16 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>
+    <insert id="insertOrderDetail">
+        insert into go_detail(god_go_num, god_g_id, god_qty)
+        values
+        <foreach collection="scList" item="shoppingCart" separator=","> (#{god_go_num}, #{shoppingCart.sc_g_id}, #{shoppingCart.sc_qty})</foreach>
+    </insert>
+    <update id="updateOrder">
+        update goods_order set go_receiver_name=${go_receiver_name}, go_receiver_phone=${go_receiver_phone}
+        ,go_receiver_post = ${go_receiver_post}, go_receiver_address = ${go_receiver_address},
+         go_receiver_address_detail = ${go_receiver_address_detail}, go_status = 1 where go_num = ${go_num}
+    </update>
 
     <select id="getUserUID" resultType="java.lang.Integer">
         select distinct sc_m_uid from shopping_cart where sc_m_uid in

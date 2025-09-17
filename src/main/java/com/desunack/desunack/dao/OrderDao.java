@@ -24,4 +24,9 @@ public interface OrderDao {
 
     @Select("select * from goods_order where go_num = ${goNum}")
     OrderDto getOrderInfo(int goNum);
+
+
+    void updateOrder(OrderDto oDto);
+
+    void insertOrderDetail(List<ShoppingCartDto> scList, int god_go_num);
 }

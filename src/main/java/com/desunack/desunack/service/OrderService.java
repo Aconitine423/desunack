@@ -34,4 +34,11 @@ public class OrderService {
         model.addAttribute("orderDto",orderDto);
 
     }
+
+    @Transactional
+    public void orderConfirm(List<ShoppingCartDto> scList, OrderDto oDto, Model model) {
+        int god_go_num = oDto.getOrder_num();
+        orderDao.updateOrder(oDto);
+        orderDao.insertOrderDetail(scList, god_go_num);
+    }
 }

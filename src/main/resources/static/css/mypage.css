@@ -102,6 +102,12 @@
     grid-template-columns: 260px 1fr;
     gap: 24px;
 }
+.mypage-sidebar-container {
+    background:var(--mp-card);
+    border:1px solid var(--mp-line);
+    border-radius:var(--mp-radius);
+    padding:16px;
+}
 .mypage-side{
     background:var(--mp-card); 
     border:1px solid var(--mp-line);
@@ -385,6 +391,9 @@ form input[type="text"], .form input[type="password"]{
 /* 7) 유틸/반응형 */
 .is-hidden{
     display:none !important;
+}
+.sb-hidden {
+    display: none;
 }
 
 @media (max-width:1024px){

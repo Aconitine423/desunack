@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDate;
 
 
 @Data
@@ -28,6 +29,17 @@ public class OrderDto {
     private char order_status;
     private int order_earned_point;
 
+    private String goc_card_com;
+    private int goc_card_installment;
+
+    private int order_kind;
+
+    private char gop_pay_type;
+    private int gop_cost;
+
+    private int goo_cost;
+    private LocalDate goo_time;
+
     public OrderEntity toEntity() {
         return OrderEntity.builder().go_num(this.order_num).go_m_uid(this.order_m_uid)
                 .go_receiver_name(this.order_receiver_name)
@@ -36,6 +48,9 @@ public class OrderDto {
                 .go_receiver_address_detail(this.order_receiver_address_detail)
                 .go_receiver_post(this.order_receiver_post).go_coupon(this.order_coupon)
                 .go_point(this.order_point).go_payments(this.order_payments)
-                .go_total_cost(this.order_total_cost).go_status(this.order_status).go_earned_point(this.order_earned_point).build();
+                .go_total_cost(this.order_total_cost).go_status(this.order_status).go_earned_point(this.order_earned_point).
+        goc_card_com(this.goc_card_com).goc_card_installment(this.goc_card_installment)
+                .gop_pay_type(this.gop_pay_type).gop_cost(this.gop_cost)
+                .goo_cost(this.goo_cost).goo_time(this.goo_time).go_kind(this.order_kind).build();
     }
 }

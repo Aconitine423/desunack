@@ -2,9 +2,11 @@ package com.desunack.desunack.service;
 
 import com.desunack.desunack.dao.OrderDao;
 import com.desunack.desunack.dto.MemberDto;
+import com.desunack.desunack.dto.OrderCardDto;
 import com.desunack.desunack.dto.OrderDto;
 import com.desunack.desunack.dto.ShoppingCartDto;
 import com.desunack.desunack.entity.MemberEntity;
+import com.desunack.desunack.entity.OrderEntity;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,9 +38,19 @@ public class OrderService {
     }
 
     @Transactional
-    public void orderConfirm(List<ShoppingCartDto> scList, OrderDto oDto, Model model) {
+    public void orderConfirm(List<ShoppingCartDto> scList, OrderDto oDto) {
         int god_go_num = oDto.getOrder_num();
-        orderDao.updateOrder(oDto);
+        OrderEntity oEntity = oDto.toEntity();
+        orderDao.updateOrder(oEntity);
         orderDao.insertOrderDetail(scList, god_go_num);
+        if(oEntity.getGo_payments().equals("카드")){ //payment에 들어갈 값에 따라 수정 필요
+            orderDao.insertCard(oEntity);
+        }
+        if(oEntity.getGo_kind()==1){ // 자체배송이라면
+            orderDao.insertOwn(oEntity);
+        }else if(oEntity.getGo_kind()==2){ // 택배배송이라면
+            orderDao.insertParcel(oEntity);
+        }
+        orderDao.deleteShoppingCart(scList);
     }
 }

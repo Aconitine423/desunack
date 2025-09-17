@@ -5,7 +5,7 @@
 <mapper namespace="com.desunack.desunack.dao.OrderDao">
     <insert id="makeOrder">
         insert into goods_order(go_receiver_name, go_m_uid, go_receiver_phone, go_receiver_post, go_receiver_address, go_receiver_address_detail, go_date, go_status, go_total_cost)
-        values (${m_name}, ${m_uid}, ${m_phone}, ${m_post}, ${m_address}, ${m_address_detail}, default, 5, ${total_cost})
+        values (${m_name}, ${m_uid}, ${m_phone}, ${m_post}, ${m_address}, ${m_address_detail}, default, 0, ${total_cost})
         <selectKey resultType="int" order="AFTER" keyProperty="go_num">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -20,6 +20,12 @@
         ,go_receiver_post = ${go_receiver_post}, go_receiver_address = ${go_receiver_address},
          go_receiver_address_detail = ${go_receiver_address_detail}, go_status = 1 where go_num = ${go_num}
     </update>
+    <delete id="deleteShoppingCart">
+        delete from shopping_cart where sc_g_id in
+                                  <foreach collection="scList" item="shoppingCart" open="(" close=")" separator=",">
+                                      ${shoppingCart.sc_g_id}
+                                  </foreach>
+    </delete>
 
     <select id="getUserUID" resultType="java.lang.Integer">
         select distinct sc_m_uid from shopping_cart where sc_m_uid in

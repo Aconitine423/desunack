@@ -12,7 +12,6 @@ import java.util.List;
 
 @Mapper
 public interface OrderDao {
-    int getUserUID(List<ShoppingCartDto> scList);
 
     @Select("select m_uid, m_name, m_phone, m_post, m_address, m_address_detail from member where m_uid = ${userUid}")
     MemberEntity getUserInfo(int userUid);

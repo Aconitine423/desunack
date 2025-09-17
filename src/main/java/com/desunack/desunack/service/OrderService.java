@@ -32,8 +32,8 @@ public class OrderService {
         }
         MemberEntity mEntity = orderDao.getUserInfo(userUid);
         int go_num = orderDao.makeOrder(mEntity, total_cost);
-        OrderDto orderDto = orderDao.getOrderInfo(go_num);
-        model.addAttribute("orderDto",orderDto);
+        OrderEntity oEntity = orderDao.getOrderInfo(go_num).toEntity();
+        model.addAttribute("orderEntity",oEntity);
 
     }
 

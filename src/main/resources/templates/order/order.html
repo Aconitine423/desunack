@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/css/order.css">
 </head>
 <body class="dsnk" data-user-role="member">
-    <div id="site-header" data-include="/common/header.html"></div>
+<th:block th:replace="~{fragments/fragments :: header}"></th:block>
     
     <main class="container checkout-page" role="main" aria-labelledby="pageTitle">
         <h1 id="pageTitle" class="page-title">주문/결제</h1>
@@ -24,14 +24,14 @@
             <div class="left">
                 
                 <!-- 1. 주문자 정보 -->
-                <section class="card" id="buterSec">
+                <section class="card" id="buyerSec">
                     <h2 class="sec-title">주문자 정보</h2>
                     <div class="row">
                         <label>이름
-                            <input id="buyerName" type="text" placeholder="이름을 입력해 주세요">
+                            <input id="buyerName" type="text" readonly th:value="${session.userName}">
                         </label>
                         <label>연락처
-                            <input id="buyerPhone" type="tel" placeholder="010-0000-0000">
+                            <input id="buyerPhone" type="tel" readonly th:value="${orderEntity.go_receiver_phone}">
                         </label>
                     </div>
                     <div class="row">
@@ -49,7 +49,7 @@
                     <div class="sec-head">
                         <h2 class="sec-title">수령인 정보</h2>
                         <label class="chk-inline">
-                            <input type="checkbox" id="sameAsBuyer">상단과 동일
+                            <input type="checkbox" id="sameAsBuyer">주문자 정보와 동일
                         </label>
                     </div>
                     
@@ -58,7 +58,7 @@
                             <input id="recvName" type="text" placeholder="수령인 이름">
                         </label>
                         <label>연락처
-                            <input id="recvPhone" type="tel" placecholder="010-0000-0000">
+                            <input id="recvPhone" type="tel" placeholder="010-0000-0000">
                         </label>
                     </div>
                     
@@ -107,7 +107,7 @@
                         <label>포인트 사용
                             <input id="points" type="number" min="0" step="1" value="0">
                         </label>
-                        <div class="mt24"><button type="button" id-="btnApplyDiscount" class="btn-outline">적용</button></div>
+                        <div class="mt24"><button type="button" id="btnApplyDiscount" class="btn-outline">적용</button></div>
                     </div>
                 </section>
                 
@@ -123,8 +123,8 @@
                         </label>
                         <label>선착불
                             <select id="shipPay">
-                                <dption value="prepaid">선불</dption>
-                                <dption value="prepaid">착불</dption>
+                                <option value="prepaid">선불</option>
+                                <option value="postpaid">착불</option>
                             </select>
                         </label>
                         <label>배송료
@@ -196,8 +196,8 @@
                     <dl class="totals">
                         <div><dt>상품 금액</dt><dd id="sumProducts">₩0</dd></div>
                         <div><dt>배송비</dt><dd id="sumShip">₩0</dd></div>
-                        <div><dt>할인</dt><dd id="sumDisecount">-₩0</dd></div>
-                        <div class="totla"><dt>총 결제 금액</dt><dd id="sumTotal">₩0</dd></div>
+                        <div><dt>할인</dt><dd id="sumDiscount">-₩0</dd></div>
+                        <div class="total"><dt>총 결제 금액</dt><dd id="sumTotal">₩0</dd></div>
                     </dl>
                     
                     <label class="chk-inline mt8">
@@ -209,8 +209,8 @@
             </aside>
         </section>
     </main>
-    
-    <div id="site-footer" data-include="/common/Footer.html"></div>
+
+<th:block th:replace="~{fragments/fragments :: footer}"></th:block>
     
     
     <!-- 주소록 모달 -->

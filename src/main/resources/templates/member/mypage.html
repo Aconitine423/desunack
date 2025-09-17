@@ -67,8 +67,8 @@
                 <section class="menu-section">
                     <p class="menu-title">회원 정보</p>
                     <ul class="menu-list">
-                        <a th:href="@{/member/update/customer/{uid}(uid=${session.userUid})}"><li><i class="fa-regular fa-id-card"></i><span class="i">회원정보 수정</span></li></a>
-                        <a th:href="@{/member/pwupdate/customer/{uid}(uid=${session.userUid})}"><li><i class="fa-solid fa-key"></i><span class="i">비밀번호 수정</span></li></a>
+                        <li><a th:href="@{/member/update/customer/{uid}(uid=${session.userUid})}"><i class="fa-regular fa-id-card"></i><span class="i">회원정보 수정</span></a></li>
+                        <li><a th:href="@{/member/pwupdate/customer/{uid}(uid=${session.userUid})}"><i class="fa-solid fa-key"></i><span class="i">비밀번호 수정</span></a></li>
                         <li><span class="i"><i class="fa-solid fa-person-walking-arrow-right"></i>회원 탈퇴</span></li>
                     </ul>
                 </section>
@@ -104,9 +104,9 @@
                     <p class="menu-title">혜택/회원</p>
                     <ul class="menu-list">
                         <li><span class="i"><i class="fa-solid fa-ticket"></i>쿠폰 관리</span></li>
-                        <a th:href="@{/member/update/seller/{uid}(uid=${session.userUid})}"><li><i class="fa-regular fa-id-card"></i><span class="i">회원정보 수정</span></li></a>
+                        <li><a th:href="@{/member/update/seller/{uid}(uid=${session.userUid})}"><i class="fa-regular fa-id-card"></i><span class="i">회원정보 수정</span></a></li>
 <!--                        <li><span class="i"><i class="fa-regular fa-id-card"></i>회원정보 수정</span></li>-->
-                        <a th:href="@{/member/pwupdate/seller/{uid}(uid=${session.userUid})}"><li><i class="fa-solid fa-key"></i><span class="i">비밀번호 수정</span></li></a>
+                        <li><a th:href="@{/member/pwupdate/seller/{uid}(uid=${session.userUid})}"><i class="fa-solid fa-key"></i><span class="i">비밀번호 수정</span></a></li>
                         <li><span class="i"><i class="fa-solid fa-person-walking-arrow-right"></i>회원 탈퇴</span></li>
                     </ul>
                 </section>
@@ -334,7 +334,24 @@
 <!--    <div id="site-footer" data-include="/My_page/mpFooter/mpFooter.html"></div>-->
 <!-- 토스트 컨테이너  -->
 <div id="toast" aria-live="polite" aria-atomic="true"></div>
-<script>
+<script th:inline="javascript">
+    // 세션 m_kind에 따른 사이드바 출력
+    $(document).ready(function(){
+        const userRole = `[[${session.m_kind}]]`;
+        console.log(userRole);
+        let templateId = '';
+        if (userRole === 'C') {
+            templateId = 'tpl-menu-consumer';
+        } else if (userRole === 'S') {
+            templateId = 'tpl-menu-seller';
+        }
+        if (templateId) {
+            const template = document.getElementById(templateId);
+            const templateContent = document.importNode(template.content, true);
+            $('#mypage-menu').append(templateContent);
+        }
+    })
+
     // [공통 include 로더] - 페이지 내 모든 [data-include] 처리
     async function doInclude(host) {
         const url = host.getAttribute('data-include');

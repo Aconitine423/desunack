@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.desunack.desunack.dao.OrderDao">
+    <insert id="makeOrder">
+        insert into goods_order(go_m_uid, go_receiver_phone, go_receiver_post, go_receiver_address, go_receiver_address_detail, go_date, go_status)
+        values (${m_uid}, ${m_phone}, ${m_post}, ${m_address}, ${m_address_detail}, default, 5, ${total_cost})
+        <selectKey resultType="int" order="AFTER" keyProperty="go_num">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <select id="getUserUID" resultType="java.lang.Integer">
+        select distinct sc_m_uid from shopping_cart where sc_m_uid in
+        <foreach collection="scList" item="sc_m_uid" open="(" close=")" separator=",">
+            ${sc_m_uid}
+        </foreach>
+
+    </select>
+</mapper>

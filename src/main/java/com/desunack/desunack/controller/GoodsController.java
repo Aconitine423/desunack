@@ -108,20 +108,5 @@ public class GoodsController {
         }
     }
 
-    @PostMapping("/goods/order")
-    public  ResponseEntity<String> goodsOrder(@RequestBody List<ShoppingCartDto> scList, Model model){
-        try{
-            model.addAttribute("scList",scList);
-            return ResponseEntity.ok("페이지 이동 성공");
-        }catch(Exception e){
-            log.error("페이지 이동중 에러 발생", e);
-            return ResponseEntity.badRequest().body("페이지 이동 실패");
 
-        }
-    }
-
-    @GetMapping("/goods/order")
-    public String goodsOrder(){
-        return "/goods/order";
-    }
 }

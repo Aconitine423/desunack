@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주문/결제</title>
+    
+    <!-- 공통 CSS -->
+    <link rel="stylesheet" href="/common/reset.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <!-- 페이지 전용 -->
+    <link rel="stylesheet" href="/css/order.css">
+</head>
+<body class="dsnk" data-user-role="member">
+    <div id="site-header" data-include="/common/header.html"></div>
+    
+    <main class="container checkout-page" role="main" aria-labelledby="pageTitle">
+        <h1 id="pageTitle" class="page-title">주문/결제</h1>
+        
+        <section class="grid">
+            <!-- 좌측 폼 -->
+            <div class="left">
+                
+                <!-- 1. 주문자 정보 -->
+                <section class="card" id="buterSec">
+                    <h2 class="sec-title">주문자 정보</h2>
+                    <div class="row">
+                        <label>이름
+                            <input id="buyerName" type="text" placeholder="이름을 입력해 주세요">
+                        </label>
+                        <label>연락처
+                            <input id="buyerPhone" type="tel" placeholder="010-0000-0000">
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label class="full">주소
+                            <div class="addr-line">
+                                <input id="buyerAddr" type="text" placeholder="기본 주소를 입력해 주세요 ">
+                                <button type="button" id="btnAddrBook" class="btn">주소 관리</button>
+                            </div>
+                        </label>
+                    </div>
+                </section>
+                
+                <!-- 2. 수령인 정보 -->
+                <section class="card" id="receiverSec">
+                    <div class="sec-head">
+                        <h2 class="sec-title">수령인 정보</h2>
+                        <label class="chk-inline">
+                            <input type="checkbox" id="sameAsBuyer">상단과 동일
+                        </label>
+                    </div>
+                    
+                    <div class="row">
+                        <label>이름
+                            <input id="recvName" type="text" placeholder="수령인 이름">
+                        </label>
+                        <label>연락처
+                            <input id="recvPhone" type="tel" placecholder="010-0000-0000">
+                        </label>
+                    </div>
+                    
+                    <div class="row">
+                        <label>우편번호
+                            <input id="zip" type="text" placeholder="우편번호 입력">
+                        </label>
+                        <div class="mt24">
+                            <button type="button" id="btnZip" class="btn-outline">주소 검색</button>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <label class="full">주소
+                            <input id="addr1" type="text" placeholder="기본 주소">
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label class="full">상세 주소
+                            <input id="addr2" type="text" placeholder="상세 주소">
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label class="full">배송 요청사항
+                            <input id="memo" type="text" placeholder="요청사항이 있으면 입력해 주세요">
+                        </label>
+                    </div>
+                </section>
+                
+                <!-- 3. 할인 정보 -->
+                <section class="card" id="discountSec">
+                    <h2 class="sec-title">할인 정보</h2>
+                    
+                    <div class="row">
+                        <label class="full">쿠폰
+                            <div class="inline">
+                                <select id="couponSelect">
+                                    <option value="">쿠폰을 선택하세요</option>
+                                </select>
+                                <button type="button" id="btnLoadCoupons" class="btn">쿠폰 불러오기</button>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <div class="row">
+                        <label>포인트 사용
+                            <input id="points" type="number" min="0" step="1" value="0">
+                        </label>
+                        <div class="mt24"><button type="button" id-="btnApplyDiscount" class="btn-outline">적용</button></div>
+                    </div>
+                </section>
+                
+                <!-- 4. 배송 정보 -->
+                <section class="card" id="shippingSec">
+                    <h2 class="sec-title">배송 정보</h2>
+                    <div class="row">
+                        <label>배송 종류
+                            <select id="shipType">
+                                <option value="normal">일반 배송</option>
+                                <option value="express">빠른 배송</option>
+                            </select>
+                        </label>
+                        <label>선착불
+                            <select id="shipPay">
+                                <dption value="prepaid">선불</dption>
+                                <dption value="prepaid">착불</dption>
+                            </select>
+                        </label>
+                        <label>배송료
+                            <input id="shipFee" type="number" min="0" step="100" value="0">
+                        </label>
+                    </div>
+                </section>
+                
+                <!-- 5. 결제 수단 -->
+                <section class="card" id="paymentSec">
+                    <h2 class="sec-title">결제 수단</h2>
+                    
+                    <div class="pay-tabs">
+                        <label class="radio"><input type="radio" name="pay" value="card" checked>신용/체크카드</label>
+                        <label class="radio"><input type="radio" name="pay" value="bank">계좌이체</label>
+                    </div>
+                    
+                    <div id="cardBox" class="pay-box">
+                        <div class="row">
+                            <label>카드사
+                                <select id="cardCompany">
+                                    <option value="">선택</option>
+                                    <option>국민</option><option>신한</option><option>삼성</option><option>현대</option>
+                                </select>
+                            </label>
+                            <label>할부 개월
+                                <select id="installment">
+                                    <option value="0">일시불</option>
+                                    <option value="2">2개월</option>
+                                    <option value="3">3개월</option>
+                                    <option value="6">6개월</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div id="bankBox" class="pay-box" hidden>
+                        <div class="row">
+                            <label>은행명
+                                <select id="bankName">
+                                    <option value="">선택</option>
+                                    <option>KB국민</option>
+                                    <option>신한</option>
+                                    <option>우리</option>
+                                    <option>하나</option>
+                                    <option>NH농협</option>
+                                    <option>IBK기업</option>
+                                    <option>SC제일</option>
+                                    <option>카카오뱅크</option>
+                                    <option>케이뱅크</option>
+                                    <option>토스뱅크</option>
+                                </select>
+                            </label>
+                            <label>입금자명
+                                <input id="depositor" type="text" placeholder="입금자명을 입력">
+                            </label>
+                        </div>
+                    </div>
+                    
+                </section>
+                
+            </div>
+            <!-- 우측: 요약 -->
+            <aside class="right">
+                <section class="summary card">
+                    <h2 class="sec-title">주문 상품</h2>
+                    <ul id="itemList" class="item-list"></ul>
+                    
+                    <dl class="totals">
+                        <div><dt>상품 금액</dt><dd id="sumProducts">₩0</dd></div>
+                        <div><dt>배송비</dt><dd id="sumShip">₩0</dd></div>
+                        <div><dt>할인</dt><dd id="sumDisecount">-₩0</dd></div>
+                        <div class="totla"><dt>총 결제 금액</dt><dd id="sumTotal">₩0</dd></div>
+                    </dl>
+                    
+                    <label class="chk-inline mt8">
+                        <input type="checkbox" id="agree">결제 약관에 동의합니다.
+                    </label>
+                    
+                    <button type="button" id="btnPay" class="btn-primary block mt12">결제하기</button>
+                </section>
+            </aside>
+        </section>
+    </main>
+    
+    <div id="site-footer" data-include="/common/Footer.html"></div>
+    
+    
+    <!-- 주소록 모달 -->
+    <dialog id="addrModal" class="modal">
+        <div class="modal-body">
+            <h3>주소 선택</h3>
+            <ul id="addrList" class="addr-list"><!-- JS 렌더링 --></ul>
+            <div class="modal-actions">
+                <button class="btn" id="addrClose">닫기</button>
+            </div>
+        </div>
+    </dialog>
+
+</body>
+</html>

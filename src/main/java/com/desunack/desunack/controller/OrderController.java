@@ -2,6 +2,7 @@ package com.desunack.desunack.controller;
 
 import com.desunack.desunack.dto.ShoppingCartDto;
 import com.desunack.desunack.service.OrderService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +24,9 @@ public class OrderController {
     OrderService oSer;
 
     @PostMapping("/goods/order")
-    public ResponseEntity<String> goodsOrder(@RequestBody List<ShoppingCartDto> scList, Model model){
+    public ResponseEntity<String> goodsOrder(@RequestBody List<ShoppingCartDto> scList, Model model, HttpSession session){
         try{
-            oSer.makeOrder(scList, model);
+            oSer.makeOrder(scList, model, session);
             model.addAttribute("scList",scList);
             return ResponseEntity.ok("페이지 이동 성공");
         }catch(Exception e){

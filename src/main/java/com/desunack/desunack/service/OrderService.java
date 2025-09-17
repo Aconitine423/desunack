@@ -5,6 +5,7 @@ import com.desunack.desunack.dto.MemberDto;
 import com.desunack.desunack.dto.OrderDto;
 import com.desunack.desunack.dto.ShoppingCartDto;
 import com.desunack.desunack.entity.MemberEntity;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,8 @@ public class OrderService {
     private final OrderDao orderDao;
 
     @Transactional
-    public void makeOrder(List<ShoppingCartDto> scList, Model model) {
-        int userUid = orderDao.getUserUID(scList);
+    public void makeOrder(List<ShoppingCartDto> scList, Model model, HttpSession session) {
+        int userUid = (int)session.getAttribute("userUid");
         int total_cost = 0;
         for (ShoppingCartDto scDto : scList) {
             int cost = orderDao.getCost(scDto.getSc_g_id());

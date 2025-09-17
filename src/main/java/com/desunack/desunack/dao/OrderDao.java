@@ -4,6 +4,7 @@ package com.desunack.desunack.dao;
 import com.desunack.desunack.dto.OrderDto;
 import com.desunack.desunack.dto.ShoppingCartDto;
 import com.desunack.desunack.entity.MemberEntity;
+import com.desunack.desunack.entity.OrderEntity;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -26,7 +27,18 @@ public interface OrderDao {
     OrderDto getOrderInfo(int goNum);
 
 
-    void updateOrder(OrderDto oDto);
+    void updateOrder(OrderEntity oEntity);
 
     void insertOrderDetail(List<ShoppingCartDto> scList, int god_go_num);
+
+    @Insert("insert into go_card(goc_go_num, goc_card_com, goc_card_installment) values (${go_num}, ${goc_card_com}, ${goc_card_installment})")
+    void insertCard(OrderEntity oEntity);
+
+    @Insert("insert into go_own(goo_go_num, goo_cost, goo_time) values (${go_num}, ${goo_cost}, ${goo_time})")
+    void insertOwn(OrderEntity oEntity);
+
+    @Insert("insert into go_parcel(gop_go_num, gop_cost, gop_pay_type) values (${go_num}, ${gop_cost}, ${gop_pay_type})")
+    void insertParcel(OrderEntity oEntity);
+
+    void deleteShoppingCart(List<ShoppingCartDto> scList);
 }

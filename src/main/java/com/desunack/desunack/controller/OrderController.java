@@ -1,7 +1,6 @@
 package com.desunack.desunack.controller;
 
-import com.desunack.desunack.dto.OrderDto;
-import com.desunack.desunack.dto.ShoppingCartDto;
+import com.desunack.desunack.dto.*;
 import com.desunack.desunack.service.OrderService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -35,9 +35,9 @@ public class OrderController {
     }
 
     @PostMapping("/goods/orderUpdate")
-    public ResponseEntity<String> goodsOrderUpdate(@RequestPart List<ShoppingCartDto> scList, @RequestPart OrderDto oDto, Model model){
+    public ResponseEntity<String> goodsOrderUpdate(@RequestPart List<ShoppingCartDto> scList, @RequestPart OrderDto oDto){
         try{
-            oSer.orderConfirm(scList, oDto, model);
+            oSer.orderConfirm(scList, oDto);
             return ResponseEntity.ok("주문 성공");
         }
         catch(Exception e){

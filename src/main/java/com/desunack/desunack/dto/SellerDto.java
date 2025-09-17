@@ -15,7 +15,6 @@ import java.time.LocalDate;
 @Accessors(chain=true)
 @Builder
 public class SellerDto {
-//    private UserDto userDto;
     // 회원공통 DTO
     private int userUid;
     private String userId;
@@ -42,10 +41,6 @@ public class SellerDto {
     private String sellerDelivery;
     private String sellerNum;
 
-//    public SellerEntity toEntity(UserDto uDto) {
-//        return SellerEntity.builder().s_picture(this.sellerNumImage)
-//                .s_account(this.sellerAccount).s_bank(this.sellerBank).s_delivery(this.sellerDelivery).memberEntity(uDto.toEntity()).build();
-//    }
     public SellerEntity toEntity() {
         return SellerEntity.builder().m_uid(this.userUid).m_id(this.userId).m_name(this.userName).m_pw(this.userPw)
                 .m_email(this.userEmail).m_post(this.userPost).m_address(this.userAddress)

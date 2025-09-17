@@ -4,8 +4,8 @@
 
 <mapper namespace="com.desunack.desunack.dao.OrderDao">
     <insert id="makeOrder">
-        insert into goods_order(go_m_uid, go_receiver_phone, go_receiver_post, go_receiver_address, go_receiver_address_detail, go_date, go_status)
-        values (${m_uid}, ${m_phone}, ${m_post}, ${m_address}, ${m_address_detail}, default, 5, ${total_cost})
+        insert into goods_order(go_receiver_name, go_m_uid, go_receiver_phone, go_receiver_post, go_receiver_address, go_receiver_address_detail, go_date, go_status, go_total_cost)
+        values (${m_name}, ${m_uid}, ${m_phone}, ${m_post}, ${m_address}, ${m_address_detail}, default, 5, ${total_cost})
         <selectKey resultType="int" order="AFTER" keyProperty="go_num">
             SELECT LAST_INSERT_ID()
         </selectKey>

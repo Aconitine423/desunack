@@ -3,14 +3,6 @@ const $wrap = document.querySelector('.mypage');
 const USER_UID = $wrap?.dataset.userUid; // 예: "U123456"
 const ROLE = $wrap?.dataset.role || 'consumer';
 
-/* 좌측 메뉴 템플릿 주입: -data-role에 따라 템플릿(#tpl-menu-)을 #mypage-menu에 복사 */
-(function injectSideMenu(){
-    const target = document.getElementById('mypage-menu');
-    const tplId = ROLE === 'seller' ? '#tpl-menu-seller' : '#tpl-menu-consumer';
-    const tpl = document.querySelector(tplId);
-    if (tpl && target) target.appendChild(tpl.content.cloneNode(true));
-})();
-
 // 토스트 메시지 함수
 function showToast(message, isSuccess = true) {
     // 1. jQuery로 토스트 요소를 만들고 클래스와 텍스트를 한 번에 설정 (체이닝)

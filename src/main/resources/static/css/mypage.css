@@ -294,15 +294,15 @@
     margin-bottom: 8px;
 }
 
-.menu-section + .menu-section{
+.sidebar-menu-section + .sidebar-menu-section{
     margin-top: 16px;
 }
-.menu-title{
+.sidebar-menu-title{
     font-size: 13px;
     color: var(--mp-sub);
     margin-bottom: 8px;
 }
-.menu-list li{
+.sidebar-menu-list li{
     display:flex;
     align-items: center;
     gap: 8px;
@@ -310,7 +310,7 @@
     border-radius: 8px;
     cursor: pointer;
 }
-.menu-list li:hover{
+.sidebar-menu-list li:hover{
     background: #f2f4ff;
 }
 

@@ -1,14 +1,19 @@
-const checkbox = $('row-chk');
-const idList = [];
-checkbox.each(function(){
-    if($(this).is(':checked')){
-        idList.push($(this).getAttribute('id'));
-    }
-})
+
+
 
 function goodsOrder(){
-    axios.post('/goods/order',idList).then(function(response){
-        location.href="/goods/order";
+    const checkbox = $('.row-chk');
+    const idList = [];
+    console.log(checkbox);
+    checkbox.each(function(){
+        console.log("id", $(this).attr('id'));
+        if($(this).is(':checked')){
+            idList.push($(this).attr('id'));
+
+        }
+    })
+    axios.post('/order/order',idList).then(function(response){
+        location.href="/order/order";
     }).catch(function(error){
         console.log(error);
     })

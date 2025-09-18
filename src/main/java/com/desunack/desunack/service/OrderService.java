@@ -41,10 +41,13 @@ public class OrderService {
         //유저정보 불러오기
         MemberEntity mEntity = orderDao.getUserInfo(userUid);
         //주문 초기상태 생성 후 주문번호 받아오기
-        int go_num = orderDao.makeOrder(mEntity, total_cost);
+        orderDao.makeOrder(mEntity, total_cost);
+        log.info("mEntity={}", mEntity);
+        int go_num = orderDao.getOrderNum(mEntity);
         //주문 초기상태 불러오기
-        OrderEntity oEntity = orderDao.getOrderInfo(go_num).toEntity();
-        model.addAttribute("orderEntity",oEntity);
+        OrderEntity orderEntity = orderDao.getOrderInfo(go_num);
+        log.info("oEntity={}", orderEntity);
+        model.addAttribute("orderEntity",orderEntity);
 
     }
 

@@ -24,17 +24,25 @@ public class OrderService {
     private final OrderDao orderDao;
 
     @Transactional
-    public void makeOrder(List<ShoppingCartDto> scList, Model model, HttpSession session) {
+    public void makeOrder(List<Integer> idList, Model model, HttpSession session) {
         int userUid = (int)session.getAttribute("userUid");
         int total_cost = 0;
-        for (ShoppingCartDto scDto : scList) {
-            int cost = orderDao.getCost(scDto.getSc_g_id());
-            total_cost += (cost*scDto.getSc_qty());
+        for (int id : idList) {
+            int cost = orderDao.getCost(id);
+            int qty = orderDao.getQty(userUid, id);
+            total_cost += (cost*qty);
         }
-        ArrayList<String> goodsList = orderDao.getGoodsInfo(scList);
+        //상품정보 불러오기
+        ArrayList<String> goodsList = orderDao.getGoodsInfo(idList);
         model.addAttribute("goodsList",goodsList);
+        //선택한 장바구니 불러오기
+        ArrayList<String> shoppingCartList = orderDao.getShoppingCart(userUid, idList);
+        model.addAttribute("shoppingCartList",shoppingCartList);
+        //유저정보 불러오기
         MemberEntity mEntity = orderDao.getUserInfo(userUid);
+        //주문 초기상태 생성 후 주문번호 받아오기
         int go_num = orderDao.makeOrder(mEntity, total_cost);
+        //주문 초기상태 불러오기
         OrderEntity oEntity = orderDao.getOrderInfo(go_num).toEntity();
         model.addAttribute("orderEntity",oEntity);
 

@@ -43,5 +43,10 @@ public interface OrderDao {
 
     void deleteShoppingCart(List<ShoppingCartDto> scList);
 
-    ArrayList<String> getGoodsInfo(List<ShoppingCartDto> scList);
+    ArrayList<String> getGoodsInfo(List<Integer> idList);
+
+    @Select("select sc_qty from shopping_cart where sc_g_id = ${id} and sc_m_uid = ${userUid}")
+    int getQty(int userUid, int id);
+
+    ArrayList<String> getShoppingCart(int userUid, List<Integer> idList);
 }

@@ -22,10 +22,9 @@ public class OrderController {
     OrderService oSer;
 
     @PostMapping("/goods/order")
-    public ResponseEntity<String> goodsOrder(@RequestBody List<ShoppingCartDto> scList, Model model, HttpSession session){
+    public ResponseEntity<String> goodsOrder(@RequestBody List<Integer> idList, Model model, HttpSession session){
         try{
-            oSer.makeOrder(scList, model, session);
-            model.addAttribute("scList",scList);
+            oSer.makeOrder(idList, model, session);
             return ResponseEntity.ok("페이지 이동 성공");
         }catch(Exception e){
             log.error("페이지 이동중 에러 발생", e);

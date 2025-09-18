@@ -26,7 +26,7 @@ public class OrderController {
         try{
             log.info(idList.toString());
             oSer.makeOrder(idList, model, session);
-            return ResponseEntity.ok("페이지 이동 성공");
+            return ResponseEntity.ok(model.getAttribute("go_num").toString());
         }catch(Exception e){
             log.error("페이지 이동중 에러 발생", e);
             return ResponseEntity.badRequest().body("페이지 이동 실패");
@@ -46,8 +46,9 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/order/order")
-    public String goodsOrder(Model model){
+    @GetMapping("/order/order/{go_num}")
+    public String goodsOrder(@PathVariable("go_num")int go_num, Model model){
+        oSer.loadOrder(go_num, model);
         return "/order/order";
     }
 }

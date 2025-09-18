@@ -37,7 +37,7 @@
                             <input id="buyerPhone2" type="text" readonly
                                    th:value="${#strings.substring(orderEntity.go_receiver_phone,4,8)}">
                             -
-                            <input id="buyerPhone3" type="text" readonly th:value="${#strings.substringAfter(orderEntity.go_receiver_phone,8)}"
+                            <input id="buyerPhone3" type="text" readonly th:value="${#strings.substringAfter(orderEntity.go_receiver_phone,8)}">
                         </label>
                     </div>
                     <div class="row">
@@ -126,27 +126,6 @@
                             </label>
                         </div>
                     </div>
-                    
-                    <div id="bankBox" class="pay-box" hidden>
-                        <div class="row">
-                            <label>은행명
-                                <select id="bankName">
-                                    <option value="">선택</option>
-                                    <option value="국민">KB국민</option>
-                                    <option value="신한">신한</option>
-                                    <option value="우리">우리</option>
-                                    <option value="하나">하나</option>
-                                    <option value="농협">NH농협</option>
-                                    <option value="기업">IBK기업</option>
-                                    <option value="sc">SC제일</option>
-                                    <option value="카카오">카카오뱅크</option>
-                                    <option value="케이">케이뱅크</option>
-                                    <option value="토스">토스뱅크</option>
-                                </select>
-                            </label>
-                        </div>
-                    </div>
-                    
                 </section>
                 
             </div>

@@ -28,15 +28,15 @@ public interface GoodsDao {
 
     ArrayList<String> getReviewList(int g_id);
 
-    @Insert("insert into favorite(f_g_id, f_m_uid) values(${f_g_id}, ${f_m_uid})")
+    @Insert("insert into favorite(f_g_id, f_m_uid) values(#{f_g_id}, #{f_m_uid})")
     void insertFavorite(FavoriteDto fDto);
 
-    @Insert("insert into shopping_cart(sc_g_id, sc_m_uid, sc_qty) values(${sc_g_id}, ${sc_m_uid}, ${sc_qty})")
+    @Insert("insert into shopping_cart(sc_g_id, sc_m_uid, sc_qty) values(#{sc_g_id}, #{sc_m_uid}, #{sc_qty})")
     void insertCart(ShoppingCartDto scDto);
 
     ArrayList<String> getShoppingCart(int userUid);
 
-    @Delete("delete from shopping_cart where sc_g_id = ${g_id}")
+    @Delete("delete from shopping_cart where sc_g_id = #{g_id}")
     void deleteShoppingCart(int g_id);
 
 

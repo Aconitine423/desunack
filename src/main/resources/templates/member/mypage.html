@@ -41,74 +41,74 @@
     </nav>
 
     <div class="mypage-grid">
-    <div class="mypage-sidebar-container">
-        <div class="mypage-sidebar">
-            <!--    소비자용 사이드바    -->
-            <div class="mypage-sidebar-customer">
-                <section class="sidebar-menu-section">
-                    <p class="sidebar-menu-title">주문 관리</p>
-                    <ul class="sidebar-menu-list">
-                        <li><span class="i"><i class="fa-solid fa-receipt"></i>주문 내역</span></li>
-                        <li><span class="i"><i class="fa-solid fa-truck-fast"></i>택배배송 조회</span></li>
-                    </ul>
-                </section>
-                <section class="sidebar-menu-section">
-                    <p class="sidebar-menu-title">혜택 관리</p>
-                    <ul class="sidebar-menu-list">
-                        <li><span class="i"><i class="fa-solid fa-coins"></i>포인트 조회</span></li>
-                        <li><span class="i"><i class="fa-solid fa-ticket"></i>쿠폰</span></li>
-                        <li><span class="i"><i class="fa-solid fa-cart-plus"></i>장바구니</span></li>
-                        <li><span class="i"><i class="fa-regular fa-heart"></i>찜 목록</span></li>
-                    </ul>
-                </section>
-                <section class="sidebar-menu-section">
-                    <p class="sidebar-menu-title">회원 정보</p>
-                    <ul class="sidebar-menu-list">
-                        <li><a th:href="@{/member/update/customer/{uid}(uid=${session.userUid})}"><i
-                                class="fa-regular fa-id-card"></i><span class="i">회원정보 수정</span></a></li>
-                        <li><a th:href="@{/member/pwupdate/customer/{uid}(uid=${session.userUid})}"><i
-                                class="fa-solid fa-key"></i><span class="i">비밀번호 수정</span></a></li>
-                        <li><span class="i"><i class="fa-solid fa-person-walking-arrow-right"></i>회원 탈퇴</span></li>
-                    </ul>
-                </section>
-            </div>
-            <!--    판매자용 사이드바    -->
-            <div class="mypage-sidebar-seller sb-hidden">
-                <section class="sidebar-menu-section">
-                    <p class="sidebar-menu-title">상품 관리</p>
-                    <ul class="sidebar-menu-list">
-                        <li><span class="i"><i class="fa-solid fa-boxes-stacked"></i>상품 관리</span></li>
-                        <li><span class="i"><i class="fa-regular fa-square-plus"></i>상품 등록</span></li>
-                    </ul>
-                </section>
-                <section class="sidebar-menu-section">
-                    <p class="sidebar-menu-title">주문 관리</p>
-                    <ul class="sidebar-menu-list">
-                        <li><span class="i"><i class="fa-solid fa-clipboard-list"></i>주문 관리</span></li>
-                        <li><span class="i"><i class="fa-solid fa-receipt"></i>주문내역 관리</span></li>
-                    </ul>
-                </section>
-                <section class="sidebar-menu-section">
-                    <p class="sidebar-menu-title">배송 관리</p>
-                    <ul class="sidebar-menu-list">
-                        <li><span class="i"><i class="fa-solid fa-truck"></i>배송 관리</span></li>
-                        <li><span class="i"><i class="fa-solid fa-route"></i>내 배송현황 관리</span></li>
-                    </ul>
-                </section>
-                <section class="sidebar-menu-section">
-                    <p class="sidebar-menu-title">혜택 / 회원</p>
-                    <ul class="sidebar-menu-list">
-                        <li><span class="i"><i class="fa-solid fa-ticket"></i>쿠폰 관리</span></li>
-                        <li><a th:href="@{/member/update/seller/{uid}(uid=${session.userUid})}"><i
-                                class="fa-regular fa-id-card"></i><span class="i">회원정보 수정</span></a></li>
-                        <li><a th:href="@{/member/pwupdate/seller/{uid}(uid=${session.userUid})}"><i
-                                class="fa-solid fa-key"></i><span class="i">비밀번호 수정</span></a></li>
-                        <li><span class="i"><i class="fa-solid fa-person-walking-arrow-right"></i>회원 탈퇴</span></li>
-                    </ul>
-                </section>
+        <div class="mypage-sidebar-container">
+            <div class="mypage-sidebar">
+                <!--    소비자용 사이드바    -->
+                <div class="mypage-sidebar-customer">
+                    <section class="sidebar-menu-section">
+                        <p class="sidebar-menu-title">주문 관리</p>
+                        <ul class="sidebar-menu-list">
+                            <li><span class="i"><i class="fa-solid fa-receipt"></i>주문 내역</span></li>
+                            <li><span class="i"><i class="fa-solid fa-truck-fast"></i>택배배송 조회</span></li>
+                        </ul>
+                    </section>
+                    <section class="sidebar-menu-section">
+                        <p class="sidebar-menu-title">혜택 관리</p>
+                        <ul class="sidebar-menu-list">
+                            <li><span class="i"><i class="fa-solid fa-coins"></i>포인트 조회</span></li>
+                            <li><span class="i"><i class="fa-solid fa-ticket"></i>쿠폰</span></li>
+                            <li><span class="i"><i class="fa-solid fa-cart-plus"></i>장바구니</span></li>
+                            <li><span class="i"><i class="fa-regular fa-heart"></i>찜 목록</span></li>
+                        </ul>
+                    </section>
+                    <section class="sidebar-menu-section">
+                        <p class="sidebar-menu-title">회원 정보</p>
+                        <ul class="sidebar-menu-list">
+                            <li><a th:href="@{/member/update/customer/{uid}(uid=${session.userUid})}"><i
+                                    class="fa-regular fa-id-card"></i><span class="i">회원정보 수정</span></a></li>
+                            <li><a th:href="@{/member/pwupdate/customer/{uid}(uid=${session.userUid})}"><i
+                                    class="fa-solid fa-key"></i><span class="i">비밀번호 수정</span></a></li>
+                            <li><span class="i"><i class="fa-solid fa-person-walking-arrow-right"></i>회원 탈퇴</span></li>
+                        </ul>
+                    </section>
+                </div>
+                <!--    판매자용 사이드바    -->
+                <div class="mypage-sidebar-seller sb-hidden">
+                    <section class="sidebar-menu-section">
+                        <p class="sidebar-menu-title">상품 관리</p>
+                        <ul class="sidebar-menu-list">
+                            <li><span class="i"><i class="fa-solid fa-boxes-stacked"></i>상품 관리</span></li>
+                            <li><span class="i"><i class="fa-regular fa-square-plus"></i>상품 등록</span></li>
+                        </ul>
+                    </section>
+                    <section class="sidebar-menu-section">
+                        <p class="sidebar-menu-title">주문 관리</p>
+                        <ul class="sidebar-menu-list">
+                            <li><span class="i"><i class="fa-solid fa-clipboard-list"></i>주문 관리</span></li>
+                            <li><span class="i"><i class="fa-solid fa-receipt"></i>주문내역 관리</span></li>
+                        </ul>
+                    </section>
+                    <section class="sidebar-menu-section">
+                        <p class="sidebar-menu-title">배송 관리</p>
+                        <ul class="sidebar-menu-list">
+                            <li><span class="i"><i class="fa-solid fa-truck"></i>배송 관리</span></li>
+                            <li><span class="i"><i class="fa-solid fa-route"></i>내 배송현황 관리</span></li>
+                        </ul>
+                    </section>
+                    <section class="sidebar-menu-section">
+                        <p class="sidebar-menu-title">혜택 / 회원</p>
+                        <ul class="sidebar-menu-list">
+                            <li><span class="i"><i class="fa-solid fa-ticket"></i>쿠폰 관리</span></li>
+                            <li><a th:href="@{/member/update/seller/{uid}(uid=${session.userUid})}"><i
+                                    class="fa-regular fa-id-card"></i><span class="i">회원정보 수정</span></a></li>
+                            <li><a th:href="@{/member/pwupdate/seller/{uid}(uid=${session.userUid})}"><i
+                                    class="fa-solid fa-key"></i><span class="i">비밀번호 수정</span></a></li>
+                            <li><span class="i"><i class="fa-solid fa-person-walking-arrow-right"></i>회원 탈퇴</span></li>
+                        </ul>
+                    </section>
+                </div>
             </div>
         </div>
-    </div>
 
         <!--        &lt;!&ndash; [L] 좌측 사이드 메뉴 &ndash;&gt;-->
         <!--        <aside class="mypage-side" aria-label="마이페이지 메뉴">-->
@@ -406,7 +406,7 @@
 <script th:inline="javascript">
     // 세션 m_kind에 따른 사이드바 출력
     $(document).ready(function () {
-        const userRole = `[[${session.m_kind}]]`;
+        const userRole = `[(${session.m_kind})]`;
         console.log(userRole);
         // let templateId = '';
         if (userRole === 'C') {
@@ -415,6 +415,7 @@
             $('.mypage-sidebar-seller').addClass('sb-hidden');
         } else if (userRole === 'S') {
             // templateId = 'tpl-menu-seller';
+            console.log("userRole = 'S'");
             $('.mypage-sidebar-customer').addClass('sb-hidden');
             $('.mypage-sidebar-seller').removeClass('sb-hidden');
         }

@@ -45,6 +45,7 @@ public class HomeController {
     @GetMapping("/")
     public String home(HttpSession session, Model model) {
         if(session.getAttribute("m_kind") != null) {
+            mSer.getSales(session);
             String kind = session.getAttribute("m_kind").toString();
             log.info("=======kind={}", kind);
             if (kind != null) {
@@ -55,7 +56,15 @@ public class HomeController {
                         CustomerDto cDto = (CustomerDto) model.getAttribute("customerDto");
                         if (cDto != null) {
                             int age = (LocalDate.now().getYear() - cDto.getCustomerBDay().getYear()) / 10 * 10; // << 현재 연도와 태어난 연도의 차를 통해서 계산하기
+                            model.addAttribute("age", age);
                             char gender = cDto.getCustomerGender();
+                            String cGender = "";
+                            if(gender == '1'){
+                                cGender = "남성";
+                            }else if(gender == '2'){
+                                cGender = "여성";
+                            }
+                            model.addAttribute("gender", cGender);
                             if (mSer.getGoodsSales(gender, age, session)) {
                                 log.info(session.getAttribute("gList").toString());
                                 return "index";
@@ -83,7 +92,6 @@ public class HomeController {
             }
         }
         if (mSer.getSales(session)) { // 비로그인
-            log.info(session.getAttribute("gList").toString());
             return "index";
         }
         return "index";

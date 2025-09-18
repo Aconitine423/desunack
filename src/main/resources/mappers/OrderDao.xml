@@ -34,4 +34,7 @@
         </foreach>
 
     </select>
+    <select id="getGoodsInfo" resultType="java.lang.String">
+        select json_object('g_image', g_image, 'g_name', g_name, 'g_value', g_value) from goods where g_id in <foreach collection="scList" item="shoppingCart" open="(" close=")" separator=",">${shoppingCart.sc_g_id}</foreach>
+    </select>
 </mapper>

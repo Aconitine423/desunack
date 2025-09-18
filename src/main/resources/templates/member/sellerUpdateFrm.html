@@ -35,45 +35,45 @@
     </nav>
 
     <div class="mypage-grid">
-            <div class="mypage-sidebar-container">
-                <div class="mypage-sidebar">
-                    <!--    판매자용 사이드바    -->
-                    <div class="mypage-sidebar-seller sb-hidden">
-                        <section class="sidebar-menu-section">
-                            <p class="sidebar-menu-title">상품 관리</p>
-                            <ul class="sidebar-menu-list">
-                                <li><span class="i"><i class="fa-solid fa-boxes-stacked"></i>상품 관리</span></li>
-                                <li><span class="i"><i class="fa-regular fa-square-plus"></i>상품 등록</span></li>
-                            </ul>
-                        </section>
-                        <section class="sidebar-menu-section">
-                            <p class="sidebar-menu-title">주문 관리</p>
-                            <ul class="sidebar-menu-list">
-                                <li><span class="i"><i class="fa-solid fa-clipboard-list"></i>주문 관리</span></li>
-                                <li><span class="i"><i class="fa-solid fa-receipt"></i>주문내역 관리</span></li>
-                            </ul>
-                        </section>
-                        <section class="sidebar-menu-section">
-                            <p class="sidebar-menu-title">배송 관리</p>
-                            <ul class="sidebar-menu-list">
-                                <li><span class="i"><i class="fa-solid fa-truck"></i>배송 관리</span></li>
-                                <li><span class="i"><i class="fa-solid fa-route"></i>내 배송현황 관리</span></li>
-                            </ul>
-                        </section>
-                        <section class="sidebar-menu-section">
-                            <p class="sidebar-menu-title">혜택 / 회원</p>
-                            <ul class="sidebar-menu-list">
-                                <li><span class="i"><i class="fa-solid fa-ticket"></i>쿠폰 관리</span></li>
-                                <li><a th:href="@{/member/update/seller/{uid}(uid=${session.userUid})}"><i
-                                        class="fa-regular fa-id-card"></i><span class="i">회원정보 수정</span></a></li>
-                                <li><a th:href="@{/member/pwupdate/seller/{uid}(uid=${session.userUid})}"><i
-                                        class="fa-solid fa-key"></i><span class="i">비밀번호 수정</span></a></li>
-                                <li><span class="i"><i class="fa-solid fa-person-walking-arrow-right"></i>회원 탈퇴</span></li>
-                            </ul>
-                        </section>
-                    </div>
+        <div class="mypage-sidebar-container">
+            <div class="mypage-sidebar">
+                <!--    판매자용 사이드바    -->
+                <div class="mypage-sidebar-seller sb-hidden">
+                    <section class="sidebar-menu-section">
+                        <p class="sidebar-menu-title">상품 관리</p>
+                        <ul class="sidebar-menu-list">
+                            <li><span class="i"><i class="fa-solid fa-boxes-stacked"></i>상품 관리</span></li>
+                            <li><span class="i"><i class="fa-regular fa-square-plus"></i>상품 등록</span></li>
+                        </ul>
+                    </section>
+                    <section class="sidebar-menu-section">
+                        <p class="sidebar-menu-title">주문 관리</p>
+                        <ul class="sidebar-menu-list">
+                            <li><span class="i"><i class="fa-solid fa-clipboard-list"></i>주문 관리</span></li>
+                            <li><span class="i"><i class="fa-solid fa-receipt"></i>주문내역 관리</span></li>
+                        </ul>
+                    </section>
+                    <section class="sidebar-menu-section">
+                        <p class="sidebar-menu-title">배송 관리</p>
+                        <ul class="sidebar-menu-list">
+                            <li><span class="i"><i class="fa-solid fa-truck"></i>배송 관리</span></li>
+                            <li><span class="i"><i class="fa-solid fa-route"></i>내 배송현황 관리</span></li>
+                        </ul>
+                    </section>
+                    <section class="sidebar-menu-section">
+                        <p class="sidebar-menu-title">혜택 / 회원</p>
+                        <ul class="sidebar-menu-list">
+                            <li><span class="i"><i class="fa-solid fa-ticket"></i>쿠폰 관리</span></li>
+                            <li><a th:href="@{/member/update/seller/{uid}(uid=${session.userUid})}"><i
+                                    class="fa-regular fa-id-card"></i><span class="i">회원정보 수정</span></a></li>
+                            <li><a th:href="@{/member/pwupdate/seller/{uid}(uid=${session.userUid})}"><i
+                                    class="fa-solid fa-key"></i><span class="i">비밀번호 수정</span></a></li>
+                            <li><span class="i"><i class="fa-solid fa-person-walking-arrow-right"></i>회원 탈퇴</span></li>
+                        </ul>
+                    </section>
                 </div>
             </div>
+        </div>
 
         <!-- [R] 우측 컨텐츠 -->
         <main class="mypage-main">
@@ -92,7 +92,8 @@
                 <div class="inputGroup">
                     <label for="sellerName">사업자명</label>
                     <div class="inputContainer">
-                        <input type="text" class="inputForm" id="sellerName" name="sellerName" placeholder="사업자명을 입력하세요."
+                        <input type="text" class="inputForm" id="sellerName" name="sellerName"
+                               placeholder="사업자명을 입력하세요."
                                autocomplete="off" th:value="${sDto.userName}" readonly>
                     </div>
                 </div>
@@ -204,15 +205,15 @@
                 <div class="inputGroup">
                     <label>배송방식 선택</label>
                     <div class="inputContainer deliveryContainer">
-                            <select id="sellerDelivery" name="sellerDelivery" th:value="${sDto.sellerDelivery}">
-                                <option value="CJ대한통운">CJ대한통운</option>
-                                <option value="우체국택배">우체국택배</option>
-                                <option value="한진택배">한진택배</option>
-                                <option value="롯데택배">롯데택배</option>
-                                <option value="로젠택배">로젠택배</option>
-                                <option value="경동택배">경동택배</option>
-                                <option value="자체배송">자체배송</option>
-                            </select>
+                        <select id="sellerDelivery" name="sellerDelivery" th:value="${sDto.sellerDelivery}">
+                            <option value="CJ대한통운">CJ대한통운</option>
+                            <option value="우체국택배">우체국택배</option>
+                            <option value="한진택배">한진택배</option>
+                            <option value="롯데택배">롯데택배</option>
+                            <option value="로젠택배">로젠택배</option>
+                            <option value="경동택배">경동택배</option>
+                            <option value="자체배송">자체배송</option>
+                        </select>
                         <span id="deliveryError" class="errorMsg"></span>
                     </div>
                 </div>
@@ -235,14 +236,14 @@
 <script src="/js/sellerUpdateFrm.js"></script>
 <script th:inline="javascript">
     // DB에서 조회한 은행과 택배사 스크립트로 select 선택 지정
-    $(document).ready(function() {
-        // 서버에서 전달된 DTO 값을 JavaScript 변수에 저장
+    $(document).ready(function () {
+        // 서버에서 전달된 DTO 값을 스크립트 변수에 저장
         const selectedBank = '[(${sDto.sellerBank})]';
         const selectedDelivery = '[(${sDto.sellerDelivery})]';
 
         console.log(selectedBank);
         console.log(selectedDelivery);
-        // jQuery를 사용하여 해당 값과 일치하는 옵션 선택
+        // 해당 값과 일치하는 옵션 선택
         $('#sellerBank').val(selectedBank);
         $('#sellerDelivery').val(selectedDelivery);
     });

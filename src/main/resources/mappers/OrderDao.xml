@@ -35,6 +35,17 @@
 
     </select>
     <select id="getGoodsInfo" resultType="java.lang.String">
-        select json_object('g_image', g_image, 'g_name', g_name, 'g_value', g_value) from goods where g_id in <foreach collection="scList" item="shoppingCart" open="(" close=")" separator=",">${shoppingCart.sc_g_id}</foreach>
+        select json_object('g_image', g_image, 'g_name', g_name, 'g_value', g_value)
+        from goods where g_id in
+        <foreach collection="idList" item="id" open="(" close=")" separator=",">${id}</foreach>
+        order by g_id
+    </select>
+
+    <select id="getShoppingCart" resultType="java.lang.String">
+        select json_object(sc_g_id, sc_qty) from shopping_cart
+                where sc_m_uid = ${userUid} and (sc_g_id in
+                <foreach collection="idList" item="id" open="(" close=")" separator=",">
+                    ${id}
+                </foreach> ) order by sc_g_id
     </select>
 </mapper>

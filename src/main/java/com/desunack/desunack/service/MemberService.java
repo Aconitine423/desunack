@@ -334,6 +334,7 @@ public class MemberService {
         SellerDto sDto = sellerEntity.toDto();
         // 전화번호 분할
         String telRemoveHyphen = sDto.getUserPhone().replace("-", "");
+        System.out.println(telRemoveHyphen.length());
         // 010-4자리-4자리
         if (telRemoveHyphen.length() == 11) {
             sDto.setTel1(telRemoveHyphen.substring(0, 3));
@@ -353,6 +354,10 @@ public class MemberService {
             sDto.setTel1(telRemoveHyphen.substring(0, 4));
             sDto.setTel2(telRemoveHyphen.substring(4, 8));
             sDto.setTel3(telRemoveHyphen.substring(8, 12));
+        } else if (telRemoveHyphen.length() == 9) { // ex) 02-3자리-4자리
+            sDto.setTel1(telRemoveHyphen.substring(0, 2));
+            sDto.setTel2(telRemoveHyphen.substring(2, 5));
+            sDto.setTel3(telRemoveHyphen.substring(5, 9));
         }
         return sDto;
     }

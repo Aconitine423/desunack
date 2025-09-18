@@ -10,7 +10,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +31,7 @@ public interface OrderDao {
 
     void updateOrder(OrderEntity oEntity);
 
-    void insertOrderDetail(List<ShoppingCartDto> scList, int god_go_num);
+    void insertOrderDetail(List<Integer> scList, int god_go_num);
 
     @Insert("insert into go_card(goc_go_num, goc_card_com, goc_card_installment) values (#{go_num}, #{goc_card_com}, #{goc_card_installment})")
     void insertCard(OrderEntity oEntity);
@@ -43,7 +42,7 @@ public interface OrderDao {
     @Insert("insert into go_parcel(gop_go_num, gop_cost, gop_pay_type) values (#{go_num}, #{gop_cost}, #{gop_pay_type})")
     void insertParcel(OrderEntity oEntity);
 
-    void deleteShoppingCart(List<Integer> idList, int uid);
+    void deleteShoppingCart(List<Integer> scList, int uid);
 
     ArrayList<String> getGoodsInfo(List<Integer> idList);
 
@@ -60,7 +59,7 @@ public interface OrderDao {
     void updateGoods(ShoppingCartDto scDto);
 
     @Select("select c_birth from c_member where c_m_uid = #{mUid}")
-    LocalDate getAge(int mUid);
+    int getAge(int mUid);
 
     @Select("select c_gender from c_member where c_m_uid = #{mUid}")
     char getGender(int mUid);
@@ -68,12 +67,12 @@ public interface OrderDao {
     @Update("update goods_total_sales set gts_sales = gts_sales + #{sc_qty} where gts_g_id = #{sc_g_id}")
     void updateTotalSales(ShoppingCartDto scDto);
 
-    @Select ("select count(*) from goods_sales where gsa_age_range = #{age} and gsa_gender = #{gender} and gsa_g_id = #{scDto.sc_g_id}")
+    @Select ("select count(*) from goods_sales where gsa_age_range = #{age} and gsa_gender = #{gender} and gsa_g_id = #{sc_g_id}")
     int nullCheckSales(ShoppingCartDto scDto, int age, char gender);
 
-    @Update("update goods_sales set gsa_sales = gsa_sales + #{scDto.sc_qty} where gsa_g_id = #{scDto.sc_g_id} and gsa_gender = #{gender} and gsa_age_range = #{age}")
+    @Update("update goods_sales set gsa_sales = gsa_sales + #{sc_qty} where gsa_g_id = #{sc_g_id} and gsa_gender = #{gender} and gsa_age_range = #{age}")
     void updateSales(ShoppingCartDto scDto, int age, char gender);
 
-    @Insert("insert goods_sales(gsa_g_id, gsa_sales, gsa_age_range, gsa_gender) values (#{scDto.sc_g_id}, #{scDto.sc_qty}, #{age}, #{gender})")
+    @Insert("insert goods_sales(gsa_g_id, gsa_sales, gsa_age_range, gsa_gender) values (#{sc_g_id}, #{sc_qty}, #{age}, #{gender})")
     void insertSales(ShoppingCartDto scDto, int age, char gender);
 }

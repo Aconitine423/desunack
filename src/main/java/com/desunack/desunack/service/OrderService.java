@@ -60,17 +60,8 @@ public class OrderService {
     @Transactional
     public void orderConfirm(List<Integer> idList, OrderEntity oEntity) {
         int god_go_num = oEntity.getGo_num();
-        log.info("id:{}", god_go_num);
-        int m_uid = oEntity.getGo_m_uid();
-        log.info("m_uid:{}", m_uid);
-        int age = (LocalDate.now().getYear() - orderDao.getAge(m_uid).getYear()) / 10 * 10;
-        log.info("age:{}", age);
-        char gender = orderDao.getGender(m_uid);
-
         orderDao.updateOrder(oEntity);
-        List<ShoppingCartDto> scList = orderDao.getShoppingCart(m_uid, idList);
-
-        orderDao.insertOrderDetail(scList, god_go_num);
+        orderDao.insertOrderDetail(idList, god_go_num);
         if(oEntity.getGo_payments().equals("카드")){ //payment에 들어갈 값에 따라 수정 필요
             orderDao.insertCard(oEntity);
         }
@@ -79,9 +70,10 @@ public class OrderService {
         }else if(oEntity.getGo_kind()==2){ // 택배배송이라면
             orderDao.insertParcel(oEntity);
         }
-
-
-        log.info("scList={}", scList);
+        int m_uid = oEntity.getGo_m_uid();
+        int age = (LocalDate.now().getYear() - orderDao.getAge(m_uid)) / 10 * 10;
+        char gender = orderDao.getGender(m_uid);
+        List<ShoppingCartDto> scList = orderDao.getShoppingCart(m_uid, idList);
         for(ShoppingCartDto scDto : scList){
             orderDao.updateGoods(scDto);
             orderDao.updateTotalSales(scDto);

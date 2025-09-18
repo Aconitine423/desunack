@@ -22,7 +22,7 @@
     </update>
     <delete id="deleteShoppingCart">
         delete from shopping_cart where sc_m_uid = #{uid} and (sc_g_id in
-            <foreach collection="idList" item="id" open="(" close=")" separator=",">#{id}
+            <foreach collection="scList" item="shoppingCart" open="(" close=")" separator=",">#{shoppingCart.sc_g_id}
                                   </foreach>)
     </delete>
 
@@ -48,6 +48,6 @@
                 </foreach> ) order by sc_g_id
     </select>
     <select id="getShoppingCart" resultType="com.desunack.desunack.dto.ShoppingCartDto">
-        select * from shopping_cart where sc_m_uid = #{mUid} and (sc_g_id in <foreach collection="idList" item="id" open="(" close=")" separator=",">#{id}</foreach> )
+        select * from shopping_cart where sc_m_uid = #{mUid} and (sc_g_id in <foreach collection="idList" item="id" open="(" close=")" )
     </select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.desunack.desunack.controller;
 
 import com.desunack.desunack.dto.*;
+import com.desunack.desunack.entity.OrderEntity;
 import com.desunack.desunack.service.OrderService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -35,9 +36,9 @@ public class OrderController {
     }
 
     @PostMapping("/order/orderUpdate")
-    public ResponseEntity<String> goodsOrderUpdate(@RequestPart List<ShoppingCartDto> scList, @RequestPart OrderDto oDto){
+    public ResponseEntity<String> goodsOrderUpdate(@RequestPart List<Integer> idList, @RequestPart OrderEntity OrderEntity){
         try{
-            oSer.orderConfirm(scList, oDto);
+            oSer.orderConfirm(idList, OrderEntity);
             return ResponseEntity.ok("주문 성공");
         }
         catch(Exception e){
@@ -47,7 +48,7 @@ public class OrderController {
     }
 
     @GetMapping("/order/order/{go_num}")
-    public String goodsOrder(@PathVariable("go_num")int go_num, Model model, HttpSession session){
+    public String goodsOrder(@PathVariable("go_num")int go_num, Model model){
         oSer.loadOrder(go_num, model);
         return "/order/order";
     }

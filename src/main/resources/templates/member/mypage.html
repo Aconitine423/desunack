@@ -404,7 +404,6 @@
 <script th:inline="javascript">
     // 세션 m_kind에 따른 사이드바 출력
     $(document).ready(function () {
-        // 세션의 내용을 `[(${})]` 로 불러오면 "" 없이 불러옴
         const userRole = `[(${session.m_kind})]`;
         console.log(userRole);
         if (userRole === 'C') {

@@ -39,7 +39,7 @@
     </select>
 
     <select id="getShoppingCart" resultType="java.lang.String">
-        select json_object(sc_g_id, sc_qty) from shopping_cart
+        select json_object('sc_g_id', sc_g_id, 'sc_qty', sc_qty) from shopping_cart
                 where sc_m_uid = #{userUid} and (sc_g_id in
                 <foreach collection="idList" item="id" open="(" close=")" separator=",">
                     #{id}

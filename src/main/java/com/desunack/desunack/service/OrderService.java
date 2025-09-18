@@ -34,21 +34,26 @@ public class OrderService {
         }
         //상품정보 불러오기
         ArrayList<String> goodsList = orderDao.getGoodsInfo(idList);
-        model.addAttribute("goodsList",goodsList);
+        session.setAttribute("goodsList",goodsList);
         //선택한 장바구니 불러오기
         ArrayList<String> shoppingCartList = orderDao.getShoppingCart(userUid, idList);
-        model.addAttribute("shoppingCartList",shoppingCartList);
+        session.setAttribute("shoppingCartList",shoppingCartList);
         //유저정보 불러오기
         MemberEntity mEntity = orderDao.getUserInfo(userUid);
         //주문 초기상태 생성 후 주문번호 받아오기
         orderDao.makeOrder(mEntity, total_cost);
         log.info("mEntity={}", mEntity);
         int go_num = orderDao.getOrderNum(mEntity);
+        model.addAttribute("go_num",go_num);
         //주문 초기상태 불러오기
+
+
+    }
+
+    public void loadOrder(int go_num, Model model){
         OrderEntity orderEntity = orderDao.getOrderInfo(go_num);
         log.info("oEntity={}", orderEntity);
         model.addAttribute("orderEntity",orderEntity);
-
     }
 
     @Transactional

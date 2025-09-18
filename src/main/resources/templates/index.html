@@ -56,35 +56,13 @@
     <!-- class="member-results": 회원결과 섹션 스타일링용 -->
 
     <!-- 섹션 제목 -->
-    <h2 class="section-title">회원 정보 기반 결과</h2>
+    <h2 class="section-title hidden" id="memberTitle"></h2>
     <!-- <h2> 요소: 제목(header) 레벨 2
          class="section-title": 섹션 제목 디자인용 -->
 
     <!-- 4열 그리드 컨테이너 -->
     <div class="grid-container" id="product-results-container">
-        <!-- class="grid-container": CSS Grid 레이아웃 사용, 4열(column) 구성 -->
 
-        <!-- 각 그리드 아이템: 배경색으로 구분 -->
-        <!--        <th:block th:if="${#lists.isEmpty(session.Json)}">-->
-        <!--            <span>리스트가 없습니다.</span>-->
-        <!--        </th:block>-->
-        <!--        <th:block th:unless="${#lists.isEmpty(session.Json)}">-->
-        <!--            <th:block th:each="goods:${session.Json}">-->
-        <!--                    <div class="grid-item" th:text="${goods}"></div>-->
-        <!--            </th:block>-->
-        <!--        </th:block>-->
-        <!--        <div class="grid-item" id="item1" style="background-color: #ff6d9d;">-->
-        <!--            [[${session.Json}]]-->
-        <!--        </div>-->
-        <!--        <div class="grid-item" id="item2" style="background-color: #4ecdc4;"></div>-->
-        <!--        <div class="grid-item" id="item3" style="background-color: #45b7d1;"></div>-->
-        <!--        <div class="grid-item" id="item4" style="background-color: #96ceb4;"></div>-->
-        <!--        <div class="grid-item" id="item5" style="background-color: #feca57;"></div>-->
-        <!--        <div class="grid-item" id="item6" style="background-color: #ff9ff3;"></div>-->
-        <!--        <div class="grid-item" id="item7" style="background-color: #54a0ff;"></div>-->
-        <!--        <div class="grid-item" id="item8" style="background-color: #5f27cd;"></div>-->
-        <!--        <div class="grid-item" id="item9" style="background-color: #00ff1f;"></div>-->
-        <!--        <div class="grid-item" id="item10" style="background-color: #ff001f;"></div>-->
     </div>
 </section>
 
@@ -93,37 +71,18 @@
 <!-- ================================================================= -->
 <section class="menu-list">
     <!-- class="menu-list": 메뉴 목록 섹션 스타일링용 -->
-    <h2 class="section-title">메뉴 목록</h2>
+    <h2 class="section-title">가장 많이 팔린 상품</h2>
 
-    <div class="grid-container">
-        <!-- 그리드 레이아웃 재사용 -->
-
-        <!-- 품절 처리된 아이템 예시 -->
-        <div class="grid-item">
-            <div class="img-container" style="background: #ff6d9d;">
-                <!-- class="img-container": 이미지 래퍼(wrapper) 스타일링용
-                style="background": 배경색 지정 -->
-
-                <!-- 반투명 오버레이 배경 (soldout-bg) -->
-                <div class="soldout-bg"></div>
-                <!-- class="soldout-bg": Sold Out 배경(overlay) 스타일 -->
-
-                <!-- sold out 뱃지 텍스트 -->
-                <div class="soldout-badge"><span>sold<br>out</span></div>
-                <!-- class="soldout-badge": Sold Out 배지(badge) 스타일
-                <span>: 줄바꿈(<br>) 포함 텍스트 표시용 -->
-            </div>
-        </div>
-
-        <!-- 나머지 정상 상품 아이템 -->
-        <div class="grid-item" style="background-color: #ff6d9d;"></div>
-        <div class="grid-item" style="background-color: #4ecdc4;"></div>
-        <div class="grid-item" style="background-color: #45b7d1;"></div>
-        <div class="grid-item" style="background-color: #96ceb4;"></div>
-        <div class="grid-item" style="background-color: #feca57;"></div>
-        <div class="grid-item" style="background-color: #ff9ff3;"></div>
-        <div class="grid-item" style="background-color: #54a0ff;"></div>
-        <div class="grid-item" style="background-color: #5f27cd;"></div>
+    <div class="grid-container" id = "normalContainer">
+<!--        &lt;!&ndash; 나머지 정상 상품 아이템 &ndash;&gt;-->
+<!--        <div class="grid-item" style="background-color: #ff6d9d;"></div>-->
+<!--        <div class="grid-item" style="background-color: #4ecdc4;"></div>-->
+<!--        <div class="grid-item" style="background-color: #45b7d1;"></div>-->
+<!--        <div class="grid-item" style="background-color: #96ceb4;"></div>-->
+<!--        <div class="grid-item" style="background-color: #feca57;"></div>-->
+<!--        <div class="grid-item" style="background-color: #ff9ff3;"></div>-->
+<!--        <div class="grid-item" style="background-color: #54a0ff;"></div>-->
+<!--        <div class="grid-item" style="background-color: #5f27cd;"></div>-->
     </div>
 </section>
 <th:block th:replace="~{fragments/fragments :: footer}"></th:block>
@@ -137,6 +96,11 @@
 <script th:inline="javascript">
     // console.log([[${session.Json}]])
     let goods = [[${session.gList}]];
+    let normalGoods = [[${session.normalgList}]];
+    let gender = [[${gender}]];
+    let age = [[${age}]];
+    let m_kind = [[${session.m_kind}]];
+    let userName = [[${session.userName}]];
     const createHtml = (goods) => {
         console.log(goods);
         let html = "";
@@ -168,15 +132,34 @@
         return html;
     }
     $(document).ready(function () {
+        if(m_kind === 'C' || m_kind === 'S'){
         const $container = $('#product-results-container');
         $container.empty();
+        const $memberTitle = $('#memberTitle');
+        $memberTitle.removeClass('hidden');
         try {
             const html = createHtml(goods);
             $container.html(html);
+            if(m_kind === 'C'){
+                $memberTitle.text(`${age}대 ${gender}이 많이 구매한 상품`);
+            }else if(m_kind === 'S'){
+                $memberTitle.text(`${userName}님의 가장 많이 팔린 상품`);
+            }
         } catch (e) {
             console.log(e);
             $container.html('<span class="error-message">데이터를 불러오는 데 실패했습니다.</span>')
         }
+        }
+        const normalContainer = $('#normalContainer');
+        normalContainer.empty();
+        try{
+            const normalhtml = createHtml(normalGoods);
+            normalContainer.html(normalhtml);
+        }catch(e){
+            console.log(e);
+            normalContainer.html(`<span class = "error-message">데이터를 불러오는 데 실패했습니다.</span>`)
+        }
+
     });
 
 

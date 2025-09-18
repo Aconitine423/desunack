@@ -238,7 +238,7 @@ public class MemberService {
     public boolean getSales(HttpSession session) {
         ArrayList<String> gList = mDao.getSales();
         if(gList != null){
-            session.setAttribute("gList", gList);
+            session.setAttribute("normalgList", gList);
 
             return true;
         }

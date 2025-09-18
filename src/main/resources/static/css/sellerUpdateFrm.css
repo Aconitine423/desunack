@@ -55,16 +55,6 @@ body{
     width: 100%;
 }
 
-/* ID 닉네임 중복확인 버튼 */
-/*.checkBtn {*/
-/*    padding: 0.75rem 1rem;*/
-/*    background: #eee;*/
-/*    border: 1px solid #ccc;*/
-/*    border-radius: 4px;*/
-/*    cursor: pointer;*/
-/*    white-space: nowrap; !* 텍스트가 줄바꿈되지 않도록 함 *!*/
-/*}*/
-
 /* 전화번호 입력창 컨테이너 */
 .telContainer {
     display: flex;
@@ -121,23 +111,30 @@ body{
     flex-basis: 100%;
     height: auto;
 }
-
-/* 생년월일 컨테이너 */
-/*.birthContainer {*/
-/*    flex-wrap: wrap;*/
-/*    align-items: center;*/
-/*}*/
-/*.birthContainer .birthSelect {*/
-/*    flex-grow: 1;*/
-/*    min-width: 80px;*/
-/*    padding: 0.75rem;*/
-/*    border: 1px solid #ccc;*/
-/*    border-radius: 4px; !* 둥근 모양을 위한 값 *!*/
-/*    box-sizing: border-box;*/
-/*    appearance: none;*/
-/*    -webkit-appearance: none;*/
-/*    -moz-appearance: none;*/
-/*}*/
+/* 계좌 은행 선택 컨테이너 */
+.bankContainer select {
+    flex-grow: 1;
+    min-width: 100px;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px; /* 둥근 모양을 위한 값 */
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+/* 배송방식 선택 컨테이너 */
+.deliveryContainer select {
+    flex-grow: 1;
+    min-width: 100px;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px; /* 둥근 모양을 위한 값 */
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
 
 /* 실시간 오류메시지창 */
 .errorMsg {
@@ -178,9 +175,9 @@ body{
     background-color: #da190b;
 }
 
-.radioLabel {
-    margin-right: 1rem;
-}
+/*.radioLabel {*/
+/*    margin-right: 1rem;*/
+/*}*/
 
 /* 토스트 박스 */
 #toast{
@@ -252,12 +249,18 @@ body{
     grid-template-columns: 260px 1fr;
     gap: 24px;
 }
-.mypage-side{
+.mypage-sidebar-container {
     background:var(--mp-card);
     border:1px solid var(--mp-line);
     border-radius:var(--mp-radius);
     padding:16px;
 }
+/*.mypage-side{*/
+/*    background:var(--mp-card);*/
+/*    border:1px solid var(--mp-line);*/
+/*    border-radius:var(--mp-radius);*/
+/*    padding:16px;*/
+/*}*/
 
 /* 3) 카드 공통 / 버튼 */
 .mypage-card{
@@ -310,15 +313,15 @@ body{
     100%{background-position:-200% 0}
 }
 
-.menu-section + .menu-section{
+.sidebar-menu-section + .sidebar-menu-section{
     margin-top: 16px;
 }
-.menu-title{
+.sidebar-menu-title{
     font-size: 13px;
     color: var(--mp-sub);
     margin-bottom: 8px;
 }
-.menu-list li{
+.sidebar-menu-list li{
     display:flex;
     align-items: center;
     gap: 8px;
@@ -326,7 +329,7 @@ body{
     border-radius: 8px;
     cursor: pointer;
 }
-.menu-list li:hover{
+.sidebar-menu-list li:hover{
     background: #f2f4ff;
 }
 

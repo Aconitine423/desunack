@@ -64,7 +64,7 @@
                                          'g_image',g_image,'g_detail',g_detail,'g_delivery_kind',g_delivery_kind,'g_status',g_status,
                                          'g_toal_rating',g_total_rating,'g_review_count',g_review_count,'gsa_sales',gsa_sales)
         from goods join goods_sales on goods.g_id = goods_sales.gsa_g_id
-        where gsa_gender = #{m_gender} and gsa_age_range = #{m_age} order by gsa_sales desc limit 10
+        where gsa_gender = #{m_gender} and gsa_age_range = #{m_age} order by gsa_sales desc limit 5
     </select>
     <select id="getCompanySales" resultType="java.lang.String">
         select json_object('g_id',g_id,'g_m_uid',g_m_uid,'brand_name',brand_name,'g_name',g_name,'company_name',company_name,
@@ -72,7 +72,7 @@
                                          'g_image',g_image,'g_detail',g_detail,'g_delivery_kind',g_delivery_kind,'g_status',g_status,
                                          'g_toal_rating',g_total_rating,'g_review_count',g_review_count,'gts_sales',gts_sales)
         from goods join goods_total_sales on goods.g_id = goods_total_sales.gts_g_id
-        where g_m_uid = #{m_uid} order by gts_sales desc limit 10
+        where g_m_uid = #{m_uid} order by gts_sales desc limit 5
     </select>
     <select id="getCustomerInfo" resultType="java.lang.String">
         select json_object('m_uid', m_uid, 'm_id', m_id, 'm_name', m_name, 'm_email', m_email,'m_post', m_post, 'm_address', m_address,

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,6 +31,8 @@ public class OrderService {
             int cost = orderDao.getCost(scDto.getSc_g_id());
             total_cost += (cost*scDto.getSc_qty());
         }
+        ArrayList<String> goodsList = orderDao.getGoodsInfo(scList);
+        model.addAttribute("goodsList",goodsList);
         MemberEntity mEntity = orderDao.getUserInfo(userUid);
         int go_num = orderDao.makeOrder(mEntity, total_cost);
         OrderEntity oEntity = orderDao.getOrderInfo(go_num).toEntity();

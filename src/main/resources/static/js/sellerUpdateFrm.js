@@ -113,49 +113,6 @@ $selectDomain.on('change', function () {
 
 const $updateForm = $('#updateForm');
 
-// // 중복 체크 여부 상태를 저장할 변수 (기본값: false)
-// let isNicknameChecked = false;
-// let isNicknameAvailable = false;
-//
-// // 닉네임 중복체크
-// function checkUserNickname() {
-//     const userNickname = $('#userNickname').val();
-//     const originalNickname = $('#originalNickname').val();
-//     // 중복 체크 여부 초기화
-//     isNicknameChecked = false;
-//
-//     if (userNickname === '') {
-//         $('#nicknameError').text('닉네임은 필수 입력 항목입니다.').css('color', 'red');
-//         return;
-//     } else if (userNickname > 20) {
-//         $('#nicknameError').text('닉네임은 최대 20자까지 가능합니다.').css('color', 'red');
-//         return;
-//     } else if (userNickname === originalNickname) {
-//         // 닉네임값이 변하지 않으면 중복체크 통과한것으로 처리
-//         isNicknameChecked = true;
-//         isNicknameAvailable = true;
-//         $('#nicknameError').text('');
-//         console.log('닉네임 변경없음. 중복체크 통과')
-//         return;
-//     }
-//
-//     // DB 닉네임 중복 체크 요청
-//     axios.post('/signup/checkUserNickname', {customerNickname: userNickname})
-//         .then(response => {
-//             isNicknameChecked = true;
-//             isNicknameAvailable = !response.data;
-//             if (isNicknameAvailable) {
-//                 $('#nicknameError').text('사용 가능한 닉네임입니다.').css('color', 'green');
-//             } else {
-//                 $('#nicknameError').text('이미 사용중인 닉네임입니다.').css('color', 'red');
-//             }
-//         })
-//         .catch(function (error) {
-//             console.log('닉네임 중복체크 실패: ', error);
-//             $('#nicknameError').text('닉네임 중복체크에 실패했습니다.').css('color', 'red');
-//         })
-// }
-
 // 전화번호 입력 필드에 숫자만 입력 가능하도록
 $('#tel1, #tel2, #tel3').on('input', function () {
     const $this = $(this);
@@ -169,26 +126,6 @@ function validateForm() {
 
     // 모든 오류 메시지 초기화
     $('.errorMsg').text('');
-
-    // // 사업자명 유효성 검사 (필수, 길이)
-    // const sellerName = $('#sellerName').val();
-    // if (sellerName === '') {
-    //     $('#nameError').text('이름은 필수 입력 항목입니다.').css('color', 'red');
-    //     isValid = false;
-    // } else if (sellerName.length > 20) {
-    //     $('#nameError').text('이름은 최대 20자까지 가능합니다.').css('color', 'red');
-    //     isValid = false;
-    // }
-    //
-    // // 사업자번호 유효성 검사 (필수, 길이)
-    // const sellerNum = $('#sellerNum').val();
-    // if (sellerNum === '') {
-    //     $('#sellerNumError').text('닉네임은 필수 입력 항목입니다.').css('color', 'red');
-    //     isValid = false;
-    // } else if (sellerNum.length > 20) {
-    //     $('#sellerNumError').text('닉네임은 최대 20자까지 가능합니다.').css('color', 'red');
-    //     isValid = false;
-    // }
 
     // 전화번호 유효성 검사 (필수, 형식)
     const tel1 = $('#tel1').val();

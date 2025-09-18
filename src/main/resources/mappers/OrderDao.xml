@@ -5,10 +5,7 @@
 <mapper namespace="com.desunack.desunack.dao.OrderDao">
     <insert id="makeOrder">
         insert into goods_order(go_receiver_name, go_m_uid, go_receiver_phone, go_receiver_post, go_receiver_address, go_receiver_address_detail, go_date, go_status, go_total_cost)
-        values (${m_name}, ${m_uid}, ${m_phone}, ${m_post}, ${m_address}, ${m_address_detail}, default, 0, ${total_cost})
-        <selectKey resultType="int" order="AFTER" keyProperty="go_num">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
+        values (#{mEntity.m_name}, #{mEntity.m_uid}, #{mEntity.m_phone}, #{mEntity.m_post}, #{mEntity.m_address}, #{mEntity.m_address_detail}, default, 0, #{total_cost})
     </insert>
     <insert id="insertOrderDetail">
         insert into go_detail(god_go_num, god_g_id, god_qty)
@@ -16,36 +13,36 @@
         <foreach collection="scList" item="shoppingCart" separator=","> (#{god_go_num}, #{shoppingCart.sc_g_id}, #{shoppingCart.sc_qty})</foreach>
     </insert>
     <update id="updateOrder">
-        update goods_order set go_receiver_name=${go_receiver_name}, go_receiver_phone=${go_receiver_phone}
-        ,go_receiver_post = ${go_receiver_post}, go_receiver_address = ${go_receiver_address},
-         go_receiver_address_detail = ${go_receiver_address_detail}, go_status = 1 where go_num = ${go_num}
+        update goods_order set go_receiver_name=#{go_receiver_name}, go_receiver_phone=#{go_receiver_phone}
+        ,go_receiver_post = #{go_receiver_post}, go_receiver_address = #{go_receiver_address},
+         go_receiver_address_detail = #{go_receiver_address_detail}, go_status = 1 where go_num = ${go_num}
     </update>
     <delete id="deleteShoppingCart">
         delete from shopping_cart where sc_g_id in
                                   <foreach collection="scList" item="shoppingCart" open="(" close=")" separator=",">
-                                      ${shoppingCart.sc_g_id}
+                                      #{shoppingCart.sc_g_id}
                                   </foreach>
     </delete>
 
     <select id="getUserUID" resultType="java.lang.Integer">
         select distinct sc_m_uid from shopping_cart where sc_m_uid in
         <foreach collection="scList" item="sc_m_uid" open="(" close=")" separator=",">
-            ${sc_m_uid}
+            #{sc_m_uid}
         </foreach>
 
     </select>
     <select id="getGoodsInfo" resultType="java.lang.String">
         select json_object('g_image', g_image, 'g_name', g_name, 'g_value', g_value)
         from goods where g_id in
-        <foreach collection="idList" item="id" open="(" close=")" separator=",">${id}</foreach>
+        <foreach collection="idList" item="id" open="(" close=")" separator=",">#{id}</foreach>
         order by g_id
     </select>
 
     <select id="getShoppingCart" resultType="java.lang.String">
         select json_object(sc_g_id, sc_qty) from shopping_cart
-                where sc_m_uid = ${userUid} and (sc_g_id in
+                where sc_m_uid = #{userUid} and (sc_g_id in
                 <foreach collection="idList" item="id" open="(" close=")" separator=",">
-                    ${id}
+                    #{id}
                 </foreach> ) order by sc_g_id
     </select>
 </mapper>

@@ -133,7 +133,7 @@
             <aside class="right">
                 <section class="summary card">
                     <h2 class="sec-title">주문 상품</h2>
-                    <ul id="itemList" class="item-list"></ul>
+                    <table id="goodsList"></table>
                     
                     <dl class="totals">
                         <div class="total"><dt>총 결제 금액</dt><dd id="sumTotal" th:text="${orderEntity.go_total_cost}">₩0</dd></div>
@@ -165,6 +165,50 @@
 
 </body>
 <script th:inline="javascript">
+// 상품정보 : name > image > value // 장바구니 정보 : qty > id
+const gList = [[${goodsList}]];
+const scList = [[${shoppingCartList}]];
+const createHtml = (goods, shoppingCart) =>{
+    let html="";
+    for(let i = 0; i < goods.length; i++){
+        let goodsStr = goods[i];
+        let shoppingCartstr = shoppingCart[i];
+
+        let subgoods = goodsStr.replaceAll(' ', '');
+        subgoods = subgoods.replaceAll('"', '');
+        let subCart = shoppingCartstr.replaceAll(' ', '');
+        subCart = subCart.replaceAll('"', '');
+
+        let startName = subgoods.indexOf('g_name')+7;
+        let endName = subgoods.indexOf('g_image')-1;
+        let name = subgoods.substring(startName, endName);
+        let startImage = subgoods.indexOf('g_image')+8;
+        let endImage = subgoods.indexOf('g_value')-1;
+        let image = subgoods.substring(startImage, endImage);
+        let startValue = subgoods.indexOf('g_value')+8;
+        let endValue = subgoods.indexOf('}');
+        let cost = subgoods.substring(startValue, endValue);
+        let startQty = subCart.indexOf('sc_qty')+7;
+        let endQty = subCart.indexOf('sc_g_id')-1;
+        let qty = subCart.substring(startQty, endQty);
+        cost = cost * qty;
+        html += `<tr><td><img src="${image}" alt="${name}"></td>
+<td>${name}<br>구매수량 : ${qty}개</td><td>${cost}원</td></tr>`
+    }
+    return html;
+}
+$(document).ready(function(){
+    const $table = $('#goodsList');
+    $table.empty();
+    try{
+        const html = createHtml(gList, scList);
+        $table.html(html);
+    }catch(e){
+        console.log(e);
+        $table.html('<span>데이터가 없습니다.')
+    }
+})
+
 
 </script>
 </html>

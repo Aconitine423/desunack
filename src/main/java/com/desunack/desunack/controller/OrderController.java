@@ -19,11 +19,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping
 public class OrderController {
-    OrderService oSer;
+    private final OrderService oSer;
 
-    @PostMapping("/goods/order")
+    @PostMapping("/order/order")
     public ResponseEntity<String> goodsOrder(@RequestBody List<Integer> idList, Model model, HttpSession session){
         try{
+            log.info(idList.toString());
             oSer.makeOrder(idList, model, session);
             return ResponseEntity.ok("페이지 이동 성공");
         }catch(Exception e){
@@ -33,7 +34,7 @@ public class OrderController {
         }
     }
 
-    @PostMapping("/goods/orderUpdate")
+    @PostMapping("/order/orderUpdate")
     public ResponseEntity<String> goodsOrderUpdate(@RequestPart List<ShoppingCartDto> scList, @RequestPart OrderDto oDto){
         try{
             oSer.orderConfirm(scList, oDto);
@@ -45,8 +46,8 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/goods/order")
-    public String goodsOrder(){
-        return "/goods/order";
+    @GetMapping("/order/order")
+    public String goodsOrder(Model model){
+        return "/order/order";
     }
 }

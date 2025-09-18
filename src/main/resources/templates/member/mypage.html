@@ -18,7 +18,6 @@
 </head>
 <body>
 <th:block th:replace="~{fragments/fragments :: header}"></th:block>
-<!--    <div id="site-header" data-include="/fragments/mpheader.html"></div>-->
 <noscript>이 페이지의 일부 기능은 자바스크립트를 필요로 합니다.</noscript>
 <!-- data-role 값으로 메뉴가 달라짐
 -consumer: 일반(소비자) 회원
@@ -400,30 +399,22 @@
 </div>
 
 <th:block th:replace="~{fragments/fragments :: footer}"></th:block>
-<!--    <div id="site-footer" data-include="/My_page/mpFooter/mpFooter.html"></div>-->
 <!-- 토스트 컨테이너  -->
 <div id="toast" aria-live="polite" aria-atomic="true"></div>
 <script th:inline="javascript">
     // 세션 m_kind에 따른 사이드바 출력
     $(document).ready(function () {
+        // 세션의 내용을 `[(${})]` 로 불러오면 "" 없이 불러옴
         const userRole = `[(${session.m_kind})]`;
         console.log(userRole);
-        // let templateId = '';
         if (userRole === 'C') {
-            // templateId = 'tpl-menu-consumer';
             $('.mypage-sidebar-customer').removeClass('sb-hidden');
             $('.mypage-sidebar-seller').addClass('sb-hidden');
         } else if (userRole === 'S') {
-            // templateId = 'tpl-menu-seller';
             console.log("userRole = 'S'");
             $('.mypage-sidebar-customer').addClass('sb-hidden');
             $('.mypage-sidebar-seller').removeClass('sb-hidden');
         }
-        // if (templateId) {
-        //     const template = document.getElementById(templateId);
-        //     const templateContent = document.importNode(template.content, true);
-        //     $('#mypage-menu').append(templateContent);
-        // }
     })
 
     // [공통 include 로더] - 페이지 내 모든 [data-include] 처리
@@ -465,13 +456,6 @@
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('[data-include]').forEach(doInclude);
     });
-
-    // (선택) 헤더 전용 JS가 있으면 헤더 include 후에만 로드
-    // document.getElementById('site-header')?.addEventListener('include:ready', () => {
-    //     const s = document.createElement('script');
-    //     s.src = '/js/mpheader.js'; // 필요하면 경로 조정
-    //     document.body.appendChild(s);
-    // });
 </script>
 </body>
 <script src="/js/mypage.js"></script>

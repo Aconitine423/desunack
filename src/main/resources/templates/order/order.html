@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>주문/결제</title>
-    
+    <link rel="shortcut icon" href="/img/favicon/favicon-16x16.png" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 공통 CSS -->
     <link rel="stylesheet" href="/common/reset.css">
     <link rel="stylesheet" href="/css/global.css">
@@ -37,7 +40,7 @@
                             <input id="buyerPhone2" type="text" readonly
                                    th:value="${#strings.substring(orderEntity.go_receiver_phone,4,8)}">
                             -
-                            <input id="buyerPhone3" type="text" readonly th:value="${#strings.substringAfter(orderEntity.go_receiver_phone,8)}">
+                            <input id="buyerPhone3" type="text" readonly th:value="${#strings.substring(orderEntity.go_receiver_phone,9, 13)}">
                         </label>
                     </div>
                     <div class="row">
@@ -166,8 +169,10 @@
 </body>
 <script th:inline="javascript">
 // 상품정보 : name > image > value // 장바구니 정보 : qty > id
-const gList = [[${goodsList}]];
-const scList = [[${shoppingCartList}]];
+const gList = [[${session.goodsList}]];
+const scList = [[${session.shoppingCartList}]];
+console.log(gList);
+console.log(scList);
 const createHtml = (goods, shoppingCart) =>{
     let html="";
     for(let i = 0; i < goods.length; i++){

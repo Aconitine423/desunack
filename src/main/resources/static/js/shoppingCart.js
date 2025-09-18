@@ -13,7 +13,7 @@ function goodsOrder(){
         }
     })
     axios.post('/order/order',idList).then(function(response){
-        location.href="/order/order";
+        location.href=`/order/order/${response.data}`;
     }).catch(function(error){
         console.log(error);
     })

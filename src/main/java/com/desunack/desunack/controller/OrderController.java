@@ -48,7 +48,7 @@ public class OrderController {
     }
 
     @GetMapping("/order/order/{go_num}")
-    public String goodsOrder(@PathVariable("go_num")int go_num, Model model){
+    public String goodsOrder(@PathVariable("go_num")int go_num, Model model, HttpSession session){
         oSer.loadOrder(go_num, model);
         return "/order/order";
     }

@@ -22,7 +22,7 @@
     </update>
     <delete id="deleteShoppingCart">
         delete from shopping_cart where sc_m_uid = #{uid} and (sc_g_id in
-            <foreach collection="scList" item="shoppingCart" open="(" close=")" separator=",">#{shoppingCart.sc_g_id}
+            <foreach collection="idList" item="id" open="(" close=")" separator=",">#{id}
                                   </foreach>)
     </delete>
 

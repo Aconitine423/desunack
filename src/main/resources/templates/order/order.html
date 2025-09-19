@@ -21,7 +21,7 @@
     
     <main class="container checkout-page" role="main" aria-labelledby="pageTitle">
         <h1 id="pageTitle" class="page-title">주문/결제</h1>
-        
+
         <section class="grid">
             <!-- 좌측 폼 -->
             <div class="left">
@@ -30,6 +30,7 @@
                 <section class="card" id="buyerSec">
                     <h2 class="sec-title">주문자 정보</h2>
                     <div class="row">
+                            <input id="uid" type="hidden" th:value="${session.userUid}">
                         <label>이름
                             <input id="buyerName" type="text" readonly th:value="${session.userName}">
                         </label>
@@ -171,10 +172,11 @@
 // 상품정보 : name > image > value // 장바구니 정보 : qty > id
 const gList = [[${session.goodsList}]];
 const scList = [[${session.shoppingCartList}]];
+const orderNum = [[${orderEntity.go_num}]]
 console.log(gList);
 console.log(scList);
 const createHtml = (goods, shoppingCart) =>{
-    let html="";
+    let html=`<input type = "hidden" value="${orderNum}" id="order${orderNum}">`;
     for(let i = 0; i < goods.length; i++){
         let goodsStr = goods[i];
         let shoppingCartstr = shoppingCart[i];
@@ -219,5 +221,5 @@ $(document).ready(function(){
 
 
 </script>
-<script src="/js/shoppingCart.js"></script>
+<script src="/js/order.js"></script>
 </html>

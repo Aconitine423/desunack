@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class OrderService {
         ArrayList<String> goodsList = orderDao.getGoodsInfo(idList);
         session.setAttribute("goodsList",goodsList);
         //선택한 장바구니 불러오기
-        ArrayList<String> shoppingCartList = orderDao.getShoppingCart(userUid, idList);
+        ArrayList<String> shoppingCartList = orderDao.getShoppingCartString(userUid, idList);
         session.setAttribute("shoppingCartList",shoppingCartList);
         //유저정보 불러오기
         MemberEntity mEntity = orderDao.getUserInfo(userUid);
@@ -57,10 +58,18 @@ public class OrderService {
     }
 
     @Transactional
-    public void orderConfirm(List<ShoppingCartDto> scList, OrderDto oDto) {
-        int god_go_num = oDto.getOrder_num();
-        OrderEntity oEntity = oDto.toEntity();
+    public void orderConfirm(List<Integer> idList, OrderEntity oEntity) {
+        int god_go_num = oEntity.getGo_num();
+        log.info("id:{}", god_go_num);
+        int m_uid = oEntity.getGo_m_uid();
+        log.info("m_uid:{}", m_uid);
+        int age = (LocalDate.now().getYear() - orderDao.getAge(m_uid).getYear()) / 10 * 10;
+        log.info("age:{}", age);
+        char gender = orderDao.getGender(m_uid);
+
         orderDao.updateOrder(oEntity);
+        List<ShoppingCartDto> scList = orderDao.getShoppingCart(m_uid, idList);
+
         orderDao.insertOrderDetail(scList, god_go_num);
         if(oEntity.getGo_payments().equals("카드")){ //payment에 들어갈 값에 따라 수정 필요
             orderDao.insertCard(oEntity);
@@ -70,6 +79,18 @@ public class OrderService {
         }else if(oEntity.getGo_kind()==2){ // 택배배송이라면
             orderDao.insertParcel(oEntity);
         }
-        orderDao.deleteShoppingCart(scList);
+
+
+        log.info("scList={}", scList);
+        for(ShoppingCartDto scDto : scList){
+            orderDao.updateGoods(scDto);
+            orderDao.updateTotalSales(scDto);
+            if(orderDao.nullCheckSales(scDto, age, gender) != 0){
+                orderDao.updateSales(scDto, age, gender);
+            }else{
+                orderDao.insertSales(scDto, age, gender);
+            }
+        }
+        orderDao.deleteShoppingCart(idList, oEntity.getGo_m_uid());
     }
 }

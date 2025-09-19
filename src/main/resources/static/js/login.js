@@ -42,7 +42,8 @@ const $modal = $('#findModal');
 // 모달을 열고 findInfoFrm.html 내용을 로드
 $('.modal-trigger').on('click', function (e) {
     e.preventDefault();
-    $modal.find('.modal-content').load('/find/info', function () {
+    $('.modal').addClass('show');
+    $modal.find('.modal-body').load('/find/info', function () {
         $modal.fadeIn(300);
         initializeModalEvents();
     });
@@ -53,12 +54,14 @@ function initializeModalEvents() {
     // 모달 닫기
     $('.close-button').on('click', function () {
         $modal.fadeOut(300);
+        $('.modal').removeClass('show');
     });
 
     // 모달 외부 클릭 시 닫기
     $(window).on('click', function (e) {
         if ($(e.target).is($modal)) {
             $modal.fadeOut(300);
+            $('.modal').removeClass('show');
         }
     });
 

@@ -48,6 +48,6 @@
                 </foreach> ) order by sc_g_id
     </select>
     <select id="getShoppingCart" resultType="com.desunack.desunack.dto.ShoppingCartDto">
-        select * from shopping_cart where sc_m_uid = #{mUid} and (sc_g_id in <foreach collection="idList" item="id" open="(" close=")" )
+        select * from shopping_cart where sc_m_uid = #{mUid} and (sc_g_id in <foreach collection="idList" item="id" open="(" close=")" separator=",">#{id}</foreach> )
     </select>
 </mapper>

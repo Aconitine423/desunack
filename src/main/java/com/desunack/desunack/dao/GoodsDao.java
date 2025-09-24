@@ -36,9 +36,12 @@ public interface GoodsDao {
 
     ArrayList<String> getShoppingCart(int userUid);
 
-    @Delete("delete from shopping_cart where sc_g_id = #{g_id}")
-    void deleteShoppingCart(int g_id);
+    @Delete("delete from shopping_cart where sc_g_id = #{g_id} and sc_m_uid = #{m_uid}")
+    void deleteShoppingCart(int g_id, int m_uid);
 
 
     ArrayList<String> getFavorite(int userUid);
+
+    @Delete("delete from favorite where f_g_id = #{g_id} and f_m_uid = #{m_uid}")
+    void deleteFavorite(int g_id, int m_uid);
 }

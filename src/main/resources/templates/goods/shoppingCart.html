@@ -124,6 +124,7 @@
             $('.btn-del').click(function () {
                 const shoppingCartDto = {
                     sc_g_id: $(this).data('id'),
+                    sc_m_uid: [[${session.userUid}]]
                 }
                 axios.post('/goods/shoppingCart/delete', shoppingCartDto).then(function(response){
                     console.log("삭제 성공");

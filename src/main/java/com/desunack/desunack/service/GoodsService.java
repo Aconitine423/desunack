@@ -187,7 +187,8 @@ public class GoodsService {
 
     public void deleteShoppingCart(ShoppingCartDto shoppingCartDto) {
         int g_id = shoppingCartDto.getSc_g_id();
-        goodsDao.deleteShoppingCart(g_id);
+        int m_uid = shoppingCartDto.getSc_m_uid();
+        goodsDao.deleteShoppingCart(g_id,m_uid);
 
     }
 
@@ -198,5 +199,11 @@ public class GoodsService {
             return true;
         }
         return false;
+    }
+
+    public void deleteFavorite(FavoriteDto favoriteDto) {
+        int g_id = favoriteDto.getF_g_id();
+        int m_uid = favoriteDto.getF_m_uid();
+        goodsDao.deleteFavorite(g_id, m_uid);
     }
 }

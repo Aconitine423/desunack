@@ -24,14 +24,15 @@ public class GoodsController {
 
 
     @GetMapping("/goods/registrate")
-    public String gRegistrate(){
+    public String gRegistrate() {
         log.info("=====등록 페이지 이동");
         return "/Registration";
     }
+
     @PostMapping("/goods/registrate")
     public ResponseEntity<String> goodsRegistrate(@RequestPart("goodsDto") GoodsDto goodsDto,
-                                                  @RequestPart("mainFile")MultipartFile main,
-                                                  @RequestPart("subFile")MultipartFile sub,
+                                                  @RequestPart("mainFile") MultipartFile main,
+                                                  @RequestPart("subFile") MultipartFile sub,
                                                   @RequestPart("tAllergy") TransferAllergyDto taDTO,
                                                   @RequestPart("tSweetener") TransferSweetenerDto tsDTO,
                                                   @RequestPart("goodsInfoDto") GoodsInfoDto giDTO,
@@ -41,7 +42,7 @@ public class GoodsController {
         log.info("=========={}", giDTO);
         try {
             gSer.goodsRegistrate(goodsDto, main, sub, taDTO, tsDTO,
-                    giDTO,session);
+                    giDTO, session);
             return ResponseEntity.ok("상품등록 성공");
         } catch (IOException e) {
             log.error("파일 업로드 중 에러 발생", e);
@@ -51,9 +52,10 @@ public class GoodsController {
             return ResponseEntity.badRequest().body("상품등록 실패");
         }
     }
+
     @GetMapping("/goods/detail/{g_id}")
-    public String goodsDetail(@PathVariable("g_id") int g_id, Model model){
-        if(gSer.getGoodsDetail(g_id, model)){
+    public String goodsDetail(@PathVariable("g_id") int g_id, Model model) {
+        if (gSer.getGoodsDetail(g_id, model)) {
             return "/goods/goodsDetail";
         }
         log.info("상품 정보를 불러오는 것을 실패했습니다.");
@@ -61,7 +63,7 @@ public class GoodsController {
     }
 
     @PostMapping("/goods/favorite")
-    public ResponseEntity<String> goodsFavorite(@RequestBody FavoriteDto FavoriteDto){
+    public ResponseEntity<String> goodsFavorite(@RequestBody FavoriteDto FavoriteDto) {
         try {
             gSer.insertFavorite(FavoriteDto);
             return ResponseEntity.ok("찜목록 등록 성공");
@@ -72,7 +74,7 @@ public class GoodsController {
     }
 
     @PostMapping("/goods/shoppingCart")
-    public ResponseEntity<String> goodsShoppingCart(@RequestBody ShoppingCartDto ShoppingCartDto){
+    public ResponseEntity<String> goodsShoppingCart(@RequestBody ShoppingCartDto ShoppingCartDto) {
         try {
             gSer.insertCart(ShoppingCartDto);
             return ResponseEntity.ok("장바구니 등록 성공");
@@ -83,30 +85,42 @@ public class GoodsController {
     }
 
     @GetMapping("/goods/shoppingCart/{userUid}")
-    public String goodsShoppingCart(@PathVariable("userUid")int userUid, Model model){
-        if(gSer.getShoppingCart(userUid, model)){
+    public String goodsShoppingCart(@PathVariable("userUid") int userUid, Model model) {
+        if (gSer.getShoppingCart(userUid, model)) {
             return "/goods/shoppingCart";
         }
         return null;
     }
 
     @GetMapping("/goods/favorite/{userUid}")
-    public String goodsFavorite(@PathVariable("userUid")int userUid, Model model){
-        if(gSer.getFavorite(userUid, model)){
+    public String goodsFavorite(@PathVariable("userUid") int userUid, Model model) {
+        if (gSer.getFavorite(userUid, model)) {
             return "/goods/favorite";
         }
         return null;
     }
 
     @PostMapping("/goods/shoppingCart/delete")
-    public ResponseEntity<String> goodsShoppingCartDelete(@RequestBody ShoppingCartDto ShoppingCartDto){
-        try{gSer.deleteShoppingCart(ShoppingCartDto);
+    public ResponseEntity<String> goodsShoppingCartDelete(@RequestBody ShoppingCartDto ShoppingCartDto) {
+        try {
+            gSer.deleteShoppingCart(ShoppingCartDto);
             return ResponseEntity.ok("장바구니 삭제 성공");
-        }catch(Exception e){
+        } catch (Exception e) {
             log.error("장바구니 삭제중 에러 발생", e);
             return ResponseEntity.badRequest().body("장바구니 삭제 실패");
         }
     }
 
+    @PostMapping("/goods/favorite/delete")
+    public ResponseEntity<String> favoriteDelete(@RequestBody FavoriteDto FavoriteDto) {
+        try {
+            gSer.deleteFavorite(FavoriteDto);
+            return ResponseEntity.ok("찜 목록 삭제 성공");
+        } catch (Exception e) {
+            log.error("찜 목록 삭제중 에러 발생", e);
+            return ResponseEntity.badRequest().body("찜목록 삭제 실패");
+        }
 
+
+    }
 }

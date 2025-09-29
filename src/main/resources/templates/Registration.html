@@ -119,48 +119,30 @@
             <!-- 성분 정보 -->
             <fieldset>
                 <legend>성분 정보</legend>
-                <div class="checkbox-row">
-                    <label>
-                        <input type="checkbox" id="Sweetener1" name="goodsSweetener" value="1">
-                        아세설팜칼륨
-                        <input type="checkbox" id="Sweetener2" name="goodsSweetener" value="2">
-                        알룰로스
-                        <input type="checkbox" id="Sweetener3" name="goodsSweetener" value="3">
-                        아스파탐
-                        <input type="checkbox" id="Sweetener4" name="goodsSweetener" value="4">
-                        에리스리톨
-                        <input type="checkbox" id="Sweetener5" name="goodsSweetener" value="5">
-                        말티톨
-                        <input type="checkbox" id="Sweetener6" name="goodsSweetener" value="6">
-                        사카린
-                        <input type="checkbox" id="Sweetener7" name="goodsSweetener" value="7">
-                        솔비톨
-                        <input type="checkbox" id="Sweetener8" name="goodsSweetener" value="8">
-                        스테비아
-                        <input type="checkbox" id="Sweetener9" name="goodsSweetener" value="9">
-                        수크랄로스
-                        <input type="checkbox" id="Sweetener10" name="goodsSweetener" value="10">
-                        자일리톨
-                    </label>
-                    <hr>
-                    <label>
-                        <input type="checkbox" id="Allergy1" name="goodsAllergy" value="1">
-                        난류
-                        <input type="checkbox" id="Allergy2" name="goodsAllergy" value="2">
-                        어류
-                        <input type="checkbox" id="Allergy3" name="goodsAllergy" value="3">
-                        우유
-                        <input type="checkbox" id="Allergy4" name="goodsAllergy" value="4">
-                        견과류
-                        <input type="checkbox" id="Allergy5" name="goodsAllergy" value="5">
-                        땅콩
-                        <input type="checkbox" id="Allergy6" name="goodsAllergy" value="6">
-                        패류
-                        <input type="checkbox" id="Allergy7" name="goodsAllergy" value="7">
-                        대두
-                        <input type="checkbox" id="Allergy8" name="goodsAllergy" value="8">
-                        밀
-                    </label>
+                <div class="checkbox-group sweetener-group">
+                    <!-- 감미료 그룹 (10개 항목 - 5개씩 2줄 배치) -->
+                    <label><input type="checkbox" id="Sweetener1" name="goodsSweetener" value="1"> 아세설팜칼륨</label>
+                    <label><input type="checkbox" id="Sweetener2" name="goodsSweetener" value="2"> 알룰로스</label>
+                    <label><input type="checkbox" id="Sweetener3" name="goodsSweetener" value="3"> 아스파탐</label>
+                    <label><input type="checkbox" id="Sweetener4" name="goodsSweetener" value="4"> 에리스리톨</label>
+                    <label><input type="checkbox" id="Sweetener5" name="goodsSweetener" value="5"> 말티톨</label>
+                    <label><input type="checkbox" id="Sweetener6" name="goodsSweetener" value="6"> 사카린</label>
+                    <label><input type="checkbox" id="Sweetener7" name="goodsSweetener" value="7"> 솔비톨</label>
+                    <label><input type="checkbox" id="Sweetener8" name="goodsSweetener" value="8"> 스테비아</label>
+                    <label><input type="checkbox" id="Sweetener9" name="goodsSweetener" value="9"> 수크랄로스</label>
+                    <label><input type="checkbox" id="Sweetener10" name="goodsSweetener" value="10"> 자일리톨</label>
+                </div>
+                <hr>
+                <div class="checkbox-group allergy-group">
+                    <!-- 알레르기 그룹 (8개 항목 - 한 줄 배치) -->
+                    <label><input type="checkbox" id="Allergy1" name="goodsAllergy" value="1"> 난류</label>
+                    <label><input type="checkbox" id="Allergy2" name="goodsAllergy" value="2"> 어류</label>
+                    <label><input type="checkbox" id="Allergy3" name="goodsAllergy" value="3"> 우유</label>
+                    <label><input type="checkbox" id="Allergy4" name="goodsAllergy" value="4"> 견과류</label>
+                    <label><input type="checkbox" id="Allergy5" name="goodsAllergy" value="5"> 땅콩</label>
+                    <label><input type="checkbox" id="Allergy6" name="goodsAllergy" value="6"> 패류</label>
+                    <label><input type="checkbox" id="Allergy7" name="goodsAllergy" value="7"> 대두</label>
+                    <label><input type="checkbox" id="Allergy8" name="goodsAllergy" value="8"> 밀</label>
                 </div>
             </fieldset>
             <!-- 배송 정보 -->

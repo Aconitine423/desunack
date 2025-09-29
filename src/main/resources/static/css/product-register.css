@@ -46,7 +46,7 @@ img {
 /* 상품 등록 페이지 전용 레이아웃 보정 */
 
 body.registration-page main.register-form{
-    max-width: 500px; /* 원하는 폼 너비  */
+    max-width: 800px; /* 원하는 폼 너비  */
     margin: 40px auto !important; /* auto로 중앙 정렬 강제 */
     float: none !important; /* 혹시 float 걸려 있으면 해제 */
     text-align: left /* 본문 내용은 왼쪽 정렬  */
@@ -71,7 +71,7 @@ h1{
 }
 
 .register-form{
-    max-width: 500px; /* 전체 폭 줄임 */
+    max-width: 800px; /* 전체 폭 줄임 */
     margin: 15px auto;
     background: #fff;
     padding: 20px 15px; /*내부 여백 확 줄임*/
@@ -84,6 +84,7 @@ fieldset{
     padding: 10px 15px; /* 내부 여백 줄임 */
     margin-bottom: 15px; /* 구역 간격 좁힘 */
     border-radius: 6px;
+    max-width: 800px;
 }
 
 legend{
@@ -225,21 +226,51 @@ textarea.auto-resize {
     background: #222;
 }
 
-/* 체크박스 가로 배치 */
-.checkbox-row {
-  display: flex;          /* 가로 배치 */
-  align-items: center;    /* 세로 중앙 정렬 */
-  gap: 20px;              /* 체크박스 간격 */
+/* 체크박스 그룹 전체를 가로로 배치하고 줄 바꿈을 허용하는 핵심 스타일 */
+.checkbox-group {
+    display: flex;          /* 자식 요소들을 가로로 배치 */
+    flex-wrap: wrap;        /* 공간이 부족하면 자동 줄 바꿈 (반응형) */
+    gap: 10px 24px;         /* 세로 간격 10px, 가로 항목 간격 24px */
+    padding: 8px 0;
 }
 
-.checkbox-row label {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 13px;
-  cursor: pointer;
+/* 그룹 내 개별 체크박스 라벨 기본 스타일 */
+.checkbox-group label {
+    display: inline-flex;   /* 체크박스와 텍스트를 한 줄에 배치 */
+    align-items: center;    /* 세로 중앙 정렬 */
+    gap: 6px;
+    font-size: 14px;
+    color: #444;
+    cursor: pointer;
+    margin-bottom: 0;
+    /* 기본적으로 내용 길이에 따라 유연하게 너비 결정 */
+    flex: 0 0 auto;
+}
+/* 대체당 그룹: 한 줄에 5개씩 배치되도록 너비 강제 설정 */
+.sweetener-group label {
+    /*
+        컨테이너 너비(800px)를 5등분한 값(20%)에서 가로 간격(24px)을 나누어 뺀 값으로 너비를 설정합니다.
+        5 * (20% - 19.2px) + 4 * 24px = 100%
+        이를 통해 정확히 5개가 한 줄에 배치됩니다.
+    */
+    flex: 0 0 calc(20% - 19.2px);
+}
+/* 알러지 그룹: 항목 개수(8개)가 한 줄에 모두 배치되도록 내용 길이에 맞춤 */
+.allergy-group label {
+    /* flex: 0 0 auto; 이 기본값이며, 내용 길이가 800px 안에 들어가므로 한 줄로 표시됨 */
+}
+.checkbox-group input[type="checkbox"] {
+    margin-left: 0; /* 불필요한 왼쪽 마진 제거 */
+    transform: scale(1.1); /* 체크박스 크기 약간 키움 */
+    accent-color: #10b981; /* 체크 색상 지정 (Tailwind green-500) */
+    border-radius: 4px;
 }
 
+fieldset hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 15px 0;
+}
 
 /* 숫자 입력 + 원 단위 정렬 */
 

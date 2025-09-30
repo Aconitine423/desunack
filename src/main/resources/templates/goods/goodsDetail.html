@@ -8,12 +8,46 @@
     <title th:text="'['+${goodsDto.brand_name}+']'+${goodsDto.g_name}">[대체당FESTA] 저당 알롤로스 쌈장 2+1 상세페이지</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <!-- Chart.js CDN 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="/common/reset.css">
     <link rel="stylesheet" href="/css/goodsDetail.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/footer.css">
     <!--    <link rel="stylesheet" href="../breadcrumb/breadcrumb.css">-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .section {
+            padding: 30px 0;
+            border-bottom: 1px solid #eee;
+        }
+        #review-summary-chart {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        .chart-container {
+            max-width: 800px;
+            margin: 0 auto;
+            height: 400px; /* 차트 높이 지정 */
+        }
+        .review-summary-chart h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .review-list-item {
+            padding: 15px;
+            border-bottom: 1px dashed #ddd;
+        }
+        .review-list-item:last-child {
+            border-bottom: none;
+        }
+    </style>
 </head>
 <body>
 <!-- 헤더가 들어간 자리 -->
@@ -103,6 +137,16 @@
             </div>
 
     </section>
+    <!-- 리뷰 요약 영역 -->
+    <section id="review-summary-chart" class="section">
+        <h2>혈당 변화 추이 분석 (섭취 전/직후/1시간 후)</h2>
+        <p style="text-align: center; color: #555; margin-bottom: 20px;">
+            **리뷰어 혈당 변화(mg/dL)를 정상 기준선과 비교한 결과입니다.**
+        </p>
+        <div class="chart-container">
+            <canvas id="bloodGlucoseChart"></canvas>
+        </div>
+    </section>
     <!-- 상단 네비게이션 -->
     <nav id="scrollspy-nav">
         <ul>
@@ -111,7 +155,6 @@
             <li><a href="#section-inquiry">상품 정보 제공 고시</a></li>
         </ul>
     </nav>
-    <!-- 리뷰 요약 영역 -->
     <div class="product-detail">
         <h2>상세 정보</h2>
         <img class="detail" th:src="${goodsDto.g_detail}">
@@ -252,6 +295,114 @@
         } catch (e) {
             console.log(e);
             $container.html('<span class="error-message">데이터를 불러오는 데 실패했습니다.</span>')
+        }
+    });
+
+//     혈당변화 그래프 로직
+    // 1. 정상인 혈당 수치 - mg/dL 기준
+    const NORMAL_GLUCOSE = {
+        BEFORE: 85,  // 공복 혈당 (80-100mg/dL)
+        AFTER_0H: 120, // 섭취 직후 (140mg/dL 미만)
+        AFTER_1H: 100  // 섭취 1시간 후 (다시 하강)
+    };
+
+    // 2. 더미데이터 (실제로는 서버에서 dr_healthy 기준으로 집계된 평균값을 받아와야 함)
+    // **서버에서 이 데이터를 JSON 형태로 받아와야 함**
+    const mockAggregatedData = {
+        // 당뇨약 섭취 여부: 'Y'
+        medication_y: {
+            BEFORE: 135,
+            AFTER_0H: 180,
+            AFTER_1H: 165
+        },
+        // 당뇨약 섭취 여부: 'N'
+        medication_n: {
+            BEFORE: 95,
+            AFTER_0H: 140,
+            AFTER_1H: 110
+        }
+    };
+
+    const ctx = document.getElementById('bloodGlucoseChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['섭취 전', '섭취 직후', '섭취 1시간 이후'],
+            datasets: [
+                // 1. 당뇨약 섭취 그룹 (dr_healthy='Y')
+                {
+                    label: '당뇨약 섭취 그룹 평균',
+                    data: [
+                        mockAggregatedData.medication_y.BEFORE,
+                        mockAggregatedData.medication_y.AFTER_0H,
+                        mockAggregatedData.medication_y.AFTER_1H
+                    ],
+                    borderColor: 'rgb(255, 99, 132)', // 빨간색
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    borderWidth: 3,
+                    tension: 0.4
+                },
+                // 2. 당뇨약 비섭취 그룹 (dr_healthy='N')
+                {
+                    label: '당뇨약 비섭취 그룹 평균',
+                    data: [
+                        mockAggregatedData.medication_n.BEFORE,
+                        mockAggregatedData.medication_n.AFTER_0H,
+                        mockAggregatedData.medication_n.AFTER_1H
+                    ],
+                    borderColor: 'rgb(54, 162, 235)', // 파란색
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderWidth: 3,
+                    tension: 0.4
+                },
+                // 3. 정상 기준선 (Static Data)
+                {
+                    label: '정상인 기준 (비교)',
+                    data: [
+                        NORMAL_GLUCOSE.BEFORE,
+                        NORMAL_GLUCOSE.AFTER_0H,
+                        NORMAL_GLUCOSE.AFTER_1H
+                    ],
+                    borderColor: 'rgb(75, 192, 192)', // 초록색 (기준)
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    borderDash: [5, 5], // 점선으로 표시
+                    borderWidth: 2,
+                    tension: 0.4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, // 컨테이너 크기에 맞춰 조정
+            plugins: {
+                title: {
+                    display: true,
+                    text: '상품 섭취 후 그룹별 혈당 변화 (mg/dL)',
+                    font: { size: 16 }
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                },
+            },
+            scales: {
+                y: {
+                    title: {
+                        display: true,
+                        text: '혈당 수치 (mg/dL)'
+                    },
+                    min: 70, // 차트의 Y축 최소값을 설정
+                    max: 200, // 차트의 Y축 최대값을 설정 (데이터에 따라 조정)
+                    beginAtZero: false
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: '시간 경과'
+                    }
+                }
+            }
         }
     });
 </script>

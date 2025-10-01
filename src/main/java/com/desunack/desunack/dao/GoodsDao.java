@@ -9,6 +9,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface GoodsDao {
@@ -44,4 +46,6 @@ public interface GoodsDao {
 
     @Delete("delete from favorite where f_g_id = #{g_id} and f_m_uid = #{m_uid}")
     void deleteFavorite(int g_id, int m_uid);
+
+    List<Map<String, Object>> findAvgGlucoseGroupedByHealthyStatus(int gId);
 }

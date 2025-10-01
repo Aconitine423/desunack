@@ -45,4 +45,19 @@
         from favorite join c_member on favorite.f_m_uid = c_member.c_m_uid join goods on favorite.f_g_id = goods.g_id
         where f_m_uid = #{userUid}
     </select>
+    <select id="findAvgGlucoseGroupedByHealthyStatus" resultType="java.util.Map">
+        SELECT
+            D.dr_healthy,
+            CAST(AVG(D.dr_before) AS DECIMAL(10, 2)) AS avg_before,
+            CAST(AVG(D.dr_after1) AS DECIMAL(10, 2)) AS avg_after1,
+            CAST(AVG(D.dr_after2) AS DECIMAL(10, 2)) AS avg_after2
+        FROM
+            review R
+                INNER JOIN
+            d_review D ON R.r_num = D.dr_r_num
+        WHERE
+            R.r_g_id = #{gId}
+        GROUP BY
+            D.dr_healthy;
+    </select>
 </mapper>

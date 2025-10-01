@@ -2,6 +2,8 @@ package com.desunack.desunack.controller;
 
 import com.desunack.desunack.dto.*;
 import com.desunack.desunack.service.GoodsService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -54,8 +56,12 @@ public class GoodsController {
     }
 
     @GetMapping("/goods/detail/{g_id}")
-    public String goodsDetail(@PathVariable("g_id") int g_id, Model model) {
+    public String goodsDetail(@PathVariable("g_id") int g_id, Model model) throws JsonProcessingException {
         if (gSer.getGoodsDetail(g_id, model)) {
+            // 1. DB에서 goodsId에 해당하는 dr_review 데이터를 그룹별로 집계하는 로직 실행
+            BloodGlucoseSummaryDto summary = gSer.getAggregatedGlucoseData(g_id);
+            // 2. DTO 객체를 JSON 문자열로 변환하지 않고 그대로 모델에 추가
+            model.addAttribute("bloodGlucoseSummary", summary);
             return "/goods/goodsDetail";
         }
         log.info("상품 정보를 불러오는 것을 실패했습니다.");

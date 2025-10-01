@@ -307,21 +307,19 @@
     };
 
     // 2. 더미데이터 (실제로는 서버에서 dr_healthy 기준으로 집계된 평균값을 받아와야 함)
-    // **서버에서 이 데이터를 JSON 형태로 받아와야 함**
-    const mockAggregatedData = {
-        // 당뇨약 섭취 여부: 'Y'
-        medication_y: {
-            BEFORE: 135,
-            AFTER_0H: 180,
-            AFTER_1H: 165
-        },
-        // 당뇨약 섭취 여부: 'N'
-        medication_n: {
-            BEFORE: 95,
-            AFTER_0H: 140,
-            AFTER_1H: 110
-        }
-    };
+    // DTO를 모델에 담아서 가져옴
+    const chartData = /*[[${bloodGlucoseSummary}]]*/ {};
+    // 없다면 빈 객체를 사용
+    const medYData = chartData.medication_y || {};
+    const medNData = chartData.medication_n || {};
+    // 데이터셋 생성 함수 (데이터가 없을 경우 0으로 기본값 설정)
+    function getGlucoseData(dataObj) {
+        return [
+            dataObj.BEFORE || 0,
+            dataObj.AFTER_0H || 0,
+            dataObj.AFTER_1H || 0
+        ];
+    }
 
     const ctx = document.getElementById('bloodGlucoseChart').getContext('2d');
 
@@ -333,11 +331,7 @@
                 // 1. 당뇨약 섭취 그룹 (dr_healthy='Y')
                 {
                     label: '당뇨약 섭취 그룹 평균',
-                    data: [
-                        mockAggregatedData.medication_y.BEFORE,
-                        mockAggregatedData.medication_y.AFTER_0H,
-                        mockAggregatedData.medication_y.AFTER_1H
-                    ],
+                    data: getGlucoseData(medYData),
                     borderColor: 'rgb(255, 99, 132)', // 빨간색
                     backgroundColor: 'rgba(255, 99, 132, 0.5)',
                     borderWidth: 3,
@@ -346,11 +340,7 @@
                 // 2. 당뇨약 비섭취 그룹 (dr_healthy='N')
                 {
                     label: '당뇨약 비섭취 그룹 평균',
-                    data: [
-                        mockAggregatedData.medication_n.BEFORE,
-                        mockAggregatedData.medication_n.AFTER_0H,
-                        mockAggregatedData.medication_n.AFTER_1H
-                    ],
+                    data: getGlucoseData(medNData),
                     borderColor: 'rgb(54, 162, 235)', // 파란색
                     backgroundColor: 'rgba(54, 162, 235, 0.5)',
                     borderWidth: 3,
